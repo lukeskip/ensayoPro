@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::resource('v1/users', v1\UserController::class,[
+// 	'except' => ['create','edit'] 
+// ]);
+
+Route::resource('v1/users', 'v1\UserController');
