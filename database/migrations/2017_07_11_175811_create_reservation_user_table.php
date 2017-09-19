@@ -28,6 +28,6 @@ class CreateReservationUserTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('reservation_user');
     }
 }

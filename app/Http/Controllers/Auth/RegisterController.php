@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/redirect';
 
     /**
      * Create a new controller instance.
@@ -48,8 +49,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -63,11 +64,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
+
+        $user =  User::create([
+            'name' => $data['name'],
+            'lastname'=>$data['lastname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        if(array_key_exists('role',$data)){
+            $role = Role::where('token',$data['role'])->first();
+            $user->roles()->attach($role->id);
+        }else{
+            $user->roles()->attach(Role::where('name', 'musician')->first());
+        }
+
+        return $user;
     }
 }

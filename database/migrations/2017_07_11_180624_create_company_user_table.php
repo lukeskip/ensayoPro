@@ -28,6 +28,6 @@ class CreateCompanyUserTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('company_user');
     }
 }

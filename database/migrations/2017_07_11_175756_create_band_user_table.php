@@ -28,6 +28,6 @@ class CreateBandUserTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('band_user');
     }
 }

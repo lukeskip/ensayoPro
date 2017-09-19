@@ -35,4 +35,14 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'facebook' => [
+        'client_id'     => '851875531619550',
+        'client_secret' => '3a3669327c47b754bcf9ef82eb257e3e',
+        'redirect'      => env('FACEBOOK_URL'),
+    ],
+
+    'mandrill' => [
+        'secret' => env('MANDRILL_KEY'),
+    ],
+
 ];

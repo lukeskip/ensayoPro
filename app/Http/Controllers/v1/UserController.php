@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\v1;
 
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\User;
 use App\Band;
 
 class UserController extends Controller
 {
+
+    use HasApiTokens, Notifiable;
     /**
      * Display a listing of the resource.
      *
@@ -18,10 +22,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
+        
             return response()->json(User::with('companies','roles')->get());
-        }
-
+         
     }
 
     /**
@@ -42,7 +45,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request->input('first_name');
+        return $name;
+     
     }
 
     /**

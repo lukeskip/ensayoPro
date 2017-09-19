@@ -1,13 +1,13 @@
 <?php
 
 namespace App;
-
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name', 'email', 'password',
+        'name','lastname','email', 'password'
     ];
 
     /**
@@ -27,7 +27,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function save(array $options = []){
+    public function save (array $options = []){
         if(empty($this->api_token)){
             $this->api_token = str_random(60);
         }
@@ -53,4 +53,6 @@ class User extends Authenticatable
     public function reservations(){
         return $this->belongsToMany('App\Reservation');
     }
+
+
 }
