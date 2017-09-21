@@ -37,6 +37,7 @@ $(document).ready(function(){
 	
 });
 
+
 // controlador de mensajes
 function show_message(type,title,message,link,color = '#CF2832'){
 
@@ -71,6 +72,8 @@ function conection(method,fields,link,redirect){
 	}).fail(function(jqXHR, textStatus){
 		if (jqXHR.status === 0) {
             msg = 'Not connect.\n Verify Network.';
+        } else if (jqXHR.status == 401) {
+            window.location.replace('/login');
         } else if (jqXHR.status == 404) {
             msg = 'Requested page not found. [404]';
         } else if (jqXHR.status == 500) {

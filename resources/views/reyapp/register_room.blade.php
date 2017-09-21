@@ -8,10 +8,10 @@
 			<div class="large-12 columns">
 				<div class="step">
 					<div class="description">Paso</div>
-					<div class="number">2</div>
+					<div class="number">3</div>
 				</div>
-				<h1>Registra tu marca</h1>
-				<h2>Posteriormente tendrás que registrar cada una de la salas o cuartos de ensayo operando bajo esta marca.</h2>
+				<h1>Registra tu sala de ensayo</h1>
+				<h2>Tendrás que registrar una a una las salas con las que cuenta tu marca</h2>
 			</div>
 		</div>
 		<div class="row">
@@ -19,7 +19,7 @@
 			<div class="large-12 columns">
 				<div class="input-group">
 					<span class="input-group-label">
-						Marca:
+						Nombre:
 					</span>
 				  <input class="input-group-field" type="text" name="name">
 				</div>
@@ -31,12 +31,20 @@
 			
 			<div class="large-12 columns">
 				<div class="input-group">
+					 <label for="same_address"><input id="same_address" type="checkbox">Misma dirección que Marca</label>
+				</div>
+			</div>
+
+			<div class="large-12 columns">
+				<div class="input-group">
 					<span class="input-group-label">
 						Dirección:
 					</span>
 				  <input class="input-group-field" type="text" name="address">
 				</div>
 			</div>
+
+			
 
 		</div>
 
@@ -45,9 +53,9 @@
 			<div class="large-12 columns">
 				<div class="input-group">
 					<span class="input-group-label">
-						Telefono:
+						Descripción:
 					</span>
-				  <input class="input-group-field" type="text" name="phone">
+				  <textarea class="input-group-field" type="text" name="description"></textarea>
 				</div>
 			</div>
 
@@ -58,9 +66,9 @@
 			<div class="large-12 columns">
 				<div class="input-group">
 					<span class="input-group-label">
-						RFC:
+						Precio:
 					</span>
-				  <input class="input-group-field" type="text" name="rfc">
+				  <input class="input-group-field" type="text" name="price">
 				</div>
 			</div>
 

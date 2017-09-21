@@ -20,14 +20,6 @@ Route::get('/', function () {
     return view('reyapp.main');
 });
 
-Route::get('/redirect', function (){
-	$user  = App\User::find(Auth::user()->id);
-	return $user;
-	// if (in_array('admin', $roles)){
-	// 	return redirect('/home');
-	// }
-});
-
 
 Auth::routes();
 
@@ -35,22 +27,106 @@ Route::get('/registro', function () {
     return view('reyapp.register');
 });
 
-Route::resource('bandas', 'BandController');
+Route::get('/', function () {
+    return view('reyapp.login');
+});
 
-Route::get('/registro/banda', function () {
+
+
+Route::group(['middleware' => 'auth'], function () {
+
+	Route::get('/reservaciones', 'ReservationController@index')->name('reservations');
+
+	// Dashboard routes
+	// Route::get('/dashboard', function () {
+	//     return view('reyapp.dashboard');
+	// });
+
+	Route::get('/dashboard', 'ReservationController@index')->name('dashboard');
+
+	Route::get('/company/dashboard', function () {
+	    return view('reyapp.dashboard_company');
+	});
+
+	Route::get('/admin/dashboard', function () {
+	    return view('reyapp.dashboard_admin');
+	});
+	// ENDS: dashboard routes
+
+
+	// Redirigimos según role después de registro
+	Route::get('registro/redirect', function (){
+	$user_id = Auth::user()->id;
+	$user = App\User::where('id', $user_id)->with('roles')->first();
+	$role = $user->roles->first()->name;
 	
-	if(Auth::user())
-	{
-		return view('reyapp.register_band');
-	}else{
-		return redirect('/registro');
-	}
+		if($role == 'admin'){
+			return redirect('admin/dashboard');
+		}
+
+		if($role == 'company'){
+			return redirect('registro/company');
+		}
+
+		if($role == 'musician'){
+			return redirect('/dashboard');
+		}
+	});
+
+
+	//ENDS: Redirigimos según role después de registro
+
+
+	// Redirigimos según role después de login
+	Route::get('login/redirect', function (){
+	$user_id = Auth::user()->id;
+	$user = App\User::where('id', $user_id)->with('roles')->first();
+	$role = $user->roles->first()->name;
+	
+		if($role == 'admin'){
+			return redirect('admin/dashboard');
+		}
+
+		if($role == 'company'){
+			return redirect('company/dashboard');
+		}
+
+		if($role == 'musician'){
+			return redirect('/dashboard');
+		}
+	});
+
+
+	//ENDS: Redirigimos según role después de login
+
+	Route::resource('bandas', 'BandController');
+
+	Route::resource('companies', 'CompanyController');
+
+	Route::get('/registro/banda', function () {
+		
+		if(Auth::user())
+		{
+			return view('reyapp.register_band');
+		}else{
+			return redirect('/registro');
+		}
+	    
+	});
+
+	Route::get('/registro/salas', function () {
+    	return view('reyapp.register_room');
+	});
     
 });
 
+
+
+
+
+
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/registro/company', 'CompanyController@register')->name('register_company');
+Route::get('/registro/usuario/company', 'CompanyController@register_user')->name('register_user_company');
+Route::get('/registro/company', 'CompanyController@register_company')->name('register_company');
 
 
-
-Route::get('/developers', 'DeveloperController@index')->name('home');

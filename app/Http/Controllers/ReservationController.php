@@ -2,35 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Role as Role;
-use App\Company as Company;
+use App\Reservation as Reservation;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth as Auth;
-use App\User as User;
 
-class CompanyController extends Controller
+class ReservationController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
-    public function register_user()
-    {
-        $role = Role::where('name','company')->first();
-        return view('reyapp.register_user_company')->with('role',$role->token);
-    }
-
-    public function register_company()
-    {    
-        return view('reyapp.register_company');
-    }
-
     public function index()
     {
-        $companies = Company::all();
-        return view('reyapp.companies')->with('companies',$companies);
+        $reservations = Reservation::all();
+        return view('reyapp.dashboard')->with('reservations',$reservations);
     }
 
     /**
@@ -51,18 +36,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-
-        $user_id = Auth::user()->id;
-        $company   = new Company();
-        $company->name  = $request->name;
-        $company->address = $request->address;
-        $company->phone = $request->phone;
-        $company->rfc = $request->rfc;
-        $user = User::findOrFail($user_id);
-        $user->companies()->save($company);
-
-        return redirect('registro/salas');
-
+        //
     }
 
     /**
