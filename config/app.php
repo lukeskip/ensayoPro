@@ -173,6 +173,7 @@ return [
         \Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Optimus\FineuploaderServer\Provider\LaravelServiceProvider::class,
 
         /*
          * Application Service Providers...

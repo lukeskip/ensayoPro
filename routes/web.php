@@ -117,7 +117,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/registro/salas', function () {
     	return view('reyapp.register_room');
 	});
-    
+
+
+	//STARTS: UPLOADER
+    Route::post('/uploader/upload', '\Optimus\FineuploaderServer\Controller\LaravelController@upload');
+	Route::delete('/uploader/delete/{uuid}', '\Optimus\FineuploaderServer\Controller\LaravelController@delete');
+	Route::get('/uploader/session', '\Optimus\FineuploaderServer\Controller\LaravelController@session');
+
+    // ENDS: UPLOADER
 });
 
 

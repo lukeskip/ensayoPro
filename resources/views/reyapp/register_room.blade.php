@@ -103,12 +103,21 @@
             element: document.getElementById("uploader"),
             debug: true,
             request: {
-                endpoint: '/uploads'
+				endpoint: '/uploader/upload',
+				params: {
+					base_directory: 'completed',
+					sub_directory: null,
+					optimus_uploader_allowed_extensions: [],
+					optimus_uploader_size_limit: 0,
+					optimus_uploader_thumbnail_height: 100,
+					optimus_uploader_thumbnail_width: 100,
+				}
             },
             deleteFile: {
                 enabled: true,
-                endpoint: '/uploads'
+                endpoint: '/uploader/delete/{uuid}'
             }
+            
         })
     </script>
 @endsection
