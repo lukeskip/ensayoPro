@@ -15,9 +15,13 @@ html,body{
 }
 
 body{
+	height: 100%;
+	width:100%;
+	background-attachment: fixed;
 	background-color: #AF0929;
 	background-image:url(../img/back.jpg); 
 	background-position: center;
+	background-size: cover;
 	font-family: 'Raleway', sans-serif; 
 	color:white;
 }
@@ -41,6 +45,13 @@ body{
 }
 
 /*FORM*/
+
+.qq-gallery .qq-upload-button{
+	background: black;
+	border:none;
+	width: inherit;
+	cursor: pointer;
+}
 
 .add{
 	border:rgba(0,0,0,.5) 3px dotted;

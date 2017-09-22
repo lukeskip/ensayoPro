@@ -1,9 +1,15 @@
-@extends('layouts.reyapp.landing')
+@extends('layouts.reyapp.main')
 
 @section('content')
+
+
+	
+   
+
+
 	<form class="form-horizontal" method="POST" action="{{ route('companies.store') }}">
 		{{ csrf_field() }}
-		
+
 		<div class="row">
 			<div class="large-12 columns">
 				<div class="step">
@@ -71,7 +77,14 @@
 				  <input class="input-group-field" type="text" name="price">
 				</div>
 			</div>
+	
+		</div>
 
+		<div class="row">
+			<div class="large-12 columns">
+				<div id="uploader"></div>
+				<br><br>
+			</div>
 		</div>
 
 		<div class="row ">
@@ -82,4 +95,20 @@
 			</div>
 		</div>
 	</form>
+@endsection
+@section('scripts')
+	 <script>
+        // Some options to pass to the uploader are discussed on the next page
+        var uploader = new qq.FineUploader({
+            element: document.getElementById("uploader"),
+            debug: true,
+            request: {
+                endpoint: '/uploads'
+            },
+            deleteFile: {
+                enabled: true,
+                endpoint: '/uploads'
+            }
+        })
+    </script>
 @endsection
