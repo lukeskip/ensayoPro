@@ -102,6 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('bandas', 'BandController');
 
 	Route::resource('companies', 'CompanyController');
+	Route::resource('rooms', 'RoomController');
 
 	Route::get('/registro/banda', function () {
 		
@@ -114,14 +115,16 @@ Route::group(['middleware' => 'auth'], function () {
 	    
 	});
 
-	Route::get('/registro/salas', function () {
-    	return view('reyapp.register_room');
-	});
+	// Route::get('/registro/salas', function () {
+ //    	return view('reyapp.register_room');
+	// });
+
+	Route::get('/registro/salas', 'RoomController@register')->name('register_room');
 
 
 	//STARTS: UPLOADER
     Route::post('/uploader/upload', '\Optimus\FineuploaderServer\Controller\LaravelController@upload');
-	Route::delete('/uploader/delete/{uuid}', '\Optimus\FineuploaderServer\Controller\LaravelController@delete');
+	Route::delete('/uploader/delete','\Optimus\FineuploaderServer\Controller\LaravelController@delete');
 	Route::get('/uploader/session', '\Optimus\FineuploaderServer\Controller\LaravelController@session');
 
     // ENDS: UPLOADER

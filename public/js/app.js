@@ -1,4 +1,4 @@
-
+room_images = [];
 $(document).foundation();
 $(document).ready(function(){
 	
@@ -11,6 +11,11 @@ $(document).ready(function(){
 	// al click ejecutamos register_band
 	$('body').on('click', '.register_band', function() {
 		register_band ();
+	});
+
+	$('body').on('click', '.register_room', function(e) {
+		e.preventDefault();
+		register_room_prepare ();
 	});
 
 	// función que maneja el registro de la banda del usuario
@@ -34,9 +39,22 @@ $(document).ready(function(){
 
 		conection('POST',data,'/bandas');
 	}
+
+	function register_room_prepare (){
+		
+		$('#uploader').fineUploader('uploadStoredFiles');
+
+	}
 	
 });
 
+
+
+// 
+function register_room (){
+	data = $("#form_companies").serialize()+'&images='+JSON.stringify(room_images);
+	conection('POST',data,'/rooms');
+}
 
 // controlador de mensajes
 function show_message(type,title,message,link,color = '#CF2832'){
@@ -69,7 +87,7 @@ function conection(method,fields,link,redirect){
 	  data:fields,
 	}).done(function(data) {
 	  console.log(data);
-	}).fail(function(jqXHR, textStatus){
+	}).fail(function(jqXHR, exception){
 		if (jqXHR.status === 0) {
             msg = 'Not connect.\n Verify Network.';
         } else if (jqXHR.status == 401) {
@@ -79,7 +97,7 @@ function conection(method,fields,link,redirect){
         } else if (jqXHR.status == 500) {
             msg = 'Internal Server Error [500].';
         } else if (exception === 'parsererror') {
-            msg = 'Requested JSON parse failed.';
+            msg = 'Requested JSON parse failedaaaa.';
         } else if (exception === 'timeout') {
             msg = 'Time out error.';
         } else if (exception === 'abort') {

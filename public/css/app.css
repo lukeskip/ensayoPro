@@ -46,6 +46,17 @@ body{
 
 /*FORM*/
 
+.qq-gallery .qq-upload-cancel{
+	background: black;
+	padding: 0;
+}
+
+.qq-gallery .qq-upload-drop-area-active{
+	border:#333 3px dotted;
+	padding: 20px;
+	background: url(../img/drop.png) no-repeat center center;
+}
+
 .qq-gallery .qq-upload-button{
 	background: black;
 	border:none;

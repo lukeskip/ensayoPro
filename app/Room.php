@@ -15,4 +15,9 @@ class Room extends Model
     {
         return $this->hasMany('App\Reservation');
     }
+
+    public function media_items()
+    {
+        return $this->hasMany('App\MediaItem');
+    }
 }
