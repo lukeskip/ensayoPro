@@ -56,6 +56,10 @@ class CompanyController extends Controller
         $company   = new Company();
         $company->name  = $request->name;
         $company->address = $request->address;
+        $company->colony = $request->colony;
+        $company->deputation = $request->deputation;
+        $company->postal_code = $request->postal_code;
+        $company->city = $request->city;
         $company->phone = $request->phone;
         $company->rfc = $request->rfc;
         $user = User::findOrFail($user_id);

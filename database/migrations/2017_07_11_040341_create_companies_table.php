@@ -17,6 +17,10 @@ class CreateCompaniesTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('address');
+            $table->string('colony');
+            $table->string('deputation');
+            $table->string('postal_code');
+            $table->string('city');
             $table->string('phone');
             $table->string('rfc')->nullable();
             $table->timestamps();

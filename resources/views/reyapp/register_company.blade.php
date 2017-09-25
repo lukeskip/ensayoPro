@@ -28,17 +28,71 @@
 		</div>
 
 		<div class="row">
-			
-			<div class="large-12 columns">
-				<div class="input-group">
-					<span class="input-group-label">
-						Dirección:
-					</span>
-				  <input class="input-group-field" type="text" name="address">
+
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Dirección:
+						</span>
+					  <input class="input-group-field" type="text" name="address">
+					</div>
+				</div>
+
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Colonia:
+						</span>
+					  <input class="input-group-field" type="text" name="colony">
+					</div>
+				</div>
+
+
+				
+			</div>
+
+			<div class="row">
+				
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Deleg/Municipio:
+						</span>
+					  <input class="input-group-field" type="text" name="deputation">
+					</div>
+				</div>
+
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Código Postal:
+						</span>
+					  <input class="input-group-field" type="text" name="postal_code">
+					</div>
 				</div>
 			</div>
 
-		</div>
+			<div class="row">
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Ciudad:
+						</span>
+					  <input class="input-group-field" type="text" name="city">
+					</div>
+				</div>
+
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							País:
+						</span>
+					  <select class="input-group-field" name="country" id="">
+					  	<option value="mexico">México</option>
+					  </select>
+					</div>
+				</div>
+			</div>
 
 		<div class="row">
 			

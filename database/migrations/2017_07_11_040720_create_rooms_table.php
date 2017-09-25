@@ -16,7 +16,12 @@ class CreateRoomsTable extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('address');
+            $table->boolean('company_address');
+            $table->string('address')->nullable();
+            $table->string('colony')->nullable();
+            $table->string('deputation')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('city')->nullable();
             $table->string('price');
             $table->string('description');
             $table->integer('company_id');

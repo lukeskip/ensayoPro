@@ -20,6 +20,7 @@ class CreateReservationsTable extends Migration
             $table->string('description');
             $table->string('price');
             $table->integer('room_id');
+            $table->enum('status', ['confirmed', 'pending','cancelled']);
             $table->timestamps();
         });
     }

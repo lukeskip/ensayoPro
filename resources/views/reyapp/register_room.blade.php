@@ -131,32 +131,88 @@
 					<span class="input-group-label">
 						Nombre:
 					</span>
-				  <input class="input-group-field" type="text" name="name">
+				  <input class="input-group-field" type="text" name="name" placeholder="Ej. Sala grande">
 				</div>
 			</div>
 
 		</div>
 
 		<div class="row">
-			
 			<div class="large-12 columns">
 				<div class="input-group">
-					 <label for="same_address"><input id="same_address" type="checkbox">Misma dirección que marca</label>
+					 <label for="same_address">
+					 	<input id="company_address" name="company_address" type="checkbox">Misma dirección que marca
+					 </label>
 				</div>
 			</div>
-
-			<div class="large-12 columns">
-				<div class="input-group">
-					<span class="input-group-label">
-						Dirección:
-					</span>
-				  <input class="input-group-field" type="text" name="address">
-				</div>
-			</div>
-
-			
-
 		</div>
+
+		{{-- STARTS: ADDRESS ZONE --}}
+		<div class="new_address">
+			<div class="row">
+
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Dirección:
+						</span>
+					  <input class="input-group-field" type="text" name="address">
+					</div>
+				</div>
+
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Colonia:
+						</span>
+					  <input class="input-group-field" type="text" name="colony">
+					</div>
+				</div>
+				
+			</div>
+
+			<div class="row">
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Deleg/Municipio:
+						</span>
+					  <input class="input-group-field" type="text" name="deputation">
+					</div>
+				</div>
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Código Postal:
+						</span>
+					  <input class="input-group-field" type="text" name="postal_code">
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Ciudad:
+						</span>
+					  <input class="input-group-field" type="text" name="city">
+					</div>
+				</div>
+
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							País:
+						</span>
+					  <select class="input-group-field" name="country" id="">
+					  	<option value="mexico">México</option>
+					  </select>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{-- ENDS: ADDRESS ZONE --}}
 		
 		<div class="row">
 			
@@ -215,32 +271,46 @@
 @endsection
 @section('scripts')
 	<script>
-	$('#uploader').fineUploader({
-		debug:false,
-		request: {
-			endpoint: '/uploader/upload',
-			params: {
-			base_directory: 'completed',
-			sub_directory: null,
-			optimus_uploader_allowed_extensions: [],
-			optimus_uploader_size_limit: 0,
-			optimus_uploader_thumbnail_height: 100,
-			optimus_uploader_thumbnail_width: 100,
+	$(document).ready(function(){
+		$('#uploader').fineUploader({
+			debug:false,
+			request: {
+				endpoint: '/uploader/upload',
+				params: {
+				base_directory: 'completed',
+				sub_directory: null,
+				optimus_uploader_allowed_extensions: [],
+				optimus_uploader_size_limit: 0,
+				optimus_uploader_thumbnail_height: 100,
+				optimus_uploader_thumbnail_width: 100,
+				}
+	        },
+			autoUpload: false,
+			callbacks: {
+			    onComplete: function(id,name,responseJSON) {
+			        room_images.push({
+						'name'  :responseJSON.name,
+						'path'	:'uploader/completed'
+					});
+			    },
+			    onAllComplete: function(succeeded){
+			    	register_room();
+			    }
 			}
-        },
-		autoUpload: false,
-		callbacks: {
-		    onComplete: function(id,name,responseJSON) {
-		        room_images.push({
-					'name'  :responseJSON.name,
-					'path'	:'uploader/completed'
-				});
-		    },
-		    onAllComplete: function(succeeded){
-		    	register_room();
-		    }
-		}
-    });
+    	});
+
+		// Escondemos parte la sección de dirección se coincide con la de la compañía
+		$('body').on('click', '#company_address', function() {
+			if ($(this).is(':checked')) {
+				$('.new_address').css('display','none');
+    		}else{
+    			$('.new_address').css('display','block');
+    		}
+
+		});
+    		
+	});
+	
 
    
 

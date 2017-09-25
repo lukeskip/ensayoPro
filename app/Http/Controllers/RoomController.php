@@ -51,11 +51,23 @@ class RoomController extends Controller
     public function store(Request $request)
     {
         $company_id = $request->company;
-        $room               = new Room();
-        $room->name         = $request->name;
-        $room->address      = $request->address;
-        $room->price        = $request->price;
-        $room->description  = $request->description;
+        $room                   = new Room();
+        $room->name             = $request->name;
+        $room->price            = $request->price;
+        $room->description      = $request->description;
+        
+
+        if($request->company_address){
+            $room->company_address  = true;
+            
+        }else{
+            $room->company_address  = false;
+            $room->address          = $request->address;
+            $room->colony           = $request->colony;
+            $room->deputation       = $request->deputation;
+            $room->postal_code      = $request->postal_code;
+            $room->city             = $request->city;
+        }
 
         $company = Company::where('id',$company_id)->with('rooms')->first();      
         $company->rooms()->save($room);
@@ -72,7 +84,8 @@ class RoomController extends Controller
              
         }
 
-        return response()->json(['success' => 'true']);
+        // respondemos la petición con un true
+        return response()->json(['success' => true]);
     }
 
     /**

@@ -53,7 +53,8 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 	// ENDS: dashboard routes
 
-
+	Route::get('/registro/company', 'CompanyController@register_company')->name('register_company');
+	
 	// Redirigimos según role después de registro
 	Route::get('registro/redirect', function (){
 	$user_id = Auth::user()->id;
@@ -137,6 +138,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/registro/usuario/company', 'CompanyController@register_user')->name('register_user_company');
-Route::get('/registro/company', 'CompanyController@register_company')->name('register_company');
+
 
 
