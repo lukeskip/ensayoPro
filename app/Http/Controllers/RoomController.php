@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use App\Room as Room;
 use App\User as User;
-use App\company as company;
+use App\Company as Company;
 use App\MediaItem as MediaItem;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
@@ -27,7 +28,70 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        $items_per_page = 10;
+        $order = 'quality_up';
+
+        // Actuamos dependiento los filtros que tengamos diponible
+        if(request()->has('order')){
+            
+            if(request()->order == 'price_up'){
+            
+                $order = 'price';
+                $rooms = Room::orderBy($order, 'asc')->paginate($items_per_page);
+            
+            }else if(request()->order == 'price_down'){
+            
+                $order = 'price';
+                $rooms = Room::orderBy($order, 'desc')->paginate($items_per_page);
+            
+            }else if(request()->order == 'quality_up'){
+
+                $rooms = Room::leftJoin('opinions', 'opinions.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'ASC')->paginate($items_per_page);
+
+            }else if(request()->order == 'quality_down'){
+
+                $rooms = Room::leftJoin('opinions', 'opinions.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'DESC')->paginate($items_per_page);
+            }
+
+        }else{
+            
+            $rooms = Room::paginate($items_per_page);
+
+        }
+        
+
+        // Si tienen la misma dirección de la compañía la asignamos y la mandamos dentro del mismo objeto
+        
+        foreach ($rooms as $room) {
+
+            if($room->company_address){
+                $room['address']        = $room->companies->address;
+                $room['colony']         = $room->companies->colony;
+                $room['deputation']     = $room->companies->deputation;
+                $room['postal_code']    = $room->companies->postal_code;
+            }
+            
+            // Cuantificamos y promediamos las opiniones en base 5
+            $quality = 0;
+            $sumOpinions = count($room->opinions);
+
+            if($sumOpinions > 0){
+                foreach ($room->opinions as $opinion) {
+                    $quality += $opinion->score;
+                }
+
+                $quality = $quality / $sumOpinions;
+                $room['score']    = round(($quality *100) / 5);
+            }
+            
+            $room['opinions'] = $sumOpinions;
+        }
+
+        
+        $companies = Company::orderBy('name', 'desc')->get();
+        $order = request()->order;
+
+        return view('reyapp.rooms.index')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order);
     }
 
 

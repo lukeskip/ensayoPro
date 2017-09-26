@@ -26,6 +26,22 @@ body{
 	color:white;
 }
 
+.button.no-shadow{
+	box-shadow: none;
+}
+.no-padding{
+	padding: 0;
+}
+
+.padding-left{
+	padding-left: 10px;
+}
+
+@media screen and (max-width: 1024px) {
+	.padding-left{
+		padding-left: 0;
+	}	
+}
 .hidden{
 	display: none;
 }
@@ -43,6 +59,149 @@ body{
 .button.blue{
 	background: #4C29DE;
 }
+
+/*STARTS: ROOM ITEM *************************************/
+
+.row.room-item{
+	position: relative;
+	padding: 20px;
+}
+
+.room-item .link{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+
+.room-item .info{
+	
+}
+
+.room-item .colony,.room-item .deputation,.room-item .discount{
+	font-size: .8em;
+	color:white;
+	padding: 5px 10px;
+	border-radius: 5px;
+	margin-top: 10px;
+	display: inline-block;
+	margin-top: 10px;
+	cursor: pointer;
+}
+
+.room-item .colony,.room-item .deputation{
+	background:#1779BA;
+}
+
+.room-item .discount{
+	background: #00BF22;
+}
+
+.room-item .price{
+	font-size: 1.5em;
+	padding-top: 10px;
+	text-align: center;
+}
+
+
+
+/*ENDS: ROOM ITEM ***************************************/
+
+
+/*STARTS: Skillbars*******************************************/
+
+.skillbar {
+	margin-top: 10px;
+	position:relative;
+	display:block;
+	margin-bottom:15px;
+	width:100%;
+	background:rgba(0,0,0,.3);
+	height:10px;
+	border-radius:10px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	-webkit-transition:0.4s linear;
+	-moz-transition:0.4s linear;
+	-ms-transition:0.4s linear;
+	-o-transition:0.4s linear;
+	transition:0.4s linear;
+	-webkit-transition-property:width, background-color;
+	-moz-transition-property:width, background-color;
+	-ms-transition-property:width, background-color;
+	-o-transition-property:width, background-color;
+	transition-property:width, background-color;
+}
+
+.skillbar-title {
+	position:absolute;
+	top:0;
+	left:0;
+	width:110px;
+	font-weight:bold;
+	font-size:13px;
+	color:#ffffff;
+	background:#6adcfa;
+	-webkit-border-top-left-radius:3px;
+	-webkit-border-bottom-left-radius:4px;
+	-moz-border-radius-topleft:3px;
+	-moz-border-radius-bottomleft:3px;
+	border-top-left-radius:3px;
+	border-bottom-left-radius:3px;
+}
+
+.skillbar-title span {
+	display:block;
+	background:rgba(0, 0, 0, 0.1);
+	padding:0 20px;
+	height:35px;
+	line-height:35px;
+	-webkit-border-top-left-radius:3px;
+	-webkit-border-bottom-left-radius:3px;
+	-moz-border-radius-topleft:3px;
+	-moz-border-radius-bottomleft:3px;
+	border-top-left-radius:3px;
+	border-bottom-left-radius:3px;
+}
+
+.skillbar-bar {
+	height:100%;
+	width:0px;
+	background: #00BF22;
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+}
+
+.skill-bar-percent {
+	position:absolute;
+	right:10px;
+	top:0;
+	font-size:11px;
+	height:35px;
+	line-height:35px;
+	color:#ffffff;
+	color:rgba(0, 0, 0, 0.4);
+}
+/*ENDS: Skillbars*******************************************/
+
+
+/*STARTS: PAGINATION*/
+.pagination{
+	text-align: center;
+	margin-top: 10px;
+}
+.pagination li{
+	font-size: 1.5em;
+}
+
+.pagination a:hover, .pagination button:hover{
+	background: white;
+	color:#C73536;
+}
+/*ENDS: PAGINATION*/
 
 /*FORM*/
 
@@ -243,6 +402,12 @@ nav.main ul li a{
 }
 
 /*SONGS */
+
+.list-header{
+	background: rgba(0,0,0,.8);
+	text-align: center;
+	padding: 20px;
+}
 
 .list-item{
 	color:white;

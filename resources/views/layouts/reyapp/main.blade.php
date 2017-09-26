@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="{{asset('css/foundation.css')}}">
 
 		<link rel="shortcut icon" type="favicon/png" href="{{asset('img/favicon.png')}}"/>
-		<link rel="shortcut icon" type="favicon/png" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 		
 		<link rel="stylesheet" href="{{asset('js/vendor/jquery-ui/jquery-ui.min.css')}}">
 		<link rel="stylesheet" href="{{asset('plugins/sweetalert2/sweetalert2.css')}}">

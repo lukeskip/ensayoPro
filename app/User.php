@@ -54,5 +54,9 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Reservation');
     }
 
+    public function opinions(){
+        return $this->hasMany('App\Opinion');
+    }
+
 
 }

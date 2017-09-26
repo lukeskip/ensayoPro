@@ -8,7 +8,7 @@ class Room extends Model
 {
     public function companies()
     {
-        return $this->belongsTo('App\Company')->withTimestamps();
+        return $this->belongsTo('App\Company','company_id');
     }
 
     public function reservations()
@@ -19,5 +19,10 @@ class Room extends Model
     public function media_items()
     {
         return $this->hasMany('App\MediaItem');
+    }
+
+    public function opinions()
+    {
+        return $this->hasMany('App\Opinion');
     }
 }

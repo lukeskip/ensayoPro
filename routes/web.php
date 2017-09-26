@@ -11,6 +11,8 @@
 |
 */
 
+Auth::routes();
+
 Route::get('logout', function (){
 	Auth::logout();
 	return redirect('/');
@@ -20,28 +22,17 @@ Route::get('/', function () {
     return view('reyapp.main');
 });
 
-
-Auth::routes();
-
 Route::get('/registro', function () {
     return view('reyapp.register');
 });
 
-Route::get('/', function () {
-    return view('reyapp.login');
-});
-
-
-
 Route::group(['middleware' => 'auth'], function () {
+
+
 
 	Route::get('/reservaciones', 'ReservationController@index')->name('reservations');
 
-	// Dashboard routes
-	// Route::get('/dashboard', function () {
-	//     return view('reyapp.dashboard');
-	// });
-
+	// Dashboard routes//////////////////////////////////////////////////////////
 	Route::get('/dashboard', 'ReservationController@index')->name('dashboard');
 
 	Route::get('/company/dashboard', function () {
@@ -51,7 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/admin/dashboard', function () {
 	    return view('reyapp.dashboard_admin');
 	});
-	// ENDS: dashboard routes
+	// ENDS: dashboard routes////////////////////////////////////////////////////
 
 	Route::get('/registro/company', 'CompanyController@register_company')->name('register_company');
 	
@@ -100,10 +91,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 	//ENDS: Redirigimos según role después de login
 
+	//STARTS: resources///////////////////////////////////////////// 
 	Route::resource('bandas', 'BandController');
-
 	Route::resource('companies', 'CompanyController');
-	Route::resource('rooms', 'RoomController');
+	Route::resource('salas', 'RoomController');
+	//ENDS: resources/////////////////////////////////////////////
 
 	Route::get('/registro/banda', function () {
 		
@@ -116,19 +108,17 @@ Route::group(['middleware' => 'auth'], function () {
 	    
 	});
 
-	// Route::get('/registro/salas', function () {
- //    	return view('reyapp.register_room');
-	// });
-
 	Route::get('/registro/salas', 'RoomController@register')->name('register_room');
 
 
-	//STARTS: UPLOADER
+	//STARTS: UPLOADER/////////////////////////////////////////////////////////
     Route::post('/uploader/upload', '\Optimus\FineuploaderServer\Controller\LaravelController@upload');
 	Route::delete('/uploader/delete','\Optimus\FineuploaderServer\Controller\LaravelController@delete');
 	Route::get('/uploader/session', '\Optimus\FineuploaderServer\Controller\LaravelController@session');
 
-    // ENDS: UPLOADER
+    // ENDS: UPLOADER///////////////////////////////////////////////////////////
+
+
 });
 
 
