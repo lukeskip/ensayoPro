@@ -53,7 +53,7 @@ $(document).ready(function(){
 // 
 function register_room (){
 	data = $("#form_companies").serialize()+'&images='+JSON.stringify(room_images);
-	conection('POST',data,'/rooms');
+	conection('POST',data,'/salas');
 }
 
 // controlador de mensajes

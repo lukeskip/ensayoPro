@@ -31,7 +31,7 @@ class RoomController extends Controller
         $items_per_page = 10;
         $order = 'quality_up';
 
-        // Actuamos dependiento los filtros que tengamos diponible
+        // Actuamos dependiento los filtros que tengamos diponibles
         if(request()->has('order')){
             
             if(request()->order == 'price_up'){
@@ -91,7 +91,7 @@ class RoomController extends Controller
         $companies = Company::orderBy('name', 'desc')->get();
         $order = request()->order;
 
-        return view('reyapp.rooms.index')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order);
+        return view('reyapp.rooms.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order);
     }
 
 
@@ -160,7 +160,32 @@ class RoomController extends Controller
      */
     public function show($id)
     {
-        //
+        $room = Room::find($id);
+
+        if($room->company_address){
+            $room['address']        = $room->companies->address;
+            $room['colony']         = $room->companies->colony;
+            $room['deputation']     = $room->companies->deputation;
+            $room['postal_code']    = $room->companies->postal_code;
+        }
+
+        // Cuantificamos y promediamos las opiniones en base 5
+        $quality = 0;
+        $sumOpinions = count($room->opinions);
+
+        if($sumOpinions > 0){
+            foreach ($room->opinions as $opinion) {
+                $quality += $opinion->score;
+            }
+
+            $quality = $quality / $sumOpinions;
+            $room['score']    = round(($quality *100) / 5);
+        }
+        
+        $room['opinions'] = $sumOpinions;
+        
+
+        return view('reyapp.rooms.single')->with('room',$room);
     }
 
     /**

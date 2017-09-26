@@ -21,6 +21,8 @@ class CreateCompaniesTable extends Migration
             $table->string('deputation');
             $table->string('postal_code');
             $table->string('city');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->string('phone');
             $table->string('rfc')->nullable();
             $table->timestamps();

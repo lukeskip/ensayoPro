@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="{{asset('plugins/sweetalert2/sweetalert2.css')}}">
 		<link rel="stylesheet" href="{{asset('plugins/fine-uploader/fine-uploader-gallery.min.css')}}">
 		
+		@yield('styles')
 
 		<link rel="stylesheet" href="{{asset('css/app.css')}}">
 		
@@ -128,6 +129,7 @@
 		<script src="{{asset('js/vendor/selectize/js/selectize.min.js')}}"></script>
 		<script src="{{asset('plugins/sweetalert2/sweetalert2.js')}}"></script>
 		<script src="{{asset('js/bower_components/chart.js/dist/Chart.min.js')}}"></script>
+    	<script src="{{asset('plugins/jquery-validation-1.17.0/dist/jquery.validate.min.js')}}"></script>
 
 		<script src="{{asset('plugins/fine-uploader/jquery.fine-uploader.js')}}"></script>
 
@@ -136,14 +138,7 @@
 		
 
 		<script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-		  ga('create', 'UA-73222704-1', 'auto');
-		  ga('send', 'pageview');
-
+		  
 		</script>
 
 		@yield('scripts')

@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Reservation as Reservation;
+use App\Room as Room;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
+    
+    public function make_reservation($room_id)
+    {
+        $room = Room::find($room_id);
+        return view('reyapp.rooms.make_reservation')->with('room',$room);
+    }
+
     /**
      * Display a listing of the resource.
      *

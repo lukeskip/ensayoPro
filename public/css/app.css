@@ -56,6 +56,9 @@ body{
 	background: #2FAB31;
 }
 
+.button.red{
+	color:#C73536;
+}
 .button.blue{
 	background: #4C29DE;
 }
@@ -370,6 +373,12 @@ a:hover, a:focus{
 	padding-top: 50px;
 	padding-bottom: 100px;
 
+}
+
+@media only screen and (max-width: 500px) {
+	.container{
+		width: 100%;
+	}
 }
 
 h1,h2,h3{
@@ -758,6 +767,102 @@ h1 .duration{
 	line-height: 1em;
 }
 /*steps*****************************/
+#map{
+	width: 100%;
+	margin-bottom: 20px;
+	border:5px solid white;
+}
+/*STARTS: Room Single******************************************/
+.room-item .image{
+	width: 48%;
+	margin-right: 2%;
+	overflow: hidden;
+	display: block;
+	float: left;
+	border:white 2px solid;
+}
+
+.room-item .info{
+	margin-bottom: 10px;
+}
+
+.room-item .full-address{
+	margin: 20px 0;
+	font-size: 1.3em;
+
+}
+
+.room-item .equipment{
+	margin-top: 10px;
+}
+.room-item.room-single .price{
+	font-size: 2em;
+	text-align: left
+}
+
+.room-item.room-single h1{
+	font-size: 2.5em;
+	margin:0;
+}
+
+.room-item.room-single h2{
+	font-size: 1.8em;
+	margin: 0;
+}
+
+
+/*ENDS: Room Single********************************************/
+
+/*STARTS: lightbox*********************************************/
+.lb-data .lb-close{
+	position: absolute;
+    top: -20px;
+    right: 20px;
+}
+/*ENDS: Lightbox***********************************************/
+
+/*STARTS: Date picker**********************************************/
+/*DATE PICKER*/
+.fullday{
+	background: red;
+}
+
+#datepicker{
+	cursor: pointer;
+}
+
+.ui-widget-content, .ui-widget.ui-widget-content{
+	background: none;
+}
+
+.ui-datepicker {
+    height: 500px ;
+    padding: 0.2em 0.2em 0;
+    width: 100%;
+}
+
+.ui-datepicker{
+ font-size:1.5em;
+}
+.ui-widget-header{
+	background:black; 
+	color:white;
+
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+	background:#333333;
+	color:white; 
+	border:0;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover{
+	background:#CF2832;
+	color:white; 
+	border:0;
+}
+/*ENDS: datepicker************************************************/
+
 footer{
 	border-top:5px solid white;
 	background: black;

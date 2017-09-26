@@ -28,9 +28,18 @@ Route::get('/registro', function () {
 
 Route::group(['middleware' => 'auth'], function () {
 
+	Route::get('imagenes/{image}', function($image){
 
+	    //do so other checks here if you wish
 
-	Route::get('/reservaciones', 'ReservationController@index')->name('reservations');
+	    if(!File::exists( $image = storage_path("uploader/completed/{$image}") )) abort(401);
+
+	    $returnImage = Image::make($image);
+
+		return $returnImage->response();
+	});
+
+	Route::get('salas/reservando/{room_id}', 'ReservationController@make_reservation');
 
 	// Dashboard routes//////////////////////////////////////////////////////////
 	Route::get('/dashboard', 'ReservationController@index')->name('dashboard');
@@ -95,6 +104,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('bandas', 'BandController');
 	Route::resource('companies', 'CompanyController');
 	Route::resource('salas', 'RoomController');
+	Route::resource('reservaciones', 'ReservationController');
 	//ENDS: resources/////////////////////////////////////////////
 
 	Route::get('/registro/banda', function () {
