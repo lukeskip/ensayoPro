@@ -37,25 +37,25 @@ class RoomController extends Controller
             if(request()->order == 'price_up'){
             
                 $order = 'price';
-                $rooms = Room::orderBy($order, 'asc')->paginate($items_per_page);
+                $rooms = Room::where('status','active')->orderBy($order, 'asc')->paginate($items_per_page);
             
             }else if(request()->order == 'price_down'){
             
                 $order = 'price';
-                $rooms = Room::orderBy($order, 'desc')->paginate($items_per_page);
+                $rooms = Room::where('status','active')->orderBy($order, 'desc')->paginate($items_per_page);
             
             }else if(request()->order == 'quality_up'){
 
-                $rooms = Room::leftJoin('opinions', 'opinions.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'ASC')->paginate($items_per_page);
+                $rooms = Room::where('status','active')->leftJoin('opinions', 'opinions.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'ASC')->paginate($items_per_page);
 
             }else if(request()->order == 'quality_down'){
 
-                $rooms = Room::leftJoin('opinions', 'opinions.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'DESC')->paginate($items_per_page);
+                $rooms = Room::where('status','active')->leftJoin('opinions', 'opinions.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'DESC')->paginate($items_per_page);
             }
 
         }else{
             
-            $rooms = Room::paginate($items_per_page);
+            $rooms = Room::where('status','active')->paginate($items_per_page);
 
         }
         
@@ -69,6 +69,8 @@ class RoomController extends Controller
                 $room['colony']         = $room->companies->colony;
                 $room['deputation']     = $room->companies->deputation;
                 $room['postal_code']    = $room->companies->postal_code;
+                $room['latitude']       = $room->companies->latitude;
+                $room['longitude']      = $room->companies->longitude;
             }
             
             // Cuantificamos y promediamos las opiniones en base 5
@@ -119,11 +121,13 @@ class RoomController extends Controller
         $room->name             = $request->name;
         $room->price            = $request->price;
         $room->description      = $request->description;
-        
+        $room->equipment        = $request->equipment;
+        $room->schedule_start   = $request->schedule_start;
+        $room->schedule_end     = $request->schedule_end;
+        $room->status           = 'inactive';
 
         if($request->company_address){
-            $room->company_address  = true;
-            
+            $room->company_address  = true;       
         }else{
             $room->company_address  = false;
             $room->address          = $request->address;
@@ -167,7 +171,11 @@ class RoomController extends Controller
             $room['colony']         = $room->companies->colony;
             $room['deputation']     = $room->companies->deputation;
             $room['postal_code']    = $room->companies->postal_code;
+            $room['latitude']       = $room->companies->latitude;
+            $room['longitude']      = $room->companies->longitude;
         }
+
+        $room['equipment'] = explode(PHP_EOL, $room['equipment']);
 
         // Cuantificamos y promediamos las opiniones en base 5
         $quality = 0;

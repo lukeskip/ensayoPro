@@ -8,6 +8,10 @@ a{
 	color:white;
 }
 
+.button{
+	box-shadow: none;
+}
+
 html,body{
 	font-family: 'Raleway', sans-serif;
 	height: 100%;
@@ -60,7 +64,7 @@ body{
 	color:#C73536;
 }
 .button.blue{
-	background: #4C29DE;
+	background: #1779BA;
 }
 
 /*STARTS: ROOM ITEM *************************************/
@@ -207,6 +211,13 @@ body{
 /*ENDS: PAGINATION*/
 
 /*FORM*/
+form .clarification{
+	margin-bottom: 20px;
+	margin-top: 10px;
+}
+.new_address{
+	margin-bottom: 20px;
+}
 
 .qq-gallery .qq-upload-cancel{
 	background: black;
@@ -254,7 +265,7 @@ label{
 	background: black;
 	color: white;
 	border:none;
-	min-width: 110px;
+	min-width: 120px;
 	font-size: .8em;
 }
 
@@ -368,7 +379,7 @@ a:hover, a:focus{
 .container{
 	margin-top: 20px;
 	width: 80%;
-	max-width: 800px;
+	max-width: 1024px;
 	margin:auto;
 	padding-top: 50px;
 	padding-bottom: 100px;
@@ -421,6 +432,7 @@ nav.main ul li a{
 .list-item{
 	color:white;
 	padding: 10px;
+	list-style: none;
 }
 .list-item button{
 	color:white;
@@ -576,8 +588,6 @@ h1 .duration{
 	font-size: .8em;
 }
 
-
-
 .reveal{
 	background-image:url(../img/back.jpg);
 	padding: 40px;
@@ -594,7 +604,135 @@ h1 .duration{
 	right:1em;
 }
 
+/*STARTS: Calendar***********************************/
+.desktop{
+	background: white;
+}
 
+.calendar-header{
+	background: black;
+	padding: 20px;
+}
+.calendar-header h1{
+	font-size: 1.5em;
+	text-align: left;
+	margin:0;
+}
+
+.calendar-header h2{
+	font-size: 1em;
+	text-align: left;
+	margin:0;
+}
+
+#calendar .fc-v-event .fc-time{
+	font-size: 2em;
+}
+
+#calendar .fc-v-event .fc-title{
+	font-size: 1.5em;
+}
+
+
+
+#calendar{
+	background: white;
+	padding: 20px;
+	color:#333;
+}
+
+
+#calendar a{
+	color:red;
+	color:#333;
+}
+
+#calendar .fc-day-header{
+	text-transform: capitalize;
+}
+
+#calendar .fc-highlight{
+	background: #2FAB31;
+}
+
+#calendar .fc-event{
+	background: #C73536;
+	color: white;
+	border:none;
+	border-radius: 0;
+	padding: 5px 0
+}
+
+#calendar .fc-day{
+	cursor: pointer
+}
+
+#calendar .fc-month-view .occupied{
+	display:none;
+}
+
+.fc-agendaWeek-view tr {
+    height: 33px;
+}
+
+.fc-agendaDay-view tr {
+    height: 33px;
+}
+.reservation-desktop{
+	background: white;
+}
+
+.reservation-desktop .display{
+	padding: 20px;
+	text-align: center;
+}
+
+.reservation-desktop .display.total-hours {
+	background: #2FAB31; 
+}
+
+.reservation-desktop .display.total-hours .number{
+	font-size: 3em;
+}
+
+.reservation-desktop .display.total-price {
+	background: #1779BA; 
+}
+
+.reservation-desktop .display.total-price .number{
+	font-size: 1.5em;
+}
+
+.reservation-desktop .display.clarification{
+	background: white;
+	color:#333;
+	font-size: .8em;
+}
+
+.timer_bar_wrapper{
+	height: 20px;
+	background: #A22A2C;
+	position: relative;
+}
+
+.timer_bar_wrapper .timer_bar{
+	height: 100%;
+	width:0;
+	background-color: #1779BA;
+	z-index: 1;
+}
+
+.timer_bar_wrapper .timer_bar_text{
+	z-index: 2;
+	font-size: .8em;
+	line-height: 20px;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	top: 0;
+	left:0;
+}
+/*ENDS: Calendar*************************************/
 /*PRESSKITS*/
 
 .steps{

@@ -25,6 +25,7 @@ class CreateCompaniesTable extends Migration
             $table->string('longitude');
             $table->string('phone');
             $table->string('rfc')->nullable();
+            $table->enum('status', ['active', 'inactive','deleted']);
             $table->timestamps();
         });
     }

@@ -62,6 +62,9 @@ class CompanyController extends Controller
         $company->city = $request->city;
         $company->phone = $request->phone;
         $company->rfc = $request->rfc;
+        $company->latitude = $request->latitude;
+        $company->longitude = $request->longitude;
+        $company->status = 'inactive';
         $user = User::findOrFail($user_id);
         $user->companies()->save($company);
 

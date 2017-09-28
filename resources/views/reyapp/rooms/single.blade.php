@@ -49,7 +49,7 @@
 	</div>
 	<div class="row">
 		<div class="medium-12 columns">
-			<h3 class="list-header">Equipamiento</h3>
+			<h3 class="list-header">Equipamiento / Fotos</h3>
 		</div>
 	</div>
 	<div class="row">
@@ -67,18 +67,10 @@
 		</div>
 		<div class="medium-8 columns equipment">
 			<ul>
-				<li>Cerwin Vega 15″</li>
-				<li>Consola Mackie ProFX12 “12 Canales”</li>
-				<li>Micrófonos máximo 3 por ensayo.</li>
-				<li>Batería Pearl Vision Birch</li>
-				<li>Bajo: Fender Rumble 200 “200W”</li>
-				<li>Guitarra: Fender Hot Rod Deluxe III Bulbos “40W”</li>
-				<li>Guitarra: Fender Hot Rod Deluxe III Bulbos “40W”</li>
+			@foreach($room->equipment as $equipment)
+				<li class="list-item">{{$equipment}}</li>
+			@endforeach
 			</ul>
-			
-			
-			
-			
 			
 			
 			
@@ -105,18 +97,19 @@
 				width:$(this).attr('data-percent')
 			},3000);
 		});
-		console.log($('.info').height());
+
+		// creamos el mapa con las coordenadas guardadas
 		$('#map').height($('.info').height());
 
 		map = new GMaps({
 	        div: '#map',
-	        lat: -12.043333,
-	        lng: -77.028333
+	        lat: {{$room->latitude}},
+	        lng: {{$room->longitude}}
       	});
 
       	map.addMarker({
-		  lat: -12.043333,
-		  lng: -77.028333,
+		  lat: {{$room->latitude}},
+		  lng: {{$room->longitude}},
 		  title: 'Lima',
 		  click: function(e) {
 		    alert('You clicked in this marker');

@@ -88,7 +88,7 @@
 @endsection
 @section('content')
 
-
+	
 	<form id="form_companies" class="form-horizontal" method="POST" action="{{ route('companies.store') }}">
 		{{ csrf_field() }}
 		
@@ -111,7 +111,7 @@
 
 				<div class="input-group">
 					<span class="input-group-label">
-						Compañía:
+						Compañía
 					</span>
 				  
 				  <select class="input-group-field" name="company" id="company">
@@ -129,7 +129,7 @@
 			<div class="large-12 columns">
 				<div class="input-group">
 					<span class="input-group-label">
-						Nombre:
+						Nombre
 					</span>
 				  <input class="input-group-field" type="text" name="name" placeholder="Ej. Sala grande">
 				</div>
@@ -140,7 +140,7 @@
 		<div class="row">
 			<div class="large-12 columns">
 				<div class="input-group">
-					 <label for="same_address">
+					 <label for="company_address">
 					 	<input id="company_address" name="company_address" type="checkbox">Misma dirección que marca
 					 </label>
 				</div>
@@ -150,65 +150,82 @@
 		{{-- STARTS: ADDRESS ZONE --}}
 		<div class="new_address">
 			<div class="row">
-
-				<div class="large-6 columns">
+				<div class="large-12 columns">
 					<div class="input-group">
 						<span class="input-group-label">
-							Dirección:
+							Dirección
 						</span>
-					  <input class="input-group-field" type="text" name="address">
-					</div>
-				</div>
-
-				<div class="large-6 columns">
-					<div class="input-group">
-						<span class="input-group-label">
-							Colonia:
-						</span>
-					  <input class="input-group-field" type="text" name="colony">
+					  <input class="input-group-field address get_loc" type="text" name="address" placeholder="Calle y número">
 					</div>
 				</div>
 				
+				<div class="large-12 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Deleg.
+						</span>
+					  <input class="input-group-field deputation get_loc" type="text" name="deputation" placeholder="Delegación o municipio">
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				
+				<div class="large-12 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Colonia
+						</span>
+					  <input class="input-group-field colony get_loc" type="text" name="colony">
+					</div>
+				</div>
+
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Teléfono
+						</span>
+					  <input class="input-group-field" type="text" name="phone">
+					</div>
+				</div>
+
+				<div class="large-6 columns">
+					<div class="input-group">
+						<span class="input-group-label">
+							Código P.
+						</span>
+					  <input class="input-group-field postal_code get_loc" type="text" name="postal_code">
+					</div>
+				</div>
 			</div>
 
 			<div class="row">
 				<div class="large-6 columns">
 					<div class="input-group">
 						<span class="input-group-label">
-							Deleg/Municipio:
+							Ciudad
 						</span>
-					  <input class="input-group-field" type="text" name="deputation">
-					</div>
-				</div>
-				<div class="large-6 columns">
-					<div class="input-group">
-						<span class="input-group-label">
-							Código Postal:
-						</span>
-					  <input class="input-group-field" type="text" name="postal_code">
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="large-6 columns">
-					<div class="input-group">
-						<span class="input-group-label">
-							Ciudad:
-						</span>
-					  <input class="input-group-field" type="text" name="city">
+					  <input class="input-group-field city get_loc" type="text" name="city">
 					</div>
 				</div>
 
 				<div class="large-6 columns">
 					<div class="input-group">
 						<span class="input-group-label">
-							País:
+							País
 						</span>
-					  <select class="input-group-field" name="country" id="">
+					  <select class="input-group-field country get_loc" name="country" id="">
 					  	<option value="mexico">México</option>
 					  </select>
 					</div>
+				</div>
+
+				<div class="large-12 columns">
+					<div class="clarification text-center">
+						Verifica la ubicación, corrígela arrastrando el pin
+					</div>
+					<div id="map-canvas" style="height: 200px;"></div>
 				</div>
 			</div>
 		</div>
@@ -216,14 +233,7 @@
 		
 		<div class="row">
 			
-			<div class="large-12 columns">
-				<div class="input-group">
-					<span class="input-group-label">
-						Teléfono:
-					</span>
-				  <input class="input-group-field" type="text" name="phone">
-				</div>
-			</div>
+			
 
 		</div>
 		
@@ -232,9 +242,22 @@
 			<div class="large-12 columns">
 				<div class="input-group">
 					<span class="input-group-label">
-						Descripción:
+						Descripción
 					</span>
 				  <textarea class="input-group-field" type="text" name="description"></textarea>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+			
+			<div class="large-12 columns">
+				<div class="input-group">
+					<span class="input-group-label">
+						Equipamiento
+					</span>
+				  <textarea class="input-group-field" type="text" name="equipment" placeholder="Escribe un item por línea"></textarea>
 				</div>
 			</div>
 
@@ -245,9 +268,68 @@
 			<div class="large-12 columns">
 				<div class="input-group">
 					<span class="input-group-label">
-						Precio:
+						Precio
 					</span>
 				  <input class="input-group-field" type="text" name="price">
+				</div>
+			</div>
+			<div class="large 12-columns">
+				<div class="clarification text-center">
+					Horario de servicio:
+				</div>
+			</div>
+			<div class="large-6 columns">
+				
+				<div class="input-group">
+					<span class="input-group-label">
+						Abre:
+					</span>
+					<select class="input-group-field" name="schedule_start" id="">
+						<option value="">Selecciona...</option>
+						<option value="08">8:00</option>
+						<option value="09">9:00</option>
+						<option value="10">10:00</option>
+						<option value="11">11:00</option>
+						<option value="12">12:00</option>
+						<option value="13">13:00</option>
+						<option value="14">14:00</option>
+						<option value="15">15:00</option>
+						<option value="16">16:00</option>
+						<option value="17">17:00</option>
+						<option value="18">18:00</option>
+						<option value="19">19:00</option>
+						<option value="20">20:00</option>
+						<option value="21">21:00</option>
+						<option value="22">22:00</option>
+						<option value="23">23:00</option>
+					</select>
+				</div>
+			</div>
+			<div class="large-6 columns">
+				
+				<div class="input-group">
+					<span class="input-group-label">
+						Cierra
+					</span>
+					<select class="input-group-field" name="schedule_end" id="">
+						<option value="">Selecciona...</option>
+						<option value="08">8:00</option>
+						<option value="09">9:00</option>
+						<option value="10">10:00</option>
+						<option value="11">11:00</option>
+						<option value="12">12:00</option>
+						<option value="13">13:00</option>
+						<option value="14">14:00</option>
+						<option value="15">15:00</option>
+						<option value="16">16:00</option>
+						<option value="17">17:00</option>
+						<option value="18">18:00</option>
+						<option value="19">19:00</option>
+						<option value="20">20:00</option>
+						<option value="21">21:00</option>
+						<option value="22">22:00</option>
+						<option value="23">23:00</option>
+					</select>
 				</div>
 			</div>
 	
@@ -262,7 +344,7 @@
 
 		<div class="row ">
 			<div class="large-12 columns">
-				<button type="submit" class="button expanded green register_room">
+				<button class="button expanded green register_room submit">
 					Registrar
 				</button>
 			</div>
@@ -270,8 +352,13 @@
 	</form>
 @endsection
 @section('scripts')
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMMiHmdWoL0K5FQPWL_cXBbK0IV-t7l3w"></script>
+
+	<script src="{{asset('js/get_loc.js')}}"></script>
+	
+
 	<script>
-	$(document).ready(function(){
+		// Cargamos los archivos antes de ahcer submit
 		$('#uploader').fineUploader({
 			debug:false,
 			request: {
@@ -298,21 +385,6 @@
 			    }
 			}
     	});
+	</script>
 
-		// Escondemos parte la sección de dirección se coincide con la de la compañía
-		$('body').on('click', '#company_address', function() {
-			if ($(this).is(':checked')) {
-				$('.new_address').css('display','none');
-    		}else{
-    			$('.new_address').css('display','block');
-    		}
-
-		});
-    		
-	});
-	
-
-   
-
-    </script>
 @endsection
