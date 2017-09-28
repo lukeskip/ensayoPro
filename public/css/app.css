@@ -625,12 +625,24 @@ h1 .duration{
 	margin:0;
 }
 
+#calendar .fc-v-event {
+
+}
+
 #calendar .fc-v-event .fc-time{
 	font-size: 2em;
+	padding-left: 20px;
 }
 
 #calendar .fc-v-event .fc-title{
 	font-size: 1.5em;
+	padding-left: 20px;
+}
+
+#calendar .fc-content .closeon{
+	position: absolute;
+	top: 10px;
+	right:20px;
 }
 
 
