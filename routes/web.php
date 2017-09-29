@@ -43,15 +43,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('salas/reservando/checkout', 'ReservationController@checkout');
 
 	// Dashboard routes//////////////////////////////////////////////////////////
-	Route::get('/dashboard', 'ReservationController@index')->name('dashboard');
+	
+	Route::get('/dashboard', 'DashboardController@musician')->name('dashboardMusician');
+	Route::get('/company/dashboard', 'DashboardController@company')->name('dashboardCompany');
+	Route::get('/admin/dashboard', 'DashboardController@admin')->name('dashboardAdmin');
 
-	Route::get('/company/dashboard', function () {
-	    return view('reyapp.dashboard_company');
-	});
+	Route::get('/company/dashboard/calendar', 'DashboardController@company_calendar')->name('dashboardCompany');
 
-	Route::get('/admin/dashboard', function () {
-	    return view('reyapp.dashboard_admin');
-	});
 	// ENDS: dashboard routes////////////////////////////////////////////////////
 
 	Route::get('/registro/company', 'CompanyController@register_company')->name('register_company');

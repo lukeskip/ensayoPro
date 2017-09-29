@@ -58,5 +58,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Opinion');
     }
 
+    public function rooms()
+    {
+        return $this->hasManyThrough('App\Room', 'App\Company');
+    }
+
 
 }

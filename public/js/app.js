@@ -1,7 +1,6 @@
 room_images = [];
 $(document).foundation();
 $(document).ready(function(){
-	
 
 	// clonamos el markup que agrega un input más de miembro.
 	$('body').on('click', '.add.member', function() {
@@ -45,6 +44,26 @@ $(document).ready(function(){
 		$('#uploader').fineUploader('uploadStoredFiles');
 
 	}
+
+	// Mostramos tooltips
+    $('.hastooltip').hover(function(){
+            // Hover over code
+            var title = $(this).attr('title');
+            $(this).data('tipText', title).removeAttr('title');
+            $('<p class="tooltip"></p>')
+            .text(title)
+            .appendTo('body')
+            .fadeIn('slow');
+    }, function() {
+            // Hover out code
+            $(this).attr('title', $(this).data('tipText'));
+            $('.tooltip').remove();
+    }).mousemove(function(e) {
+            var mousex = e.pageX + 20; //Get X coordinates
+            var mousey = e.pageY + 10; //Get Y coordinates
+            $('.tooltip')
+            .css({ top: mousey, left: mousex })
+    });
 	
 });
 
@@ -75,7 +94,8 @@ function show_message(type,title,message,link,color = '#CF2832'){
 
 
 // pool de conexiones
-function conection(method,fields,link,redirect){
+function conection (method,fields,link,redirect){
+
 	$.ajax({
 		header:{
 			'Content-Type':'application/x-www-form-urlencoded',
@@ -87,27 +107,24 @@ function conection(method,fields,link,redirect){
 	  data:fields,
 	}).done(function(data) {
 	  console.log(data);
+	  
 	}).fail(function(jqXHR, exception){
-		if (jqXHR.status === 0) {
-            msg = 'Not connect.\n Verify Network.';
-        } else if (jqXHR.status == 401) {
-            window.location.replace('/login');
-        } else if (jqXHR.status == 404) {
-            msg = 'Requested page not found. [404]';
-        } else if (jqXHR.status == 500) {
-            msg = 'Internal Server Error [500].';
-        } else if (exception === 'parsererror') {
-            msg = 'Requested JSON parse failedaaaa.';
-        } else if (exception === 'timeout') {
-            msg = 'Time out error.';
-        } else if (exception === 'abort') {
-            msg = 'Ajax request aborted.';
-        } else {
-            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-        }
+		msg =  get_error(jqXHR.status);
   		show_message('error','Error en el servidor!',msg);
 	});
 
+}
+
+function get_error(code){
+	if (code === 0) {
+        return 'Not connect.\n Verify Network.';
+    } else if (code == 401) {
+        window.location.replace('/login');
+    } else if (code == 404) {
+        return 'Requested page not found. [404]';
+    } else if (code == 500) {
+        return 'Internal Server Error [500].';
+    } 
 }
 
 

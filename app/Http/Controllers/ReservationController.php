@@ -62,7 +62,9 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $title = $request->hola;
+
+        return response()->json(['success' => $title]);
     }
 
     /**
@@ -107,6 +109,6 @@ class ReservationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return response()->json(['success' => true]);
     }
 }

@@ -15,6 +15,8 @@ a{
 html,body{
 	font-family: 'Raleway', sans-serif;
 	height: 100%;
+	padding: 0;
+	margin:0;
 
 }
 
@@ -28,6 +30,10 @@ body{
 	background-size: cover;
 	font-family: 'Raleway', sans-serif; 
 	color:white;
+}
+
+.hastooltip{
+	cursor: default;
 }
 
 .button.no-shadow{
@@ -66,6 +72,118 @@ body{
 .button.blue{
 	background: #1779BA;
 }
+
+.button.black{
+	background: black;
+}
+
+/*STARTS: Dashboard**************************************/
+.dashboard h1{
+	text-align: left;
+}
+
+.dashboard .list-item{
+	text-align: center;
+	line-height: 25px;
+}
+
+.dashboard .list-item .status{
+	text-align: center;
+	font-size: 1.5em;
+	height: 20px
+}
+
+/*.dashboard .list-item .status .confirmed,
+.dashboard .list-item .status .pending,
+.dashboard .list-item .status .cancelled{
+	background: white;
+	padding: 2px;
+	border-radius: 100%;
+}*/
+
+.dashboard .list-item .status.confirmed{
+	background: #2FAB31;
+
+}
+
+.dashboard .list-item .status.pending{
+	background: #1891FC;
+}
+
+.dashboard .list-item .status.cancelled{
+	background: black;
+}
+
+.dashboard .list-header{
+
+}
+
+.dashboard .incomings{
+	background: #2FAB31;
+	padding: 20px;
+	text-align: center
+}
+
+.dashboard .incomings .number{
+	font-size: 2em;
+	line-height: 1em;
+}
+
+.dashboard .incomings .number:before{
+	content:'$';
+}
+
+.dashboard .hours{
+	background: #207AB7;
+	padding: 20px;
+	text-align: center
+}
+
+.dashboard .hours .number{
+	font-size: 2em;
+	line-height: 1em;
+}
+
+.dashboard .list-item{
+	/*color: #333;*/
+}
+
+.dashboard .status .confirmed{
+
+}
+
+.dashboard .reservations{
+	margin-bottom: 10px;
+} 
+/*ENDS: Dashboard****************************************/
+
+
+
+/*STARTS: Company Calendar*******************************/
+body.company_calendar{
+	margin-top: -20px;
+}
+.company_calendar .container{
+	width:100%;
+	max-width: 100%;
+	margin-top: 0;
+	padding: 0;
+}
+
+.company_calendar .timer_bar_wrapper{
+
+}
+
+.company_calendar #calendar .reyapp{
+	background-image: url('../img/pattern.png');
+}
+
+.company_calendar #calendar .fc-time-grid-event{
+	border:2px solid white;
+}
+/*ENDS: Company Calendar*******************************/
+
+
 
 /*STARTS: ROOM ITEM *************************************/
 
@@ -538,41 +656,6 @@ nav.main ul li a{
 	background-color: #00BF22;
 }
 
-.rey_button{
-	display: block;
-	text-align: center;
-	color:white;
-	padding: 10px;
-	border-radius: 5px;
-	background: #333333;
-	margin-bottom: 10px;
-	cursor: pointer;
-	font-family: 'Raleway', sans-serif;
-}
-
-.rey_button.green{
-	background: #00BF22;
-}
-
-.rey_button.red{
-	background: #DE353A;
-}
-
-.rey_button.blue{
-	background: #008EFF;
-}
-
-.rey_button.loggin{
-	min-width: 50%;
-}
-
-.rey_button.full{
-	min-width: 100%;
-}
-
-.rey_button.small{
-	display: inline-block;
-}
 
 
 /*SETLIST & SONGS*/
@@ -625,6 +708,8 @@ h1 .duration{
 	margin:0;
 }
 
+
+
 #calendar .fc-v-event {
 
 }
@@ -643,6 +728,7 @@ h1 .duration{
 	position: absolute;
 	top: 10px;
 	right:20px;
+	z-index: 2;
 }
 
 
@@ -672,7 +758,7 @@ h1 .duration{
 	color: white;
 	border:none;
 	border-radius: 0;
-	padding: 5px 0
+	padding: 5px;
 }
 
 #calendar .fc-day{

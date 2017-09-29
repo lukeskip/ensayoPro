@@ -8,12 +8,15 @@
 		<link rel="stylesheet" href="{{asset('js/vendor/selectize/css/selectize.default.css')}}">
 		<link rel="stylesheet" href="{{asset('css/foundation.css')}}">
 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="shortcut icon" type="favicon/png" href="{{asset('img/favicon.png')}}"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 		
 		<link rel="stylesheet" href="{{asset('js/vendor/jquery-ui/jquery-ui.min.css')}}">
-		<link rel="stylesheet" href="{{asset('js/vendor/sweetalert/sweetalert.css')}}">
+		<link rel="stylesheet" href="{{asset('plugins/sweetalert2/sweetalert2.css')}}">
+		<link rel="stylesheet" href="{{asset('plugins/swal-forms-master/swal-forms.css')}}">
+		<link rel="stylesheet" href="{{asset('plugins/fine-uploader/fine-uploader-gallery.min.css')}}">
 		
+		@yield('styles')
 
 		<link rel="stylesheet" href="{{asset('css/app.css')}}">
 		
@@ -32,11 +35,15 @@
 		<meta name="author" content="metatags generator">
 		<meta name="robots" content="index, follow">
 		<meta name="revisit-after" content="3 month">
+		
+		@yield('header')
 
 		<title>Ensaya Pro</title>
 
+
+
 	</head>
-	<body>
+	<body class="@yield('body_class')">
 		<div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas>
 
 		    <!-- Close button -->
@@ -49,35 +56,7 @@
 		    	<img src="{{asset('img/logo_rey.png')}}" alt="" width="200px;">
 		    </div>
 
-		    <ul class="vertical menu">
-				<li>
-					
-					<a target="_blank" href="http://reydecibel.com.mx">
-					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Blog
-					</a>
-				</li>
-				<li>
-					<a href="/setlists">
-						<i class="fa fa-list" aria-hidden="true"></i> Mis Setlists
-					</a>
-				</li>
-				<li>
-					<a href="/songs">
-						<i class="fa fa-music" aria-hidden="true"></i> Mis Canciones
-					</a>
-				</li>
-				</li>
-				@yield('menu_extra')
-				<li>
-					<a target="_blank" href="https://www.facebook.com/ReyDecibelMx/">
-					<i class="fa fa-facebook-official" aria-hidden="true"></i> Síguenos
-				</a>
-				<li>
-					<a href="/logout">
-						<i class="fa fa-sign-out" aria-hidden="true"></i> Salir
-					</a>
-				</li>
-		    </ul>
+		    
 		    <div class="legal">
 
 				Todos los derechos reservados,2017. <a style="color:white" target="_blank" href="http://www.reydecibel.com.mx/terminos-condiciones-generador-setlists/">Términos y condiciones</a>
@@ -87,10 +66,11 @@
 
 	<div class="off-canvas-content" data-off-canvas-content>
 		 
+		{{-- <div class="beta">Alpha</div> --}}
 		<div class="loader_wrapper">
 			<div class="loader"></div>
 		</div>	
-
+		
 		<div class="container">
 			
 			<h1 class="text-center">
@@ -122,11 +102,20 @@
 		<script src="{{asset('js/vendor/what-input.js')}}"></script>
 		<script src="{{asset('js/vendor/foundation.js')}}"></script>
 		<script src="{{asset('js/vendor/selectize/js/selectize.min.js')}}"></script>
-		<script src="{{asset('js/vendor/sweetalert/sweetalert.min.js')}}"></script>
+		<script src="{{asset('plugins/sweetalert2/sweetalert2.js')}}"></script>
+		<script src="{{asset('plugins/swal-forms-master/swal-forms.js')}}"></script>
 		<script src="{{asset('js/bower_components/chart.js/dist/Chart.min.js')}}"></script>
+    	<script src="{{asset('plugins/jquery-validation-1.17.0/dist/jquery.validate.min.js')}}"></script>
 
+		<script src="{{asset('plugins/fine-uploader/jquery.fine-uploader.js')}}"></script>
 
 		<script src="{{asset('js/app.js')}}"></script>
+
+		
+
+		<script>
+		  
+		</script>
 
 		@yield('scripts')
 	</body>

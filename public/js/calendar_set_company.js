@@ -6,13 +6,14 @@ $(document).ready(function() {
 		var max_time 	= 300;//segundos para recargar la página 
 		var event_id = 0;
 
-		function addEvent( start, end) {
-			create = true;
+		var window_height = $(window).height()-150;
+
+		function addEvent(start, end , color= '#2FAB31',title) {
 			
 			// Contruimos el objeto del nuevo evento
 			event_id = event_id + 1;
 			var new_event = {
-				title: 'Noche de Quiz',
+				title: title,
 				className: 'new-reservation',
 				start: start,
 				end: end,
@@ -20,47 +21,7 @@ $(document).ready(function() {
 				color:'#2FAB31',
 			};
 			
-			// Revisamos el evento dure al menos 2 horas
-			start_time = new Date(new_event.start);
-			end_time   = new Date(new_event.end);
-
-			diff = end_time - start_time;
-
-			diffSeconds = diff/1000;
-			diff_hours = Math.floor(diffSeconds/3600);
-
-			
-
-
-			// Buscamos eventos contiguos, si existen los pegamos
-			events = $('#calendar').fullCalendar( 'clientEvents' );
-			$.each(events, function( index, event ) {
-  	
-  				old_end   = new Date(event.end);
-  				old_start = new Date(event.start);
-  				new_start = new Date(new_event.start);
-  				new_end   = new Date(new_event.end);
- 
-  				if( old_end.getTime() == new_start.getTime() && event.className == 'new-reservation'){
-  					event.end = new_event.end; 
-  					$('#calendar').fullCalendar('updateEvent', event);
-  					create = false;
-  				}else if(old_start.getTime() == new_end.getTime() && event.className == 'new-reservation'){
-  					
-  					new_event.end = event.end;
-  					$('#calendar').fullCalendar('removeEvents',event.id);					
-  				}
-  				
-			});
-
-			if(create == true && diff_hours >= 2){
-				$('#calendar').fullCalendar('renderEvent', new_event, true);
-
-			}else if (create == true && diff_hours < 2){
-				show_message('error','¡Error!','tienes que reservar al menos 2 horas, puedes haciedo arrastrando el cursor de manera lenta');	
-			}
-
-			counting_hours();
+			$('#calendar').fullCalendar('renderEvent', new_event, true);
 			
 		}
 
@@ -112,12 +73,13 @@ $(document).ready(function() {
 			maxTime: schedule_end+ ":00:00",
 			defaultDate: '2017-09-12',
 			slotLabelFormat:"HH:mm",
-			contentHeight: 450,
+			contentHeight: window_height,
 			navLinks: true, // can click day/week names to navigate views
 			editable: false,
 			selectable: true,
 			selectOverlap:false,
 			selectMinDistance:25,
+			eventDurationEditable:true,
 			selectConstraint:{
 				start: schedule_start+':00', // a start time (10am in this example)
 				end: schedule_end+':00', // an end time (6pm in this example)
@@ -125,39 +87,43 @@ $(document).ready(function() {
 				// days of week. an array of zero-based day of week integers (0=Sunday)
 				
 			},
-			eventResize: function(event, delta, revertFunc) {
+			// eventResize: function(event, delta, revertFunc) {
 
-				alert(event.title + " end is now " + event.end.format());
+			// 	alert(event.title + " end is now " + event.end.format());
 
-				if (!confirm("is this okay?")) {
-					revertFunc();
-				}
+			// 	if (!confirm("is this okay?")) {
+			// 		revertFunc();
+			// 	}
 
-			},
+			// },
 			select: function(start, end, allDay,view) {
-
-				addEvent(start,end);
+				open_form(start,end);
+				
 
 			},
 			events: [
 				{
 					id: 999,
 					title: 'Ocupado',
-					start: '2017-09-29T10:00:00',
-					end: '2017-09-29T12:00:00',
+					start: '2017-09-30T10:00:00',
+					end: '2017-09-30T12:00:00',
 					overlap: false,
-					className: "occupied",
+					className: "reyapp",
 				},
 			],
 			eventRender: function(event, element, view) {
+
+				console.log(event.className);
+				console.log(view.name);
+				// Agregamos el botón para eliminar la reservación
 				if (view.name== 'agendaDay' && event.className =='new-reservation') {
 					element.find(".fc-content").prepend('<span class="closeon"><i class="fa fa-window-close" aria-hidden="true"></i></span>');
+					console.log("Se ejecutaaaa");
 				}
-				
 				// Eliminamos la reservación del calendario delete
 				element.find(".closeon").on('click', function() {
-					$('#calendar').fullCalendar('removeEvents',event.id);
-					counting_hours();	
+					delete_reservation(event.id,event.title);
+	
 				});
 			},	
 			dayClick: function(date, jsEvent, view) {
@@ -185,8 +151,86 @@ $(document).ready(function() {
 		}
 
 
+
+		function update_reservation(){
+
+		}
+
+		function delete_reservation (id,title){
+			swal({
+			  title: '¿Estás Seguro?',
+			  text: "Seguro que quieres borrar el ensayo de "+title+" Ya no podrás deshacer está acción",
+			  type: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'Borrar',
+			  cancelButtonText: 'No, cancelar!',
+			}).then(function () {
+				return new Promise(function (resolve, reject) {
+					$.ajax({
+						header:{
+							'Content-Type':'application/x-www-form-urlencoded',
+							'Accept':'application/json'
+						},
+						method:'DELETE',
+						url: APP_URL+'/reservaciones/'+id,
+						dataType:'json',
+						// data:fields,
+					}).done(function(data) {
+						console.log(data);
+						if(data.success == true){
+							show_message('success','Se eliminó', title);
+							$('#calendar').fullCalendar('removeEvents',id);
+						}else{
+							show_message('error','Hubo un error','Hubo un error en el servidor');
+						}
+					  
+					}).fail(function(jqXHR, exception){
+						msg =  get_error(jqXHR.status);
+							show_message('error','Error en el servidor!',msg);
+					});
+				});
+			})
+		}
+
+		function open_form(start,end){
+			
+			popup.open();
+			
+			// $.ajax({
+			// 	header:{
+			// 		'Content-Type':'application/x-www-form-urlencoded',
+			// 		'Accept':'application/json'
+			// 	},
+			// 	method:'POST',
+			// 	url: APP_URL+'/reservaciones',
+			// 	dataType:'json',
+			// 	data:{
+			// 		'title':$('#title').val(),
+			// 		'room_id':$('room_id').val(),
+			// 		'start':start,
+			// 		'end':end,
+			// 	},
+			// }).done(function(data) {
+			// 	console.log(data);
+			// 	if(data.success == true){
+			// 		show_message('success','Se agregó el evento',text);
+			// 		addEvent(start,end,'',text);
+			// 	}else{
+			// 		show_message('error','Hubo un error','Hubo un error en el servidor');
+			// 	}
+			  
+			// }).fail(function(jqXHR, exception){
+			// 	msg =  get_error(jqXHR.status);
+			// 		show_message('error','Error en el servidor!',msg);
+			// });
+		}
+
 		
 });
+
+
 
 function checkout(){
 	events_array = [];

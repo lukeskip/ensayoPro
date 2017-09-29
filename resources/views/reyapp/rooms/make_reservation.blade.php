@@ -76,6 +76,7 @@
 		var schedule_end   = {{$room->schedule_end}};
 		var room_price 	   = {{$room->price}};
 		var room_id		   = {{$room->id}};
+		
 
 		$('body').on('click', '.checkout', function() {
 			checkout();
