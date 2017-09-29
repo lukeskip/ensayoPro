@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 
 	Route::get('salas/reservando/{room_id}', 'ReservationController@make_reservation');
+	Route::post('salas/reservando/checkout', 'ReservationController@checkout');
 
 	// Dashboard routes//////////////////////////////////////////////////////////
 	Route::get('/dashboard', 'ReservationController@index')->name('dashboard');

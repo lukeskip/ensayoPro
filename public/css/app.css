@@ -745,6 +745,31 @@ h1 .duration{
 	left:0;
 }
 /*ENDS: Calendar*************************************/
+
+/*STARTS: Checkout********************************************/
+
+.checkout{
+	background: white
+}
+
+.checkout .header{
+	background: black;
+	color: white;
+	padding: 20px;
+}
+
+.checkout .header h1{
+	font-size: 2em;
+	text-align: left;
+}
+
+.checkout .header h2{
+	font-size: 1.2em;
+	text-align: left;
+}
+
+/*ENDS: Checkout********************************************/
+
 /*PRESSKITS*/
 
 .steps{

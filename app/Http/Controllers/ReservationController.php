@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Reservation as Reservation;
 use App\Room as Room;
+use App\User as User;
+use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -11,8 +13,24 @@ class ReservationController extends Controller
     
     public function make_reservation($room_id)
     {
+        if($room_id != ''){
+            $user_id = Auth::user()->id;
+            $bands = User::find($user_id)->companies();
+            $room = Room::find($room_id);
+            return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands); 
+        }else{
+            return redirect('/salas');
+        }
+        
+    }
+
+    public function checkout(Request $request)
+    {   
+        $room_id = $request->room_id;
         $room = Room::find($room_id);
-        return view('reyapp.rooms.make_reservation')->with('room',$room);
+        $events = json_decode($request->events,true);
+
+        return view('reyapp.rooms.checkout')->with('room',$room)->with('events',$events);
     }
 
     /**

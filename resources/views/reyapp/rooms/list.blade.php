@@ -40,11 +40,10 @@
 			</div>
 
 			<div class="medium-2 columns no-padding padding-left">
-				<div class="input-group">
-				  <div class="input-group-button">
+				
 				    <input type="submit" class="button green expanded no-shadow" value="Filtrar">
-				  </div>
-				</div>
+				 
+				
 			</div>
 		</form>
 		
