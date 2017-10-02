@@ -116,7 +116,7 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        $company_id = $request->company;
+        $company_id             = $request->company;
         $room                   = new Room();
         $room->name             = $request->name;
         $room->price            = $request->price;
@@ -124,7 +124,9 @@ class RoomController extends Controller
         $room->equipment        = $request->equipment;
         $room->schedule_start   = $request->schedule_start;
         $room->schedule_end     = $request->schedule_end;
+        $room->color            = $request->color;
         $room->status           = 'inactive';
+        
 
         if($request->company_address){
             $room->company_address  = true;       

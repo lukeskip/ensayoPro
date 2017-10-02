@@ -77,19 +77,19 @@ function register_room (){
 
 // controlador de mensajes
 function show_message(type,title,message,link,color = '#CF2832'){
-
-	swal({
-	  title: title,
-	  text: message,
-	  type: type,
-	  confirmButtonText: 'OK',
-	  confirmButtonColor: color
-	}).then(function (result) {
+	swal({ 
+		title: title,
+		text: message,
+		type: type,
+		confirmButtonText: 'OK',
+		confirmButtonColor: color 
+	},
+	function(){
 		if(link){
-			window.location.replace(link);	
+		window.location.replace(link);	
 		}
-		
 	});
+
 }
 
 
@@ -105,7 +105,8 @@ function conection (method,fields,link,redirect){
 	  url: APP_URL+link,
 	  dataType:'json',
 	  data:fields,
-	}).done(function(data) {
+	})
+	.done(function(data) {
 	  console.log(data);
 	  
 	}).fail(function(jqXHR, exception){

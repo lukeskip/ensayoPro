@@ -160,6 +160,67 @@ body{
 
 
 /*STARTS: Company Calendar*******************************/
+
+.room-keys{
+	position: absolute;
+	background: black;
+	bottom: 100px;
+	min-width:200px; 
+	left:0;
+	z-index: 9999;
+	padding: 10px;
+	padding-left: 20px;
+	border: 2px solid #333;
+	border-left:none;
+}
+
+.room-keys .open{
+	content: '>';
+	position: absolute;
+	top: -2px;
+	right:-35px;
+	width: 35px;
+	color: white;
+	background: black;
+	padding: 10px;
+	border: 2px solid #333;
+	border-left:none;
+	cursor: pointer;
+}
+
+.room-keys .title{
+	text-transform: uppercase;
+	text-align: center;
+	color:white;
+	border-bottom:2px solid white;
+	margin-bottom: 10px;
+	clear: both;
+}
+
+.room-keys .room-item{
+	color: #333;
+	height: 25px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+
+}
+
+.room-keys .room-item .color{
+	width: 20px;
+	height: 20px;
+	background:red;
+	border-radius: 100%;
+	display: inline-block;
+	float: left;
+	line-height: 25px;
+	margin-right:5px; 
+}
+
+.room-keys .room-item .text{
+	white-space: nowrap;
+	color: white;
+}
+
 body.company_calendar{
 	margin-top: -20px;
 }
@@ -174,7 +235,7 @@ body.company_calendar{
 
 }
 
-.company_calendar #calendar .reyapp{
+.company_calendar #calendar .app-reservation{
 	background-image: url('../img/pattern.png');
 }
 
@@ -329,6 +390,11 @@ body.company_calendar{
 /*ENDS: PAGINATION*/
 
 /*FORM*/
+
+.input-group-label .hastooltip{
+	margin-left: 5px;
+}
+
 form .clarification{
 	margin-bottom: 20px;
 	margin-top: 10px;
@@ -385,6 +451,34 @@ label{
 	border:none;
 	min-width: 120px;
 	font-size: .8em;
+	height: 43px;
+}
+.input-group > :last-child > *{
+	border-radius: 0;
+}
+
+.colorpicker{
+	text-indent: -9999px;
+	border: none;
+	height: 43px;
+}
+
+.evo-cp-wrap{
+	width:100%!important;
+}
+.evo-palcenter{
+	background: black;
+	color: white;
+	padding: 20px;
+	width: 220px;
+}
+
+.evo-palette .ui-widget-content{
+	color:white;
+}
+
+.evo-more, .evo-color{
+	display: none;
 }
 
 h2{
@@ -1123,6 +1217,36 @@ h1 .duration{
 	border:0;
 }
 /*ENDS: datepicker************************************************/
+
+/*STARTS: Sweet alert*****************************************************/
+.sweet-alert{
+	position: absolute;
+	top:150px;
+}
+
+
+.swal-form input.nice-input{
+	width:100%;
+	margin-bottom: 10px;
+}
+
+.sa-button-container button{
+	min-width: 200px;
+}
+
+@media screen and (max-width: 1024px) {
+	.sweet-alert{	
+		top:100px;
+		max-height: 80%;
+	}
+	.sweet-alert .confirm{
+		margin-bottom: 20px;
+	}
+
+
+}
+
+/*ENDS: Sweet alert*****************************************************/
 
 footer{
 	border-top:5px solid white;

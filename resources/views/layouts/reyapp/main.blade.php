@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 		
 		<link rel="stylesheet" href="{{asset('js/vendor/jquery-ui/jquery-ui.min.css')}}">
+		<link rel="stylesheet" href="{{asset('plugins/colorpicker/css/evol-colorpicker.min.css')}}">
 		<link rel="stylesheet" href="{{asset('plugins/sweetalert2/sweetalert2.css')}}">
 		<link rel="stylesheet" href="{{asset('plugins/fine-uploader/fine-uploader-gallery.min.css')}}">
 		
@@ -122,6 +123,7 @@
 		
 		<script src="{{asset('js/vendor/jquery.js')}}"></script>
 		<script src="{{asset('js/vendor/jquery-ui/jquery-ui.min.js')}}"></script>
+		<script src="{{asset('plugins/colorpicker/js/evol-colorpicker.min.js')}}"></script>
 		<script src="{{asset('js/vendor/jquery-ui/touchpunch.js')}}"></script>
 		<script src="{{asset('js/laroute.js')}}"></script>
 		<script src="{{asset('js/vendor/what-input.js')}}"></script>

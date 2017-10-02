@@ -265,12 +265,22 @@
 
 		<div class="row">
 		   
-			<div class="large-12 columns">
+			<div class="large-6 columns">
 				<div class="input-group">
 					<span class="input-group-label">
 						Precio
 					</span>
 				  <input class="input-group-field" type="text" name="price">
+				</div>
+			</div>
+			<div class="large-6 columns">
+				<div class="input-group">
+					<span class="input-group-label">
+					Color
+						<i class="fa fa-question-circle hastooltip" title="Con este color identificarás a esta sala en el calendario" aria-hidden="true"></i>
+
+					</span>
+				  <input class="input-group-field colorpicker" type="text" name="color">
 				</div>
 			</div>
 			<div class="large 12-columns">
@@ -358,7 +368,20 @@
 	
 
 	<script>
-		// Cargamos los archivos antes de ahcer submit
+		$(".colorpicker").on("change.color", function(event, color){
+    		$(this).css('background-color', color);
+    		
+		});
+
+		$(".colorpicker").colorpicker({
+			hideButton: true,
+			history: false,
+			defaultPalette:'web'
+
+		});
+
+
+		// Cargamos los archivos antes de hacer submit
 		$('#uploader').fineUploader({
 			debug:false,
 			request: {

@@ -30,6 +30,7 @@ class CreateRoomsTable extends Migration
             $table->string('schedule_start');
             $table->string('schedule_end');
             $table->integer('company_id');
+            $table->string('color');
             $table->enum('status', ['active', 'inactive','deleted']);
             $table->timestamps();
         });

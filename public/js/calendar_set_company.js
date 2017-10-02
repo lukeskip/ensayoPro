@@ -8,17 +8,17 @@ $(document).ready(function() {
 
 		var window_height = $(window).height()-150;
 
-		function addEvent(start, end , color= '#2FAB31',title) {
+		function addEvent(id,start, end , color = '#2FAB31',title) {
 			
 			// Contruimos el objeto del nuevo evento
 			event_id = event_id + 1;
 			var new_event = {
 				title: title,
-				className: 'new-reservation',
+				className: 'company-reservation',
 				start: start,
 				end: end,
-				id: event_id,
-				color:'#2FAB31',
+				id: id,
+				color:color,
 			};
 			
 			$('#calendar').fullCalendar('renderEvent', new_event, true);
@@ -69,56 +69,37 @@ $(document).ready(function() {
 			lang:'es',
 			slotEventOverlap:false,
 			slotDuration: '00:60:00',
+			slotMinutes: 60,
+			timezone: 'America/Mexico_City',
 			minTime: schedule_start+ ":00:00",
 			maxTime: schedule_end+ ":00:00",
-			defaultDate: '2017-09-12',
 			slotLabelFormat:"HH:mm",
 			contentHeight: window_height,
-			navLinks: true, // can click day/week names to navigate views
+			navLinks: true, 
 			editable: false,
 			selectable: true,
-			selectOverlap:false,
-			selectMinDistance:25,
-			eventDurationEditable:true,
+			selectOverlap:true,
+			eventDurationEditable:false,
 			selectConstraint:{
-				start: schedule_start+':00', // a start time (10am in this example)
-				end: schedule_end+':00', // an end time (6pm in this example)
+				start: schedule_start+':00', 
+				end: schedule_end+':00',
 				dow: [0, 1, 2, 3, 4, 5, 6 ]
-				// days of week. an array of zero-based day of week integers (0=Sunday)
-				
 			},
-			// eventResize: function(event, delta, revertFunc) {
-
-			// 	alert(event.title + " end is now " + event.end.format());
-
-			// 	if (!confirm("is this okay?")) {
-			// 		revertFunc();
-			// 	}
-
-			// },
 			select: function(start, end, allDay,view) {
+
 				open_form(start,end);
 				
 
 			},
-			events: [
-				{
-					id: 999,
-					title: 'Ocupado',
-					start: '2017-09-30T10:00:00',
-					end: '2017-09-30T12:00:00',
-					overlap: false,
-					className: "reyapp",
-				},
-			],
+			events: reservations,
 			eventRender: function(event, element, view) {
 
-				console.log(event.className);
-				console.log(view.name);
+
+
 				// Agregamos el botón para eliminar la reservación
-				if (view.name== 'agendaDay' && event.className =='new-reservation') {
+				if (view.name== 'agendaDay' && event.className =='company-reservation') {
+					$(element).css('width','45%');
 					element.find(".fc-content").prepend('<span class="closeon"><i class="fa fa-window-close" aria-hidden="true"></i></span>');
-					console.log("Se ejecutaaaa");
 				}
 				// Eliminamos la reservación del calendario delete
 				element.find(".closeon").on('click', function() {
@@ -166,7 +147,7 @@ $(document).ready(function() {
 			  cancelButtonColor: '#d33',
 			  confirmButtonText: 'Borrar',
 			  cancelButtonText: 'No, cancelar!',
-			}).then(function () {
+			},function () {
 				return new Promise(function (resolve, reject) {
 					$.ajax({
 						header:{
@@ -176,9 +157,8 @@ $(document).ready(function() {
 						method:'DELETE',
 						url: APP_URL+'/reservaciones/'+id,
 						dataType:'json',
-						// data:fields,
 					}).done(function(data) {
-						console.log(data);
+		
 						if(data.success == true){
 							show_message('success','Se eliminó', title);
 							$('#calendar').fullCalendar('removeEvents',id);
@@ -195,42 +175,57 @@ $(document).ready(function() {
 		}
 
 		function open_form(start,end){
-			
-			popup.open();
-			
-			// $.ajax({
-			// 	header:{
-			// 		'Content-Type':'application/x-www-form-urlencoded',
-			// 		'Accept':'application/json'
-			// 	},
-			// 	method:'POST',
-			// 	url: APP_URL+'/reservaciones',
-			// 	dataType:'json',
-			// 	data:{
-			// 		'title':$('#title').val(),
-			// 		'room_id':$('room_id').val(),
-			// 		'start':start,
-			// 		'end':end,
-			// 	},
-			// }).done(function(data) {
-			// 	console.log(data);
-			// 	if(data.success == true){
-			// 		show_message('success','Se agregó el evento',text);
-			// 		addEvent(start,end,'',text);
-			// 	}else{
-			// 		show_message('error','Hubo un error','Hubo un error en el servidor');
-			// 	}
-			  
-			// }).fail(function(jqXHR, exception){
-			// 	msg =  get_error(jqXHR.status);
-			// 		show_message('error','Error en el servidor!',msg);
-			// });
+
+			save_start = $.fullCalendar.formatDate(start , "YYYY-MM-DD HH:mm:SS");
+			save_end   = $.fullCalendar.formatDate(end, "YYYY-MM-DD HH:mm:SS");
+
+			swal.withFormAsync({
+			    title: 'Reservar',
+			    text: 'Escribe el nombre de la banda o usuario',
+			    showCancelButton: true,
+			    confirmButtonColor: '#2FAB31;',
+			    confirmButtonText: 'Guardar',
+			    closeOnConfirm: true,
+			    formFields: [
+			      { id: 'room_id',
+			        type: 'select',
+			        options:rooms
+			      },
+			      { id: 'name', placeholder: 'Nombre de la banda' },
+			      { id: 'start', type: 'hidden', value : save_start},
+			      { id: 'end', type: 'hidden', value : save_end},
+
+			    ]
+			  }).then(function (context) {
+			  	if(context._isConfirm){
+			  		$.ajax({
+					header:{
+						'Content-Type':'application/x-www-form-urlencoded',
+						'Accept':'application/json'
+					},
+					method:'POST',
+					url: APP_URL+'/reservaciones',
+					dataType:'json',
+					data:context.swalForm,
+					}).done(function(data) {
+						
+						if(data.success == true){
+						  addEvent(data.id,start,end,data.color,data.title);
+						}else{
+							
+							show_message('error','¡Error!',data.message);
+						 
+						}
+					}).fail(function(jqXHR, exception){
+
+					});
+			  	}
+			    
+			  });
 		}
 
 		
 });
-
-
 
 function checkout(){
 	events_array = [];

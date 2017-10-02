@@ -18,10 +18,13 @@ class CreateReservationsTable extends Migration
             $table->datetime('starts');
             $table->datetime('ends');
             $table->string('description');
-            $table->string('price');
+            $table->string('price')->nullable();
             $table->integer('room_id');
+            $table->integer('user_id');
             $table->enum('status', ['confirmed', 'pending','cancelled']);
+            $table->softDeletes();
             $table->timestamps();
+
         });
     }
 

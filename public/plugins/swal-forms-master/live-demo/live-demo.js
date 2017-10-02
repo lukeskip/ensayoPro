@@ -24,11 +24,11 @@ function sample1 () {
 }
 
 function sampleWithPromises () {
-  hola = "menesa de saludo";
-  console.log("es este");
+  
+  
   swal.withFormAsync({
-    title: 'Cool Swal-Forms example',
-    text: 'Any text that you consider useful for the form',
+    title: 'Reservar',
+    text: 'Escribe el nombre de la banda o usuario',
     showCancelButton: true,
     confirmButtonColor: '#DD6B55',
     confirmButtonText: 'Get form data!',

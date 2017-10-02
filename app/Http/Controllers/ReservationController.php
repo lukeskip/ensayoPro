@@ -7,6 +7,7 @@ use App\Room as Room;
 use App\User as User;
 use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Http\Request;
+use DateTime;
 
 class ReservationController extends Controller
 {
@@ -61,10 +62,53 @@ class ReservationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $title = $request->hola;
+    {   
+        $user_id = Auth::user()->id;
+        $description = $request->name;
+        $room_id = $request->room_id;
+        $starts = $request->start;
+        $ends = $request->end;
 
-        return response()->json(['success' => $title]);
+
+        $starts_check = new DateTime($starts);
+        $ends_check   = new DateTime($ends);
+
+        $starts_check = $starts_check->modify('+1 minutes');
+        $ends_check   = $ends_check->modify('-1 minutes');
+
+        // Revisamos que la reservación no se empalme con otra
+        $reservations_check = Reservation::where(function ($query) use ($starts_check) {
+                $query->where('starts', '<',$starts_check)
+                ->where('ends', '>',$starts_check);
+            })->orWhere(function ($query) use ($ends_check) {
+                $query->where('starts', '<',$ends_check)
+                ->where('ends', '>',$ends_check);
+        })->get();
+
+        // Si se empalmó revisamos que no sea en la misma sala
+        $reservations_check = $reservations_check->where('room_id',$room_id);
+
+        // Si no existe otra reservación en ese horario y esa misma sala lo guardamos
+        if($reservations_check->isEmpty()){
+
+            $reservation   = new Reservation();
+            $reservation->description = $description;
+            $reservation->starts = $starts;
+            $reservation->ends = $ends;
+            $reservation->price = '500';
+            $reservation->status = 'confirmed';
+            $reservation->user_id = $user_id;
+
+            $room = Room::findOrFail($room_id);
+            $room->reservations()->save($reservation);
+            return response()->json(['success' => true , 'title' => $description,'id'=>$reservation->id,'color'=>$room->color]);
+
+        }else{
+            // Si si se empalma mandamos mensaje de error
+            return response()->json(['success' => false , 'message' => 'Ese horario no está disponible en esa sala']);
+        }
+        
+        
     }
 
     /**
@@ -108,7 +152,12 @@ class ReservationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {   
+        $user_id = Auth::user()->id;
+        $reservation = Reservation::find($id);
+        if($user_id == $reservation->user_id);{
+            $reservation->delete();
+        }
         return response()->json(['success' => true]);
     }
 }
