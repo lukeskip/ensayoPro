@@ -21,6 +21,7 @@ class CreateReservationsTable extends Migration
             $table->string('price')->nullable();
             $table->integer('room_id');
             $table->integer('user_id');
+            $table->boolean('is_admin');
             $table->enum('status', ['confirmed', 'pending','cancelled']);
             $table->softDeletes();
             $table->timestamps();

@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="medium-6 medium-centered columns login">
             <div class="panel panel-default">
-                <div class="panel-heading">Loginaaa</div>
+                <h2>Login</h2>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
@@ -42,7 +42,7 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Recuerdame
                                     </label>
                                 </div>
                             </div>
@@ -54,10 +54,13 @@
                                     Entrar
                                 </button>
 
-                                <a class="button green expanded" href="{{ route('password.request') }}">
+                            </div>
+                        </div>
+                        <div class="alternatives">
+                            <a class="" href="{{ route('password.request') }}">
                                     ¿Olvidaste tu contraseña?
                                 </a>
-                            </div>
+                                <a href="/registro/">¿No tienes una cuenta? ¡Regístrate!</a>
                         </div>
                     </form>
                 </div>

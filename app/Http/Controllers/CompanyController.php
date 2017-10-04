@@ -7,6 +7,7 @@ use App\Company as Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use App\User as User;
+use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
@@ -24,7 +25,7 @@ class CompanyController extends Controller
 
     public function register_company()
     {    
-        return view('reyapp.register_company');
+        return view('reyapp.companies.register_company');
     }
 
     public function index()
@@ -51,6 +52,27 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        // Registramos las reglas de validación
+        $rules = array(
+            'name'              => 'required|max:255',
+            'address'           => 'required|max:1000',
+            'colony'            => 'required|max:100',
+            'deputation'        => 'required|max:100',
+            'postal_code'       => 'required|max:20',
+            'city'              => 'required|max:100',
+            'phone'             => 'required|max:30',
+            'rfc'               => 'required|max:30',
+            'latitude'          => 'required|max:20',
+            'longitude'         => 'required|max:20',       
+        );
+
+        // Validamos todos los campos
+        $validator = Validator::make($request->all(), $rules);
+
+        // Si la validación falla, nos detenemos y mandamos false
+        if ($validator->fails()) {
+            return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
+        }
 
         $user_id = Auth::user()->id;
         $company   = new Company();
@@ -68,7 +90,7 @@ class CompanyController extends Controller
         $user = User::findOrFail($user_id);
         $user->companies()->save($company);
 
-        return redirect('registro/salas');
+        return response()->json(['success' => true]);
 
     }
 

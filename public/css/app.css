@@ -8,6 +8,10 @@ a{
 	color:white;
 }
 
+.tooltip{
+	max-width: 12rem;
+}
+
 .button{
 	box-shadow: none;
 }
@@ -43,6 +47,10 @@ body{
 	padding: 0;
 }
 
+.no-background{
+	background: none!important;
+}
+
 .padding-left{
 	padding-left: 10px;
 }
@@ -76,6 +84,27 @@ body{
 .button.black{
 	background: black;
 }
+
+/*STARTS: Login ******************************************/
+.login{
+	background:white;
+	padding: 20px;
+	color:#333;
+	box-shadow: 0 0 10px rgba(0,0,0,.5);
+} 
+
+.login label{
+	color: #333;
+}
+
+.login a,.login a:hover{
+	color:#666;
+}
+
+.login .alternatives{
+	text-align: center;
+}
+/*ENDS: Login ********************************************/
 
 /*STARTS: Dashboard**************************************/
 .dashboard h1{
@@ -237,6 +266,7 @@ body.company_calendar{
 
 .company_calendar #calendar .app-reservation{
 	background-image: url('../img/pattern.png');
+	opacity: .8;
 }
 
 .company_calendar #calendar .fc-time-grid-event{
@@ -247,6 +277,25 @@ body.company_calendar{
 
 
 /*STARTS: ROOM ITEM *************************************/
+
+.room-item .tag{
+	font-size: .8em;
+	color:white;
+	padding: 5px 10px;
+	border-radius: 5px;
+	margin-top: 10px;
+	display: inline-block;
+	margin-top: 10px;
+	cursor: pointer;
+}
+
+.room-item .tag.blue{
+	background:#1779BA;
+}
+
+.room-item .tag.discount{
+	background: #00BF22;
+}
 
 .row.room-item{
 	position: relative;
@@ -390,6 +439,95 @@ body.company_calendar{
 /*ENDS: PAGINATION*/
 
 /*FORM*/
+
+.chosen-container-multi .chosen-choices li.search-field input[type=text]{
+	margin-top: 5px;
+	font-size: inherit;
+	font-family: inherit;
+}
+
+.chosen-container .chosen-drop{
+	margin-top: -20px;
+}
+
+.chosen-container-multi .chosen-choices{
+	min-height: 43px;
+	margin-bottom: 20px;
+}
+
+.chosen-container .chosen-results li.highlighted{
+	background: #1779BA;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice{
+	background: #2FAB31;
+	border:none;
+	border-radius: 3px;
+	color: white;
+	padding: 5px 20px 5px 5px;
+	border:none;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close{
+	background: url('../img/close_tag.png');
+	background-size: cover;
+	width: 8px;
+	height:8px;
+	top:8px;
+	right:5px;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover{
+	background-position: inherit; 
+}
+
+
+
+#map-canvas{
+	height: 300px;
+	border: 8px solid white;
+}
+.form_wrapper .ui-widget-content, .ui-widget.ui-widget-content{
+	margin-top: -13px;
+    margin-left: -3px;
+}
+
+.form_wrapper h3{
+	background: black;
+	display: inline-block;
+	padding:10px;
+	margin-top: 10px;
+}
+.form_wrapper label{
+	margin-top: 10px;
+	background: black;
+	padding: 0px 10px;
+	font-size: 1em;
+}
+
+.form_wrapper label.error{
+	margin-top: 0;
+	background: rgba(0,0,0,.2);
+	color:white;
+}
+
+.form_wrapper input{
+	margin-bottom: 0;
+}
+
+.form_wrapper .columns{
+	margin-bottom: 10px;
+}
+
+.form_wrapper input,.form_wrapper select, .form_wrapper textarea{
+	/*margin-bottom: 10px;*/
+}
+
+.form_wrapper h1,.form_wrapper h2{
+	
+}
 
 .input-group-label .hastooltip{
 	margin-left: 5px;

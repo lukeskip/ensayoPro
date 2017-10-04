@@ -16,26 +16,7 @@ class DashboardController extends Controller
     	return 'musician';
     }
 
-    public function company(){
-    	$user_id = Auth::user()->id;
-    	$user = User::find($user_id);
-    	$company = $user->companies()->first();
-    	return view('reyapp.dashboard.dashboard_company')->with('user',$user)->with('company',$company);
-    }
-
-    public function company_calendar(){
-    	$user_id = Auth::user()->id;
-    	$user = User::find($user_id);
-  		$company = $user->companies()->first();
-  		$rooms = $company->rooms()->with('reservations')->get();
-  		
-  		$company_reservations = Reservation::with(['users','rooms'])->where('user_id',$user_id)->get();
-
-  		$app_reservations = Reservation::with(['users','rooms'])->where('user_id','!=',$user_id)->get();
- 
-    	return view('reyapp.dashboard.company_calendar')->with('rooms',$rooms)->with('company_reservations',$company_reservations)->with('app_reservations',$app_reservations);
-
-    }
+  
 
     public function admin(){
     	return 'Admin';

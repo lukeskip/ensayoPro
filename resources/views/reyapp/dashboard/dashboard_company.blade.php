@@ -30,80 +30,56 @@
 					</div>
 				</div>
 				
-				<div class="row list-item">
-					<div class="medium-3 columns">
+				@foreach($reservations as $reservation)
+					<div class="row list-item">
+						<div class="medium-3 columns">
 
-					<span class="hastooltip" title="Este es un tool tip">Sergio García</span>
-						
-					</div>
-					<div class="medium-3 columns ">
-						Noche de Quiz
-					</div>
-					<div class="medium-2 columns ">
-						Sala Grande
-					</div>
-					<div class="medium-2 columns price">
-						$400
-					</div>
-					<div class="medium-2 columns status">
-						<i class="fa fa-times-circle-o hastooltip cancelled" title="Cancelado" aria-hidden="true"></i>
-					</div>
+							<span class="hastooltip" title="Este es un tool tip">
+								{{$reservation->users->name}} {{$reservation->users->lastname}}
+							</span>
+							
+						</div>
+						<div class="medium-3 columns ">
+							{{$reservation->description}}
+						</div>
+						<div class="medium-2 columns ">
+							{{$reservation->rooms->name}}
+						</div>
+						<div class="medium-2 columns price">
+							{{$reservation->price}}
+						</div>
+						<div class="medium-2 columns status">
+							@if($reservation->status == 'confirmed')
+								<i class="fa fa-check-circle-o confirmed hastooltip" title="Confirmado" aria-hidden="true"></i>
+							@elseif($reservation->status == 'pending')
+								<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Pendiente"></i>
+							@elseif($reservation->status)
+								<i class="fa fa-times-circle-o hastooltip cancelled" title="Cancelado" aria-hidden="true"></i>
+							@endif
+						</div>
 
-				</div>
-
-				<div class="row list-item">
-					<div class="medium-3 columns">
-
-					<span class="hastooltip" title="Este es un tool tip">Male Lara</span>
-						
 					</div>
-					<div class="medium-3 columns ">
-						Falsa Fortuna
-					</div>
-					<div class="medium-2 columns ">
-						Sala Grande
-					</div>
-					<div class="medium-2 columns price">
-						$500
-					</div>
-					<div class="medium-2 columns status">
-						<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Pendiente"></i>
-					</div>
-
-				</div>
-
-				<div class="row list-item">
-					<div class="medium-3 columns">
-
-					<span class="hastooltip" title="Este es un tool tip">Francisco Salas</span>
-						
-					</div>
-					<div class="medium-3 columns ">
-						Silver Stones
-					</div>
-					<div class="medium-2 columns ">
-						Sala Grande
-					</div>
-					<div class="medium-2 columns price">
-						$400
-					</div>
-					<div class="medium-2 columns status">
-						<i class="fa fa-check-circle-o confirmed hastooltip" title="Confirmado" aria-hidden="true"></i>
-					</div>
-
-				</div>
+				@endforeach
 				
 		</div>
 		<div class="large-3 columns">
-			<button class="button expanded green">Ir a agenda</button>
+			<a class="button expanded green" href="/company/dashboard/calendar" target="_blank">
+				Ir a agenda
+			</a>
 			<div class="incomings">
-				<div class="text">Ingresos este mes</div>
+				<div class="text">
+					Ingresos 
+					<span><i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Este mes vía la plataforma"></i></span>
+				</div>
 				<div class="number">20,000</div>
 			</div>
 
 			<div class="hours">
 				<div class="number">156</div>
-				<div class="text">Horas reservadas este mes</div>
+				<div class="text">
+					Horas Reservadas 
+					<span><i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Este mes vía la plataforma"></i></span>
+				</div>
 			</div>
 		</div>
 	</div>

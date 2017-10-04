@@ -8,6 +8,7 @@ use App\Band as Band;
 use App\Role as Role;
 use Mail;
 use Illuminate\Support\Facades\Auth as Auth;
+use Illuminate\Support\Facades\Validator;
 
 
 class BandController extends Controller
@@ -40,7 +41,23 @@ class BandController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		
+
+		// Registramos las reglas de validación
+		$rules = array(
+			'name'				=> 'required|max:255',        
+			'genre' 			=> 'required|in:rock,pop,latin,jazz,blues',
+			'members'			=> 'required|json',        
+		);
+
+		// Validamos todos los campos
+		$validator = Validator::make($request->all(), $rules);
+
+		// Si la validación falla, nos detenemos y mandamos false
+		if ($validator->fails()) {
+			return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revisalos']);
+		}
+
+		$role_id = Role::where('name','musician')->first()->id;
 		$user_id = Auth::user()->id;
 		$band   = new Band();
 		$band->name  = $request->name;
@@ -59,27 +76,31 @@ class BandController extends Controller
 			$user = User::where('email', $member['email'])->first();
 			
 			// Si exite lo agregamos a la banda
-			if($user){
-				$user->bands()->attach($band_id);
-			}else{
-			// Si no exite lo creamos y lo agregamos a la banda
+			if(!$user){
+				// Si no exite lo creamos y lo agregamos a la banda
 				$user = new User();
 				$user->email = $member['email'];
 				$band->users()->save($user);
-				$user->roles()->attach()->role(['name' => 'musician']);
 
+				$user->roles()->attach($role_id);
 				$token = $user->api_token;
 				$email = $user->email;
 
-				Mail::send('reyapp.invitation', ['name'=>$name,'token'=>$token,'band'=>$band_name], function ($message)use($email,$band_name){
 
-				$message->from('no_replay@reydecibel.com.mx', 'Rey Decibel')->subject('Eres parte de '.$band_name);
-				$message->to($email);
+				// Mail::send('reyapp.invitation', ['name'=>$name,'token'=>$token,'band'=>$band_name], function ($message)use($email,$band_name){
 
-				});
+				// $message->from('no_replay@reydecibel.com.mx', 'Rey Decibel')->subject('Eres parte de '.$band_name);
+				// $message->to($email);
+
+				// });
+				
+			}else{
+				$user->bands()->attach($band_id);
 			}
 			 
 		}
+
+		return response()->json(['success' => true]);
 		
 	}
 

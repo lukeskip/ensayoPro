@@ -1,7 +1,10 @@
 $(document).ready(function() {
 
-		// avisamos sobre el tiempo de caducidad de los datos
-		show_message('warning','Atención','esta ventana se recargará cada 5 minutos para actualizar los datos');
+		// avisamos sobre el tiempo de caducidad de los datos solo una vez por sesión
+		if (sessionStorage.getItem('refreshmsg') !== 'true') {
+			show_message('warning','Atención','esta ventana se recargará cada 5 minutos para actualizar los datos');
+			sessionStorage.setItem('refreshmsg','true');
+		}
 
 		var max_time 	= 300;//segundos para recargar la página 
 		var event_id = 0;
@@ -143,7 +146,7 @@ $(document).ready(function() {
 			  text: "Seguro que quieres borrar el ensayo de "+title+" Ya no podrás deshacer está acción",
 			  type: 'warning',
 			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
+			  confirmButtonColor: '#C73536',
 			  cancelButtonColor: '#d33',
 			  confirmButtonText: 'Borrar',
 			  cancelButtonText: 'No, cancelar!',
@@ -183,7 +186,7 @@ $(document).ready(function() {
 			    title: 'Reservar',
 			    text: 'Escribe el nombre de la banda o usuario',
 			    showCancelButton: true,
-			    confirmButtonColor: '#2FAB31;',
+			    confirmButtonColor: '#2FAB31',
 			    confirmButtonText: 'Guardar',
 			    closeOnConfirm: true,
 			    formFields: [
@@ -212,9 +215,7 @@ $(document).ready(function() {
 						if(data.success == true){
 						  addEvent(data.id,start,end,data.color,data.title);
 						}else{
-							
 							show_message('error','¡Error!',data.message);
-						 
 						}
 					}).fail(function(jqXHR, exception){
 

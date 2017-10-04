@@ -28,31 +28,49 @@ Route::get('/registro', function () {
 
 Route::group(['middleware' => 'auth'], function () {
 
+	// STARTS: Carga de imágenes fineuploader
 	Route::get('imagenes/{image}', function($image){
 
 	    //do so other checks here if you wish
-
 	    if(!File::exists( $image = storage_path("uploader/completed/{$image}") )) abort(401);
 
 	    $returnImage = Image::make($image);
 
 		return $returnImage->response();
 	});
+	// ENDS: Carga de imágenes fineuploader
 
 	Route::get('salas/reservando/{room_id}', 'ReservationController@make_reservation');
 	Route::post('salas/reservando/checkout', 'ReservationController@checkout');
 
+	// Company Admin routes//////////////////////////////////////////////////////////
+	Route::get('/company/dashboard', 'AdminCompanyController@company');
+	Route::get('/company/salas', 'AdminCompanyController@company_rooms');
+
+	Route::get('/company/codigos', 'AdminCompanyController@company_rooms');
+
+	
+	Route::get('/company/dashboard/calendar', 'AdminCompanyController@company_calendar');
+	Route::get('/registro/company', 'CompanyController@register_company')->name('register_company');
+
+	Route::get('/registro/salas', 'RoomController@create')->name('register_room');
+	Route::get('/company/salas/editar/{id}', 'RoomController@edit');
+	Route::post('/company/salas/{id}','RoomController@update');
+	
+	Route::resource('companies', 'CompanyController');
+
+
 	// Dashboard routes//////////////////////////////////////////////////////////
 	
 	Route::get('/dashboard', 'DashboardController@musician')->name('dashboardMusician');
-	Route::get('/company/dashboard', 'DashboardController@company')->name('dashboardCompany');
+	
 	Route::get('/admin/dashboard', 'DashboardController@admin')->name('dashboardAdmin');
 
-	Route::get('/company/dashboard/calendar', 'DashboardController@company_calendar')->name('dashboardCompany');
+	
 
 	// ENDS: dashboard routes////////////////////////////////////////////////////
 
-	Route::get('/registro/company', 'CompanyController@register_company')->name('register_company');
+	
 	
 	// Redirigimos según role después de registro
 	Route::get('registro/redirect', function (){
@@ -96,28 +114,20 @@ Route::group(['middleware' => 'auth'], function () {
 		}
 	});
 
-
 	//ENDS: Redirigimos según role después de login
 
 	//STARTS: resources///////////////////////////////////////////// 
 	Route::resource('bandas', 'BandController');
-	Route::resource('companies', 'CompanyController');
+	
 	Route::resource('salas', 'RoomController');
 	Route::resource('reservaciones', 'ReservationController');
 	//ENDS: resources/////////////////////////////////////////////
 
 	Route::get('/registro/banda', function () {
-		
-		if(Auth::user())
-		{
-			return view('reyapp.register_band');
-		}else{
-			return redirect('/registro');
-		}
-	    
+		return view('reyapp.register_band');
 	});
 
-	Route::get('/registro/salas', 'RoomController@register')->name('register_room');
+	
 
 
 	//STARTS: UPLOADER/////////////////////////////////////////////////////////

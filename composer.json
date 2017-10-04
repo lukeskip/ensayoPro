@@ -16,6 +16,7 @@
         "optimus/fineuploader-server": "0.2.*",
         "optimus/fineuploader-server-thumbnail-creator": "0.1.*",
         "optimus/onion": "0.1.*",
+        "trexology/promocodes": "^1.1",
         "tymon/jwt-auth": "0.5.*"
     },
     "require-dev": {

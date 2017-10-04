@@ -67,8 +67,8 @@
 
 						<a href="/salas/{{$room->id}}">{{$room->companies->name}} ({{$room->name}})</a>
 						<div class="info">
-							<a href="#" class="colony">{{$room->colony}}</a href="#">
-							<a href="#" class="deputation">{{$room->deputation}}</a href="#">
+							<a href="#" class="colony tag">{{$room->colony}}</a href="#">
+							<a href="#" class="deputation tag">{{$room->deputation}}</a href="#">
 							{{-- <a href="#" class="discount">Descuento -20%</a href="#"> --}}
 						</div>
 						

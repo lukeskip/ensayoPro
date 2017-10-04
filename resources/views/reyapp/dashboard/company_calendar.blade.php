@@ -27,8 +27,6 @@
 	<script src="{{asset('plugins/fullcalendar/fullcalendar.min.js')}}"></script>
 	<script src="{{asset('plugins/fullcalendar/locale/es.js')}}"></script>
 
-	
-
 	<script>
 		var schedule_start = 8;
 		var schedule_end   = 20;
@@ -66,21 +64,12 @@
 					'title' 	: '{{$reservation->description}}',
 					'start' 	: '{{$reservation->starts}}',
 					'end'   	: '{{$reservation->ends}}',
+					'color' 	: '{{$reservation->rooms->color}}',
 					'className' : 'app-reservation', 
 			});
 		@endforeach
-
-		room_colors  = [
-			{
-				'id' : '1',
-				'color': 'black'
-			},
-			{
-				'id': '2',
-				'color':'red'
-			},
-		]; 
 		
+		// Mostramos el código de colores de las salas
 		$(document).ready(function(){
 			$('.room-keys').css('left','-200px');
 			room_keys = false;
@@ -104,10 +93,6 @@
 						});
 					}	
 			});
-					
-
-
-
 			
 		});
 

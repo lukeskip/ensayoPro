@@ -8,10 +8,12 @@ use App\User as User;
 use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Http\Request;
 use DateTime;
+use Illuminate\Support\Facades\Validator;
 
 class ReservationController extends Controller
 {
     
+    // Pantalla de calendario para usuario 'musician'
     public function make_reservation($room_id)
     {
         if($room_id != ''){
@@ -25,6 +27,7 @@ class ReservationController extends Controller
         
     }
 
+    // Pantalla Checkout para usuario 'musician'
     public function checkout(Request $request)
     {   
         $room_id = $request->room_id;
@@ -62,7 +65,24 @@ class ReservationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {  
+
+        // Registramos las reglas de validación
+        $rules = array(
+            'name'   => 'required|max:255',
+            'room_id'       => 'required|integer',
+            'start'         => 'required|date', 
+            'end'           => 'required|date',       
+        );
+
+        // Validamos todos los campos
+        $validator = Validator::make($request->all(), $rules);
+
+        // Si la validación falla, nos detenemos y mandamos false
+        if ($validator->fails()) {
+            return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
+        }
+
         $user_id = Auth::user()->id;
         $description = $request->name;
         $room_id = $request->room_id;
@@ -77,13 +97,17 @@ class ReservationController extends Controller
         $ends_check   = $ends_check->modify('-1 minutes');
 
         // Revisamos que la reservación no se empalme con otra
-        $reservations_check = Reservation::where(function ($query) use ($starts_check) {
+        $reservations_check = Reservation::where(
+            function ($query) use ($starts_check) {
                 $query->where('starts', '<',$starts_check)
                 ->where('ends', '>',$starts_check);
             })->orWhere(function ($query) use ($ends_check) {
                 $query->where('starts', '<',$ends_check)
                 ->where('ends', '>',$ends_check);
-        })->get();
+             })->orWhere(function ($query) use ($starts_check,$ends_check) {
+                $query->where('starts', '>',$starts_check)
+                ->where('ends', '<',$ends_check);
+            })->get();
 
         // Si se empalmó revisamos que no sea en la misma sala
         $reservations_check = $reservations_check->where('room_id',$room_id);
@@ -91,16 +115,18 @@ class ReservationController extends Controller
         // Si no existe otra reservación en ese horario y esa misma sala lo guardamos
         if($reservations_check->isEmpty()){
 
-            $reservation   = new Reservation();
+            $reservation              = new Reservation();
             $reservation->description = $description;
-            $reservation->starts = $starts;
-            $reservation->ends = $ends;
-            $reservation->price = '500';
-            $reservation->status = 'confirmed';
-            $reservation->user_id = $user_id;
+            $reservation->starts      = $starts;
+            $reservation->ends        = $ends;
+            $reservation->user_id     = $user_id;
+
+            $reservation->status      = 'confirmed';
+            $reservation->is_admin    = true;
 
             $room = Room::findOrFail($room_id);
             $room->reservations()->save($reservation);
+            
             return response()->json(['success' => true , 'title' => $description,'id'=>$reservation->id,'color'=>$room->color]);
 
         }else{

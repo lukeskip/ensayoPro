@@ -37,9 +37,9 @@ $(document).ready(function(){
 		
 		// Obtenemos la longitud y latitud de google y las asignamos a fields hidden
 		function getLatLong() {
-			console.log($('.address').val());
+			
 			var addressInput = $('.address').val()+', '+$('.colony').val()+', '+$('.deputation').val()+', '+$('.postal_code').val()+', '+$('.city').val()+', '+$('.country').val()
-			console.log(addressInput);
+			
 			var geocoder = new google.maps.Geocoder();
 
 			geocoder.geocode({address: addressInput}, function(results, status) {

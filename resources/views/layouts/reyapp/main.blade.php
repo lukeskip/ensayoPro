@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="{{asset('js/vendor/jquery-ui/jquery-ui.min.css')}}">
 		<link rel="stylesheet" href="{{asset('plugins/colorpicker/css/evol-colorpicker.min.css')}}">
 		<link rel="stylesheet" href="{{asset('plugins/sweetalert2/sweetalert2.css')}}">
+		<link rel="stylesheet" href="{{asset('plugins/chosen/chosen.min.css')}}">
 		<link rel="stylesheet" href="{{asset('plugins/fine-uploader/fine-uploader-gallery.min.css')}}">
 		
 		@yield('styles')
@@ -130,6 +131,7 @@
 		<script src="{{asset('js/vendor/foundation.js')}}"></script>
 		<script src="{{asset('js/vendor/selectize/js/selectize.min.js')}}"></script>
 		<script src="{{asset('plugins/sweetalert2/sweetalert2.js')}}"></script>
+		<script src="{{asset('plugins/chosen/chosen.jquery.min.js')}}"></script>
 		<script src="{{asset('js/bower_components/chart.js/dist/Chart.min.js')}}"></script>
     	<script src="{{asset('plugins/jquery-validation-1.17.0/dist/jquery.validate.min.js')}}"></script>
 

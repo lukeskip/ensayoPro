@@ -9,18 +9,10 @@ use App\User as User;
 use App\Company as Company;
 use App\MediaItem as MediaItem;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class RoomController extends Controller
 {
-    
-    public function register (){
-        $user_id = Auth::user()->id;
-        $companies = User::where('id',$user_id)->with('companies')->first();
-        $companies = $companies->companies;
-        return view('reyapp.register_room')->with('companies',$companies);
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -105,7 +97,10 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        $user_id = Auth::user()->id;
+        $companies = User::where('id',$user_id)->with('companies')->first();
+        $companies = $companies->companies;
+        return view('reyapp.rooms.register_room')->with('companies',$companies);
     }
 
     /**
@@ -116,6 +111,26 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
+
+        // Registramos las reglas de validación
+        $rules = array(
+            'name'              => 'required|max:255',
+            'description'       => 'required|max:1000',
+            'equipment'         => 'required|max:1000',
+            'schedule_start'    => 'required|max:3', 
+            'schedule_end'      => 'required|max:3',
+            'color'             => 'required|max:10',        
+            'price'             => 'required|integer',        
+        );
+
+        // Validamos todos los campos
+        $validator = Validator::make($request->all(), $rules);
+
+        // Si la validación falla, nos detenemos y mandamos false
+        if ($validator->fails()) {
+            return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
+        }
+         
         $company_id             = $request->company;
         $room                   = new Room();
         $room->name             = $request->name;
@@ -206,7 +221,10 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user_id = Auth::user()->id;
+        $companies = User::where('id',$user_id)->with('companies')->first();
+        $companies = $companies->companies;
+        return view('reyapp.rooms.register_room')->with('companies',$companies);
     }
 
     /**

@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="medium-6 medium-centered columns login">
             <div class="panel panel-default">
-                <div class="panel-heading">Reinicia tu Contraseña</div>
+                <h2>Te hemos enviado un correo</h2>
                 <div class="panel-body">
                     @if (session('status'))
                         <div class="alert alert-success">
