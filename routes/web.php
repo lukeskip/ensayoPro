@@ -119,6 +119,7 @@ Route::group(['middleware' => 'auth'], function () {
 	//STARTS: resources///////////////////////////////////////////// 
 	Route::resource('bandas', 'BandController');
 	
+	Route::resource('opiniones', 'OpinionController');
 	Route::resource('salas', 'RoomController');
 	Route::resource('reservaciones', 'ReservationController');
 	//ENDS: resources/////////////////////////////////////////////

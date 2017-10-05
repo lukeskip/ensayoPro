@@ -1,5 +1,7 @@
 @extends('layouts.reyapp.main')
-
+@section('styles')
+<link rel="stylesheet" href="{{asset('plugins/bar-rating/themes/fontawesome-stars.css')}}">
+@endsection
 @section('content')
 	<div class="row">
 		<form id="order_form" class="search" method="get" action="/salas">
@@ -73,15 +75,19 @@
 						</div>
 						
 					</div>
-					<div class="medium-3 columns ">
+					<div class="medium-3 columns rating_wrapper">
+								
 						@if($room->opinions > 0)
-							<div class="skillbar clearfix " data-percent="{{$room->score}}%" >
-								<div class="skillbar-bar"></div>
-							</div>
-							<div class="text-center">
-								 {{$room->opinions}} calificaciones
-							</div>
+							<select name="" data-score="{{$room->score}}" class="rating">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+							
 						@else
+
 							<div class="text-center">
 								 Esta sala aún no tiene calificaciones
 							</div>
@@ -104,13 +110,20 @@
 @endsection
 
 @section('scripts')
+<script src="{{asset('plugins/bar-rating/jquery.barrating.min.js')}}"></script>
 <script>
 	$(document).ready(function(){
-		$('.skillbar').each(function(){
-			$(this).find('.skillbar-bar').animate({
-				width:$(this).attr('data-percent')
-			},3000);
-		});
+
+		$('.rating').each(function() {
+	        $(this).barrating({
+				theme: 'fontawesome-stars',
+				readonly:true,
+				initialRating:$(this).data('score'),
+				onSelect:function(value, text, event){
+					console.log(value);
+				}
+			});
+	    });
 	});
 </script>
 	

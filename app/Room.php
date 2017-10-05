@@ -25,4 +25,9 @@ class Room extends Model
     {
         return $this->hasMany('App\Opinion');
     }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
 }

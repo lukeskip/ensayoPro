@@ -63,7 +63,7 @@ $(document).ready(function() {
 			},
 			validRange: function(nowDate) {
 				return {
-					start: nowDate,
+					start: nowDate.clone().add(-2, 'months'),
 					end: nowDate.clone().add(2, 'months')
 				};
 			},
@@ -83,6 +83,9 @@ $(document).ready(function() {
 			selectable: true,
 			selectOverlap:true,
 			eventDurationEditable:false,
+			displayEventEnd: 'true',
+			axisFormat: 'H:mm',
+			timeFormat: 'H:mm',
 			selectConstraint:{
 				start: schedule_start+':00', 
 				end: schedule_end+':00',
@@ -101,7 +104,7 @@ $(document).ready(function() {
 
 				// Agregamos el botón para eliminar la reservación
 				if (view.name== 'agendaDay' && event.className =='company-reservation') {
-					$(element).css('width','45%');
+					// $(element).css('max-width','80%');
 					element.find(".fc-content").prepend('<span class="closeon"><i class="fa fa-window-close" aria-hidden="true"></i></span>');
 				}
 				// Eliminamos la reservación del calendario delete
@@ -134,11 +137,6 @@ $(document).ready(function() {
 		
 		}
 
-
-
-		function update_reservation(){
-
-		}
 
 		function delete_reservation (id,title){
 			swal({
@@ -195,6 +193,8 @@ $(document).ready(function() {
 			        options:rooms
 			      },
 			      { id: 'name', placeholder: 'Nombre de la banda' },
+			      { id: 'email', placeholder: 'Email para envio de comprobante' },
+			      { id: 'phone', placeholder: 'Teléfono' },
 			      { id: 'start', type: 'hidden', value : save_start},
 			      { id: 'end', type: 'hidden', value : save_end},
 

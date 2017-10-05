@@ -4,6 +4,8 @@ h1,h2,h3{
 	margin-bottom: 20px;
 }
 
+a:focus {outline:0;}
+
 a{
 	color:white;
 }
@@ -190,6 +192,13 @@ body{
 
 /*STARTS: Company Calendar*******************************/
 
+.fc-ltr .fc-time-grid .fc-event-container{
+	margin: 0 10% 0 2px;
+}
+
+.fc-event .fc-bg{
+	opacity: 0;
+}
 .room-keys{
 	position: absolute;
 	background: black;
@@ -439,6 +448,30 @@ body.company_calendar{
 /*ENDS: PAGINATION*/
 
 /*FORM*/
+
+.rating{
+	display: none;
+}
+
+.br-theme-fontawesome-stars-o .br-widget a.br-selected:after{
+	color:#EDB867;
+}
+
+.br-theme-fontawesome-stars-o .br-widget a.br-fractional:after{
+	color:#EDB867;
+}
+
+.br-theme-fontawesome-stars-o .br-widget a:after{
+	color:#EDB867;
+}
+
+.br-theme-fontawesome-stars-o .br-widget a.br-active:after{
+	color:#EDB867;
+}
+
+.br-widget{
+	text-align: center
+}
 
 .chosen-container-multi .chosen-choices li.search-field input[type=text]{
 	margin-top: 5px;
@@ -787,8 +820,8 @@ nav.main ul li a{
 .list-item button{
 	color:white;
 }
-.list-item:nth-child(even) {background: rgba(250,250,250,.1);}
-.list-item:nth-child(odd) {background: rgba(0,0,0,.3)}
+.list-item:nth-child(even) {color:white;background: rgba(250,250,250,.1)}
+.list-item:nth-child(odd) {color:white;background: rgba(0,0,0,.1)}
 
 .list_rey{
 	margin:auto;
@@ -1260,23 +1293,58 @@ h1 .duration{
 	line-height: 1em;
 }
 /*steps*****************************/
-#map{
-	width: 100%;
-	margin-bottom: 20px;
-	border:5px solid white;
-}
+
 /*STARTS: Room Single******************************************/
+
+.room-item #map{
+	width: 100%;
+	height: 200px;
+	/*margin-bottom: 20px;*/
+	border:5px solid black;
+	margin-top: -20px;
+}
 .room-item .image{
-	width: 48%;
+	width: 30%;
 	margin-right: 2%;
 	overflow: hidden;
-	display: block;
-	float: left;
+	display: inline-block;
 	border:white 2px solid;
+}
+
+.room-item .images{
+	text-align: center;
+	background: rgba(0,0,0,.5);
+	padding: 40px 0;
+	margin-top: -20px;
 }
 
 .room-item .info{
 	margin-bottom: 10px;
+	position: relative;
+}
+
+.room-item .info .tags{
+	margin-top: 30px;
+}
+
+.equipment ul{
+	margin-left:0;
+	margin-bottom: 20px;
+
+}
+
+.equipment ul .list-item{
+	padding-left : 20px;
+}
+
+.equipment ul .list-item:before{
+	content:'\f14a';
+	font-family: 'FontAwesome';
+	color:black;
+	width: 20px;
+	height: 20px;
+	margin-right:20px;
+
 }
 
 .room-item .full-address{
@@ -1289,20 +1357,82 @@ h1 .duration{
 	margin-top: 10px;
 }
 .room-item.room-single .price{
-	font-size: 2em;
-	text-align: left
+	font-size: .7em;
+	background: black;
+	padding: 10px;
+	border-radius: 5px;
+	position: absolute;
+	top: 20px;
+	right:20px;
 }
 
 .room-item.room-single h1{
 	font-size: 2.5em;
 	margin:0;
+	text-align: left;
+	line-height: 2em;
 }
 
 .room-item.room-single h2{
 	font-size: 1.8em;
 	margin: 0;
+	text-align: left;
 }
 
+.br-theme-fontawesome-stars-o .br-widget{
+	/*display: inline-block;*/
+}
+
+.room-item .rating_wrapper{
+	padding-top: 20px; 
+}
+
+.comments{
+	color:white;
+	/*padding: 10px;*/
+}
+
+.comment{
+	padding: 20px;
+}
+
+.comment label{
+	color: #333;
+}
+
+.comment .button{
+	box-shadow: none;
+}
+
+.comment textarea{
+	min-height: 100px;
+}
+
+.comments .comment .author{
+	text-align: right;
+	margin-top: 10px;
+}
+
+.comments .comment .title{
+	font-size: 1em;
+	margin-bottom: 10px;
+	color:#C73536;
+	font-weight: 700;
+	text-transform: uppercase;
+
+}
+
+.comments .comment .description{
+	font-size: .9em;
+
+}
+
+.comment:nth-child(even) {color:#333;background: white;}
+.comment:nth-child(odd) {color:#333;background: #eee}*/
+
+/*
+.room-item .list-item:nth-child(even) {color:#333;background: rgba(250,250,250,1);}
+.room-item .list-item:nth-child(odd) {color:#333;background: #eee}*/
 
 /*ENDS: Room Single********************************************/
 

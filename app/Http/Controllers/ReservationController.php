@@ -69,10 +69,11 @@ class ReservationController extends Controller
 
         // Registramos las reglas de validación
         $rules = array(
-            'name'   => 'required|max:255',
+            'name'          => 'required|max:255',
             'room_id'       => 'required|integer',
             'start'         => 'required|date', 
-            'end'           => 'required|date',       
+            'end'           => 'required|date',
+            'email'         => 'sometimes|nullable|email',       
         );
 
         // Validamos todos los campos
@@ -84,7 +85,7 @@ class ReservationController extends Controller
         }
 
         $user_id = Auth::user()->id;
-        $description = $request->name;
+        $description = $request->name." ".$request->email." ".$request->phone;
         $room_id = $request->room_id;
         $starts = $request->start;
         $ends = $request->end;

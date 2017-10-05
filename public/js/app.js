@@ -13,40 +13,45 @@ $(document).ready(function(){
 			
 	});
 
-	$(".colorpicker").colorpicker({
-		hideButton: true,
-		history: false,
-		defaultPalette:'web'
+	if($(".colorpicker").length > 0){
+		$(".colorpicker").colorpicker({
+			hideButton: true,
+			history: false,
+			defaultPalette:'web'
+		});
+	}
 
-	});
+	
 
 	// Cargamos los archivos antes de hacer submit al completarlos se enviar el formulario
-	$('#uploader').fineUploader({
-		debug:false,
-		request: {
-			endpoint: '/uploader/upload',
-			params: {
-			base_directory: 'completed',
-			sub_directory: null,
-			optimus_uploader_allowed_extensions: [],
-			optimus_uploader_size_limit: 0,
-			optimus_uploader_thumbnail_height: 100,
-			optimus_uploader_thumbnail_width: 100,
-			}
-		},
-		autoUpload: false,
-		callbacks: {
-			onComplete: function(id,name,responseJSON) {
-				room_images.push({
-					'name'  :responseJSON.name,
-					'path'	:'uploader/completed'
-				});
+	if($('#uploader').length > 0){
+		$('#uploader').fineUploader({
+			debug:false,
+			request: {
+				endpoint: '/uploader/upload',
+				params: {
+				base_directory: 'completed',
+				sub_directory: null,
+				optimus_uploader_allowed_extensions: [],
+				optimus_uploader_size_limit: 0,
+				optimus_uploader_thumbnail_height: 100,
+				optimus_uploader_thumbnail_width: 100,
+				}
 			},
-			onAllComplete: function(succeeded){
-				register_room();
+			autoUpload: false,
+			callbacks: {
+				onComplete: function(id,name,responseJSON) {
+					room_images.push({
+						'name'  :responseJSON.name,
+						'path'	:'uploader/completed'
+					});
+				},
+				onAllComplete: function(succeeded){
+					register_room();
+				}
 			}
-		}
-	});
+		});
+	}
 	// ENDS: Forms
 	
 
@@ -153,7 +158,7 @@ function conection (method,fields,link,redirect){
 	.done(function(data) {
 	
 		if(data.success == true){
-			if(link){
+			if(redirect){
 				window.location.replace(redirect);
 			}else{
 				show_message('success','¡Listo!',data.message);

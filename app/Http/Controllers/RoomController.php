@@ -75,12 +75,12 @@ class RoomController extends Controller
                 }
 
                 $quality = $quality / $sumOpinions;
-                $room['score']    = round(($quality *100) / 5);
+                $room['score']    = $quality;
             }
             
             $room['opinions'] = $sumOpinions;
         }
-
+        
         
         $companies = Company::orderBy('name', 'desc')->get();
         $order = request()->order;
@@ -204,11 +204,10 @@ class RoomController extends Controller
             }
 
             $quality = $quality / $sumOpinions;
-            $room['score']    = round(($quality *100) / 5);
+            $room['score']    = round($quality,1, PHP_ROUND_HALF_UP);
         }
         
         $room['opinions'] = $sumOpinions;
-        
 
         return view('reyapp.rooms.single')->with('room',$room);
     }
