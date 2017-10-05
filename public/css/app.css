@@ -812,6 +812,10 @@ nav.main ul li a{
 	padding: 20px;
 }
 
+h3.list-header{
+	margin:0;
+}
+
 .list-item{
 	color:white;
 	padding: 10px;
@@ -1299,12 +1303,10 @@ h1 .duration{
 .room-item #map{
 	width: 100%;
 	height: 200px;
-	/*margin-bottom: 20px;*/
 	border:5px solid black;
-	margin-top: -20px;
 }
 .room-item .image{
-	width: 30%;
+	width: 25%;
 	margin-right: 2%;
 	overflow: hidden;
 	display: inline-block;
@@ -1315,7 +1317,6 @@ h1 .duration{
 	text-align: center;
 	background: rgba(0,0,0,.5);
 	padding: 40px 0;
-	margin-top: -20px;
 }
 
 .room-item .info{
@@ -1387,13 +1388,19 @@ h1 .duration{
 	padding-top: 20px; 
 }
 
-.comments{
+.comments-wrapper{
 	color:white;
-	/*padding: 10px;*/
+	margin-top: 20px;
+	margin-bottom: 80px;
+}
+
+.comments-wrapper .comment-form{
+	background: white;
+	padding: 20px 50px;
 }
 
 .comment{
-	padding: 20px;
+	padding: 20px 50px;
 }
 
 .comment label{
@@ -1404,16 +1411,28 @@ h1 .duration{
 	box-shadow: none;
 }
 
-.comment textarea{
+.comment-form textarea{
 	min-height: 100px;
 }
 
-.comments .comment .author{
-	text-align: right;
-	margin-top: 10px;
+.comment .sign{
+	text-align: left;
+	margin-top: 20px;
+	font-weight: 700;
 }
 
-.comments .comment .title{
+.comment .sign .date{
+	font-weight: 400;
+}
+
+.comment .sign .delete{
+	font-weight: 400;
+	color:#C73536;
+	font-size: .8em;
+}
+
+
+.comment .title{
 	font-size: 1em;
 	margin-bottom: 10px;
 	color:#C73536;

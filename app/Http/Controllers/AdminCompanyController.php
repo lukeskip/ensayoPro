@@ -65,20 +65,20 @@ class AdminCompanyController extends Controller
                 $room['longitude']      = $room->companies->longitude;
             }
             
-            // Cuantificamos y promediamos las opiniones en base 5
+            // Cuantificamos y promediamos las calificaciones en base 5
             $quality = 0;
-            $sumOpinions = count($room->opinions);
+            $sumORatings = count($room->ratings);
 
-            if($sumOpinions > 0){
-                foreach ($room->opinions as $opinion) {
-                    $quality += $opinion->score;
+            if($sumRatings > 0){
+                foreach ($room->ratings as $rating) {
+                    $quality += $rating->score;
                 }
 
-                $quality = $quality / $sumOpinions;
+                $quality = $quality / $sumRatings;
                 $room['score']    = round(($quality *100) / 5);
             }
             
-            $room['opinions'] = $sumOpinions;
+            $room['ratings'] = $sumRatings;
         }
         
         $companies = Company::orderBy('name', 'desc')->get();

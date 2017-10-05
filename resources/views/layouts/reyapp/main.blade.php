@@ -60,12 +60,14 @@
 		    </div>
 
 		    <ul class="vertical menu">
-				<li>
-					
-					<a target="_blank" href="/users/{{Auth::user()->id}}">
-					<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
-					</a>
-				</li>
+				@if(!Auth::guest())
+					<li>
+						
+						<a target="_blank" href="/users/{{Auth::user()->id}}">
+						<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
+						</a>
+					</li>
+				@endif
 				<li>
 					
 					<a target="_blank" href="http://reydecibel.com.mx">

@@ -150,27 +150,15 @@ $(document).ready(function() {
 			  cancelButtonText: 'No, cancelar!',
 			},function () {
 				return new Promise(function (resolve, reject) {
-					$.ajax({
-						header:{
-							'Content-Type':'application/x-www-form-urlencoded',
-							'Accept':'application/json'
-						},
-						method:'DELETE',
-						url: APP_URL+'/reservaciones/'+id,
-						dataType:'json',
-					}).done(function(data) {
-		
-						if(data.success == true){
+					conection('DELETE','','/reservaciones/'+id,true).then(function(data) {
+  						if(data.success == true){
 							show_message('success','Se eliminó', title);
 							$('#calendar').fullCalendar('removeEvents',id);
 						}else{
 							show_message('error','Hubo un error','Hubo un error en el servidor');
 						}
-					  
-					}).fail(function(jqXHR, exception){
-						msg =  get_error(jqXHR.status);
-							show_message('error','Error en el servidor!',msg);
 					});
+
 				});
 			})
 		}
@@ -201,25 +189,14 @@ $(document).ready(function() {
 			    ]
 			  }).then(function (context) {
 			  	if(context._isConfirm){
-			  		$.ajax({
-					header:{
-						'Content-Type':'application/x-www-form-urlencoded',
-						'Accept':'application/json'
-					},
-					method:'POST',
-					url: APP_URL+'/reservaciones',
-					dataType:'json',
-					data:context.swalForm,
-					}).done(function(data) {
-						
-						if(data.success == true){
+			  		conection('POST',context.swalForm,'/reservaciones',true).then(function(data) {
+  						if(data.success == true){
 						  addEvent(data.id,start,end,data.color,data.title);
 						}else{
 							show_message('error','¡Error!',data.message);
 						}
-					}).fail(function(jqXHR, exception){
-
 					});
+	
 			  	}
 			    
 			  });

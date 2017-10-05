@@ -141,11 +141,10 @@ function show_message(type,title,message,link,color = '#CF2832'){
 
 }
 
+// Pool de conexiones
+function conection (method,fields,link,handle = false){
 
-// pool de conexiones
-function conection (method,fields,link,redirect){
-
-	$.ajax({
+	return $.ajax({
 		header:{
 			'Content-Type':'application/x-www-form-urlencoded',
 			'Accept':'application/json'
@@ -156,17 +155,16 @@ function conection (method,fields,link,redirect){
 	  data:fields,
 	})
 	.done(function(data) {
-	
-		if(data.success == true){
-			if(redirect){
-				window.location.replace(redirect);
-			}else{
-				show_message('success','¡Listo!',data.message);
-			}
+		// Si handle es true, solo regresamos la respuesta del ajax, si no manejamos el mensaje al usuario desde aquí
+		if(handle){
+			return data;
 		}else{
-			show_message('error','¡Error!',data.message);
-		}
-	  
+			if(data.success == true){
+				show_message('success','¡Listo!',data.message);
+			}else{
+				show_message('error','¡Error!',data.message);
+			}
+		}	
 	  
 	}).fail(function(jqXHR, exception){
 		msg =  get_error(jqXHR.status);
@@ -186,6 +184,15 @@ function get_error(code){
 		return 'Internal Server Error [500].';
 	} 
 }
+
+function resetForm($form) {
+    $form.find('input:text, input:hidden, input:password, input:file, select, textarea').val('');
+    $form.find('input:radio, input:checkbox')
+         .removeAttr('checked').removeAttr('selected');
+}
+
+
+
 
 
 

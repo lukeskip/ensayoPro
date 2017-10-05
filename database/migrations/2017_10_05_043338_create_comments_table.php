@@ -15,9 +15,11 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
             $table->longText('description');
             $table->integer('user_id');
             $table->integer('room_id');
+            $table->enum('status', ['approved', 'rejected','pending']);
             $table->timestamps();
         });
     }

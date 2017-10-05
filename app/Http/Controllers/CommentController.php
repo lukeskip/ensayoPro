@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
-use App\Opinion as Opinion;
+use App\Comment as Comment;
 use Illuminate\Support\Facades\Validator;
 
-class OpinionController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class OpinionController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -39,8 +39,8 @@ class OpinionController extends Controller
     {
         // Registramos las reglas de validación
         $rules = array(
-            'description'   => 'sometimes|nullable|max:1000',
-            'score'         => 'required|integer',
+            'title'         => 'required|max:255',
+            'description'   => 'required|max:1000',
             'room_id'       => 'required|integer',       
         );
 
@@ -49,7 +49,6 @@ class OpinionController extends Controller
 
         $room_id        = $request->room_id;
         $score          = $request->score;
-        $description    = $request->description;
 
         // Si la validación falla, nos detenemos y mandamos false
         if ($validator->fails()) {
@@ -57,31 +56,18 @@ class OpinionController extends Controller
         }
 
         $user_id = Auth::user()->id;
-        $opinion_check = Opinion::where(
-            function ($query) use ($room_id,$user_id) {
-                $query->where('room_id', $room_id)->where('user_id', $user_id);
-            })->first();
+        $status  = 'pending';
+        $comment = new Comment;
+        $comment->title         = $request->title;
+        $comment->description   = $request->description;
+        $comment->room_id       = $request->room_id;
+        $comment->user_id       = $user_id;
+        $comment->status        = $status;
 
-        
-        if(!$opinion_check){
-            $opinion = new Opinion;
-            $opinion->description   = '$description';
-            $opinion->score         = $score;
-            $opinion->room_id       = $room_id;
-            $opinion->user_id       = $user_id;
-            $opinion->save();
-
-            return response()->json(['success' => true,'message'=>'Gracias por calificar esta sala']);
-        }else{
-
-            $opinion_check->description = '$description';
-            $opinion_check->score       = $score;
-
-            $opinion_check->save();
-
-            return response()->json(['success' => true,'message'=>'Gracias por calificar esta sala']);
-        }
-        
+        $comment->save();
+        $author = $comment->users->name;
+        $date = $comment->created_at->format('d/m/Y');
+        return response()->json(['success' => true,'message'=>'Tu comentario ha sido guardado','title' => $request->title,'description' => $request->description ,'author' => $author,'class' => $status,'date'=>$date]);
     }
 
     /**

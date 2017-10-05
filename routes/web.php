@@ -28,18 +28,6 @@ Route::get('/registro', function () {
 
 Route::group(['middleware' => 'auth'], function () {
 
-	// STARTS: Carga de imágenes fineuploader
-	Route::get('imagenes/{image}', function($image){
-
-	    //do so other checks here if you wish
-	    if(!File::exists( $image = storage_path("uploader/completed/{$image}") )) abort(401);
-
-	    $returnImage = Image::make($image);
-
-		return $returnImage->response();
-	});
-	// ENDS: Carga de imágenes fineuploader
-
 	Route::get('salas/reservando/{room_id}', 'ReservationController@make_reservation');
 	Route::post('salas/reservando/checkout', 'ReservationController@checkout');
 
@@ -118,9 +106,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 	//STARTS: resources///////////////////////////////////////////// 
 	Route::resource('bandas', 'BandController');
-	
-	Route::resource('opiniones', 'OpinionController');
-	Route::resource('salas', 'RoomController');
 	Route::resource('reservaciones', 'ReservationController');
 	//ENDS: resources/////////////////////////////////////////////
 
@@ -140,6 +125,23 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 });
+
+
+Route::resource('comentarios', 'CommentController');
+Route::resource('ratings', 'RatingController');
+Route::resource('salas', 'RoomController');
+
+// STARTS: Carga de imágenes fineuploader
+Route::get('imagenes/{image}', function($image){
+
+    //do so other checks here if you wish
+    if(!File::exists( $image = storage_path("uploader/completed/{$image}") )) abort(401);
+
+    $returnImage = Image::make($image);
+
+	return $returnImage->response();
+});
+// ENDS: Carga de imágenes fineuploader
 
 
 

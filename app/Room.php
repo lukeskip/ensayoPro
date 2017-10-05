@@ -21,9 +21,9 @@ class Room extends Model
         return $this->hasMany('App\MediaItem');
     }
 
-    public function opinions()
+    public function ratings()
     {
-        return $this->hasMany('App\Opinion');
+        return $this->hasMany('App\Rating');
     }
 
     public function comments()

@@ -38,11 +38,11 @@ class RoomController extends Controller
             
             }else if(request()->order == 'quality_up'){
 
-                $rooms = Room::where('status','active')->leftJoin('opinions', 'opinions.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'ASC')->paginate($items_per_page);
+                $rooms = Room::where('status','active')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'ASC')->paginate($items_per_page);
 
             }else if(request()->order == 'quality_down'){
 
-                $rooms = Room::where('status','active')->leftJoin('opinions', 'opinions.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'DESC')->paginate($items_per_page);
+                $rooms = Room::where('status','active')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'DESC')->paginate($items_per_page);
             }
 
         }else{
@@ -65,22 +65,22 @@ class RoomController extends Controller
                 $room['longitude']      = $room->companies->longitude;
             }
             
-            // Cuantificamos y promediamos las opiniones en base 5
+            // Cuantificamos y promediamos las calificaiones
             $quality = 0;
-            $sumOpinions = count($room->opinions);
+            $sumRatings = count($room->ratings);
 
-            if($sumOpinions > 0){
-                foreach ($room->opinions as $opinion) {
-                    $quality += $opinion->score;
+            if($sumRatings > 0){
+                foreach ($room->ratings as $rating) {
+                    $quality += $rating->score;
                 }
 
-                $quality = $quality / $sumOpinions;
+                $quality = $quality / $sumRatings;
                 $room['score']    = $quality;
             }
             
-            $room['opinions'] = $sumOpinions;
+            $room['ratings'] = $sumRatings;
         }
-        
+
         
         $companies = Company::orderBy('name', 'desc')->get();
         $order = request()->order;
@@ -182,7 +182,9 @@ class RoomController extends Controller
     public function show($id)
     {
         $room = Room::find($id);
-
+        if(!$room){
+            return "Esta sala ha sido eliminada o está temporalmente suspendida";
+        }
         if($room->company_address){
             $room['address']        = $room->companies->address;
             $room['colony']         = $room->companies->colony;
@@ -196,20 +198,26 @@ class RoomController extends Controller
 
         // Cuantificamos y promediamos las opiniones en base 5
         $quality = 0;
-        $sumOpinions = count($room->opinions);
+        $sumRatings = count($room->ratings);
 
-        if($sumOpinions > 0){
-            foreach ($room->opinions as $opinion) {
-                $quality += $opinion->score;
+        if($sumRatings > 0){
+            foreach ($room->ratings as $rating) {
+                $quality += $rating->score;
             }
 
-            $quality = $quality / $sumOpinions;
+            $quality = $quality / $sumRatings;
             $room['score']    = round($quality,1, PHP_ROUND_HALF_UP);
         }
         
-        $room['opinions'] = $sumOpinions;
+        $room['ratings'] = $sumRatings;
 
-        return view('reyapp.rooms.single')->with('room',$room);
+        if(!Auth::guest()){
+            $user = User::find(Auth::user()->id)->id;
+        }else{
+            $user = false;
+        }
+
+        return view('reyapp.rooms.single')->with('room',$room)->with('user',$user);
     }
 
     /**

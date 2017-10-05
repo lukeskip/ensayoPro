@@ -57,58 +57,12 @@
 			</div>
 			
 			<div class="equipment">
-				<div class="list-header">EQUIPAMIENTO</div class="list-header">
+				<h3 class="list-header">EQUIPAMIENTO</h3>
 				<ul>
 					@foreach($room->equipment as $equipment)
 						<li class="list-item">{{$equipment}}</li>
 					@endforeach
 				</ul>
-			</div>
-
-			<div class="comments">
-				<div class="list-header">OPINIONES</div class="list-header">
-					<div class="comment-form comment">
-						@if (!Auth::guest())
-	
-						
-						<form action="">
-							<div class="title">Deja una opinión</div>
-							<label for="">Título;</label>
-							<input type="text" name="title">
-							<label for="">Opinión:</label>
-							<textarea name="" id=""></textarea>
-							<button class="green button small" type="submit">Enviar</button>
-						</form>
-						@else
-						<h3>Logéate para dejar una opinión</h3>
-						@endif
-					</div>
-					<div class="comment">
-						<div class="date">12 de septiembre de 2016</div>
-						<div class="title">No me gustó esta sala</div>
-						<div class="description">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</div>
-						<div class="author">Cheko García</div>
-					</div>
-					<div class="comment">
-						<div class="date">12 de septiembre de 2016</div>
-						<div class="title">Está chida te atienden bien</div>
-						<div class="description">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</div>
-						<div class="author">Malena Lara</div>
-					</div>
 			</div>
 			
 
@@ -141,6 +95,58 @@
 				@endforeach
 			</div>
 			
+		</div>
+
+		<div class="large-12 columns">
+			<div class="comments-wrapper">
+				<h3 class="list-header">OPINIONES</h3>
+					<div class="comment-form">
+						@if (!Auth::guest())
+						<form id="form-comment" action="">
+							<div class="title">Deja una opinión</div>
+							<label for="">Título:</label>
+							<input type="text" name="title">
+							<label for="">Opinión:</label>
+							<textarea name="description" id=""></textarea>
+							<input type="hidden" name="room_id" value="{{$room->id}}">
+							<button class="black button comment-submit">Enviar</button>
+						</form>
+						@else
+						<h3>Logéate para dejar una opinión</h3>
+						@endif
+					</div>
+					<div class="comments">
+						
+						@foreach($room->comments as $comment)
+							{{-- Si el comentarios está aprovado o pertenece al usuario que lo creo, estará visible --}}
+							@if($comment->status == 'approved' or $user == $comment->user_id)
+							<div class="comment {{$comment->status}}">
+
+								<div class="title">{{$comment->title}}</div>
+								<div class="description">
+									{{$comment->description}}
+								</div>
+								<div class="sign">
+									{{$comment->users->name}} 
+									<span class="date">{{$comment->created_at->format('d/m/Y')}}</span>
+									@if(!Auth::guest())
+									@if(Auth::user()->id == $comment->user_id)
+										<a href="#" class="delete" data-id="{{$comment->id}}" >
+											Eliminar comentario
+										</a>
+									@endif
+								@endif
+								</div>
+							</div>
+							@else
+
+							@endif
+
+						@endforeach
+
+					</div>
+					
+			</div>
 		</div>
 
 		
@@ -186,8 +192,22 @@
 			initialRating:@if($room->score){{$room->score}} @else 0 @endif,
 			onSelect:function(value, text, event){
 				data = {'score':value,'room_id':{{$room->id}},'description':text };
-				conection('POST',data,'/opiniones');
+				conection('POST',data,'/ratings');
 			}
+		});
+
+		$('.comment-submit').click(function(e){
+			e.preventDefault();
+			data = $('#form-comment').serialize();
+			conection('POST',data,'/comentarios',true).then(function(data){
+				if(data.success == true){
+					$('.comments').prepend('<div class="comment '+data.class+'"><div class="title">'+data.title+'</div><div class="description">'+data.description+'</div><div class="sign">'+data.author+' <span class="date">'+data.date+'</span></div></div>');
+					resetForm($('#form-comment'));	
+				}else{
+					show_message('error','Error',data.message);
+				}
+				
+			})
 		});
 
 

@@ -77,7 +77,7 @@
 					</div>
 					<div class="medium-3 columns rating_wrapper">
 								
-						@if($room->opinions > 0)
+						@if($room->ratings > 0)
 							<select name="" data-score="{{$room->score}}" class="rating">
 								<option value="1">1</option>
 								<option value="2">2</option>

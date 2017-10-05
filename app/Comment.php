@@ -8,11 +8,11 @@ class Comment extends Model
 {
     public function rooms()
     {
-        return $this->belogsTo('App\Room','room_id');
+        return $this->belongsTo('App\Room','room_id');
     }
 
     public function users()
     {
-        return $this->belogsTo('App\User','user_id');
+        return $this->belongsTo('App\User','user_id');
     }
 }
