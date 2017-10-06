@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use App\Comment as Comment;
 use Illuminate\Support\Facades\Validator;
+use App\User as User;
 
 class CommentController extends Controller
 {
@@ -112,6 +113,21 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(!Auth::guest()){
+            
+            $user = User::find(Auth::user()->id)->id;
+            $comment = Comment::find($id);
+ 
+            // Revisamos que el comentario pertenezca al usuario loggeado
+            if($comment->user_id == $user){
+                $comment->delete();
+                return response()->json(['success' => true,'message'=>'Tu comentario ha sido borrado','id'=>$comment->id]);   
+            }
+            
+       
+        }else{
+            return response()->json(['success' => false,'message'=>'No puedes borrar este comentario','id'=>$comment->id]); 
+        }
+        
     }
 }

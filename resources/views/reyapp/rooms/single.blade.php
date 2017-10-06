@@ -10,9 +10,7 @@
 
 	<div class="row">
 		
-		
-
-
+	
 		<div class="large-8 columns info">
 			
 			<h1 class="text-left">{{$room->companies->name}}</h1>
@@ -118,9 +116,9 @@
 					<div class="comments">
 						
 						@foreach($room->comments as $comment)
-							{{-- Si el comentarios está aprovado o pertenece al usuario que lo creo, estará visible --}}
+							{{-- Si el comentarios está aprobado o pertenece al usuario que lo creo, estará visible --}}
 							@if($comment->status == 'approved' or $user == $comment->user_id)
-							<div class="comment {{$comment->status}}">
+							<div class="comment {{$comment->status}}" data-id="{{$comment->id}}">
 
 								<div class="title">{{$comment->title}}</div>
 								<div class="description">
@@ -131,7 +129,7 @@
 									<span class="date">{{$comment->created_at->format('d/m/Y')}}</span>
 									@if(!Auth::guest())
 									@if(Auth::user()->id == $comment->user_id)
-										<a href="#" class="delete" data-id="{{$comment->id}}" >
+										<a href="#" class="delete delete-comment" data-id="{{$comment->id}}" >
 											Eliminar comentario
 										</a>
 									@endif
@@ -208,6 +206,19 @@
 				}
 				
 			})
+		});
+
+		$('.delete-comment').click(function(e){
+			e.preventDefault();
+			conection('DELETE',$(this).data('id'),'/comentarios/'+$(this).data('id'),true).then(function(data){
+				if(data.success == true){
+					$('a[data-id='+data.id+']').parent().parent().remove();	
+				}else{
+					show_message('error','Error',data.message);
+				}
+				
+			})
+			
 		});
 
 
