@@ -71,22 +71,28 @@ class CompanyController extends Controller
 
         // Si la validación falla, nos detenemos y mandamos false
         if ($validator->fails()) {
-            return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
+            // return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
+            return response()->json($validator->messages(), 200);
         }
 
         $user_id = Auth::user()->id;
-        $company   = new Company();
-        $company->name  = $request->name;
-        $company->address = $request->address;
-        $company->colony = $request->colony;
-        $company->deputation = $request->deputation;
-        $company->postal_code = $request->postal_code;
-        $company->city = $request->city;
-        $company->phone = $request->phone;
-        $company->rfc = $request->rfc;
-        $company->latitude = $request->latitude;
-        $company->longitude = $request->longitude;
-        $company->status = 'inactive';
+        $company                 = new Company();
+        $company->legalname      = $request->legalname;
+        $company->clabe          = $request->clabe;
+        $company->name           = $request->name;
+        $company->address        = $request->address;
+        $company->colony         = $request->colony;
+        $company->deputation     = $request->deputation;
+        $company->postal_code    = $request->postal_code;
+        $company->city           = $request->city;
+        $company->phone          = $request->phone;
+        $company->rfc            = $request->rfc;
+        $company->latitude       = $request->latitude;
+        $company->longitude      = $request->longitude;
+        $company->bank           = $request->bank_entity;
+        $company->account_holder = $request->account_holder;
+        $company->status         = 'inactive';
+        
         $user = User::findOrFail($user_id);
         $user->companies()->save($company);
 

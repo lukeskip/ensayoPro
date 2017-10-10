@@ -4,7 +4,19 @@ $(document).ready(function() {
 		show_message('warning','Atención','esta ventana se recargará cada 5 minutos para actualizar los datos');
 
 		var max_time 	= 300;//segundos para recargar la página 
-		var event_id = 0;
+		var event_id 	= 0;
+		var title 		= $("option:selected").text();
+
+		$('.band').on('change', function (e) {
+			if($(this).val() != 0){
+				title = $("option:selected").text();
+				console.log(title);
+			}else{
+				title = 'Tu ensayo';
+			}
+   		 	
+    		console.log(title);
+		});
 
 		function addEvent( start, end) {
 			create = true;
@@ -12,12 +24,13 @@ $(document).ready(function() {
 			// Contruimos el objeto del nuevo evento
 			event_id = event_id + 1;
 			var new_event = {
-				title: 'Noche de Quiz',
+				title: title,
+				band:$('.band').val(),
 				className: 'new-reservation',
 				start: start,
 				end: end,
 				id: event_id,
-				color:'#2FAB31',
+				// color:'#2FAB31',
 			};
 			
 			// Revisamos el evento dure al menos 2 horas
@@ -41,7 +54,7 @@ $(document).ready(function() {
   				new_start = new Date(new_event.start);
   				new_end   = new Date(new_event.end);
  
-  				if( old_end.getTime() == new_start.getTime() && event.className == 'new-reservation'){
+  				if( old_end.getTime() == new_start.getTime() && event.className == 'new-reservation' && event.band == $('.band').val()){
   					event.end = new_event.end; 
   					$('#calendar').fullCalendar('updateEvent', event);
   					create = false;
@@ -110,7 +123,7 @@ $(document).ready(function() {
 			slotDuration: '00:60:00',
 			minTime: schedule_start+ ":00:00",
 			maxTime: schedule_end+ ":00:00",
-			defaultDate: '2017-09-12',
+			// defaultDate: '2017-09-12',
 			slotLabelFormat:"HH:mm",
 			contentHeight: 450,
 			navLinks: true, // can click day/week names to navigate views
@@ -139,16 +152,7 @@ $(document).ready(function() {
 				addEvent(start,end);
 
 			},
-			events: [
-				{
-					id: 999,
-					title: 'Ocupado',
-					start: '2017-09-29T10:00:00',
-					end: '2017-09-29T12:00:00',
-					overlap: false,
-					className: "occupied",
-				},
-			],
+			events : reservations,
 			eventRender: function(event, element, view) {
 				if (view.name== 'agendaDay' && event.className =='new-reservation') {
 					element.find(".fc-content").prepend('<span class="closeon"><i class="fa fa-window-close" aria-hidden="true"></i></span>');
@@ -192,10 +196,15 @@ function checkout(){
 	events_array = [];
 	events = $('#calendar').fullCalendar( 'clientEvents' );
 	$.each(events, function( index, event ) {
-		events_array.push({
-			'start' : event.start,
-			'end' 	: event.end 
-		});
+		if (event.className != 'occupied'){
+			events_array.push({
+				'band'  : event.band,
+				'title' : event.title,
+				'start' : event.start,
+				'end' 	: event.end 
+			});	
+		}
+		
 	});
 
 	$('.events').val(JSON.stringify(events_array));

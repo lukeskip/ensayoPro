@@ -17,7 +17,8 @@ class CreateMediaItemsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('path');
-            $table->string('room_id');
+            $table->string('room_id')->nullable();
+            $table->string('user_id')->nullable();
             $table->timestamps();
         });
     }

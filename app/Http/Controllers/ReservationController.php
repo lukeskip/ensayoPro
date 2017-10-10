@@ -18,9 +18,10 @@ class ReservationController extends Controller
     {
         if($room_id != ''){
             $user_id = Auth::user()->id;
-            $bands = User::find($user_id)->companies();
+            $bands = User::find($user_id)->bands;
             $room = Room::find($room_id);
-            return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands); 
+            $reservations = Reservation::where('room_id',$room_id)->get();
+            return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands)->with('reservations',$reservations); 
         }else{
             return redirect('/salas');
         }
@@ -30,10 +31,48 @@ class ReservationController extends Controller
     // Pantalla Checkout para usuario 'musician'
     public function checkout(Request $request)
     {   
-        $room_id = $request->room_id;
-        $room = Room::find($room_id);
-        $events = json_decode($request->events,true);
+        $room_id    = $request->room_id;
+        $room       = Room::find($room_id);
+        $events     = json_decode($request->events,true);
+        
+        for($i=0;$i<count($events);$i++){
+            $starts_check = $events[$i]['start'];
+            $ends_check =$events[$i]['end'];
 
+            $reservations_check = Reservation::where(
+            function ($query) use ($starts_check) {
+                $query->where('starts', '<',$starts_check)
+                ->where('ends', '>',$starts_check);
+            })->orWhere(function ($query) use ($ends_check) {
+                $query->where('starts', '<',$ends_check)
+                ->where('ends', '>',$ends_check);
+             })->orWhere(function ($query) use ($starts_check,$ends_check) {
+                $query->where('starts', '>',$starts_check)
+                ->where('ends', '<',$ends_check);
+            })->get();
+
+            
+
+            // Si se empalmó revisamos que no sea en la misma sala
+            $reservations_check = $reservations_check->where('room_id',$room_id);
+
+            // Si no existe otra reservación en ese horario y esa misma sala ponemos el status en available
+            if($reservations_check->isEmpty()){
+                $prefix = substr($room->companies()->first()->name, 0, 4);
+                $prefix = str_replace(' ', '', $prefix);
+                $random = str_random(8);
+                $code   = strtoupper($prefix.$random);
+                
+                $events[$i]['code']   = $code; 
+                $events[$i]['status'] = 'available';
+            }else{
+                $events[$i]['status'] = 'unavailable';
+            }
+        }
+        
+
+        return $events;
+        
         return view('reyapp.rooms.checkout')->with('room',$room)->with('events',$events);
     }
 
@@ -84,12 +123,11 @@ class ReservationController extends Controller
             return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
         }
 
-        $user_id = Auth::user()->id;
-        $description = $request->name." ".$request->email." ".$request->phone;
-        $room_id = $request->room_id;
-        $starts = $request->start;
-        $ends = $request->end;
-
+        $user_id        = Auth::user()->id;
+        $description    = $request->name." ".$request->email." ".$request->phone;
+        $room_id        = $request->room_id;
+        $starts         = $request->start;
+        $ends           = $request->end;
 
         $starts_check = new DateTime($starts);
         $ends_check   = new DateTime($ends);
@@ -126,6 +164,15 @@ class ReservationController extends Controller
             $reservation->is_admin    = true;
 
             $room = Room::findOrFail($room_id);
+        
+            $prefix = substr($room->companies()->first()->name, 0, 4);
+            $prefix = str_replace(' ', '', $prefix);
+            $random = str_random(8);
+
+            $code   = strtoupper($prefix.$random);
+
+            $reservation->code = $code;
+
             $room->reservations()->save($reservation);
             
             return response()->json(['success' => true , 'title' => $description,'id'=>$reservation->id,'color'=>$room->color]);

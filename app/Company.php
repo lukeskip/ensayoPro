@@ -15,4 +15,9 @@ class Company extends Model
     {
         return $this->hasMany('App\Room');
     }
+    
+    public function media_items()
+    {
+        return $this->hasMany('App\MediaItem');
+    }
 }

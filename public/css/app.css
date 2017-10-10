@@ -3,6 +3,9 @@
 h1,h2,h3{
 	margin-bottom: 20px;
 }
+hr{
+	border-bottom:none;
+}
 
 a:focus {outline:0;}
 
@@ -522,6 +525,17 @@ body.company_calendar{
 	height: 300px;
 	border: 8px solid white;
 }
+
+
+
+.form_wrapper .g-recaptcha div{
+	margin:auto;
+}
+
+.form_wrapper .disclaimer{
+	padding: 10px;
+}
+
 .form_wrapper .ui-widget-content, .ui-widget.ui-widget-content{
 	margin-top: -13px;
     margin-left: -3px;
@@ -531,7 +545,7 @@ body.company_calendar{
 	background: black;
 	display: inline-block;
 	padding:10px;
-	margin-top: 10px;
+	margin-top: 20px;
 }
 .form_wrapper label{
 	margin-top: 10px;
@@ -1023,9 +1037,9 @@ h1 .duration{
 }
 
 #calendar .fc-event{
-	background: #C73536;
+	background: #36A93A;
 	color: white;
-	border:none;
+	border:2px solid white;
 	border-radius: 0;
 	padding: 5px;
 }
@@ -1123,6 +1137,13 @@ h1 .duration{
 	text-align: left;
 }
 
+.checkout .content ul{
+	margin:0;
+}
+
+.checkout .content ul .list-item{
+	color:#333;
+}
 /*ENDS: Checkout********************************************/
 
 /*PRESSKITS*/

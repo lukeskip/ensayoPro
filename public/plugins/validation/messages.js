@@ -6,7 +6,7 @@ $.extend(jQuery.validator.messages, {
   date: "Por favor, escribe una fecha válida.",
   dateISO: "Por favor, escribe una fecha (ISO) válida.",
   number: "Por favor, escribe un número entero válido.",
-  digits: "Por favor, escribe sólo dígitos.",
+  digits: "Por favor, escribe sólo números.",
   creditcard: "Por favor, escribe un número de tarjeta válido.",
   equalTo: "Por favor, escribe el mismo valor de nuevo.",
   accept: "Por favor, escribe un valor con una extensión aceptada.",

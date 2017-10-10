@@ -176,6 +176,7 @@ return [
         Optimus\FineuploaderServer\Provider\LaravelServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Trexology\Promocodes\PromocodesServiceProvider::class,
+        'Buzz\LaravelGoogleCaptcha\CaptchaServiceProvider',
 
         /*
          * Application Service Providers...
@@ -240,7 +241,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Promocodes' => Trexology\Promocodes\Facades\Promocodes::class
+        'Promocodes' => Trexology\Promocodes\Facades\Promocodes::class,
+        'Captcha' => '\Buzz\LaravelGoogleCaptcha\CaptchaFacade',
 
     ],
 

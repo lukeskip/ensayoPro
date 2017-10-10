@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function bands()
     {
-        return $this->belongsToMany('App\Band');
+        return $this->belongsToMany('App\Band','band_user');
     }
 
     public function reservations(){

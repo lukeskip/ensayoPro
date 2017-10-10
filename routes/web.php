@@ -126,6 +126,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
+Route::get('/payments', 'PaymentController@index');
+Route::post('/checkout', 'PaymentController@checkout');
 
 Route::resource('comentarios', 'CommentController');
 Route::resource('ratings', 'RatingController');

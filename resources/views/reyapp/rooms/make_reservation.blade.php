@@ -41,10 +41,10 @@
 				<input type="hidden" name="events" class="events">
 				<input type="hidden" name="room_id" class="room_id" value="{{$room->id}}">
 				<div>
-					<select  name="band" id="">
+					<select  name="band" class="band" id="">
 						<option value="">Banda...</option>
 						@foreach($bands as $band)
-							<option value="{{$band->id}}">{{$band->name}}</option>
+							<option selected value="{{$band->id}}">{{$band->name}}</option>
 						@endforeach
 						
 					</select>
@@ -76,7 +76,18 @@
 		var schedule_end   = {{$room->schedule_end}};
 		var room_price 	   = {{$room->price}};
 		var room_id		   = {{$room->id}};
+		var reservations   = [];
 		
+		@foreach($reservations as $reservation)
+			reservations.push({
+					'id'    	: {{$reservation->id}},
+					'title' 	: 'Ocupado',
+					'start' 	: '{{$reservation->starts}}',
+					'end'   	: '{{$reservation->ends}}',
+					'color' 	: '{{$reservation->rooms->color}}',
+					'className' : 'occupied', 
+			});
+		@endforeach  
 
 		$('body').on('click', '.checkout', function() {
 			checkout();

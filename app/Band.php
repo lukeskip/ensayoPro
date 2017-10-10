@@ -8,6 +8,6 @@ class Band extends Model
 {
     public function users()
     {
-        return $this->belongsToMany('App\User','band_user');
+        return $this->belongsToMany('App\User');
     }
 }

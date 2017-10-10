@@ -100,8 +100,21 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'name' => [
+            'required' => 'Este campo es requerido',
+        ],
+        'lastname' => [
+            'required' => 'Este campo es requerido',
+        ],
+        'email' => [
+            'required'  => 'Por favor, escribe tu correo electrónico',
+        ],
+        'password' => [
+            'required' => 'Escribe una contraseña',
+            'confirmed' => 'Los passwords no coinciden',
+        ],
+        'g-recaptcha-response' => [
+            'required' => 'Es necesario comprobar que no eres robot',
         ],
     ],
 

@@ -10,4 +10,9 @@ class MediaItem extends Model
     {
         return $this->belongsTo('App\Room');
     }
+
+    public function companies()
+    {
+        return $this->belongsTo('App\Companies');
+    }
 }

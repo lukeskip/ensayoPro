@@ -59,12 +59,6 @@ $(document).ready(function(){
 	$('body').on('click', '.add.member', function() {
 		$('.input_band_member_clone').clone().removeClass( "input_band_member_clone" ).appendTo('#paste');
 	});
-
-
-	// $('body').on('click', '.register_room', function(e) {
-	// 	// register_room_prepare ();
-	// });
-
 	
 
 	// Mostramos tooltips
@@ -135,10 +129,9 @@ function show_message(type,title,message,link,color = '#CF2832'){
 	},
 	function(){
 		if(link){
-		window.location.replace(link);	
+			window.location.replace(link);	
 		}
 	});
-
 }
 
 // Pool de conexiones

@@ -16,6 +16,7 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->string('legalname')->unique();
             $table->string('address');
             $table->string('colony');
             $table->string('deputation');
@@ -25,6 +26,9 @@ class CreateCompaniesTable extends Migration
             $table->string('longitude');
             $table->string('phone');
             $table->string('rfc')->nullable();
+            $table->string('clabe');
+            $table->string('bank');
+            $table->string('account_holder');
             $table->enum('status', ['active', 'inactive','deleted']);
             $table->timestamps();
         });
