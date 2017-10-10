@@ -60,7 +60,6 @@
 		// Construimos un objeto con las reservaciones de otros usuarios y que se hicieron por la base de datos
 		@foreach($app_reservations as $reservation)
 			reservations.push({
-					'id'    	: {{$reservation->id}},
 					'title' 	: '{{$reservation->description}}',
 					'start' 	: '{{$reservation->starts}}',
 					'end'   	: '{{$reservation->ends}}',

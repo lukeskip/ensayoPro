@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Http\Request;
 use DateTime;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class ReservationController extends Controller
 {
@@ -34,6 +35,7 @@ class ReservationController extends Controller
         $room_id    = $request->room_id;
         $room       = Room::find($room_id);
         $events     = json_decode($request->events,true);
+        $total_h    = 0;
         
         for($i=0;$i<count($events);$i++){
             $starts_check = $events[$i]['start'];
@@ -62,18 +64,29 @@ class ReservationController extends Controller
                 $prefix = str_replace(' ', '', $prefix);
                 $random = str_random(8);
                 $code   = strtoupper($prefix.$random);
+
+                $months = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
                 
-                $events[$i]['code']   = $code; 
-                $events[$i]['status'] = 'available';
+                $events[$i]['code']         = $code; 
+                $events[$i]['status']       = 'available';
+                $start                      = new Carbon($events[$i]['start']);
+                $end                        = new Carbon($events[$i]['end']);
+                $events[$i]['day']          = $start->format('d');
+                $events[$i]['month']        = $months[$start->format('m')];
+                $events[$i]['start_time']   = $start->format('H:i');
+                $events[$i]['end_time']     = $end->format('H:i');
+                
+               
+                $total_h += $start->diffInHours($end);     
+
+
             }else{
                 $events[$i]['status'] = 'unavailable';
             }
         }
         
-
-        return $events;
-        
-        return view('reyapp.rooms.checkout')->with('room',$room)->with('events',$events);
+        $price = $total_h * $room->price;
+        return view('reyapp.rooms.checkout')->with('room',$room)->with('events',$events)->with('price',$price)->with('hours',$total_h);
     }
 
     /**

@@ -84,7 +84,6 @@
 					'title' 	: 'Ocupado',
 					'start' 	: '{{$reservation->starts}}',
 					'end'   	: '{{$reservation->ends}}',
-					'color' 	: '{{$reservation->rooms->color}}',
 					'className' : 'occupied', 
 			});
 		@endforeach  

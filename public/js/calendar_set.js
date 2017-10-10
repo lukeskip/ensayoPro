@@ -22,7 +22,7 @@ $(document).ready(function() {
 			create = true;
 			
 			// Contruimos el objeto del nuevo evento
-			event_id = event_id + 1;
+			event_id = 'new_'+event_id + 1;
 			var new_event = {
 				title: title,
 				band:$('.band').val(),
@@ -70,7 +70,7 @@ $(document).ready(function() {
 				$('#calendar').fullCalendar('renderEvent', new_event, true);
 
 			}else if (create == true && diff_hours < 2){
-				show_message('error','¡Error!','tienes que reservar al menos 2 horas, puedes haciedo arrastrando el cursor de manera lenta');	
+				show_message('error','¡Error!','Tienes que reservar al menos 2 horas, puedes hacerlo arrastrando el cursor lentamente');	
 			}
 
 			counting_hours();

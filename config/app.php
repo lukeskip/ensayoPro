@@ -243,6 +243,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Promocodes' => Trexology\Promocodes\Facades\Promocodes::class,
         'Captcha' => '\Buzz\LaravelGoogleCaptcha\CaptchaFacade',
+        'Carbon' => 'Carbon\Carbon',
 
     ],
 

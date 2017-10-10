@@ -19,6 +19,7 @@ a{
 
 .button{
 	box-shadow: none;
+	color:white;
 }
 
 html,body{
@@ -52,6 +53,10 @@ body{
 	padding: 0;
 }
 
+.no-margin{
+	margin: 0;
+}
+
 .no-background{
 	background: none!important;
 }
@@ -77,17 +82,21 @@ body{
 
 .button.green{
 	background: #2FAB31;
+	color:white;
 }
 
 .button.red{
 	color:#C73536;
+	color:white;
 }
 .button.blue{
 	background: #1779BA;
+	color:white;
 }
 
 .button.black{
 	background: black;
+	color:white;
 }
 
 /*STARTS: Login ******************************************/
@@ -1039,7 +1048,7 @@ h1 .duration{
 #calendar .fc-event{
 	background: #36A93A;
 	color: white;
-	border:2px solid white;
+	border:1px dotted white;
 	border-radius: 0;
 	padding: 5px;
 }
@@ -1050,6 +1059,10 @@ h1 .duration{
 
 #calendar .fc-month-view .occupied{
 	display:none;
+}
+
+#calendar .fc-event.occupied{
+	background:#C73536;
 }
 
 .fc-agendaWeek-view tr {
@@ -1118,7 +1131,28 @@ h1 .duration{
 /*STARTS: Checkout********************************************/
 
 .checkout{
-	background: white
+	background: white;
+	color:#333;
+}
+
+.checkout .price-info{
+	font-size: 2em;
+	text-align: right;
+	margin-top: 20px;
+	margin-bottom: 20px; 
+	padding: 20px;
+}
+
+.checkout .price-info hr{
+	border-bottom: 2px solid #333;
+	margin: 5px;
+}
+
+.checkout .price-info label{
+	display: inline-block;
+	color: #666;
+	margin-right: 10px;
+	line-height: 1.9em;
 }
 
 .checkout .header{
@@ -1137,12 +1171,60 @@ h1 .duration{
 	text-align: left;
 }
 
+.checkout h3{
+	color:#333;
+	margin: 20px;
+}
+
 .checkout .content ul{
 	margin:0;
 }
 
 .checkout .content ul .list-item{
 	color:#333;
+	min-height: 120px;
+	padding: 0;
+	margin-bottom: 10px;
+}
+
+.checkout .content ul .list-item:last-child{
+	margin-bottom: 0;
+}
+
+.checkout .content ul .list-item .icon-date{
+	background: white;
+	width: 100px;
+	height:100px;
+	margin:10px;
+	float: left;
+	text-align: center;
+}
+
+.checkout .content ul .list-item:nth-child(even) .icon-date{
+	background: #EEE;
+}
+
+.checkout .content ul .list-item .icon-date .day{
+	font-size: 2em;
+	padding-top: 10px;
+	display: block;
+}
+
+.checkout .content ul .list-item .time{
+	font-size: 2em;
+}
+
+.checkout .content ul .list-item .icon-date .month{
+	color:#C73536;
+}
+
+.checkout .content ul .list-item .info{
+	padding: 10px;
+}
+
+.checkout .content ul .list-item .title{
+	padding: 10px;
+	display: block;
 }
 /*ENDS: Checkout********************************************/
 
@@ -1468,7 +1550,7 @@ h1 .duration{
 }
 
 .comment:nth-child(even) {color:#333;background: white;}
-.comment:nth-child(odd) {color:#333;background: #eee}*/
+.comment:nth-child(odd) {color:#333;background: #eee}
 
 /*
 .room-item .list-item:nth-child(even) {color:#333;background: rgba(250,250,250,1);}
