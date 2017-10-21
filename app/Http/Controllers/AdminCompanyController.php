@@ -25,7 +25,7 @@ class AdminCompanyController extends Controller
 
       $reservations = Reservation::whereIn('room_id', $room_ids)->with(['users','rooms'])->get();
 
-    	return view('reyapp.dashboard.dashboard_company')->with('user',$user)->with('company',$company)->with('reservations',$reservations);
+    	return view('reyapp.companies.dashboard_company')->with('user',$user)->with('company',$company)->with('reservations',$reservations);
     }
 
     public function company_calendar(){
@@ -42,12 +42,12 @@ class AdminCompanyController extends Controller
 
   		$app_reservations = Reservation::whereIn('room_id', $room_ids)->with(['users','rooms'])->where('is_admin','!=',true)->get();
  
-    	return view('reyapp.dashboard.company_calendar')->with('rooms',$rooms)->with('company_reservations',$company_reservations)->with('app_reservations',$app_reservations);
+    	return view('reyapp.companies.company_calendar')->with('rooms',$rooms)->with('company_reservations',$company_reservations)->with('app_reservations',$app_reservations);
 
     }
 
     public function company_rooms (){
-    	$items_per_page = 10;
+        $items_per_page = 10;
         $order = 'quality_up';
             
         $rooms = Room::paginate($items_per_page);
@@ -67,7 +67,7 @@ class AdminCompanyController extends Controller
             
             // Cuantificamos y promediamos las calificaciones en base 5
             $quality = 0;
-            $sumORatings = count($room->ratings);
+            $sumRatings = count($room->ratings);
 
             if($sumRatings > 0){
                 foreach ($room->ratings as $rating) {

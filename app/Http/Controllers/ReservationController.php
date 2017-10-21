@@ -187,6 +187,11 @@ class ReservationController extends Controller
             $reservation->code = $code;
 
             $room->reservations()->save($reservation);
+
+            if ($request->has('band')) {
+                $band = Band::find($request->band);
+                $reservation->attach($band);
+            }
             
             return response()->json(['success' => true , 'title' => $description,'id'=>$reservation->id,'color'=>$room->color]);
 
@@ -238,6 +243,7 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function destroy($id)
     {   
         $user_id = Auth::user()->id;

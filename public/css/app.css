@@ -1636,6 +1636,54 @@ h1 .duration{
 
 }
 
+/*STARTS: Edit-Show ****************************************************/
+.show-edit-wrapper{
+	position: relative;
+}
+
+.show-edit-wrapper .show .text{
+	position: relative;
+	cursor: pointer;
+}
+
+.show-edit-wrapper .show .text:after{
+	content:'\f044';
+	font-family: 'FontAwesome';
+	background: black;
+	padding: 5px;
+	padding-left: 7px;
+	position: absolute;
+	top: 3px;
+	right:5px;
+	display: none;
+	color:white;
+}
+
+.show-edit-wrapper .edit{
+	display:none;
+}
+
+.show-edit-wrapper:hover .show .text:after{
+	display: block;
+}
+
+
+
+.show-edit-wrapper .show .text{
+	padding: 10px;
+	/*background: white;*/
+	color:white;
+}
+
+.show-edit-wrapper .show label{
+	background: black;
+	padding:5px;
+}
+
+/*ENDS: Edit-Show ****************************************************/
+
+
+
 /*ENDS: Sweet alert*****************************************************/
 
 footer{

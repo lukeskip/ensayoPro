@@ -17,6 +17,12 @@ class CompanyController extends Controller
      * @return \Illuminate\Http\Response
      */
     
+    public function settings($id)
+    {
+        $company = Company::findOrFail($id);
+        return view('reyapp.companies.settings')->with('company',$company);
+    }
+    
     public function register_user()
     {
         $role = Role::where('name','company')->first();

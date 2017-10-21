@@ -52,7 +52,7 @@
 				@endforeach
 		</div>
 		<div class="medium-3 columns">
-			<a href="/registro/salas" class="button expanded green">Registrar Sala</a>
+			<a href="/company/registro/salas" class="button expanded green">Registrar Sala</a>
 		</div>
 	</div>
 	<div class="row">

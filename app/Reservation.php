@@ -23,4 +23,13 @@ class Reservation extends Model
     public function rooms(){
     	return $this->belongsTo('App\Room','room_id');
     }
+
+    public function payments(){
+        return $this->hasMany('App\Payment');
+    }
+
+    public function bands()
+    {
+        return $this->belongsToMany('App\Band','band_user');
+    }
 }

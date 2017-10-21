@@ -2,6 +2,21 @@ room_images = [];
 $(document).foundation();
 $(document).ready(function(){
 
+	$('.show-edit-wrapper .show .text').click(function(){
+		$(this).toggle();
+		$(this).parent().parent().find('.edit').toggle();
+	});
+
+	$(".show-edit-wrapper form").on("submit", function(e){
+		e.preventDefault();
+		method 	= $(this).attr('method');
+		action 	= $(this).attr('action');
+		data 	= $(this).serialize();
+		conection(method,data,action,true).then(function(data){
+			console.log(data);
+		});
+ 	});
+
 	// STARTS: Forms
 	if($('.chosen-select').length > 0){
 		$('.chosen-select').chosen();
@@ -20,8 +35,6 @@ $(document).ready(function(){
 			defaultPalette:'web'
 		});
 	}
-
-	
 
 	// Cargamos los archivos antes de hacer submit al completarlos se enviar el formulario
 	if($('#uploader').length > 0){
@@ -103,7 +116,13 @@ function register_band (){
 	// armamos una variable que utilizaremos en nuestro pool de conexiones
 	data = $("#band_data").serialize()+"&members="+JSON.stringify(members);
 
-	conection('POST',data,'/bandas','/dashboard');
+	conection('POST',data,'/bandas',true).then(function(data) {
+			if(data.success == true){
+				window.location.replace('/dashboard');
+			}else{
+				show_message('error','Error','Algo salió mal en el servidor, por favor inténtalo más tarde','/dashboard');
+			}
+	});
 }
 
 // cargamos las imágenes en FineUploader antes de enviar el formulario ya validado
@@ -143,9 +162,9 @@ function conection (method,fields,link,handle = false){
 			'Accept':'application/json'
 		},
 		method:method,
-	  url: APP_URL+link,
-	  dataType:'json',
-	  data:fields,
+	  	url: APP_URL+link,
+	 	dataType:'json',
+	  	data:fields
 	})
 	.done(function(data) {
 		// Si handle es true, solo regresamos la respuesta del ajax, si no manejamos el mensaje al usuario desde aquí

@@ -61,13 +61,57 @@
 
 		    <ul class="vertical menu">
 				@if(!Auth::guest())
-					<li>
-						
-						<a target="_blank" href="/users/{{Auth::user()->id}}">
-						<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
-						</a>
-					</li>
-				@endif
+					
+					{{-- STARTS: Company Menu --}}
+					@if(Auth::user()->roles->first()->name == 'company')
+						<li>
+							<a target="_blank" href="/users/{{Auth::user()->id}}">
+								<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
+							</a>
+						</li>
+						<li><a href="/company">
+							<i class="fa fa-line-chart" aria-hidden="true"></i> Dashboard
+							</a>
+						</li>
+						<li><a href="/company/ajustes">
+								<i class="fa fa-cogs" aria-hidden="true"></i> Ajustes
+							</a>
+						</li>
+						<li>
+							<a href="/company/agenda" target="_blank">
+								<i class="fa fa-calendar-o" aria-hidden="true"></i> Agenda
+							</a>
+						</li>
+					{{-- ENDS: Company Menu --}}
+					
+					{{-- STARTS: Musician Menu --}}
+					@elseif (Auth::user()->roles->first()->name == 'musician')
+
+						<li>
+							<a target="_blank" href="/users/{{Auth::user()->id}}">
+								<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
+							</a>
+						</li>
+						<li>
+							<a href="/dashboard">
+								<i class="fa fa-line-chart" aria-hidden="true"></i> Dashboard
+							</a>
+						</li>
+						<li>
+							<a href="/bandas">
+								<i class="fa fa-users" aria-hidden="true"></i> Tus bandas
+							</a>
+						</li>
+						<li>
+							<a href="/salas">
+								<i class="fa fa-calendar-o" aria-hidden="true"></i> Reserva tu ensayo
+							</a>
+						</li>
+
+					{{-- ENDS: Musician Menu --}}
+
+						@endif
+					@endif <!-- END IF AUTH-->
 				<li>
 					
 					<a target="_blank" href="http://reydecibel.com.mx">
