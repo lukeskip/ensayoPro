@@ -15,7 +15,7 @@ Auth::routes();
 
 Route::get('logout', function (){
 	Auth::logout();
-	return redirect('/login');
+	return redirect('/');
 });
 
 Route::get('/', function () {
@@ -26,21 +26,8 @@ Route::get('/registro', function () {
     return view('reyapp.register');
 });
 
-Route::group(['middleware' => ['auth','company'],'prefix'=>'company'], function () {
-	Route::get('/', 'AdminCompanyController@company');
-	Route::get('/salas', 'AdminCompanyController@company_rooms');
-	Route::get('/codigos', 'AdminCompanyController@company_rooms');
-	Route::get('/salas/editar/{id}', 'RoomController@edit');
-	Route::get('/ajustes/{id}', 'CompanyController@settings');
-	Route::post('/salas/{id}','RoomController@update');
-	Route::get('/registro/salas', 'RoomController@create')->name('register_room');
-	Route::get('/agenda', 'AdminCompanyController@company_calendar');
-	Route::get('/registro', 'CompanyController@register_company')->name('register_company');
-	Route::resource('companies', 'CompanyController');
-});
-
-Route::group(['middleware' => ['auth','admin'],'prefix'=>'admin'], function () {
-	Route::get('/dashboard', 'DashboardController@admin')->name('dashboardAdmin');
+Route::get('/test', function () {
+    return view('reyapp.test');
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -48,10 +35,28 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('salas/reservando/{room_id}', 'ReservationController@make_reservation');
 	Route::post('salas/reservando/checkout', 'ReservationController@checkout');
 
+	// Company Admin routes//////////////////////////////////////////////////////////
+	Route::get('/company/dashboard', 'AdminCompanyController@company');
+	Route::get('/company/salas', 'AdminCompanyController@company_rooms');
+
+	Route::get('/company/codigos', 'AdminCompanyController@company_rooms');
+
+	
+	Route::get('/company/dashboard/calendar', 'AdminCompanyController@company_calendar');
+	Route::get('/registro/company', 'CompanyController@register_company')->name('register_company');
+
+	Route::get('/registro/salas', 'RoomController@create')->name('register_room');
+	Route::get('/company/salas/editar/{id}', 'RoomController@edit');
+	Route::post('/company/salas/{id}','RoomController@update');
+	
+	Route::resource('companies', 'CompanyController');
+
+
+	// Dashboard routes//////////////////////////////////////////////////////////
 	
 	Route::get('/dashboard', 'DashboardController@musician')->name('dashboardMusician');
 	
-	
+	Route::get('/admin/dashboard', 'DashboardController@admin')->name('dashboardAdmin');
 
 	
 
@@ -61,10 +66,9 @@ Route::group(['middleware' => 'auth'], function () {
 	
 	// Redirigimos según role después de registro
 	Route::get('registro/redirect', function (){
-
-		$user_id = Auth::user()->id;
-		$user = App\User::where('id', $user_id)->with('roles')->first();
-		$role = $user->roles->first()->name;
+	$user_id = Auth::user()->id;
+	$user = App\User::where('id', $user_id)->with('roles')->first();
+	$role = $user->roles->first()->name;
 	
 		if($role == 'admin'){
 			return redirect('admin/dashboard');
@@ -75,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 		}
 
 		if($role == 'musician'){
-			return redirect('/registro/banda');
+			return redirect('/dashboard');
 		}
 	});
 
@@ -94,7 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
 		}
 
 		if($role == 'company'){
-			return redirect('company');
+			return redirect('company/dashboard');
 		}
 
 		if($role == 'musician'){
@@ -127,7 +131,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/payments', 'PaymentController@index');
-Route::post('/checkout', 'PaymentController@checkout');
+Route::post('/card', 'PaymentController@CreatePayCard');
+Route::post('/oxxo', 'PaymentController@CreatePayOxxo');
 
 Route::resource('comentarios', 'CommentController');
 Route::resource('ratings', 'RatingController');
