@@ -41,8 +41,6 @@
 
 		<title>Ensaya Pro</title>
 
-
-
 	</head>
 	<body class="@yield('body_class')">
 		<div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas>
