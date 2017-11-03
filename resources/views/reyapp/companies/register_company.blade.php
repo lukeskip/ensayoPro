@@ -180,7 +180,11 @@
 			},
 			submitHandler: function(form) {
     			data = $(form).serialize();
-    			conection('POST',data,'/companies');
+    			conection('POST',data,'/company/companies',true).then(function(answer){
+    				if(answer.success == true){
+    					window.location.replace("/company");
+    				}
+    			});
   			},
   			errorPlacement: function(error, element) {
 	    		if(element[0].name == "days[]"){

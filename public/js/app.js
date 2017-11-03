@@ -168,6 +168,7 @@ function conection (method,fields,link,handle = false){
 	})
 	.done(function(data) {
 		// Si handle es true, solo regresamos la respuesta del ajax, si no manejamos el mensaje al usuario desde aquí
+		console.log(data);
 		if(handle){
 			return data;
 		}else{
