@@ -12,8 +12,13 @@ $(document).ready(function(){
 		method 	= $(this).attr('method');
 		action 	= $(this).attr('action');
 		data 	= $(this).serialize();
+		target  = $(this);
 		conection(method,data,action,true).then(function(data){
-			console.log(data);
+			if(data.success == true){
+				target.parent().toggle();
+				target.parent().parent().find('.text').html(data.description);
+				target.parent().parent().find('.text').toggle();
+			}
 		});
  	});
 

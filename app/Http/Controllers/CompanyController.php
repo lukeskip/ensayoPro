@@ -137,7 +137,21 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user_id = Auth::user()->id;
+        $company = Company::with('users')->find($id);
+        $company_user = $company->users->first()->id;
+
+        // verificamos que el usuario sea dueño de la información
+        if($user_id != $company_user){
+            return response()->json(['success' => false,'messages'=>'No tienen privilagios necesarios']); 
+        }
+
+        if ($request->has('name')) {
+           $company->name = $request->name;
+           $company->save();
+           return response()->json(['success' => true,'description'=>$company->name]); 
+        }
+         
     }
 
     /**
