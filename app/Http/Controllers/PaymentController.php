@@ -7,143 +7,88 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-
-//Constructor
-    public function __construct()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkout(Request $request )
     {
-        \Conekta\Conekta::setApiKey(env('CONEKTA_SECRET_KEY'));
+        require_once base_path().'/vendor/conekta/conekta-php/lib/Conekta.php';
+        \Conekta\Conekta::setApiKey("key_JeZAXurkTuQBxPhthGxshLw");
         \Conekta\Conekta::setApiVersion("2.0.0");
+
+
     }
 
-//Creando un pago mediante tarjeta
-    public function CreatePayCard(Request $request)
+    public function index()
     {
-        $valid_order =
-        array(
-            'line_items'=> array(
-                array(
-                    'name'        => $request->input('room'),
-                    'description' => 'Renta de instalaciones',
-                    'unit_price'  => $request->input('price'),
-                    'quantity'    => $request->input('quantity')
-                )
-            ),
-            'currency'    => 'MXN',
-          //'metadata'    => array('test' => 'extra info'),
-            'charges'     => array(
-              array(
-                  'payment_method' => array(
-                      'type'       => 'card',
-                      'token_id' => $request->input('token')
-                  )
-                   //'amount' => $precio
-              )
-          ),
-            'currency'      => 'MXN',
-            'customer_info' => array(
-                'name'  => $request->input('name'),
-                'phone' => $request->input('tel'),
-                'email' => $request->input('email')
-            )
-        );
-
-        try {
-          $order = \Conekta\Order::create($valid_order);
-
-          $pI = $order['id'];
-          $pM = $order->charges[0]->payment_method->type;
-          $pR = 0;
-          $pS = $order['payment_status'];
-
-          $rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS);
-
-  //Establecido para retornar el estado de pago unicamente (se puede recibir todo el data)
-          return $this->Response(1,$rsp);
-      } catch (\Conekta\ProcessingError $e){ 
-
-          return $this->Response(0,$e);
-      } catch (\Conekta\ParameterValidationError $e){
-        return $this->Response(0,$e);
-    } 
-    catch (\Conekta\Handler $e){
-        return $this->Response(0,$e);
+        return view ('reyapp.payments.index');
     }
 
-}
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
 
-//Creando un pago mediante Oxxo.
-public function CreatePayOxxo(Request $request)
-{
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
-    $expire = strtotime(date("Y-m-d H:i:s")) + "36000";
-    $valid_order =
-    array(
-        'line_items'=> array(
-          array(
-            'name'        => $request->input('room'),
-            'description' => 'Renta de instalaciones',
-            'unit_price'  => $request->input('price'),
-            'quantity'    => $request->input('quantity')
-        )
-      ),
-        'currency'      => 'MXN',
-          // 'metadata'    => array('test' => 'extra info'),
-        'charges'     => array(
-          array(
-              'payment_method' => array(
-                  'type'       => 'oxxo_cash',
-                  'expires_at' => $expire
-              )
-                   //'amount' => $precio
-          )
-      ),
-        'currency'      => 'MXN',
-        'customer_info' => array(
-            'name'  => $request->input('name'),
-            'phone' => $request->input('tel'),
-            'email' => $request->input('email')
-        )
-    );
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-    try {
-      $order = \Conekta\Order::create($valid_order);
-          $pI = $order['id'];
-          $pM = $order->charges[0]->payment_method->type;
-          $pR = $order->charges[0]->payment_method->reference;
-          $pS = $order['payment_status'];
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
-          $rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS);
-//INFORMACIÓN IMPORTANTE DEL JSON DE RESPUESTA.
-// ID: $order->id
-// Método de pago: $order->charges[0]->payment_method->service_name
-// Referencia: $order->charges[0]->payment_method->reference
-// Total: $order->amount/100 . $order->currency (lo manda en centavos, por eso se divide entre 100)
-// Orden:
-// Cantidad:  $order->line_items[0]->quantity
-// Nombre: $order->line_items[0]->name
-// Precio unitario $order->line_items[0]->unit_price/100
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
 
-      return $this->Response(1,$rsp);
-
-  } catch (\Conekta\ProcessingError $e){ 
-    return $this->Response(0,$e);
-} catch (\Conekta\ParameterValidationError $e){
-    return $this->Response(0,$e);
-} 
-catch (\Conekta\Handler $e){
-    return $this->Response(0,$e);
-}
-
-}
-
-    //Manejo de respuestas
-private function Response($success,$result)
-{
-    if($success==0){ $result=$result->getMessage(); } 
-    $out = array("type"=>$success,"data"=>$result);
-     return view('reyapp.testResponse')->with('response',$out); 
-}
-
-
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 }
