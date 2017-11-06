@@ -12,8 +12,13 @@ $(document).ready(function(){
 		method 	= $(this).attr('method');
 		action 	= $(this).attr('action');
 		data 	= $(this).serialize();
+		target  = $(this);
 		conection(method,data,action,true).then(function(data){
-			console.log(data);
+			if(data.success == true){
+				target.parent().toggle();
+				target.parent().parent().find('.text').html(data.description);
+				target.parent().parent().find('.text').toggle();
+			}
 		});
  	});
 
@@ -168,6 +173,7 @@ function conection (method,fields,link,handle = false){
 	})
 	.done(function(data) {
 		// Si handle es true, solo regresamos la respuesta del ajax, si no manejamos el mensaje al usuario desde aquí
+		console.log(data);
 		if(handle){
 			return data;
 		}else{
