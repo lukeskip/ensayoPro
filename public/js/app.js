@@ -2,24 +2,72 @@ room_images = [];
 $(document).foundation();
 $(document).ready(function(){
 
+	$(document).on('keyup',function(evt) {
+	    if (evt.keyCode == 27) {
+	       edit_init();
+		}
+	});
+
+	function edit_init(){
+		$('.show-edit-wrapper').each(function(){
+			$(this).find('.show').find('.text').css('display','block');
+			$(this).find('.edit').css('display','none');
+		});
+	}
+
 	$('.show-edit-wrapper .show .text').click(function(){
+		edit_init();
 		$(this).toggle();
 		$(this).parent().parent().find('.edit').toggle();
 	});
 
 	$(".show-edit-wrapper form").on("submit", function(e){
 		e.preventDefault();
-		method 	= $(this).attr('method');
-		action 	= $(this).attr('action');
-		data 	= $(this).serialize();
-		target  = $(this);
-		conection(method,data,action,true).then(function(data){
-			if(data.success == true){
-				target.parent().toggle();
-				target.parent().parent().find('.text').html(data.description);
-				target.parent().parent().find('.text').toggle();
-			}
-		});
+		form 			= $(this);
+		method 			= form.attr('method');
+		action 			= form.attr('action');
+		address_mode 	= form.data('address');
+		
+		if(address_mode == true){
+			getLatLongPromise().done(function(data){
+				var latitude  = data[0].geometry.location.lat();
+				var longitude = data[0].geometry.location.lng();
+				data 	= form.serialize()+'&latitude='+latitude+'&longitude='+longitude;
+				conection(method,data,action,true).then(function(data){
+					if(data.success == true){
+						form.parent().toggle();
+						form.parent().parent().find('.text').html(data.description);
+						form.parent().parent().find('.text').toggle();
+						show_message('success','Listo','Los datos fueron guardados correctamente');
+					}
+
+				});
+			}).fail(function(){
+				data = form.serialize();
+				conection(method,data,action,true).then(function(data){
+					if(data.success == true){
+						form.parent().toggle();
+						form.parent().parent().find('.text').html(data.description);
+						form.parent().parent().find('.text').toggle();
+						show_message('warning','Atención','Los datos fueron guardados, sin embargo, la dirección no fue encontrada, por favor arrastra el pin a la ubicación correcta');
+					}
+				});
+			});
+		}else{
+			data = form.serialize();
+			conection(method,data,action,true).then(function(data){
+					if(data.success == true){
+						form.parent().toggle();
+						form.parent().parent().find('.text').html(data.description);
+						form.parent().parent().find('.text').toggle();
+						show_message('success','Listo','Los datos fueron guardados correctamente');
+					}else{
+						show_message('error','Error',data[0].name);
+					}
+			});
+		}
+		
+		
  	});
 
 	// STARTS: Forms
@@ -169,11 +217,14 @@ function conection (method,fields,link,handle = false){
 		method:method,
 	  	url: APP_URL+link,
 	 	dataType:'json',
-	  	data:fields
+	  	data:fields,
+	  	beforeSend: function( xhr ) {
+    		$('.loader-wrapper').css('display','block');
+  		}
 	})
 	.done(function(data) {
 		// Si handle es true, solo regresamos la respuesta del ajax, si no manejamos el mensaje al usuario desde aquí
-		console.log(data);
+		$('.loader-wrapper').fadeOut();
 		if(handle){
 			return data;
 		}else{

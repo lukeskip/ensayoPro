@@ -102,6 +102,7 @@ return [
     'custom' => [
         'name' => [
             'required' => 'Este campo es requerido',
+            'unique' => 'Ese nombre ya está ocupado',
         ],
         'lastname' => [
             'required' => 'Este campo es requerido',
@@ -116,6 +117,8 @@ return [
         'g-recaptcha-response' => [
             'required' => 'Es necesario comprobar que no eres robot',
         ],
+
+
     ],
 
     /*

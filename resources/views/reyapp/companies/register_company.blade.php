@@ -167,6 +167,9 @@
 	<script src="{{asset('plugins/validation/jquery.validate.min.js')}}"></script>
 	<script src="{{asset('plugins/validation/messages.js')}}"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMMiHmdWoL0K5FQPWL_cXBbK0IV-t7l3w"></script>
+	<script>
+		var initMarker = {lat: 19.4326018, lng: -99.13320490000001};
+	</script>
 	<script src="{{asset('js/get_loc.js')}}"></script>
 	<script>
 		$.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" });
