@@ -106,13 +106,19 @@ function getLatLongPromise() {
 
 
 // Escondemos parte la sección de dirección se coincide con la de la compañía
+
+address_company();
+
 $('body').on('click', '#company_address', function() {
-	if ($(this).is(':checked')) {
+	address_company();
+});
+
+function address_company(){
+	if ($('#company_address').is(':checked')) {
 		$('.new_address').css('display','none');
 	}else{
 		$('.new_address').css('display','block');
 	}
-
-});
+}
     		
 	

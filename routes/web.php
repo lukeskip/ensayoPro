@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth','company'],'prefix'=>'company'], function 
 	Route::get('/', 'AdminCompanyController@company');
 	Route::get('/salas', 'AdminCompanyController@company_rooms');
 	Route::get('/codigos', 'AdminCompanyController@company_rooms');
-	Route::get('/salas/editar/{id}', 'RoomController@edit');
+	Route::get('/salas/ajustes/{id}', 'RoomController@edit');
 	Route::get('/ajustes/{id}', 'CompanyController@edit');
 	Route::post('/salas/{id}','RoomController@update');
 	Route::get('/registro/salas', 'RoomController@create')->name('register_room');

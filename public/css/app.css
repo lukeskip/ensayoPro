@@ -599,6 +599,7 @@ form .clarification{
 }
 .new_address{
 	margin-bottom: 20px;
+	display: none;
 }
 
 .qq-gallery .qq-upload-cancel{
@@ -1645,12 +1646,15 @@ h1 .duration{
 	position: relative;
 }
 
-
 .show-edit-wrapper .show .text{
 	position: relative;
 	cursor: pointer;
 	background: rgba(0,0,0,.2);
 	margin-bottom: 10px;
+}
+
+.show-edit-wrapper .show.big .text{
+	min-height: 200px;
 }
 
 .show-edit-wrapper .show .text:after{
@@ -1709,7 +1713,7 @@ h1 .duration{
 	left: 0;
 	bottom: 0;
 	right:0;
-	position: absolute;
+	position: fixed;
 	z-index: 9999;
 	display: none;
 }

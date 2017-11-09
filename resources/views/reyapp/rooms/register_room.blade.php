@@ -135,10 +135,6 @@
 					<input id="company_address" name="company_address" type="checkbox">Misma dirección que marca
 				</label>
 			</div>
-				
-			<div class="large-12 columns">
-				
-			</div>
 		</div>
 
 		{{-- STARTS: ADDRESS ZONE --}}
@@ -336,6 +332,9 @@
 	
 	<script src="{{asset('plugins/validation/jquery.validate.min.js')}}"></script>
 	<script src="{{asset('plugins/validation/messages.js')}}"></script>
+	<script>
+		var initMarker = {lat: 19.4326018, lng: -99.13320490000001};
+	</script>
 	<script src="{{asset('js/get_loc.js')}}"></script>
 	<script>
 		$.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" });

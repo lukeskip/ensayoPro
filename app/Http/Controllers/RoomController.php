@@ -228,10 +228,23 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
-        $user_id = Auth::user()->id;
-        $companies = User::where('id',$user_id)->with('companies')->first();
-        $companies = $companies->companies;
-        return view('reyapp.rooms.register_room')->with('companies',$companies);
+        // $user_id = Auth::user()->id;
+        // $companies = User::where('id',$user_id)->with('companies')->first();
+        // $companies = $companies->companies;
+        // return view('reyapp.rooms.register_room')->with('companies',$companies);
+
+        $room = Room::findOrFail($id);
+
+        
+        if($room->status == 'inactive'){
+            $room['status'] = 'Inactiva';
+        }
+
+        if($room->status == 'active'){
+            $room['status'] = 'Activa';
+        }
+        
+        return view('reyapp.rooms.settings')->with('room',$room);
     }
 
     /**
