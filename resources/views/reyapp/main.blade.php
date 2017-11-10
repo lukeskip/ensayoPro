@@ -1,7 +1,8 @@
 @extends('layouts.reyapp.landing')
 @section('body_class', 'landing')
 @section('header')
-
+{{-- Si quieres insertar algún archivo CSS va aquí, la siguiente linea es un ejemplo, el archivo tiene que estar cargado en la carpeta public --}}
+{{-- <link rel="stylesheet" href="{{asset('js/vendor/selectize/css/selectize.default.css')}}"> --}}
 @endsection
 @section('content')
 
@@ -146,6 +147,9 @@
 	<a href="/registro" class="button expanded">Registrarme</a> -->
 
 
+@endsection
 
-
+@section('scripts')
+{{-- Si quieres cargar un archivo de javascript como un plugin lo insertas aqui, la siguiente linea es un ejemplo, igual el archivo tiene que estar en la carpeta de public --}}
+{{-- <script src="{{asset('js/vendor/jquery.js')}}"></script> --}}
 @endsection
