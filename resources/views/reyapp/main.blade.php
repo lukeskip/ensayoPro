@@ -1,6 +1,11 @@
 @extends('layouts.reyapp.landing')
+@section('body_class', 'landing')
 @section('header')
-<!-- top bar-->
+
+@endsection
+@section('content')
+
+<!-- STARTS: top bar-->
 <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
   <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
   <div class="title-bar-title">Menu</div>
@@ -20,9 +25,9 @@
     </ul>
   </div>
 </div>
-@section('content')
+<!-- ENDS: top bar-->
 
-<!-- slider-->
+<!--STARTS: slider-->
 <div class="large-12">
 <div class="fullscreen-image-slider">
   <div class="orbit" role="region" aria-label="FullScreen Pictures" data-orbit>
@@ -61,9 +66,9 @@
   </div>
 </div>
 </div>
+{{-- ENDS: slider --}}
 
-
-<!-- Benefits -->
+<!--STARTS: Benefits -->
 
 <div class="top-companies">
   <h2 class="marketing-site-features-headline">¿Para qué una sala de ensayo?</h2>
@@ -103,8 +108,10 @@
 </div>
 <div class="button-float"><a href="/registro" class="button expanded">Registrarme</a></div>
 </div>
+{{-- ENDS: Benefits --}}
 
-<!-- Features -->
+
+<!-- STARTS: Features -->
 <div class="marketing-site-features">
   <h2 class="marketing-site-features-headline">Novedades de nuestra WebApp</h2>
   <p class="marketing-site-features-subheadline subheader">Ensaya Pro es una app web desarrollada para el músico, por músicos.</p>
@@ -131,7 +138,7 @@
     </div>
   </div>
 </div>
-
+{{-- ENDS: Features --}}
 
 <!--
 <div class="large-12 text-center">
