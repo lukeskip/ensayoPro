@@ -110,16 +110,9 @@
 		
 		<div class="row">
 
-			<div class="large-4 columns">
-				<label>Compañía</label>
-				<select class="input-group-field" name="company" id="company">
-					@foreach($companies as $company)
-						<option value="{{$company->id}}">{{$company->name}}</option>
-					@endforeach
-				</select>
-			</div>
+			<input type="hidden" name="company" value="{{$company->id}}">
 
-			<div class="large-8 columns">
+			<div class="large-12 columns">
 			
 				<label>Nombre</label>
 				<input class="input-group-field required"  type="text" name="name" placeholder="Ej. Sala grande">
@@ -132,7 +125,7 @@
 			<div class="large-12 columns">
 				<h3>Ubicación</h3>
 				<label for="company_address" class="no-background">
-					<input id="company_address" name="company_address" type="checkbox">Misma dirección que marca
+					<input id="company_address" name="company_address" type="checkbox">Misma dirección que tu compañía <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Activa si la sala está ubicada en la misma dirección que registraste para tu compañía"></i>
 				</label>
 			</div>
 		</div>
@@ -340,22 +333,29 @@
 
 		// Creamos el array que contendrá las imágenes 
 		var room_images = [];
+		var room_images_check = [];
 
-		$('#uploader').fineUploader().on("complete", function (event, id, name, response) {
+		$('#uploader').fineUploader().on("submit", function (event, id, name, response) {
+    		room_images_check.push({
+				'id'  :id,
+			});
+    	}).on("complete", function (event, id, name, response) {
     		room_images.push({
 				'name'  :response.name,
 				'path'	:'uploader/completed'
 			});
-			console.log(room_images);
     	}).on("allComplete", function (event, id, name, response) {
-        		data = $("#form_rooms").serialize()+'&images='+JSON.stringify(room_images);
-				conection('POST',data,'/company/salas');
+        		send_data();
     	});
 		
 		$.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" });
 		$('#form_rooms').validate({
 			submitHandler: function(form) {
-    			$('#uploader').fineUploader('uploadStoredFiles');
+    			if(room_images_check.length !== 0){
+					$('#uploader').fineUploader('uploadStoredFiles');
+				}else{
+					send_data();
+				}
   			},
   			errorPlacement: function(error, element) {
     		if(element[0].name == "days[]"){
@@ -367,6 +367,23 @@
     		
 		}
 		});
+
+		function send_data(){
+			data = $("#form_rooms").serialize()+'&images='+JSON.stringify(room_images);
+			conection('POST',data,'/company/salas/',true).then(function(answer){
+				if(answer.success == true){
+					swal({
+					  title: '¡Listo!',
+					  text: answer.description,
+					  type: 'success',
+					  confirmButtonColor: '#CF2832', 
+					}).then(function () {
+						window.location.replace('/company/salas')
+					});
+				}
+				
+			});
+		}
 
 		
 

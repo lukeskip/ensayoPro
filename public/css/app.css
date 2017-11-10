@@ -340,6 +340,12 @@ body.company_calendar{
 	z-index: 1;
 }
 
+.room-item .status{
+	text-align: center;
+	/*font-size: 1.5em;*/
+	height: 20px
+}
+
 .room-item .info{
 	
 }
@@ -664,6 +670,7 @@ label{
 	text-indent: -9999px;
 	border: none;
 	height: 43px;
+	cursor: pointer;
 }
 
 .evo-cp-wrap{

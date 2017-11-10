@@ -1,6 +1,9 @@
 @extends('layouts.reyapp.landing')
 
 @section('content')
+@if(isset($message))
+	<h1>{{$message}}</h1>
+@else
 <div class="form_wrapper">
 	<form id="form_comp">
 		{{ csrf_field() }}
@@ -162,6 +165,7 @@
 
 	</form>
 </div>
+@endif
 @endsection
 @section('scripts')
 	<script src="{{asset('plugins/validation/jquery.validate.min.js')}}"></script>

@@ -16,7 +16,7 @@
 				<div class="row list-item room-item">
 					<div class="medium-6 columns text-center">
 
-						<a href="/salas/{{$company->id}}">{{$company->name}}</a>
+						<a href="/company/datalle/{{$company->id}}">{{$company->name}}</a>
 						<div class="info">
 							<a href="/company/ajustes/{{$company->id}}" class="blue tag">
 								Editar

@@ -111,11 +111,20 @@
 				</select>
 			</div>
 
-			<div class="large-8 columns">
+			<div class="large-4 columns">
 			
 				<label>Nombre</label>
 				<input class="input-group-field required"  type="text" name="name" placeholder="Ej. Sala grande" value="{{$room->name}}">
 				
+			</div>
+			<div class="large-4 columns">
+				<label for="company_address">
+					Estatus <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Desactiva esta sala temporalmente"></i>
+				</label>
+				<select name="status" id="">
+					<option @if($room->status == 'active') {{'selected'}} @endif value="active">Activa</option>
+					<option @if($room->status == 'inactive') {{'selected'}} @endif value="inactive">Inactiva</option>
+				</select>
 			</div>
 
 		</div>
@@ -476,7 +485,7 @@
 		$.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" });
 		$('#form_rooms').validate({
 			submitHandler: function(form) {
-				console.log(room_images_check);
+				
 				if(room_images_check.length !== 0){
 					$('#uploader').fineUploader('uploadStoredFiles');
 				}else{
@@ -506,6 +515,7 @@
 					  confirmButtonColor: '#CF2832', 
 					}).then(function () {
 						location.reload();
+						// window.location.replace('/company/salas')
 					});
 				}
 				

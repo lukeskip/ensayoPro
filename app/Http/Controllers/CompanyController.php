@@ -26,7 +26,15 @@ class CompanyController extends Controller
 
 	public function register_company()
 	{    
-		return view('reyapp.companies.register_company');
+		$user_id = Auth::user()->id;
+		$company = User::where('id',$user_id)->first()->companies;
+
+		if(!$company->isEmpty()){
+			return view('reyapp.companies.register_company')->with('message','Ya registraste una compañía');
+		}else{
+			return view('reyapp.companies.register_company');
+		}
+		
 	}
 
 	public function index()
@@ -133,7 +141,16 @@ class CompanyController extends Controller
 	 */
 	public function show($id)
 	{
-		$company = Company::find($id);
+		$user_id = Auth::user()->id;
+		$company = Company::with('users')->find($id);
+		$company_user = $company->users->first()->id;
+
+		// verificamos que el usuario sea dueño de la información
+		if($user_id != $company_user){
+			return response()->json(['success' => false,'messages'=>'No tienes privilegios necesarios']); 
+		}
+
+
 		$rooms 	 = $company->rooms;
 		foreach ($rooms as $room) {
 			// Cuantificamos y promediamos las opiniones en base 5
@@ -161,9 +178,11 @@ class CompanyController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit($id)
+	public function edit()
 	{
-		$company = Company::findOrFail($id);
+		$user_id = Auth::user()->id;
+		$company = User::find($user_id);
+		$company = $company->companies->first();
 
 		
 		if($company->status == 'inactive'){
@@ -190,9 +209,10 @@ class CompanyController extends Controller
 		$user_id = Auth::user()->id;
 		$company = Company::with('users')->find($id);
 		$company_user = $company->users->first()->id;
+		$role = $company->users->first()->roles->first()->name;
 
 		// verificamos que el usuario sea dueño de la información
-		if($user_id != $company_user){
+		if($user_id != $company_user  and $role != 'admin' ){
 			return response()->json(['success' => false,'messages'=>'No tienes privilegios necesarios']); 
 		}
 

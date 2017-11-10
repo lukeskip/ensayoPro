@@ -26,7 +26,7 @@
 						Total
 					</div>
 					<div class="medium-2 columns show-for-medium">
-						Status
+						Estatus
 					</div>
 				</div>
 				

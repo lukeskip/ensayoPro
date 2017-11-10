@@ -163,8 +163,8 @@ class RoomController extends Controller
     {
         $user_id = Auth::user()->id;
         $companies = User::where('id',$user_id)->with('companies')->first();
-        $companies = $companies->companies;
-        return view('reyapp.rooms.register_room')->with('companies',$companies);
+        $company = $companies->companies->first();
+        return view('reyapp.rooms.register_room')->with('company',$company);
     }
 
     /**
@@ -309,14 +309,6 @@ class RoomController extends Controller
         $room['equipment'] = htmlspecialchars($room->equipment);
         $room['days'] = explode(',',$room->days);
 
-        if($room->status == 'inactive'){
-            $room['status'] = 'Inactiva';
-        }
-
-        if($room->status == 'active'){
-            $room['status'] = 'Activa';
-        }
-
         if($room->company_address){
             $latitude = $room->companies->latitude;
             $longitude = $room->companies->longitude;
@@ -346,7 +338,8 @@ class RoomController extends Controller
             'schedule_start'    => 'required|max:3', 
             'schedule_end'      => 'required|max:3',
             'color'             => 'required|max:10',        
-            'price'             => 'required|integer',        
+            'price'             => 'required|integer',
+            'status'            => 'in:inactive,active'        
         );
 
         // Validamos todos los campos
@@ -367,6 +360,7 @@ class RoomController extends Controller
         $room->color            = $request->color;
         $days                   = implode(',', $request->days);
         $room->days             = $days;
+        $room->status           = $request->status;
         
 
         if($request->company_address){

@@ -35,8 +35,7 @@ Route::group(['middleware' => ['auth','company'],'prefix'=>'company'], function 
 	Route::get('/salas', 'AdminCompanyController@company_rooms');
 	Route::get('/codigos', 'AdminCompanyController@company_rooms');
 	
-	Route::get('/ajustes/{id}/', 'CompanyController@edit');
-	Route::get('/ajustes/', 'CompanyController@index');
+	Route::get('/ajustes/', 'CompanyController@edit');
 	Route::get('/datalle/{id}', 'CompanyController@show');
 	
 	Route::get('/registro', 'CompanyController@register_company')->name('register_company');

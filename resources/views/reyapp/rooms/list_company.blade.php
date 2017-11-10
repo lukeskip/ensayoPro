@@ -5,6 +5,11 @@
 @section('content')
 	<h2>Tus salas de ensayo</h2>
 	<div class="row">
+		<div class="medium-3 columns">
+			<a href="/company/registro/salas" class="button expanded green">Registrar Sala</a>
+		</div>
+	</div>
+	<div class="row">
 		<div class="large-12 columns">
 				<div class="row list-header show-for-medium">
 					<div class="medium-4 columns">
@@ -16,8 +21,11 @@
 					<div class="medium-3 columns">
 						Califiación:
 					</div>
-					<div class="medium-3 columns">
+					<div class="medium-2 columns">
 						Precio/Hora:
+					</div>
+					<div class="medium-1 columns">
+						Estatus:
 					</div>
 				</div>
 				@foreach ($rooms as $room)
@@ -58,8 +66,19 @@
 						@endif
 						
 					</div>
-					<div class="medium-3 columns price">
+					<div class="medium-2 columns price">
 						${{$room->price}}
+					</div>
+					<div class="medium-1 columns price">
+						<div class="medium-2 columns status">
+							@if($room->status == 'active')
+								<i class="fa fa-check-circle-o confirmed hastooltip" title="Activa" aria-hidden="true"></i>
+							@elseif($room->status == 'inactive')
+								<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Inactiva"></i>
+							@elseif($room->status == 'cancelled')
+								<i class="fa fa-times-circle-o hastooltip cancelled" title="Cancelada" aria-hidden="true"></i>
+							@endif
+						</div>
 					</div>
 
 				</div>

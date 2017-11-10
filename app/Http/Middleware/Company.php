@@ -18,7 +18,7 @@ class Company
     {
         $role = Auth::user()->roles->first()->name;
         
-        if($role == 'company'){
+        if($role == 'company' or $role == 'admin'){
             return $next($request);
         }else if($role == 'musician'){
            return redirect('/dashboard'); 
