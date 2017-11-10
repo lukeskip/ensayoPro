@@ -1,7 +1,29 @@
 @extends('layouts.reyapp.landing')
+@section('header')
+<!-- top bar-->
+<div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
+  <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
+  <div class="title-bar-title">Menu</div>
+</div>
 
+<div class="top-bar" id="responsive-menu">
+  <div class="top-bar-left">
+    <ul class="dropdown menu" data-dropdown-menu>
+      <li class="menu-text"><img src=" http://reyapp.dev:8000/img/logo_rey.png " width="150" alt="logo"></li>
+
+    </ul>
+  </div>
+  <div class="top-bar-right">
+    <ul class="menu">
+      <li><a href="/login/redirect">Iniciar Sesión</a></li>
+      <li><a href="/registro">Registrarme</a></li>
+    </ul>
+  </div>
+</div>
 @section('content')
-<div class ="large-12">
+
+<!-- slider-->
+<div class="large-12">
 <div class="fullscreen-image-slider">
   <div class="orbit" role="region" aria-label="FullScreen Pictures" data-orbit>
     <ul class="orbit-container">
@@ -13,6 +35,8 @@
         <span class="show-for-sr">Next Slide</span>
         <span class="nav fa fa-chevron-right fa-3x"></span>
       </button>
+      <div class="bottom-content-section" data-magellan data-threshold="0">
+
 
       <li class="is-active orbit-slide">
         <img class="orbit-image" src="http:/img/back_bass.jpg" alt="Space">
@@ -35,7 +59,7 @@
       </li>
     </ul>
   </div>
-  <div class="button-float"><a href="/registro" class="button expanded">Registrarme</a></div>
+</div>
 </div>
 
 
@@ -77,6 +101,7 @@
     </div>
   </div>
 </div>
+<div class="button-float"><a href="/registro" class="button expanded">Registrarme</a></div>
 </div>
 
 <!-- Features -->
@@ -91,7 +116,7 @@
     </div>
     <div class="small-12 medium-6 large-3 columns">
       <i class="fa fa-microphone" aria-hidden="true"></i>
-      <h4 class="marketing-site-features-title">Salas de Ensayo para Pro </h4>
+      <h4 class="marketing-site-features-title">Salas de Ensayo Pro</h4>
       <p class="marketing-site-features-desc">Elige entre las cientos de opciones para que ensayes como Pro cerca de tu localización.</p>
     </div>
     <div class="small-12 medium-6 large-3 columns">
@@ -108,13 +133,12 @@
 </div>
 
 
-
 <!--
 <div class="large-12 text-center">
 	<p>Bienvenido al lugar donde te volveras un profesional en la música</p>
 	<a href="/registro" class="button expanded">Registrarme</a> -->
-</div>
-</div>
+
+
 
 
 @endsection
