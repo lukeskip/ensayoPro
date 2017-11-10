@@ -35,10 +35,10 @@ body{
 	width:100%;
 	background-attachment: fixed;
 	background-color: #AF0929;
-	background-image:url(../img/back.jpg); 
+	background-image:url(../img/back.jpg);
 	background-position: center;
 	background-size: cover;
-	font-family: 'Raleway', sans-serif; 
+	font-family: 'Raleway', sans-serif;
 	color:white;
 }
 
@@ -68,7 +68,7 @@ body{
 @media screen and (max-width: 1024px) {
 	.padding-left{
 		padding-left: 0;
-	}	
+	}
 }
 .hidden{
 	display: none;
@@ -105,7 +105,7 @@ body{
 	padding: 20px;
 	color:#333;
 	box-shadow: 0 0 10px rgba(0,0,0,.5);
-} 
+}
 
 .login label{
 	color: #333;
@@ -197,7 +197,7 @@ body{
 
 .dashboard .reservations{
 	margin-bottom: 10px;
-} 
+}
 /*ENDS: Dashboard****************************************/
 
 
@@ -215,7 +215,7 @@ body{
 	position: absolute;
 	background: black;
 	bottom: 100px;
-	min-width:200px; 
+	min-width:200px;
 	left:0;
 	z-index: 9999;
 	padding: 10px;
@@ -263,7 +263,7 @@ body{
 	display: inline-block;
 	float: left;
 	line-height: 25px;
-	margin-right:5px; 
+	margin-right:5px;
 }
 
 .room-keys .room-item .text{
@@ -333,7 +333,7 @@ body.company_calendar{
 }
 
 .room-item .info{
-	
+
 }
 
 .room-item .colony,.room-item .deputation,.room-item .discount{
@@ -525,7 +525,7 @@ body.company_calendar{
 }
 
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover{
-	background-position: inherit; 
+	background-position: inherit;
 }
 
 
@@ -582,7 +582,7 @@ body.company_calendar{
 }
 
 .form_wrapper h1,.form_wrapper h2{
-	
+
 }
 
 .input-group-label .hastooltip{
@@ -701,7 +701,7 @@ h3{
 	font-size: .8em;
 	text-align: center;
 	padding: 10px;
-	font-family: 'Raleway', sans-serif; 
+	font-family: 'Raleway', sans-serif;
 	border-radius: 0 0 10px 10px;
 	cursor: pointer;
 	font-size: 1.2em;
@@ -714,7 +714,7 @@ h3{
 .off-canvas{
 	background: #DE353A;
 	background: black;
-	
+
 }
 
 .off-canvas a{
@@ -743,7 +743,7 @@ h3{
 	font-size: .8em;
 	text-align: center;
 	padding: 10px;
-	font-family: 'Raleway', sans-serif; 
+	font-family: 'Raleway', sans-serif;
 	border-radius: 0 0 10px 10px;
 	cursor: pointer;
 
@@ -808,7 +808,7 @@ h2,h3{
 	text-transform: uppercase;
 }
 nav.main{
-	margin-bottom: 30px;	
+	margin-bottom: 30px;
 }
 nav.main ul{
 	text-align: center;
@@ -1082,7 +1082,7 @@ h1 .duration{
 }
 
 .reservation-desktop .display.total-hours {
-	background: #2FAB31; 
+	background: #2FAB31;
 }
 
 .reservation-desktop .display.total-hours .number{
@@ -1090,7 +1090,7 @@ h1 .duration{
 }
 
 .reservation-desktop .display.total-price {
-	background: #1779BA; 
+	background: #1779BA;
 }
 
 .reservation-desktop .display.total-price .number{
@@ -1139,7 +1139,7 @@ h1 .duration{
 	font-size: 2em;
 	text-align: right;
 	margin-top: 20px;
-	margin-bottom: 20px; 
+	margin-bottom: 20px;
 	padding: 20px;
 }
 
@@ -1302,7 +1302,7 @@ h1 .duration{
 	border:none;
 	outline: none !important;
 	box-shadow: none;
-	font-family: 'Raleway', sans-serif; 
+	font-family: 'Raleway', sans-serif;
 	font-style: normal;
 }
 
@@ -1383,7 +1383,7 @@ h1 .duration{
 	padding-top: 25px;
 	margin: auto;
 	margin-bottom: 15px;
-	
+
 
 }
 
@@ -1488,7 +1488,7 @@ h1 .duration{
 }
 
 .room-item .rating_wrapper{
-	padding-top: 20px; 
+	padding-top: 20px;
 }
 
 .comments-wrapper{
@@ -1590,20 +1590,20 @@ h1 .duration{
  font-size:1.5em;
 }
 .ui-widget-header{
-	background:black; 
+	background:black;
 	color:white;
 
 }
 
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
 	background:#333333;
-	color:white; 
+	color:white;
 	border:0;
 }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover{
 	background:#CF2832;
-	color:white; 
+	color:white;
 	border:0;
 }
 /*ENDS: datepicker************************************************/
@@ -1625,7 +1625,7 @@ h1 .duration{
 }
 
 @media screen and (max-width: 1024px) {
-	.sweet-alert{	
+	.sweet-alert{
 		top:100px;
 		max-height: 80%;
 	}
@@ -1686,6 +1686,82 @@ h1 .duration{
 
 /*ENDS: Sweet alert*****************************************************/
 
+/*STARTS: landing ****************************************************/
+
+
+.fullscreen-image-slider .orbit-image {
+  width: 100%;
+  height: 100%;
+}
+
+.fullscreen-image-slider .orbit-caption {
+  background-color: rgba(000, 0, 0, 0.2);
+	height: 100%;
+  text-align: center;
+	padding-top:20%;
+  color: #fefefe;
+  font-weight: bold;
+}
+
+.button-float {
+	margin-bottom: -20px;
+}
+
+.marketing-site-features {
+	background-color: rgba(250, 0, 0, 0.5);
+  text-align: center;
+  padding: 4rem 4rem;
+}
+
+.marketing-site-features .fa {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #white;
+}
+
+.marketing-site-features .marketing-site-features-title {
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 40em) {
+  .marketing-site-features {
+    text-align: left;
+  }
+}
+
+.marketing-site-features-headline {
+  text-align: center;
+  font-size: 24px;
+}
+
+.marketing-site-features-subheadline {
+  margin-bottom: 2rem;
+  text-align: center;
+	color:white;
+}
+
+.top-companies {
+	background-color: rgb(248,248,250);
+  text-align: center;
+  padding: 4rem 4rem;
+	color: #333;
+}
+
+.top-companies-subheadline {
+  margin-bottom: 2rem;
+  text-align: center;
+	color:#333;
+}
+
+.companies-image-block-title {
+	color:#333;
+	padding-top: 10px;
+}
+
+
+/*ENDS: landing ****************************************************/
+
 footer{
 	border-top:5px solid white;
 	background: black;
@@ -1699,4 +1775,3 @@ footer{
 	font-size: .8em;
 	position: fixed;
 }
-
