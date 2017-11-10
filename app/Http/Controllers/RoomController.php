@@ -103,9 +103,28 @@ class RoomController extends Controller
         $items_per_page = 10;
         $order = 'quality_up';
         $user_id = Auth::user()->id;
+        $rooms_wrap = [];
 
 
-        $company_rooms = User::find($user_id)->companies()->with('rooms')->paginate($items_per_page);
+        $user = User::find($user_id);
+        $companies = $user->companies()->with('rooms')->get();
+
+        $rooms = collect([]);
+        $room_ids  = [];
+
+        foreach ($companies as $company) {
+            foreach ($company->rooms as $room) {
+                $rooms->push($room);
+            }
+        }
+
+        return $rooms;
+
+
+        return $company_rooms = User::find($user_id)->with('companies')->get();
+
+        
+
         
         foreach ($company_rooms as $company) {
             return $company->rooms;
