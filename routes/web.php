@@ -25,14 +25,20 @@ Route::get('/', function () {
 Route::get('/registro', function () {
     return view('reyapp.register');
 });
+Route::get('/registro/usuario/company', 'CompanyController@register_user')->name('register_user_company');
 
 Route::group(['middleware' => ['auth','company'],'prefix'=>'company'], function () {
+
+	Route::get('/agenda/', 'AdminCompanyController@company_calendar');
+
 	Route::get('/', 'AdminCompanyController@company');
 	Route::get('/salas', 'AdminCompanyController@company_rooms');
 	Route::get('/codigos', 'AdminCompanyController@company_rooms');
 	
-	Route::get('/ajustes/{id}', 'CompanyController@edit');
-	Route::get('/agenda', 'AdminCompanyController@company_calendar');
+	Route::get('/ajustes/{id}/', 'CompanyController@edit');
+	Route::get('/ajustes/', 'CompanyController@index');
+	Route::get('/datalle/{id}', 'CompanyController@show');
+	
 	Route::get('/registro', 'CompanyController@register_company')->name('register_company');
 	Route::resource('companies', 'CompanyController');
 	Route::delete('/borrar_imagen/{id}', 'RoomController@delete_image');
@@ -120,6 +126,7 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('reyapp.register_band');
 	});
 
+
 	
 
 
@@ -160,8 +167,8 @@ Route::get('imagenes/{image}', function($image){
 
 
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/registro/usuario/company', 'CompanyController@register_user')->name('register_user_company');
+// Route::get('/home', 'HomeController@index')->name('home');
+
 
 
 

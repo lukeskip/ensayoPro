@@ -431,8 +431,9 @@
 	<script src="{{asset('js/get_loc.js')}}"></script>
 	<script>
 
-		// Creamos el array que contendrá las imágenes 
+		// Creamos el array que contendrá las imágenes y con el que revisamos si hay imágenes que cargar 
 		var room_images = [];
+		var room_images_check = [];
 
 		// Borramos las imágenes ya cargadas preguntando si realmente está seguro
 		$('.delete').click(function(e){
@@ -459,21 +460,29 @@
 			
 		});
 
-		$('#uploader').fineUploader().on("complete", function (event, id, name, response) {
+		$('#uploader').fineUploader().on("submit", function (event, id, name, response) {
+    		room_images_check.push({
+				'id'  :id,
+			});
+    	}).on("complete", function (event, id, name, response) {
     		room_images.push({
 				'name'  :response.name,
 				'path'	:'uploader/completed'
 			});
-			console.log(room_images);
     	}).on("allComplete", function (event, id, name, response) {
-        		data = $("#form_rooms").serialize()+'&images='+JSON.stringify(room_images);
-				conection('PUT',data,'/company/salas/'+'{{$room->id}}');
+        		send_data();
     	});
 
 		$.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" });
 		$('#form_rooms').validate({
 			submitHandler: function(form) {
-    			$('#uploader').fineUploader('uploadStoredFiles');
+				console.log(room_images_check);
+				if(room_images_check.length !== 0){
+					$('#uploader').fineUploader('uploadStoredFiles');
+				}else{
+					send_data();
+				}
+    			
   			},
   			errorPlacement: function(error, element) {
     		if(element[0].name == "days[]"){
@@ -486,7 +495,22 @@
 		}
 		});
 
-		
+		function send_data(){
+			data = $("#form_rooms").serialize()+'&images='+JSON.stringify(room_images);
+			conection('PUT',data,'/company/salas/'+'{{$room->id}}',true).then(function(answer){
+				if(answer.success == true){
+					swal({
+					  title: '¡Listo!',
+					  text: answer.description,
+					  type: 'success',
+					  confirmButtonColor: '#CF2832', 
+					}).then(function () {
+						location.reload();
+					});
+				}
+				
+			});
+		}
 
 	</script>
 	

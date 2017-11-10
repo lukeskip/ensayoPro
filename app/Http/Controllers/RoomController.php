@@ -118,18 +118,6 @@ class RoomController extends Controller
             }
         }
 
-        return $rooms;
-
-
-        return $company_rooms = User::find($user_id)->with('companies')->get();
-
-        
-
-        
-        foreach ($company_rooms as $company) {
-            return $company->rooms;
-        }
-
         // Si tienen la misma dirección de la compañía la asignamos y la mandamos dentro del mismo objeto
         
         foreach ($rooms as $room) {
@@ -158,7 +146,7 @@ class RoomController extends Controller
             
             $room['ratings'] = $sumRatings;
         }
-
+        
         
         $companies = Company::orderBy('name', 'desc')->get();
         $order = request()->order;

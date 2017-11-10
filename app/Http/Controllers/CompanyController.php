@@ -35,6 +35,30 @@ class CompanyController extends Controller
 		return view('reyapp.companies')->with('companies',$companies);
 	}
 
+	public function index_company()
+	{
+		$user_id = Auth::user()->id;
+		$companies = User::find($user_id)->companies();
+
+		// Cuantificamos y promediamos las opiniones en base 5
+        $quality = 0;
+        $sumRatings = count($companies->$rooms->ratings);
+
+        if($sumRatings > 0){
+            foreach ($room->ratings as $rating) {
+                $quality += $rating->score;
+            }
+
+            $quality = $quality / $sumRatings;
+            $room['score']    = round($quality,1, PHP_ROUND_HALF_UP);
+        }
+        
+        $company->ratings = $sumRatings;
+
+		
+		return view('reyapp.companies')->with('companies',$companies);
+	}
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -109,7 +133,26 @@ class CompanyController extends Controller
 	 */
 	public function show($id)
 	{
-		//
+		$company = Company::find($id);
+		$rooms 	 = $company->rooms;
+		foreach ($rooms as $room) {
+			// Cuantificamos y promediamos las opiniones en base 5
+	        $quality = 0;
+	        $sumRatings = count($room->ratings);
+
+	        if($sumRatings > 0){
+	            foreach ($room->ratings as $rating) {
+	                $quality += $rating->score;
+	            }
+
+	            $quality = $quality / $sumRatings;
+	            $room['score']    = round($quality,1, PHP_ROUND_HALF_UP);
+	        }
+	        
+	        $room['ratings'] = $sumRatings;
+		}
+	
+		return view('reyapp.companies.single')->with('company',$company)->with('rooms',$rooms);
 	}
 
 	/**

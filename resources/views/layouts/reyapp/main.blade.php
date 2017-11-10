@@ -86,15 +86,18 @@
 								<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
 							</a>
 						</li>
-						<li><a href="/company">
-							<i class="fa fa-line-chart" aria-hidden="true"></i> Dashboard
+						<li>
+							<a href="/company">
+								<i class="fa fa-line-chart" aria-hidden="true"></i> Dashboard
 							</a>
 						</li>
-						<li><a href="/company/ajustes">
-								<i class="fa fa-cogs" aria-hidden="true"></i> Mis Salas
+						<li>
+							<a href="/company/salas">
+								<i class="fa fa-music" aria-hidden="true"></i> Mis Salas
 							</a>
 						</li>
-						<li><a href="/company/ajustes">
+						<li>
+							<a href="/company/ajustes">
 								<i class="fa fa-cogs" aria-hidden="true"></i> Ajustes
 							</a>
 						</li>
