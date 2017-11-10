@@ -131,7 +131,7 @@
 				<label>Entidad Bancaria (*)
 					<i class="fa fa-question-circle hastooltip" title="Utilizaremos esta información para depositar tus pagos, revisa muy bien este dato" aria-hidden="true"></i>
 				</label>	
-				<input class="input-group-field required" type="text" name="bank_entity">
+				<input class="input-group-field required" type="text" name="bank">
 				
 			</div>
 

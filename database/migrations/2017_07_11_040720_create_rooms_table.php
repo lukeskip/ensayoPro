@@ -27,6 +27,7 @@ class CreateRoomsTable extends Migration
             $table->string('price');
             $table->string('description');
             $table->longText('equipment');
+            $table->string('days');
             $table->string('schedule_start');
             $table->string('schedule_end');
             $table->integer('company_id');

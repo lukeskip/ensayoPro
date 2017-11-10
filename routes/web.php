@@ -30,13 +30,20 @@ Route::group(['middleware' => ['auth','company'],'prefix'=>'company'], function 
 	Route::get('/', 'AdminCompanyController@company');
 	Route::get('/salas', 'AdminCompanyController@company_rooms');
 	Route::get('/codigos', 'AdminCompanyController@company_rooms');
-	Route::get('/salas/ajustes/{id}', 'RoomController@edit');
+	
 	Route::get('/ajustes/{id}', 'CompanyController@edit');
-	Route::post('/salas/{id}','RoomController@update');
-	Route::get('/registro/salas', 'RoomController@create')->name('register_room');
 	Route::get('/agenda', 'AdminCompanyController@company_calendar');
 	Route::get('/registro', 'CompanyController@register_company')->name('register_company');
 	Route::resource('companies', 'CompanyController');
+	Route::delete('/borrar_imagen/{id}', 'RoomController@delete_image');
+
+	// Registro y ajustes de sala sólo para usuarios "company"
+	Route::get('/registro/salas', 'RoomController@create')->name('register_room');
+	Route::get('/salas/ajustes/{id}', 'RoomController@edit');
+	Route::post('/salas','RoomController@store');
+	Route::get('/salas','RoomController@index_company');
+	Route::put('/salas/{id}','RoomController@update');
+	
 });
 
 Route::group(['middleware' => ['auth','admin'],'prefix'=>'admin'], function () {
@@ -71,7 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
 		}
 
 		if($role == 'company'){
-			return redirect('registro/company');
+			return redirect('company/registro');
 		}
 
 		if($role == 'musician'){
@@ -131,7 +138,10 @@ Route::post('/checkout', 'PaymentController@checkout');
 
 Route::resource('comentarios', 'CommentController');
 Route::resource('ratings', 'RatingController');
-Route::resource('salas', 'RoomController');
+
+// Rutas de salas sin necesidad de registro
+Route::get('/salas/{id}', 'RoomController@show');
+Route::get('/salas', 'RoomController@index');
 
 // STARTS: Carga de imágenes fineuploader
 Route::get('imagenes/{image}', function($image){

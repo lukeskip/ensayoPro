@@ -258,10 +258,10 @@
 				<label>Abre:</label>
 				<select class="input-group-field required" name="schedule_start" id="">
 					<option value="">Selecciona...</option>
-					<option value="06">6:00</option>
-					<option value="07">7:00</option>
-					<option value="08">8:00</option>
-					<option value="09">9:00</option>
+					<option value="6">6:00</option>
+					<option value="7">7:00</option>
+					<option value="8">8:00</option>
+					<option value="9">9:00</option>
 					<option value="10">10:00</option>
 					<option value="11">11:00</option>
 					<option value="12">12:00</option>
@@ -285,10 +285,10 @@
 				<label>Cierra</label>
 				<select class="input-group-field required" name="schedule_end" id="">
 					<option value="">Selecciona...</option>
-					<option value="06">6:00</option>
-					<option value="07">7:00</option>
-					<option value="08">8:00</option>
-					<option value="09">9:00</option>
+					<option value="6">6:00</option>
+					<option value="7">7:00</option>
+					<option value="8">8:00</option>
+					<option value="9">9:00</option>
 					<option value="10">10:00</option>
 					<option value="11">11:00</option>
 					<option value="12">12:00</option>
@@ -337,11 +337,25 @@
 	</script>
 	<script src="{{asset('js/get_loc.js')}}"></script>
 	<script>
+
+		// Creamos el array que contendrá las imágenes 
+		var room_images = [];
+
+		$('#uploader').fineUploader().on("complete", function (event, id, name, response) {
+    		room_images.push({
+				'name'  :response.name,
+				'path'	:'uploader/completed'
+			});
+			console.log(room_images);
+    	}).on("allComplete", function (event, id, name, response) {
+        		data = $("#form_rooms").serialize()+'&images='+JSON.stringify(room_images);
+				conection('POST',data,'/company/salas');
+    	});
+		
 		$.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" });
 		$('#form_rooms').validate({
 			submitHandler: function(form) {
-    			// $(form).submit();
-    			register_room_prepare ();
+    			$('#uploader').fineUploader('uploadStoredFiles');
   			},
   			errorPlacement: function(error, element) {
     		if(element[0].name == "days[]"){

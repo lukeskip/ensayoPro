@@ -12,6 +12,10 @@ a:focus {outline:0;}
 a{
 	color:white;
 }
+textarea{
+	white-space: pre-line;
+}
+
 
 .tooltip{
 	max-width: 12rem;
@@ -1405,6 +1409,41 @@ h1 .duration{
 	line-height: 1em;
 }
 /*steps*****************************/
+
+
+
+.room-edit .images{
+	text-align: center;
+	/*background: rgba(0,0,0,.5);*/
+	padding: 40px 0;
+	margin-bottom: 10px;
+}
+
+
+.room-edit .image{
+	width: 25%;
+	margin-right: 2%;
+/*	overflow: hidden;*/
+	display: inline-block;
+	border:white 2px solid;
+	position: relative;
+}
+
+.room-edit .image .delete{
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	background: black;
+	text-align: center;
+	color: white;
+	position: absolute;
+	top: -10px;
+	right: -10px;
+	border-radius: 100%;
+	text-align: center;
+
+}
+
 
 /*STARTS: Room Single******************************************/
 

@@ -10,9 +10,18 @@ use App\Company as Company;
 use App\MediaItem as MediaItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class RoomController extends Controller
 {
+
+    public function delete_image($id){
+        $image = MediaItem::find($id);
+        File::delete(url('imagenes/'.$image->name));
+        $image->delete();
+        return response()->json(['success' => true,'message'=>'La imagen fue borrada fue borrado']); 
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -89,6 +98,54 @@ class RoomController extends Controller
     }
 
 
+    public function index_company()
+    {
+        $items_per_page = 10;
+        $order = 'quality_up';
+        $user_id = Auth::user()->id;
+
+
+        $company_rooms = User::find($user_id)->companies()->with('rooms')->paginate($items_per_page);
+        
+        foreach ($company_rooms as $company) {
+            return $company->rooms;
+        }
+
+        // Si tienen la misma dirección de la compañía la asignamos y la mandamos dentro del mismo objeto
+        
+        foreach ($rooms as $room) {
+
+            if($room->company_address){
+                $room['address']        = $room->companies->address;
+                $room['colony']         = $room->companies->colony;
+                $room['deputation']     = $room->companies->deputation;
+                $room['postal_code']    = $room->companies->postal_code;
+                $room['latitude']       = $room->companies->latitude;
+                $room['longitude']      = $room->companies->longitude;
+            }
+            
+            // Cuantificamos y promediamos las calificaiones
+            $quality = 0;
+            $sumRatings = count($room->ratings);
+
+            if($sumRatings > 0){
+                foreach ($room->ratings as $rating) {
+                    $quality += $rating->score;
+                }
+
+                $quality = $quality / $sumRatings;
+                $room['score']    = $quality;
+            }
+            
+            $room['ratings'] = $sumRatings;
+        }
+
+        
+        $companies = Company::orderBy('name', 'desc')->get();
+        $order = request()->order;
+
+        return view('reyapp.rooms.list_company')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -117,6 +174,7 @@ class RoomController extends Controller
             'name'              => 'required|max:255',
             'description'       => 'required|max:1000',
             'equipment'         => 'required|max:1000',
+            'days'              => 'required|max:255',
             'schedule_start'    => 'required|max:3', 
             'schedule_end'      => 'required|max:3',
             'color'             => 'required|max:10',        
@@ -140,6 +198,8 @@ class RoomController extends Controller
         $room->schedule_start   = $request->schedule_start;
         $room->schedule_end     = $request->schedule_end;
         $room->color            = $request->color;
+        $days                   = implode(',', $request->days);
+        $room->days             = $days;
         $room->status           = 'inactive';
         
 
@@ -235,7 +295,13 @@ class RoomController extends Controller
 
         $room = Room::findOrFail($id);
 
+        $user_id = Auth::user()->id;
+        $companies = User::where('id',$user_id)->with('companies')->first();
+        $companies = $companies->companies;
         
+        $room['equipment'] = htmlspecialchars($room->equipment);
+        $room['days'] = explode(',',$room->days);
+
         if($room->status == 'inactive'){
             $room['status'] = 'Inactiva';
         }
@@ -243,8 +309,16 @@ class RoomController extends Controller
         if($room->status == 'active'){
             $room['status'] = 'Activa';
         }
+
+        if($room->company_address){
+            $latitude = $room->companies->latitude;
+            $longitude = $room->companies->longitude;
+        }else{
+            $latitude = $room->latitude;
+            $longitude = $room->longitude;
+        }
         
-        return view('reyapp.rooms.settings')->with('room',$room);
+        return view('reyapp.rooms.settings')->with('room',$room)->with('companies',$companies)->with('latitude',$latitude)->with('longitude',$longitude);
     }
 
     /**
@@ -256,7 +330,66 @@ class RoomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Registramos las reglas de validación
+        $rules = array(
+            'name'              => 'required|max:255',
+            'description'       => 'required|max:1000',
+            'equipment'         => 'required|max:1000',
+            'days'              => 'required|max:255',
+            'schedule_start'    => 'required|max:3', 
+            'schedule_end'      => 'required|max:3',
+            'color'             => 'required|max:10',        
+            'price'             => 'required|integer',        
+        );
+
+        // Validamos todos los campos
+        $validator = Validator::make($request->all(), $rules);
+
+        // Si la validación falla, nos detenemos y mandamos false
+        if ($validator->fails()) {
+            return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
+        }
+         
+        $room                   = Room::find($id);
+        $room->name             = $request->name;
+        $room->price            = $request->price;
+        $room->description      = $request->description;
+        $room->equipment        = $request->equipment;
+        $room->schedule_start   = $request->schedule_start;
+        $room->schedule_end     = $request->schedule_end;
+        $room->color            = $request->color;
+        $days                   = implode(',', $request->days);
+        $room->days             = $days;
+        
+
+        if($request->company_address){
+            $room->company_address  = true;       
+        }else{
+            $room->company_address  = false;
+            $room->address          = $request->address;
+            $room->colony           = $request->colony;
+            $room->deputation       = $request->deputation;
+            $room->postal_code      = $request->postal_code;
+            $room->city             = $request->city;
+        }
+
+              
+        $room->save();
+        
+        // Creamos los objetos de imagen y los relacionamos con el cuarto
+        $images = json_decode($request->input('images'),true);
+        foreach ( $images as $image) {
+        
+            $newImage = new MediaItem();
+            $newImage->name = $image['name'];
+            $newImage->path = $image['path'];
+            $newImage->room_id = $room->id;
+            $newImage->save(); 
+             
+        }
+
+        // respondemos la petición con un true
+        return response()->json(['success' => true]);
     }
 
     /**

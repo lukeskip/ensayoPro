@@ -51,7 +51,7 @@
 		<!-- STARTS: Preloader -->
 		<div class="loader-wrapper">
 			<div class="loader">
-				<img src="assets/img/elements/logo-full.png">
+				{{-- <img src="assets/img/elements/logo-full.png"> --}}
 				<div class="bars-animation">
 					<div class="bar one"></div>
 					<div class="bar two"></div>
@@ -88,6 +88,10 @@
 						</li>
 						<li><a href="/company">
 							<i class="fa fa-line-chart" aria-hidden="true"></i> Dashboard
+							</a>
+						</li>
+						<li><a href="/company/ajustes">
+								<i class="fa fa-cogs" aria-hidden="true"></i> Mis Salas
 							</a>
 						</li>
 						<li><a href="/company/ajustes">

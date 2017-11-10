@@ -1,4 +1,4 @@
-room_images = [];
+
 $(document).foundation();
 $(document).ready(function(){
 
@@ -105,17 +105,6 @@ $(document).ready(function(){
 				}
 			},
 			autoUpload: false,
-			callbacks: {
-				onComplete: function(id,name,responseJSON) {
-					room_images.push({
-						'name'  :responseJSON.name,
-						'path'	:'uploader/completed'
-					});
-				},
-				onAllComplete: function(succeeded){
-					register_room();
-				}
-			}
 		});
 	}
 	// ENDS: Forms
@@ -178,17 +167,9 @@ function register_band (){
 	});
 }
 
-// cargamos las imágenes en FineUploader antes de enviar el formulario ya validado
-function register_room_prepare (){	
-	$('#uploader').fineUploader('uploadStoredFiles');
 
-}
 
-// 
-function register_room (){
-	data = $("#form_rooms").serialize()+'&images='+JSON.stringify(room_images);
-	conection('POST',data,'/salas');
-}
+
 
 // controlador de mensajes
 function show_message(type,title,message,link,color = '#CF2832'){

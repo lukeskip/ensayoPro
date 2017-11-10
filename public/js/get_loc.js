@@ -28,14 +28,6 @@ function initialize() {
 	    $('.latitude').val(this.getPosition().lat());
       	$('.longitude').val(this.getPosition().lng());
 
-      	if(editmode ==true){
-      		data = {'latitude':this.getPosition().lat(),'longitude':this.getPosition().lng()}
-      		conection('PUT',data,action,true).then(function(data){
-				if(data.success == true){
-					show_message('success','Muy bien','Los datos fueron cambiados con éxito');
-				}
-			});
-      	}
 	});
 
 }
@@ -45,7 +37,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 // Obtenemos la longitud y latitud de google y las asignamos a fields hidden
 function getLatLong() {
-	
+	initialize();
 	var addressInput = $('.address').val()+', '+$('.colony').val()+', '+$('.deputation').val()+', '+$('.postal_code').val()+', '+$('.city').val()+', '+$('.country').val();
 	var geocoder = new google.maps.Geocoder();
 
@@ -65,6 +57,8 @@ function getLatLong() {
 			map.setZoom(17);
 
 			
+		}else{
+			show_message('warning','Atención','No pudimos encontrar la dirección escrita, asegúrate de colocar el pin en el lugar correcto')
 		}
 	});
 
