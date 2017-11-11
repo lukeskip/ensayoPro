@@ -91,7 +91,7 @@
 			    <div class="medium-6 columns">
 			      <h4 class="marketing-site-footer-name"><div><img src=" {{asset('img/logo_rey.png')}} " width="200" alt=""></div></h4>
 			      <p>Ensaya Pro es una marca de Rey Decibel.</p>
-						<p>Todos los Derechos Reservados Rey Decibel 2017. Mexico</p>
+						<p>Todos los Derechos Reservados Rey Decibel 2017. México</p>
 						<p><a href="http://www.reydecibel.com.mx/terminos-condiciones-generador-setlists/">Términos y condiciones</a></p>
 
 			    </div>
