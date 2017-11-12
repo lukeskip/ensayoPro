@@ -53,7 +53,6 @@ class AdminCompanyController extends Controller
         $rooms = Room::paginate($items_per_page);
 
         // Si tienen la misma dirección de la compañía la asignamos y la mandamos dentro del mismo objeto
-        
         foreach ($rooms as $room) {
 
             if($room->company_address){

@@ -34,7 +34,7 @@
 					<div class="row list-item">
 						<div class="medium-3 columns">
 
-							<span class="hastooltip" title="Este es un tool tip">
+							<span>
 								{{$reservation->users->name}} {{$reservation->users->lastname}}
 							</span>
 							

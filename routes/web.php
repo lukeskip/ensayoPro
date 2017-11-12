@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth','company'],'prefix'=>'company'], function 
 });
 
 Route::group(['middleware' => ['auth','admin'],'prefix'=>'admin'], function () {
-	Route::get('/dashboard', 'DashboardController@admin')->name('dashboardAdmin');
+	Route::get('/', 'AdminController@index')->name('admin');
 });
 
 Route::group(['middleware' => 'auth'], function () {

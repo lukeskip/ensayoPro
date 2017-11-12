@@ -17,6 +17,7 @@ class ReservationController extends Controller
     // Pantalla de calendario para usuario 'musician'
     public function make_reservation($room_id)
     {
+        
         if($room_id != ''){
             $user_id = Auth::user()->id;
             $bands = User::find($user_id)->bands;
