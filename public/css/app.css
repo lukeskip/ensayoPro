@@ -1695,94 +1695,329 @@ h1 .duration{
 	margin:0;
 	margin-top: -20px;
 }
-
-.top-bar {
-	background-color: rgb(0, 0, 0) !important;
+/*STARTS: TopBar***************************************************/
+.topbar-responsive {
+  background: #2c3840;
+	width: 100%;
+  padding: 1rem 1.5rem;
 	position: fixed;
 	z-index: 9999;
-	width: 100%;
-	height: 90px;
 }
-.menu {
-	background-color: transparent !important;
-}
-.menu li:hover{
-	background-color: transparent !important;
-}
-
-
-.fullscreen-image-slider .orbit-image {
-  width: 100%;
-  height: auto;
-}
-
-.fullscreen-image-slider .orbit-caption {
-  background-color: rgba(000, 0, 0, 0.2);
-	height: 100%;
-  text-align: center;
-	padding-top:20%;
+.topbar-responsive .topbar-responsive-logo {
   color: #fefefe;
-  font-weight: bold;
+  vertical-align: middle;
+}
+.topbar-responsive .menu {
+  background: #2c3840;
+
+}
+.topbar-responsive .menu li:last-of-type {
+  margin-right: 0;
+}
+.topbar-responsive .menu li:hover {
+	background: none;
 }
 
+.topbar-responsive .menu a {
+  color: #fefefe;
+  transition: color 0.15s ease-in;
+}
+.topbar-responsive .menu a:hover {
+  color: #c6d1d8;
+}
+@media screen and (max-width: 39.9375em) {
+  .topbar-responsive .menu a {
+    padding: 0.875rem 0;
+  }
+}
+.topbar-responsive .menu .topbar-responsive-button {
+  color: #fefefe;
+  border-color: #fefefe;
+  border-radius: 5000px;
+  transition: color 0.15s ease-in, border-color 0.15s ease-in;
+}
+.topbar-responsive .menu .topbar-responsive-button:hover {
+  color: #c6d1d8;
+  border-color: #c6d1d8;
+}
+@media screen and (max-width: 39.9375em) {
+  .topbar-responsive .menu .topbar-responsive-button {
+    width: 100%;
+		height: 40px;
+    margin: 0.875rem 0;
+  }
+	.menu.simple li + li {
+    margin-left: 0;
+	}
+	.topbar-responsive .menu a {
+    padding: 0 0;
+	}
+}
+@media screen and (max-width: 39.9375em) {
+  .topbar-responsive {
+    padding: 0.75rem;
+  }
+  .topbar-responsive .top-bar-title {
+    position: relative;
+    width: 100%;
+  }
+  .topbar-responsive .top-bar-title span {
+    position: absolute;
+    right: 0;
+    border: 1px solid #fefefe;
+    border-radius: 5px;
+    padding: 0.25rem 0.45rem;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+  }
+  .topbar-responsive .top-bar-title span .menu-icon {
+    margin-bottom: 4px;
+  }
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes slideDown {
+  0% {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+  }
+  100% {
+    -webkit-transform: translateY(0%);
+            transform: translateY(0%);
+  }
+}
+@keyframes slideDown {
+  0% {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+  }
+  100% {
+    -webkit-transform: translateY(0%);
+            transform: translateY(0%);
+  }
+}
+@media screen and (max-width: 39.9375em) {
+  .topbar-responsive-links {
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+    -webkit-animation-duration: 0.5s;
+            animation-duration: 0.5s;
+    width: 100%;
+    -webkit-animation: fadeIn 1s ease-in;
+            animation: fadeIn 1s ease-in;
+  }
+}
+/*ENDS: TopBar***************************************************/
 
-.top-companies {
-	background-color: rgb(248,248,250);
+/*STARTS: Slide***************************************************/
+.clean-hero-slider .orbit-caption {
+  width: auto;
+  height: auto;
+  position: absolute;
   text-align: center;
-  padding: 4rem 4rem;
-	color: #333;
+  right: 0;
+  left: 0;
+  padding: 0.2rem 2rem;
 }
 
-.top-companies-subheadline {
-  margin-bottom: 2rem;
-  text-align: center;
-	color:#333;
-}
-
-.companies-image-block-title {
-	color:#333;
-	padding-top: 10px;
-}
-
-.marketing-site-features {
-	background-color: rgba(250, 0, 0, 0.5);
-  text-align: center;
-  padding: 4rem 4rem;
-}
-
-.marketing-site-features .fa {
-  font-size: 1.9rem;
-  margin-bottom: 2rem;
-  color: white;
-}
-
-.marketing-site-features .marketing-site-features-title {
-  font-size: 1.125rem;
-  margin-bottom: 1rem;
-}
-
-@media screen and (min-width: 40em) {
-  .marketing-site-features {
-    text-align: center;
-		margin-bottom: -100px;
+@media print, screen and (min-width: 40em) {
+  .clean-hero-slider .orbit-caption {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.7);
+		border-radius: 0 20px 20px 0;
+    text-align: right;
+    width: 80%;
+    right: 0;
+    padding: 2rem 8rem;
   }
 }
 
-.marketing-site-features-headline {
-  text-align: center;
-  font-size: 24px;
+@media screen and (min-width: 75em) {
+  .clean-hero-slider .orbit-caption {
+    padding-right: 10%;
+  }
 }
 
-.marketing-site-features-subheadline {
-  margin-bottom: 2rem;
-  text-align: center;
-	color:white;
+@media screen and (min-width: 90em) {
+  .clean-hero-slider .orbit-caption {
+    padding-right: 20%;
+  }
 }
 
-.button-float {
-	padding-top: 40px;
+.clean-hero-slider .orbit-caption p {
+  font-size: 0.9rem;
+  line-height: 1.25;
 }
 
+@media print, screen and (min-width: 40em) {
+  .clean-hero-slider .orbit-caption p {
+    font-size: 1.1rem;
+  }
+}
+
+.clean-hero-slider .orbit-caption h3 {
+  color: #D03639;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.clean-hero-slider .orbit-caption p {
+
+  margin-top: 25px;
+	text-align: center;
+}
+
+@media print, screen and (min-width: 40em) {
+  .clean-hero-slider .orbit-caption h3 {
+    font-size: 2.5rem;
+    font-weight: normal;
+  }
+}
+
+.clean-hero-slider .orbit-slide {
+  padding-bottom: 40%;
+  background: #0a0a0a;
+}
+
+@media print, screen and (min-width: 40em) {
+  .clean-hero-slider .orbit-slide {
+    padding-bottom: 0;
+  }
+}
+
+.clean-hero-slider .orbit-controls button {
+  background: transparent;
+  padding: 1rem 0.5rem;
+}
+
+.clean-hero-slider .orbit-controls button:hover {
+  transition: color 0.15s ease-in;
+  color: #7c7c7c;
+	cursor: pointer;
+}
+
+@media print, screen and (min-width: 40em) {
+  .clean-hero-slider .orbit-button .orbit-previous {
+    left: auto;
+		right: 2.4rem;
+  }
+	.orbit-previous, .orbit-next {
+		right: 0.5rem;
+	}
+	.bottom-content-section {
+		position: absolute;
+		top:80%;
+		color: white;
+		right: 47%;
+	}
+}
+
+@media print, screen and (min-width: 40em) {
+  .clean-hero-slider .orbit-controls .orbit-next {
+    right: 0.5rem;
+  }
+}
+
+.clean-hero-slider .orbit-bullets {
+  display: none;
+}
+
+@media print, screen and (min-width: 40em) {
+  .clean-hero-slider .orbit-bullets {
+    display: block;
+    margin-bottom: 0;
+    margin-top: -3rem;
+    background: none;
+  }
+}
+
+@media print, screen and (max-width: 40em) {
+		.orbit-image .orbit-figure img {
+			height: 400px;
+			width: auto;
+		}
+	 .clean-hero-slider .orbit-caption {
+		 position: absolute;
+		 -webkit-transform: translateY(-50%);
+				 -ms-transform: translateY(-50%);
+						 transform: translateY(-50%);
+		 background: rgba(0, 0, 0, 0.5);
+		 text-align: left;
+		 width: 100%;
+		 height: auto;
+		 right: 0;
+	 }
+	 .bottom-content-section {
+		 position: absolute;
+		 top:70%;
+		 color: white;
+		 right: 47%;
+		}
+}
+.clean-hero-slider .orbit-bullets button {
+  width: 3rem;
+  height: 0.4rem;
+  border-radius: 0;
+  background-color: #fefefe;
+}
+
+.clean-hero-slider .orbit-bullets button.is-active {
+  background-color: #ffae00;
+}
+
+.clean-hero-slider ul.orbit-container {
+  height: auto !important;
+}
+
+.clean-hero-slider li.orbit-slide {
+  max-height: none !important;
+}
+
+/*ENDS: Slide***************************************************/
+
+/*STARS: Company***************************************************/
+.top-company {
+	margin-top: -20px;
+	padding:120px 40px;
+	background-color: #dbdbdb;
+	color: #333;
+}
+.bullets-company{
+	padding-top: 20px;
+}
+	 .top-company {
+		 margin-top: -20px;
+		 padding:120px 40px;
+		 background-color: #dbdbdb;
+		 color: #333;
+	 }
+}
+/*ENDS: Company***************************************************/
+
+/*STARS: Features***************************************************/
+
+
+/*ENDS: Features***************************************************/
 
 
 /*ENDS: landing ****************************************************/
@@ -1871,7 +2106,7 @@ h1 .duration{
 }
 
 @media screen and (max-width: 63.9375em) {
-  .marketing-site-footer-bottom {
+  .footer-bottom {
     text-align: center;
   }
 }
