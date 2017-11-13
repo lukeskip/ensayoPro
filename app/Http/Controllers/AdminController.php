@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth as Auth;
 use App\Room as Room;
 use App\User as User;
 use App\Company as Company;
+use App\Comment as Comment;
 use App\Reservation as Reservation;
 
 
@@ -20,8 +21,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::limit(10)->get();
-        $rooms = Room::where('status','active')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'DESC')->limit(10)->get();
+        $reservations   = Reservation::limit(10)->get();
+        $comments       = Comment::where('status','pending')->get();
+        
+        $rooms = Room::leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'DESC')->limit(10)->get();
 
 
         foreach ($rooms as $room) {
@@ -42,7 +45,7 @@ class AdminController extends Controller
         }
 
 
-        return view('reyapp.admin.dashboard')->with('rooms',$rooms)->with('reservations',$reservations);
+        return view('reyapp.admin.dashboard')->with('rooms',$rooms)->with('reservations',$reservations)->with('comments',$comments);
 
     }
 
