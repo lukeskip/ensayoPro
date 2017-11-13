@@ -101,7 +101,7 @@
 					<div class="comment-form">
 						@if (!Auth::guest())
 						<form id="form-comment" action="">
-							<div class="title">Deja una opinión</div>
+							<h3 class="title text-left">Deja una opinión</h3>
 							<label for="">Título:</label>
 							<input type="text" name="title">
 							<label for="">Opinión:</label>

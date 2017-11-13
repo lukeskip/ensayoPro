@@ -2,6 +2,22 @@
 $(document).foundation();
 $(document).ready(function(){
 
+	//STARTS: Read More Text
+
+	// Configure/customize these variables.
+    var showChar = 150;  
+
+    $('.more').each(function() {
+        var content = $(this).html();
+        if(content.length > showChar) {
+ 
+            var html = content.substr(0, showChar);  
+            $(this).html(html+'...');
+        }
+    });
+
+	//ENDS: Read More Text
+
 	$(document).on('keyup',function(evt) {
 	    if (evt.keyCode == 27) {
 	       edit_init();

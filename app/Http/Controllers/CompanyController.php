@@ -209,7 +209,7 @@ class CompanyController extends Controller
 		$user_id = Auth::user()->id;
 		$company = Company::with('users')->find($id);
 		$company_user = $company->users->first()->id;
-		$role = $company->users->first()->roles->first()->name;
+		$role = User::find()->roles->first()->name;
 
 		// verificamos que el usuario sea dueño de la información
 		if($user_id != $company_user  and $role != 'admin' ){

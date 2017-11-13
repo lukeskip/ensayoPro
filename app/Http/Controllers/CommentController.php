@@ -17,7 +17,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        
+        $comments = Comment::paginate(15);
+        return view('reyapp.admin.comments')->with('comments',$comments);
     }
 
     /**
@@ -102,7 +103,11 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comment = Comment::find($id);
+        $comment->status = $request->status;
+        $comment->save();
+
+        return response()->json(['success' => true,'message'=>'El comentario ha sido actualizado']);
     }
 
     /**

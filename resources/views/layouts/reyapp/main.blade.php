@@ -98,7 +98,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="admin/salas">
+							<a href="/salas">
 								<i class="fa fa-calendar-o" aria-hidden="true"></i> Salas
 							</a>
 						</li>

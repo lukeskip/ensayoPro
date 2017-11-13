@@ -101,17 +101,9 @@
 		</div>
 		
 		<div class="row">
+			<input type="hidden" name="company" value="{{$company->id}}">
 
-			<div class="large-4 columns">
-				<label>Compañía</label>
-				<select class="input-group-field" name="company" id="company">
-					@foreach($companies as $company)
-						<option value="{{$company->id}}">{{$company->name}}</option>
-					@endforeach
-				</select>
-			</div>
-
-			<div class="large-4 columns">
+			<div class="large-8 columns">
 			
 				<label>Nombre</label>
 				<input class="input-group-field required"  type="text" name="name" placeholder="Ej. Sala grande" value="{{$room->name}}">
@@ -124,6 +116,10 @@
 				<select name="status" id="">
 					<option @if($room->status == 'active') {{'selected'}} @endif value="active">Activa</option>
 					<option @if($room->status == 'inactive') {{'selected'}} @endif value="inactive">Inactiva</option>
+
+					@if($role == 'admin')
+						<option @if($room->status == 'cancelled') {{'selected'}} @endif value="cancelled">Cancelada</option>
+					@endif
 				</select>
 			</div>
 

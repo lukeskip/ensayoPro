@@ -66,11 +66,25 @@
 				@foreach ($rooms as $room)
 				<div class="row list-item room-item">
 					<div class="medium-6 columns">
-
-						<a href="/salas/{{$room->id}}">{{$room->companies->name}} ({{$room->name}})</a>
+						@if(!Auth::guest())
+							@if ($role == 'admin')
+								<a href="/admin/salas/ajustes/{{$room->id}}">{{$room->companies->name}} ({{$room->name}})</a>
+							@else
+								<a href="/salas/{{$room->id}}">{{$room->companies->name}} ({{$room->name}})</a>
+							@endif
+						@else
+							<a href="/salas/{{$room->id}}">{{$room->companies->name}} ({{$room->name}})</a>
+						@endif
+						
 						<div class="info">
+							@if($role == 'admin')
+								<a href="/salas/{{$room->id}}" class="green tag">
+									Ver
+								</a href="#">
+							@endif
 							<a href="#" class="colony tag">{{$room->colony}}</a href="#">
 							<a href="#" class="deputation tag">{{$room->deputation}}</a href="#">
+							
 							{{-- <a href="#" class="discount">Descuento -20%</a href="#"> --}}
 						</div>
 						

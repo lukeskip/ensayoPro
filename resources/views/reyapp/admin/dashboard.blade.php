@@ -27,13 +27,11 @@
 					</div>
 				</div>
 				@foreach($comments as $comment)
-					<div class="row list-item comment_form" 
-						data-id="{{$comment->id}}" 
-						data-title="{{$comment->title}}"
-						data-status="{{$comment->status}}"
+					<div class="row list-item " 
+						
 					>
 						<div class="medium-3 columns ">
-							<a href="/admin/salas/{{$comment->rooms->id}}">
+							<a href="/salas/{{$comment->rooms->id}}">
 								{{$comment->rooms->name}}
 							</a>
 							<a href="/admin/company/{{$comment->rooms->companies->id}}">
@@ -42,11 +40,28 @@
 							
 						</div>
 						<div class="medium-7 columns ">
-							<strong>{{$comment->title}}</strong>
-							{{$comment->description}}
+							<span class="more">
+								<strong style="color:black">{{$comment->title}}</strong>
+								{{$comment->description}}
+							</span>
+							
 						</div>
-						<div class="medium-2 columns price">
-							{{$comment->status}}
+						<div class="medium-2 columns status">
+							<a class="comment_form" href="#"
+								data-id="{{$comment->id}}" 
+								data-title="{{$comment->description}}"
+								data-status="{{$comment->status}}"
+							>
+
+								@if($comment->status == 'approved')
+									<i class="fa fa-check-circle-o confirmed hastooltip" title="Aprobado" aria-hidden="true"></i>
+								@elseif($comment->status == 'pending')
+									<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Pendiente"></i>
+								@elseif($comment->status == 'rejected')
+									<i class="fa fa-times-circle-o hastooltip cancelled" title="Rechazado" aria-hidden="true"></i>
+								@endif
+
+							</a>
 						</div>
 
 					</div>
@@ -55,7 +70,7 @@
 			<div class="row">
 				<div class="large-12 columns text-center">
 					<br>
-					<a class="button black" href="/admin/reservaciones">Ver todas</a>
+					<a class="button black" href="/admin/comentarios">Ver todos</a>
 				</div>
 			</div>
 				
@@ -64,7 +79,7 @@
 		{{-- ENDS: Comentarios --}}
 
 		{{-- STARTS: reservaciones --}}
-		<div class="large-12 columns reservations">
+		<div class="large-12 columns reservations end">
 				<div class="row list-header">
 					<div class="medium-12-columns">
 						<h3>Últimas reservaciones</h3>
@@ -208,16 +223,17 @@
 			var id 			= $(this).data('id');
 			var title 		= $(this).data('title');
 			var status 		= $(this).data('status');
-			open_form_comment(id,title,status);
+			var description = $(this).data('description');
+			open_form_comment(id,title,description,status);
 		});
 
-		function open_form_comment(id,title,status){
+		function open_form_comment(id,title,description,status){
 			var options = []
 			
 			var status_init = {
+				"pending"	:"Pendiente",
   				"approved": "Aprobado",
-  				"rejected"	:"Rechazado",
-  				"pending"	:"Pendiente"
+  				"rejected"	:"Rechazado"
 			};
 
 			$.each( status_init, function( key, value ) {
@@ -247,8 +263,9 @@
 				    confirmButtonColor: '#2FAB31',
 				    confirmButtonText: 'Guardar',
 				    closeOnConfirm: true,
+				    customClass: 'comment-swal',
 				    formFields: [
-						{ id: 'name', type:'hidden', value:id},
+						{ id: 'id', type:'hidden', value:id},
 						{ id: 'status',
 							type: 'select',
 							options: options
@@ -256,9 +273,9 @@
 					]
 				  }).then(function (context) {
 				  	if(context._isConfirm){
-				  		conection('PUT',context.swalForm,'/admin/comentarios',true).then(function(data) {
+				  		conection('PUT',context.swalForm,'/admin/comentarios/'+id,true).then(function(data) {
 	  						if(data.success == true){
-								show_message('success','Listo!',data.message);
+								window.location.reload();
 							}else{
 								show_message('error','¡Error!',data.message);
 							}

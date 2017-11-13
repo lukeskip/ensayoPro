@@ -28,9 +28,18 @@ class RoomController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+
         $items_per_page = 10;
         $order = 'quality_up';
+
+        if(!Auth::guest()){
+            $user_id = Auth::user()->id;
+            $role = User::find($user_id)->roles->first()->name;  
+        }else{
+            $role = '';
+        }
+        
 
         // Actuamos dependiento los filtros que tengamos diponibles
         if(request()->has('order')){
@@ -94,7 +103,7 @@ class RoomController extends Controller
         $companies = Company::orderBy('name', 'desc')->get();
         $order = request()->order;
 
-        return view('reyapp.rooms.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order);
+        return view('reyapp.rooms.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order)->with('role',$role);
     }
 
 
@@ -295,16 +304,19 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
-        // $user_id = Auth::user()->id;
-        // $companies = User::where('id',$user_id)->with('companies')->first();
-        // $companies = $companies->companies;
-        // return view('reyapp.rooms.register_room')->with('companies',$companies);
-
-        $room = Room::findOrFail($id);
 
         $user_id = Auth::user()->id;
-        $companies = User::where('id',$user_id)->with('companies')->first();
-        $companies = $companies->companies;
+        $room = Room::with('companies')->findOrFail($id);
+        $room_user = $room->companies->users->first()->id;
+        $role = User::find($user_id)->roles->first()->name;
+
+        // verificamos que el usuario sea dueño de la información
+        if($user_id != $room_user and $role!='admin'){
+            return response()->json(['success' => false,'messages'=>'No tienes privilegios necesarios']); 
+        }
+
+        
+        $company = $room->companies;
         
         $room['equipment'] = htmlspecialchars($room->equipment);
         $room['days'] = explode(',',$room->days);
@@ -317,7 +329,7 @@ class RoomController extends Controller
             $longitude = $room->longitude;
         }
         
-        return view('reyapp.rooms.settings')->with('room',$room)->with('companies',$companies)->with('latitude',$latitude)->with('longitude',$longitude);
+        return view('reyapp.rooms.settings')->with('room',$room)->with('company',$company)->with('latitude',$latitude)->with('longitude',$longitude)->with('role',$role);
     }
 
     /**
