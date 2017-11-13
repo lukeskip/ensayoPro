@@ -1,4 +1,8 @@
 @extends('layouts.reyapp.main')
+@section('styles')
+<link rel="stylesheet" href="{{asset('plugins/swal-forms-master/live-demo/sweet-alert.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/swal-forms-master/swal-forms.css')}}">
+@endsection;
 @section('body_class', 'dashboard')
 @section('content')
 	
@@ -7,46 +11,42 @@
 	<div class="row">
 		
 		{{-- STARTS: Comentarios --}}
-		<div class="large-12 columns reservations">
+		<div class="large-12 columns">
 				<div class="row list-header">
 					<div class="medium-12-columns">
 						<h3>Comentarios Pendientes</h3>
 					</div>
 					<div class="medium-3 columns show-for-medium">
-						Título 
+						Sala/Compañía
 					</div>
-					<div class="medium-3 columns show-for-medium">
-						Sala
-					</div>
-					<div class="medium-4 columns show-for-medium">
+					<div class="medium-7 columns show-for-medium">
 						Descripción
 					</div>
 					<div class="medium-2 columns show-for-medium">
-						Status
+						Estatus
 					</div>
 				</div>
 				@foreach($comments as $comment)
-					<div class="row list-item">
-						<div class="medium-3 columns">
-							{{$comment->title}}
-						</div>
+					<div class="row list-item comment_form" 
+						data-id="{{$comment->id}}" 
+						data-title="{{$comment->title}}"
+						data-status="{{$comment->status}}"
+					>
 						<div class="medium-3 columns ">
-							{{$comment->rooms->name}}
+							<a href="/admin/salas/{{$comment->rooms->id}}">
+								{{$comment->rooms->name}}
+							</a>
+							<a href="/admin/company/{{$comment->rooms->companies->id}}">
+								({{$comment->rooms->companies->name}})
+							</a>
+							
 						</div>
-						<div class="medium-2 columns ">
+						<div class="medium-7 columns ">
+							<strong>{{$comment->title}}</strong>
 							{{$comment->description}}
 						</div>
 						<div class="medium-2 columns price">
 							{{$comment->status}}
-						</div>
-						<div class="medium-2 columns status">
-							@if($reservation->status == 'confirmed')
-								<i class="fa fa-check-circle-o confirmed hastooltip" title="Confirmado" aria-hidden="true"></i>
-							@elseif($reservation->status == 'pending')
-								<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Pendiente"></i>
-							@elseif($reservation->status)
-								<i class="fa fa-times-circle-o hastooltip cancelled" title="Cancelado" aria-hidden="true"></i>
-							@endif
 						</div>
 
 					</div>
@@ -199,9 +199,77 @@
 @endsection
 
 @section('scripts')
+<script src="{{asset('plugins/swal-forms-master/live-demo/sweet-alert.js')}}"></script>
+<script src="{{asset('plugins/swal-forms-master/swal-forms.js')}}"></script>
 <script>
 	$(document).ready(function(){
 
+		$('.comment_form').click(function(){
+			var id 			= $(this).data('id');
+			var title 		= $(this).data('title');
+			var status 		= $(this).data('status');
+			open_form_comment(id,title,status);
+		});
+
+		function open_form_comment(id,title,status){
+			var options = []
+			
+			var status_init = {
+  				"approved": "Aprobado",
+  				"rejected"	:"Rechazado",
+  				"pending"	:"Pendiente"
+			};
+
+			$.each( status_init, function( key, value ) {
+			  	if(key == status){
+					console.log(key);
+					options.push({
+						'selected' :'true',
+						'value' : key,
+						'text' 	: value 
+					});
+				}else{
+					options.push({
+						'value' : key,
+						'text' 	: value 
+					});
+				}
+			  	
+
+				
+			});
+			
+			console.log(options);
+
+			swal.withFormAsync({
+				    title: title,
+				    showCancelButton: true,
+				    confirmButtonColor: '#2FAB31',
+				    confirmButtonText: 'Guardar',
+				    closeOnConfirm: true,
+				    formFields: [
+						{ id: 'name', type:'hidden', value:id},
+						{ id: 'status',
+							type: 'select',
+							options: options
+						}
+					]
+				  }).then(function (context) {
+				  	if(context._isConfirm){
+				  		conection('PUT',context.swalForm,'/admin/comentarios',true).then(function(data) {
+	  						if(data.success == true){
+								show_message('success','Listo!',data.message);
+							}else{
+								show_message('error','¡Error!',data.message);
+							}
+						});
+		
+				  	}
+				    
+				  });
+
+		}
+		
 		$('.rating').each(function() {
 	        $(this).barrating({
 				theme: 'fontawesome-stars',

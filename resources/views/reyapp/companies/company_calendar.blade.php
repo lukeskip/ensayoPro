@@ -41,7 +41,7 @@
 		@foreach($rooms as $room)
 			rooms.push({
 					'value' :{{$room->id}},
-					'text' : '{{$room->name}}' 
+					'text' 	: '{{$room->name}}' 
 			});
 		@endforeach
 

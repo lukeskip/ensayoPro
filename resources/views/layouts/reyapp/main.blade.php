@@ -78,9 +78,40 @@
 
 		    <ul class="vertical menu">
 				@if(!Auth::guest())
+
+					{{-- STARTS: admin Menu --}}
+					@if (Auth::user()->roles->first()->name == 'admin')
+
+						<li>
+							<a target="_blank" href="/users/{{Auth::user()->id}}">
+								<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
+							</a>
+						</li>
+						<li>
+							<a href="/admin/">
+								<i class="fa fa-line-chart" aria-hidden="true"></i> Dashboard
+							</a>
+						</li>
+						<li>
+							<a href="/admin/companies">
+								<i class="fa fa-users" aria-hidden="true"></i> Compañías
+							</a>
+						</li>
+						<li>
+							<a href="admin/salas">
+								<i class="fa fa-calendar-o" aria-hidden="true"></i> Salas
+							</a>
+						</li>
+						<li>
+							<a href="admin/salas">
+								<i class="fa fa-calendar-o" aria-hidden="true"></i> Reservaciones
+							</a>
+						</li>
+
+					{{-- ENDS: admin Menu --}}
 					
 					{{-- STARTS: Company Menu --}}
-					@if(Auth::user()->roles->first()->name == 'company')
+					@elseif(Auth::user()->roles->first()->name == 'company')
 						<li>
 							<a target="_blank" href="/users/{{Auth::user()->id}}">
 								<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}

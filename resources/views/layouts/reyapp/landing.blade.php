@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="{{asset('js/vendor/jquery-ui/jquery-ui.min.css')}}">
 		<link rel="stylesheet" href="{{asset('plugins/colorpicker/css/evol-colorpicker.min.css')}}">
 		<link rel="stylesheet" href="{{asset('plugins/swal-forms-master/live-demo/sweet-alert.css')}}">
-	<link rel="stylesheet" href="{{asset('plugins/swal-forms-master/swal-forms.css')}}">
+		<link rel="stylesheet" href="{{asset('plugins/swal-forms-master/swal-forms.css')}}">
 		<link rel="stylesheet" href="{{asset('plugins/fine-uploader/fine-uploader-gallery.min.css')}}">
 		
 		@yield('styles')
