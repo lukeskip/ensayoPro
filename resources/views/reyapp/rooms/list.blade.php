@@ -30,12 +30,9 @@
 						Ubicación:
 					</span>
 					<select class="input-group-field" name="area" class="area">
-						<option value="">Selecciona</option>
-						<option value="">Centro</option>
-						<option value="">Sur</option>
-						<option value="">Norte</option>
-						<option value="">Oriente</option>
-						<option value="">Poniente</option>
+						@foreach($deputations as $deputation)
+							<option value="{{$deputation->deputation}}">{{$deputation->deputation}}</option>
+						@endforeach
 					</select>
 				</div>
 				
@@ -82,8 +79,8 @@
 									Ver
 								</a href="#">
 							@endif
-							<a href="#" class="colony tag">{{$room->colony}}</a href="#">
-							<a href="#" class="deputation tag">{{$room->deputation}}</a href="#">
+							<a href="/salas/?colonia={{$room->colony}}" class="colony tag">{{$room->colony}}</a href="#">
+							<a href="/salas/?deleg={{$room->deputation}}" class="deputation tag">{{$room->deputation}}</a href="#">
 							
 							{{-- <a href="#" class="discount">Descuento -20%</a href="#"> --}}
 						</div>

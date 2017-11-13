@@ -15,404 +15,419 @@ use Illuminate\Support\Facades\File;
 class RoomController extends Controller
 {
 
-    public function delete_image($id){
-        $image = MediaItem::find($id);
-        File::delete(url('imagenes/'.$image->name));
-        $image->delete();
-        return response()->json(['success' => true,'message'=>'La imagen fue borrada fue borrado']); 
-    }
+	public function delete_image($id){
+		$image = MediaItem::find($id);
+		File::delete(url('imagenes/'.$image->name));
+		$image->delete();
+		return response()->json(['success' => true,'message'=>'La imagen fue borrada fue borrado']); 
+	}
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {   
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index()
+	{   
 
-        $items_per_page = 10;
-        $order = 'quality_up';
+		$items_per_page = 10;
+		$order = 'quality_up';
+		$role  = '';
 
-        if(!Auth::guest()){
-            $user_id = Auth::user()->id;
-            $role = User::find($user_id)->roles->first()->name;  
-        }else{
-            $role = '';
-        }
-        
-
-        // Actuamos dependiento los filtros que tengamos diponibles
-        if(request()->has('order')){
-            
-            if(request()->order == 'price_up'){
-            
-                $order = 'price';
-                $rooms = Room::where('status','active')->orderBy($order, 'asc')->paginate($items_per_page);
-            
-            }else if(request()->order == 'price_down'){
-            
-                $order = 'price';
-                $rooms = Room::where('status','active')->orderBy($order, 'desc')->paginate($items_per_page);
-            
-            }else if(request()->order == 'quality_up'){
-
-                $rooms = Room::where('status','active')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'ASC')->paginate($items_per_page);
-
-            }else if(request()->order == 'quality_down'){
-
-                $rooms = Room::where('status','active')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'DESC')->paginate($items_per_page);
-            }
-
-        }else{
-            
-            $rooms = Room::where('status','active')->paginate($items_per_page);
-
-        }
-        
-
-        // Si tienen la misma dirección de la compañía la asignamos y la mandamos dentro del mismo objeto
-        
-        foreach ($rooms as $room) {
-
-            if($room->company_address){
-                $room['address']        = $room->companies->address;
-                $room['colony']         = $room->companies->colony;
-                $room['deputation']     = $room->companies->deputation;
-                $room['postal_code']    = $room->companies->postal_code;
-                $room['latitude']       = $room->companies->latitude;
-                $room['longitude']      = $room->companies->longitude;
-            }
-            
-            // Cuantificamos y promediamos las calificaiones
-            $quality = 0;
-            $sumRatings = count($room->ratings);
-
-            if($sumRatings > 0){
-                foreach ($room->ratings as $rating) {
-                    $quality += $rating->score;
-                }
-
-                $quality = $quality / $sumRatings;
-                $room['score']    = $quality;
-            }
-            
-            $room['ratings'] = $sumRatings;
-        }
-
-        
-        $companies = Company::orderBy('name', 'desc')->get();
-        $order = request()->order;
-
-        return view('reyapp.rooms.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order)->with('role',$role);
-    }
+		if(!Auth::guest()){
+			$user_id = Auth::user()->id;
+			$role = User::find($user_id)->roles->first()->name;  
+		}
+		
+		if($role == 'admin'){ 
+			$rooms = Room::with('companies')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id'); 
+		}else{
+			$rooms = Room::where('status','active')->with('companies')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id');
+		}
 
 
-    public function index_company()
-    {
-        $items_per_page = 10;
-        $order = 'quality_up';
-        $user_id = Auth::user()->id;
-        $rooms_wrap = [];
+		
+
+		// Actuamos dependiento los filtros que tengamos diponibles
+		if(request()->has('order')){
+			
+			if(request()->order == 'price_up'){
+			
+				$rooms = $rooms->orderBy('price','ASC');
+			
+			}else if(request()->order == 'price_down'){
+			
+				$rooms = $rooms->orderBy('price','DESC');
+			
+			}else if(request()->order == 'quality_up'){
+
+				$rooms = $rooms->orderBy('average','ASC');
+
+			}else if(request()->order == 'quality_down'){
+
+				$rooms = $rooms->orderBy('average','DESC');
+			}
+
+		}
+
+		if(request()->has('colonia')){	
+			$rooms = $rooms->where('colony',request()->colonia)->orWhereHas('companies', function ($query) {
+    			$query->where('colony', 'like', request()->colonia);
+			});
+		}
+
+		if(request()->has('deleg')){	
+			$rooms = $rooms->where('deputation',request()->deleg)->orWhereHas('companies', function ($query) {
+    			$query->where('deputation', 'like', request()->deleg);
+			});
+		}
 
 
-        $user = User::find($user_id);
-        $companies = $user->companies()->with('rooms')->get();
+		
+		$rooms = $rooms->paginate($items_per_page);
 
-        $rooms = collect([]);
-        $room_ids  = [];
+		
+		// Si tienen la misma dirección de la compañía la asignamos y la mandamos dentro del mismo objeto
+		foreach ($rooms as $room) {
 
-        foreach ($companies as $company) {
-            foreach ($company->rooms as $room) {
-                $rooms->push($room);
-            }
-        }
+			if($room->company_address){
+				$room['address']        = $room->companies->address;
+				$room['colony']         = $room->companies->colony;
+				$room['deputation']     = $room->companies->deputation;
+				$room['postal_code']    = $room->companies->postal_code;
+				$room['latitude']       = $room->companies->latitude;
+				$room['longitude']      = $room->companies->longitude;
+			}
+			
+			// Cuantificamos y promediamos las calificaiones
+			$quality = 0;
+			$sumRatings = count($room->ratings);
 
-        // Si tienen la misma dirección de la compañía la asignamos y la mandamos dentro del mismo objeto
-        
-        foreach ($rooms as $room) {
+			if($sumRatings > 0){
+				foreach ($room->ratings as $rating) {
+					$quality += $rating->score;
+				}
 
-            if($room->company_address){
-                $room['address']        = $room->companies->address;
-                $room['colony']         = $room->companies->colony;
-                $room['deputation']     = $room->companies->deputation;
-                $room['postal_code']    = $room->companies->postal_code;
-                $room['latitude']       = $room->companies->latitude;
-                $room['longitude']      = $room->companies->longitude;
-            }
-            
-            // Cuantificamos y promediamos las calificaiones
-            $quality = 0;
-            $sumRatings = count($room->ratings);
+				$quality = $quality / $sumRatings;
+				$room['score']    = $quality;
+			}
+			
+			$room['ratings'] = $sumRatings;
+		}
+		$companies = Company::orderBy('name', 'desc')->get();
+		$order = request()->order;
+		$deputations = $rooms->unique('deputation')->values()->all();
 
-            if($sumRatings > 0){
-                foreach ($room->ratings as $rating) {
-                    $quality += $rating->score;
-                }
+		return view('reyapp.rooms.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order)->with('role',$role)->with('deputations',$deputations);
+	}
 
-                $quality = $quality / $sumRatings;
-                $room['score']    = $quality;
-            }
-            
-            $room['ratings'] = $sumRatings;
-        }
-        
-        
-        $companies = Company::orderBy('name', 'desc')->get();
-        $order = request()->order;
 
-        return view('reyapp.rooms.list_company')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order);
-    }
+	public function index_company()
+	{
+		$items_per_page = 10;
+		$order = 'quality_up';
+		$user_id = Auth::user()->id;
+		$rooms_wrap = [];
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $user_id = Auth::user()->id;
-        $companies = User::where('id',$user_id)->with('companies')->first();
-        $company = $companies->companies->first();
-        return view('reyapp.rooms.register_room')->with('company',$company);
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+		$user = User::find($user_id);
+		$companies = $user->companies()->with('rooms')->get();
 
-        // Registramos las reglas de validación
-        $rules = array(
-            'name'              => 'required|max:255',
-            'description'       => 'required|max:1000',
-            'equipment'         => 'required|max:1000',
-            'days'              => 'required|max:255',
-            'schedule_start'    => 'required|max:3', 
-            'schedule_end'      => 'required|max:3',
-            'color'             => 'required|max:10',        
-            'price'             => 'required|integer',        
-        );
+		$rooms = collect([]);
+		$room_ids  = [];
 
-        // Validamos todos los campos
-        $validator = Validator::make($request->all(), $rules);
+		foreach ($companies as $company) {
+			foreach ($company->rooms as $room) {
+				$rooms->push($room);
+			}
+		}
 
-        // Si la validación falla, nos detenemos y mandamos false
-        if ($validator->fails()) {
-            return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
-        }
-         
-        $company_id             = $request->company;
-        $room                   = new Room();
-        $room->name             = $request->name;
-        $room->price            = $request->price;
-        $room->description      = $request->description;
-        $room->equipment        = $request->equipment;
-        $room->schedule_start   = $request->schedule_start;
-        $room->schedule_end     = $request->schedule_end;
-        $room->color            = $request->color;
-        $days                   = implode(',', $request->days);
-        $room->days             = $days;
-        $room->status           = 'inactive';
-        
+		// Si tienen la misma dirección de la compañía la asignamos y la mandamos dentro del mismo objeto
+		
+		foreach ($rooms as $room) {
 
-        if($request->company_address){
-            $room->company_address  = true;       
-        }else{
-            $room->company_address  = false;
-            $room->address          = $request->address;
-            $room->colony           = $request->colony;
-            $room->deputation       = $request->deputation;
-            $room->postal_code      = $request->postal_code;
-            $room->city             = $request->city;
-        }
+			if($room->company_address){
+				$room['address']        = $room->companies->address;
+				$room['colony']         = $room->companies->colony;
+				$room['deputation']     = $room->companies->deputation;
+				$room['postal_code']    = $room->companies->postal_code;
+				$room['latitude']       = $room->companies->latitude;
+				$room['longitude']      = $room->companies->longitude;
+			}
+			
+			// Cuantificamos y promediamos las calificaiones
+			$quality = 0;
+			$sumRatings = count($room->ratings);
 
-        $company = Company::where('id',$company_id)->with('rooms')->first();      
-        $company->rooms()->save($room);
-        
-        // Creamos los objetos de imagen y los relacionamos con el cuarto
-        $images = json_decode($request->input('images'),true);
-        foreach ( $images as $image) {
-        
-            $newImage = new MediaItem();
-            $newImage->name = $image['name'];
-            $newImage->path = $image['path'];
-            $newImage->room_id = $room->id;
-            $newImage->save(); 
-             
-        }
+			if($sumRatings > 0){
+				foreach ($room->ratings as $rating) {
+					$quality += $rating->score;
+				}
 
-        // respondemos la petición con un true
-        return response()->json(['success' => true]);
-    }
+				$quality = $quality / $sumRatings;
+				$room['score']    = $quality;
+			}
+			
+			$room['ratings'] = $sumRatings;
+		}
+		
+		
+		$companies = Company::orderBy('name', 'desc')->get();
+		$order = request()->order;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $room = Room::find($id);
-        if(!$room){
-            return "Esta sala ha sido eliminada o está temporalmente suspendida";
-        }
-        if($room->company_address){
-            $room['address']        = $room->companies->address;
-            $room['colony']         = $room->companies->colony;
-            $room['deputation']     = $room->companies->deputation;
-            $room['postal_code']    = $room->companies->postal_code;
-            $room['latitude']       = $room->companies->latitude;
-            $room['longitude']      = $room->companies->longitude;
-        }
+		return view('reyapp.rooms.list_company')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order);
+	}
 
-        $room['equipment'] = explode(PHP_EOL, $room['equipment']);
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create()
+	{
+		$user_id = Auth::user()->id;
+		$companies = User::where('id',$user_id)->with('companies')->first();
+		$company = $companies->companies->first();
+		return view('reyapp.rooms.register_room')->with('company',$company);
+	}
 
-        // Cuantificamos y promediamos las opiniones en base 5
-        $quality = 0;
-        $sumRatings = count($room->ratings);
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request)
+	{
 
-        if($sumRatings > 0){
-            foreach ($room->ratings as $rating) {
-                $quality += $rating->score;
-            }
+		// Registramos las reglas de validación
+		$rules = array(
+			'name'              => 'required|max:255',
+			'description'       => 'required|max:1000',
+			'equipment'         => 'required|max:1000',
+			'days'              => 'required|max:255',
+			'schedule_start'    => 'required|max:3', 
+			'schedule_end'      => 'required|max:3',
+			'color'             => 'required|max:10',        
+			'price'             => 'required|integer',        
+		);
 
-            $quality = $quality / $sumRatings;
-            $room['score']    = round($quality,1, PHP_ROUND_HALF_UP);
-        }
-        
-        $room['ratings'] = $sumRatings;
+		// Validamos todos los campos
+		$validator = Validator::make($request->all(), $rules);
 
-        if(!Auth::guest()){
-            $user = User::find(Auth::user()->id)->id;
-        }else{
-            $user = false;
-        }
+		// Si la validación falla, nos detenemos y mandamos false
+		if ($validator->fails()) {
+			return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
+		}
+		 
+		$company_id             = $request->company;
+		$room                   = new Room();
+		$room->name             = $request->name;
+		$room->price            = $request->price;
+		$room->description      = $request->description;
+		$room->equipment        = $request->equipment;
+		$room->schedule_start   = $request->schedule_start;
+		$room->schedule_end     = $request->schedule_end;
+		$room->color            = $request->color;
+		$days                   = implode(',', $request->days);
+		$room->days             = $days;
+		$room->status           = 'inactive';
+		
 
-        return view('reyapp.rooms.single')->with('room',$room)->with('user',$user);
-    }
+		if($request->company_address){
+			$room->company_address  = true;       
+		}else{
+			$room->company_address  = false;
+			$room->address          = $request->address;
+			$room->colony           = $request->colony;
+			$room->deputation       = $request->deputation;
+			$room->postal_code      = $request->postal_code;
+			$room->city             = $request->city;
+		}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
+		$company = Company::where('id',$company_id)->with('rooms')->first();      
+		$company->rooms()->save($room);
+		
+		// Creamos los objetos de imagen y los relacionamos con el cuarto
+		$images = json_decode($request->input('images'),true);
+		foreach ( $images as $image) {
+		
+			$newImage = new MediaItem();
+			$newImage->name = $image['name'];
+			$newImage->path = $image['path'];
+			$newImage->room_id = $room->id;
+			$newImage->save(); 
+			 
+		}
 
-        $user_id = Auth::user()->id;
-        $room = Room::with('companies')->findOrFail($id);
-        $room_user = $room->companies->users->first()->id;
-        $role = User::find($user_id)->roles->first()->name;
+		// respondemos la petición con un true
+		return response()->json(['success' => true]);
+	}
 
-        // verificamos que el usuario sea dueño de la información
-        if($user_id != $room_user and $role!='admin'){
-            return response()->json(['success' => false,'messages'=>'No tienes privilegios necesarios']); 
-        }
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show($id)
+	{
+		$room = Room::find($id);
+		if(!$room){
+			return "Esta sala ha sido eliminada o está temporalmente suspendida";
+		}
+		if($room->company_address){
+			$room['address']        = $room->companies->address;
+			$room['colony']         = $room->companies->colony;
+			$room['deputation']     = $room->companies->deputation;
+			$room['postal_code']    = $room->companies->postal_code;
+			$room['latitude']       = $room->companies->latitude;
+			$room['longitude']      = $room->companies->longitude;
+		}
 
-        
-        $company = $room->companies;
-        
-        $room['equipment'] = htmlspecialchars($room->equipment);
-        $room['days'] = explode(',',$room->days);
+		$room['equipment'] = explode(PHP_EOL, $room['equipment']);
 
-        if($room->company_address){
-            $latitude = $room->companies->latitude;
-            $longitude = $room->companies->longitude;
-        }else{
-            $latitude = $room->latitude;
-            $longitude = $room->longitude;
-        }
-        
-        return view('reyapp.rooms.settings')->with('room',$room)->with('company',$company)->with('latitude',$latitude)->with('longitude',$longitude)->with('role',$role);
-    }
+		// Cuantificamos y promediamos las opiniones en base 5
+		$quality = 0;
+		$sumRatings = count($room->ratings);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        // Registramos las reglas de validación
-        $rules = array(
-            'name'              => 'required|max:255',
-            'description'       => 'required|max:1000',
-            'equipment'         => 'required|max:1000',
-            'days'              => 'required|max:255',
-            'schedule_start'    => 'required|max:3', 
-            'schedule_end'      => 'required|max:3',
-            'color'             => 'required|max:10',        
-            'price'             => 'required|integer',
-            'status'            => 'in:inactive,active'        
-        );
+		if($sumRatings > 0){
+			foreach ($room->ratings as $rating) {
+				$quality += $rating->score;
+			}
 
-        // Validamos todos los campos
-        $validator = Validator::make($request->all(), $rules);
+			$quality = $quality / $sumRatings;
+			$room['score']    = round($quality,1, PHP_ROUND_HALF_UP);
+		}
+		
+		$room['ratings'] = $sumRatings;
 
-        // Si la validación falla, nos detenemos y mandamos false
-        if ($validator->fails()) {
-            return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
-        }
-         
-        $room                   = Room::find($id);
-        $room->name             = $request->name;
-        $room->price            = $request->price;
-        $room->description      = $request->description;
-        $room->equipment        = $request->equipment;
-        $room->schedule_start   = $request->schedule_start;
-        $room->schedule_end     = $request->schedule_end;
-        $room->color            = $request->color;
-        $days                   = implode(',', $request->days);
-        $room->days             = $days;
-        $room->status           = $request->status;
-        
+		if(!Auth::guest()){
+			$user = User::find(Auth::user()->id)->id;
+		}else{
+			$user = false;
+		}
 
-        if($request->company_address){
-            $room->company_address  = true;       
-        }else{
-            $room->company_address  = false;
-            $room->address          = $request->address;
-            $room->colony           = $request->colony;
-            $room->deputation       = $request->deputation;
-            $room->postal_code      = $request->postal_code;
-            $room->city             = $request->city;
-        }
+		return view('reyapp.rooms.single')->with('room',$room)->with('user',$user);
+	}
 
-              
-        $room->save();
-        
-        // Creamos los objetos de imagen y los relacionamos con el cuarto
-        $images = json_decode($request->input('images'),true);
-        foreach ( $images as $image) {
-        
-            $newImage = new MediaItem();
-            $newImage->name = $image['name'];
-            $newImage->path = $image['path'];
-            $newImage->room_id = $room->id;
-            $newImage->save(); 
-             
-        }
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit($id)
+	{
 
-        // respondemos la petición con un true
-        return response()->json(['success' => true]);
-    }
+		$user_id = Auth::user()->id;
+		$room = Room::with('companies')->findOrFail($id);
+		$room_user = $room->companies->users->first()->id;
+		$role = User::find($user_id)->roles->first()->name;
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+		// verificamos que el usuario sea dueño de la información
+		if($user_id != $room_user and $role!='admin'){
+			return response()->json(['success' => false,'messages'=>'No tienes privilegios necesarios']); 
+		}
+
+		
+		$company = $room->companies;
+		
+		$room['equipment'] = htmlspecialchars($room->equipment);
+		$room['days'] = explode(',',$room->days);
+
+		if($room->company_address){
+			$latitude = $room->companies->latitude;
+			$longitude = $room->companies->longitude;
+		}else{
+			$latitude = $room->latitude;
+			$longitude = $room->longitude;
+		}
+		
+		return view('reyapp.rooms.settings')->with('room',$room)->with('company',$company)->with('latitude',$latitude)->with('longitude',$longitude)->with('role',$role);
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, $id)
+	{
+		// Registramos las reglas de validación
+		$rules = array(
+			'name'              => 'required|max:255',
+			'description'       => 'required|max:1000',
+			'equipment'         => 'required|max:1000',
+			'days'              => 'required|max:255',
+			'schedule_start'    => 'required|max:3', 
+			'schedule_end'      => 'required|max:3',
+			'color'             => 'required|max:10',        
+			'price'             => 'required|integer',
+			'status'            => 'in:inactive,active'        
+		);
+
+		// Validamos todos los campos
+		$validator = Validator::make($request->all(), $rules);
+
+		// Si la validación falla, nos detenemos y mandamos false
+		if ($validator->fails()) {
+			return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
+		}
+		 
+		$room                   = Room::find($id);
+		$room->name             = $request->name;
+		$room->price            = $request->price;
+		$room->description      = $request->description;
+		$room->equipment        = $request->equipment;
+		$room->schedule_start   = $request->schedule_start;
+		$room->schedule_end     = $request->schedule_end;
+		$room->color            = $request->color;
+		$days                   = implode(',', $request->days);
+		$room->days             = $days;
+		$room->status           = $request->status;
+		
+
+		if($request->company_address){
+			$room->company_address  = true;       
+		}else{
+			$room->company_address  = false;
+			$room->address          = $request->address;
+			$room->colony           = $request->colony;
+			$room->deputation       = $request->deputation;
+			$room->postal_code      = $request->postal_code;
+			$room->city             = $request->city;
+		}
+
+			  
+		$room->save();
+		
+		// Creamos los objetos de imagen y los relacionamos con el cuarto
+		$images = json_decode($request->input('images'),true);
+		foreach ( $images as $image) {
+		
+			$newImage = new MediaItem();
+			$newImage->name = $image['name'];
+			$newImage->path = $image['path'];
+			$newImage->room_id = $room->id;
+			$newImage->save(); 
+			 
+		}
+
+		// respondemos la petición con un true
+		return response()->json(['success' => true]);
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id)
+	{
+		//
+	}
 }
