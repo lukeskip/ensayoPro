@@ -26,6 +26,11 @@ textarea{
 	color:white;
 }
 
+.button.filter{
+	padding-top: 12px;
+	padding-bottom: 11px;
+}
+
 html,body{
 	font-family: 'Raleway', sans-serif;
 	height: 100%;

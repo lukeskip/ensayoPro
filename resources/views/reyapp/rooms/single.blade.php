@@ -22,8 +22,8 @@
 			</h2>
 
 			<div class="tags">
-				<span class="colony">{{$room->colony}}</span>
-				<span class="deputation">{{$room->deputation}}</span>
+				<a href="/salas/?colonia={{$room->colony}}" class="colony">{{$room->colony}}</a>
+				<a href="/salas/?deleg={{$room->deputation}}" class="deputation">{{$room->deputation}}</a>
 			</div>
 			<div class="hide-for-large">
 				<br><br>
@@ -110,7 +110,7 @@
 							<button class="black button comment-submit">Enviar</button>
 						</form>
 						@else
-						<h3>Logéate para dejar una opinión</h3>
+						<h3 style="color: #333">Logéate para dejar una opinión</h3>
 						@endif
 					</div>
 					<div class="comments">

@@ -5,6 +5,15 @@
 @section('content')
 	<div class="row">
 		<form id="order_form" class="search" method="get" action="/salas">
+			
+			{{-- STARTS:Hidden fields --}}
+
+			@if(request()->has('colonia'))
+				<input type="hidden" name="colonia" value="{{request('colonia')}}">
+			@endif
+
+			{{-- ENDS:Hidden fields --}}
+
 			<div class="medium-5 columns no-padding">
 				
 				<div class="input-group">
@@ -12,10 +21,10 @@
 						Ordernar:
 					</span>
 					<select class="input-group-field" name="order" id="order_input">
-						<option @if($order == 'quality_up') selected @endif value="quality_up">Calificación ascendente</option>
-						<option @if($order == 'quality_down') selected @endif value="quality_down">Calificación descendente</option>
-						<option @if($order == 'price_up') selected @endif value="price_up">Precio ascendente</option>
-						<option @if($order == 'price_down') selected @endif value="price_down">Precio descendente</option>
+						<option @if(request('order') == 'quality_up') selected @endif value="quality_up">Calificación ascendente</option>
+						<option @if(request('order') == 'quality_down') selected @endif value="quality_down">Calificación descendente</option>
+						<option @if(request('order') == 'price_up') selected @endif value="price_up">Precio ascendente</option>
+						<option @if(request('order') == 'price_down') selected @endif value="price_down">Precio descendente</option>
 						{{-- <option value="discounts">Ofertas</option> --}}
 					</select>
 				</div>
@@ -29,9 +38,10 @@
 					<span class="input-group-label">
 						Ubicación:
 					</span>
-					<select class="input-group-field" name="area" class="area">
+					<select class="input-group-field" name="deleg" class="area">
+						<option value="">Todas</option>
 						@foreach($deputations as $deputation)
-							<option value="{{$deputation->deputation}}">{{$deputation->deputation}}</option>
+							<option @if(request('deleg') == $deputation->deputation) {{'selected'}} @endif value="{{$deputation->deputation}}">{{$deputation->deputation}}</option>
 						@endforeach
 					</select>
 				</div>
@@ -40,7 +50,7 @@
 
 			<div class="medium-2 columns no-padding padding-left">
 				
-				    <input type="submit" class="button green expanded no-shadow" value="Filtrar">
+				    <input type="submit" class="button filter green expanded no-shadow" value="Filtrar">
 				 
 				
 			</div>

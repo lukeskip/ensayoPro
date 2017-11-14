@@ -71,18 +71,30 @@ class RoomController extends Controller
 		}
 
 		if(request()->has('colonia')){	
-			$rooms = $rooms->where('colony',request()->colonia)->orWhereHas('companies', function ($query) {
+			if($role == 'admin'){ 
+				$rooms = $rooms->where('colony',request()->colonia)->orWhereHas('companies', function ($query) {
+	    			$query->where('colony', 'like', request()->colonia);
+				});
+			}else{
+				$rooms = $rooms->where('colony',request()->colonia)->orWhereHas('companies', function ($query) {
     			$query->where('colony', 'like', request()->colonia);
-			});
+				})->where('status','active');
+			}
+			
 		}
 
-		if(request()->has('deleg')){	
-			$rooms = $rooms->where('deputation',request()->deleg)->orWhereHas('companies', function ($query) {
+		if(request()->has('deleg')){
+			if($role == 'admin'){ 
+				$rooms = $rooms->where('deputation',request()->deleg)->orWhereHas('companies', function ($query) {
     			$query->where('deputation', 'like', request()->deleg);
 			});
+			}else{
+				$rooms = $rooms->where('deputation',request()->deleg)->orWhereHas('companies', function ($query) {
+    			$query->where('deputation', 'like', request()->deleg);
+			})->where('status','active');
+			}
+			
 		}
-
-
 		
 		$rooms = $rooms->paginate($items_per_page);
 
