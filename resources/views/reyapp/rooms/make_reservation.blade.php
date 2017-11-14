@@ -68,6 +68,7 @@
 	<script src="{{asset('plugins/fullcalendar/lib/moment.min.js')}}"></script>
 	<script src="{{asset('plugins/fullcalendar/fullcalendar.min.js')}}"></script>
 	<script src="{{asset('plugins/fullcalendar/locale/es.js')}}"></script>
+	<script src="{{asset('plugins/underscore/underscore-min.js')}}"></script>
 
 	<script src="{{asset('js/calendar_set.js')}}"></script>
 
@@ -77,7 +78,11 @@
 		var room_price 	   = {{$room->price}};
 		var room_id		   = {{$room->id}};
 		var reservations   = [];
-		
+		var hidden		   = [];
+		var days = [0,1, 2, 3, 4, 5, 6];
+
+		hidden = _.difference(days,[{{$room->days}}]);
+
 		@foreach($reservations as $reservation)
 			reservations.push({
 					'id'    	: {{$reservation->id}},

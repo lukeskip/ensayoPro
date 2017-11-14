@@ -233,6 +233,7 @@ function conection (method,fields,link,handle = false){
 		}	
 	  
 	}).fail(function(jqXHR, exception){
+		$('.loader-wrapper').fadeOut();
 		msg =  get_error(jqXHR.status);
 		show_message('error','Error en el servidor!',msg);
 	});

@@ -1700,6 +1700,9 @@ h1 .duration{
 	top:150px;
 }
 
+.sweet-alert p{
+	font-size: 20px;
+}
 
 .swal-form input.nice-input{
 	width:100%;

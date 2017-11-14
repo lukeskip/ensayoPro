@@ -116,7 +116,7 @@ $(document).ready(function() {
 					end: nowDate.clone().add(2, 'months')
 				};
 			},
-			hiddenDays: [ 2, 4 ],
+			hiddenDays: hidden,
 			allDaySlot: false,
 			lang:'es',
 			slotEventOverlap:false,

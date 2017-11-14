@@ -45,6 +45,21 @@
 
 	</head>
 	<body class="@yield('body_class')">
+		<!-- STARTS: Preloader -->
+		<div class="loader-wrapper">
+			<div class="loader">
+				{{-- <img src="assets/img/elements/logo-full.png"> --}}
+				<div class="bars-animation">
+					<div class="bar one"></div>
+					<div class="bar two"></div>
+					<div class="bar three"></div>
+					<div class="bar four"></div>
+					<div class="bar five"></div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- ENDS: Preloader -->
 		<div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas>
 
 		    <!-- Close button -->

@@ -26,12 +26,39 @@
 	<script src="{{asset('plugins/fullcalendar/lib/moment.min.js')}}"></script>
 	<script src="{{asset('plugins/fullcalendar/fullcalendar.min.js')}}"></script>
 	<script src="{{asset('plugins/fullcalendar/locale/es.js')}}"></script>
+	<script src="{{asset('plugins/underscore/underscore-min.js')}}"></script>
 
 	<script>
-		var schedule_start = 8;
-		var schedule_end   = 20;
+		var open_times     = [];
+		var close_times    = []; 
+		var schedule_start = 0;
+		var schedule_end   = 0;
 		var room_price 	   = 200;
 		var room_id		   = 1;
+		var hidden    	   = [];
+		var total    	   = [];
+		var days = [0,1, 2, 3, 4, 5, 6];
+
+
+		@foreach($rooms as $room)
+			// Llenamos un array con los días habilitados de todos las salas
+			var dow 	= [{{$room->days}}];
+			$.grep(dow, function(item) {
+	        	total.push(item);
+			});
+
+			open_times.push({{$room->schedule_start}}); 
+			close_times.push({{$room->schedule_end}}); 
+
+
+		@endforeach
+
+		// Determinamos la hora más temprana de apertura de todas las salas como el inicio del horario y la más tardía como el final
+		schedule_start 	= _.first(open_times.sort());
+		schedule_end 	= _.last(close_times.sort());
+
+		// Determinamos qué días de la semana no están incluidos en ninguna sala para ocultarlos del calendario
+		hidden = _.difference(days,total);
 
 		// Agregamos la información de cada una de las salas a una variable que ocuparemos en la función de SweetAlert
 		var rooms 	     = [];

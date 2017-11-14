@@ -32,7 +32,7 @@ class AdminCompanyController extends Controller
     	$user_id = Auth::user()->id;
     	$user = User::find($user_id);
   		$company = $user->companies()->first();
-  		$rooms = $company->rooms()->with('reservations')->get();
+  		$rooms = $company->rooms()->with('reservations')->where('status','active')->get();
   		$room_ids  = [];
       foreach ($company->rooms as $room) {
         $room_ids[] = $room->id;

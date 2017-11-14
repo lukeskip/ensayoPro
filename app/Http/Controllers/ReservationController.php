@@ -143,8 +143,34 @@ class ReservationController extends Controller
         $starts         = $request->start;
         $ends           = $request->end;
 
-        $starts_check = new DateTime($starts);
-        $ends_check   = new DateTime($ends);
+        // Revisamos que la sala abra ese día, si no, detenemos y mandamos error
+        $room = Room::findOrFail($room_id);
+        $dow  = explode(',',$room->days);
+        $check_dow = new Carbon($starts);
+        $dow_names = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+        
+        if(!in_array($check_dow->dayOfWeek, $dow)){
+           return response()->json(['success' => false,'message'=> 'La sala '.$room->name.' está cerrada en '.$dow_names[$check_dow->dayOfWeek]]); 
+        };
+
+
+        $starts_check = new Carbon($starts);
+        $ends_check   = new Carbon($ends);
+
+        $starts_time = $starts_check->format('H:i:s');
+        $ends_time   = $ends_check->format('H:i:s');
+
+        $open_time   = Carbon::createFromFormat('H', $room->schedule_start)->format('H:i:s');
+        $close_time  = Carbon::createFromFormat('H', $room->schedule_end)->format('H:i:s');
+
+        if($starts_time < $open_time){
+            return response()->json(['success' => false,'message'=> 'La sala '.$room->name.' abre a las '.$open_time]); 
+        }
+
+        if($close_time < $ends_time){
+            return response()->json(['success' => false,'message'=> 'La sala '.$room->name.' cierra a las '.$close_time]); 
+        }
+
 
         $starts_check = $starts_check->modify('+1 minutes');
         $ends_check   = $ends_check->modify('-1 minutes');
@@ -177,7 +203,9 @@ class ReservationController extends Controller
             $reservation->status      = 'confirmed';
             $reservation->is_admin    = true;
 
-            $room = Room::findOrFail($room_id);
+            
+
+            
         
             $prefix = substr($room->companies()->first()->name, 0, 4);
             $prefix = str_replace(' ', '', $prefix);

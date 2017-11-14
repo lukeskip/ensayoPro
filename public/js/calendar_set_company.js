@@ -67,7 +67,7 @@ $(document).ready(function() {
 					end: nowDate.clone().add(2, 'months')
 				};
 			},
-			hiddenDays: [ 2, 4 ],
+			hiddenDays: hidden,
 			allDaySlot: false,
 			lang:'es',
 			slotEventOverlap:false,
@@ -92,10 +92,7 @@ $(document).ready(function() {
 				dow: [0, 1, 2, 3, 4, 5, 6 ]
 			},
 			select: function(start, end, allDay,view) {
-
 				open_form(start,end);
-				
-
 			},
 			events: reservations,
 			eventRender: function(event, element, view) {
