@@ -30,6 +30,6 @@ class Reservation extends Model
 
     public function bands()
     {
-        return $this->belongsToMany('App\Band','band_user');
+        return $this->belongsToMany('App\Band','band_reservation');
     }
 }

@@ -15,7 +15,7 @@
 		<div class="room-item">
 			<div class="open">></div>
 			<div class="color" style="background: {{$room->color}}"></div>
-			<div class="text">{{$room->name}}</div>
+			<div class="text">{{$room->name}} ({{$room->schedule_start}}hrs. a {{$room->schedule_end}}hrs.)</div>
 		</div>
 	@endforeach
 	
@@ -86,7 +86,16 @@
 
 		// Construimos un objeto con las reservaciones de otros usuarios y que se hicieron por la base de datos
 		@foreach($app_reservations as $reservation)
+			@if($reservation->bands->count() > 0)
+				var title = '{{$reservation->bands->first()->name}}'
+			@elseif($reservation->description!='')
+				var title = '{{$reservation->description}}'
+			@else
+				var title = '{{$reservation->users->name}} {{$reservation->users->lastname}}'
+			@endif
+			 
 			reservations.push({
+
 					'title' 	: '{{$reservation->description}}',
 					'start' 	: '{{$reservation->starts}}',
 					'end'   	: '{{$reservation->ends}}',
@@ -97,7 +106,7 @@
 		
 		// Mostramos el código de colores de las salas
 		$(document).ready(function(){
-			$('.room-keys').css('left','-200px');
+			$('.room-keys').css('left','-280px');
 			room_keys = false;
 			$('.room-keys .open').click(function(){
 					$('.room-keys .open').html('<');
@@ -112,7 +121,7 @@
 					}else{
 						$('.room-keys .open').html('>');
 						$('.room-keys').animate({
-							left:-200,
+							left:-280,
 						},function(){
 							room_keys = false;
 							

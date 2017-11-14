@@ -110,7 +110,13 @@
 							
 						</div>
 						<div class="medium-3 columns ">
-							{{$reservation->description}}
+							@if($reservation->bands->count() > 0)
+								{{$reservation->bands->first()->name}}
+							@elseif($reservation->description!='')
+								{{$reservation->description}}
+							@else
+								{{'Sin banda'}}
+							@endif
 						</div>
 						<div class="medium-2 columns ">
 							{{$reservation->rooms->name}}

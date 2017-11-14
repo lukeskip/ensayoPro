@@ -33,14 +33,19 @@
 				@foreach($reservations as $reservation)
 					<div class="row list-item">
 						<div class="medium-3 columns">
-
-							<span>
-								{{$reservation->users->name}} {{$reservation->users->lastname}}
-							</span>
+							
+							{{$reservation->users->name}} {{$reservation->users->lastname}}
 							
 						</div>
 						<div class="medium-3 columns ">
-							{{$reservation->description}}
+							@if($reservation->bands->count() > 0)
+								{{$reservation->bands->first()->name}}
+							@elseif($reservation->description!='')
+								{{$reservation->description}}
+							@else
+								{{'Sin banda'}}
+							@endif
+							
 						</div>
 						<div class="medium-2 columns ">
 							{{$reservation->rooms->name}}
