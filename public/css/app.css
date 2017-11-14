@@ -1695,6 +1695,10 @@ h1 .duration{
 	margin:0;
 	margin-top: -20px;
 }
+.landing-subtitle {
+	font-size: 20px;
+	padding: 0 90px 20px;
+}
 /*STARTS: TopBar***************************************************/
 .topbar-responsive {
   background: #2c3840;
@@ -1996,28 +2000,162 @@ h1 .duration{
 /*ENDS: Slide***************************************************/
 
 /*STARS: Company***************************************************/
+
 .top-company {
 	margin-top: -20px;
-	padding:120px 40px;
+	padding:120px 0 40px 0;
 	background-color: #dbdbdb;
 	color: #333;
 }
 .bullets-company{
-	padding-top: 20px;
+	padding: 20px 10px;
 }
-	 .top-company {
-		 margin-top: -20px;
-		 padding:120px 40px;
-		 background-color: #dbdbdb;
-		 color: #333;
-	 }
+
+.description-salas {
+	padding-bottom: 60px;
 }
+
 /*ENDS: Company***************************************************/
 
 /*STARS: Features***************************************************/
+.feature {
+  text-align: center;
+  padding: 8rem 0 4rem 0;
+	background-color: #2c3840;
+}
+.feature .fa {
+  margin-bottom: 1rem;
+	padding-top: 2rem;
+}
 
+.feature-title {
+	padding: 20px 10px;
+}
 
 /*ENDS: Features***************************************************/
+
+/*STARS: Testimonials***************************************************/
+
+
+.testimonial-slider-container {
+  padding: 2rem 0;
+}
+
+.testimonial-slider-container .orbit-previous,
+.testimonial-slider-container .orbit-next {
+	color: #fff;
+}
+
+.testimonial-slider-container .orbit-previous:hover, .testimonial-slider-container .orbit-previous:active, .testimonial-slider-container .orbit-previous:focus,
+.testimonial-slider-container .orbit-next:hover,
+.testimonial-slider-container .orbit-next:active,
+.testimonial-slider-container .orbit-next:focus {
+  background-color: transparent;
+}
+
+.testimonial-slider-container .orbit-previous {
+  left: 1rem;
+}
+
+.testimonial-slider-container .orbit-next {
+  right: 1rem;
+}
+
+.testimonial-slider-container .testimonial-slide {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.testimonial-slider-container .testimonial-slide-content {
+  padding: 1rem 1.5rem;
+}
+
+
+@media screen and (min-width: 40em) {
+  .testimonial-slider-container .testimonial-slide-content {
+    padding: 1rem 4rem;
+  }
+}
+
+.testimonial-slider-container .profile-pic {
+  max-width: 225px;
+}
+
+.testimonial-slider-container .testimonial-slide-text {
+  padding-left: 3rem;
+}
+
+.testimonial-slider-container .testimonial-slide-quotation {
+  font-size: 1.2rem;
+  position: relative;
+}
+
+.testimonial-slider-container .testimonial-slide-quotation::before {
+  content: "“";
+  font-size: 6rem;
+  color: white;
+  position: absolute;
+  top: -3rem;
+  left: -3rem;
+}
+
+.testimonial-slider-container .testimonial-slide-author-container {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media screen and (max-width: 39.9375em) {
+  .testimonial-slider-container .testimonial-slide-author-container .testimonial-slide-author-info {
+    margin-left: 1rem;
+  }
+}
+
+/*ENDS: Testimonials***************************************************/
+
+
+.marketing-site-hero {
+  background: url("https://images.pexels.com/photos/8264/pexels-photo.jpg?h=350&auto=compress&cs=tinysrgb") top right no-repeat;
+  height: 65vh;
+  background-size: cover;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media screen and (min-width: 40em) {
+  .marketing-site-hero {
+    background-position: center center;
+  }
+}
+
+.marketing-site-hero-content {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.marketing-site-hero-content h1 {
+  font-size: 32px;
+}
+
+@media screen and (min-width: 40em) {
+  .marketing-site-hero-content {
+    padding-left: 50%;
+  }
+}
+
+
+
+
 
 
 /*ENDS: landing ****************************************************/
