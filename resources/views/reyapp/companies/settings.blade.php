@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="large-12 columns">
 				
-				<h1>Edita los datos de tu marca</h1>
+				<h1>Edita los datos de la marca</h1>
 				<p class="text-center">Los campos marcados con un (*) son requeridos</p>
 			</div>
 		</div>
@@ -196,5 +196,8 @@
 	    		}
 			}
 		});
+		if('{{$company->status}}' == 'Inactiva'){
+			show_message('warning','Atención','Los datos de tu compañía están siendo validados, por lo que aún no está activa');
+		}
 	</script>
 @endsection

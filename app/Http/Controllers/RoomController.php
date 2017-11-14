@@ -39,13 +39,8 @@ class RoomController extends Controller
 			$role = User::find($user_id)->roles->first()->name;  
 		}
 		
-		if($role == 'admin'){ 
-			$rooms = Room::with('companies')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id'); 
-		}else{
-			$rooms = Room::where('status','active')->with('companies')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id');
-		}
-
-
+		
+		$rooms = Room::with('companies')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id'); 
 		
 
 		// Actuamos dependiento los filtros que tengamos diponibles
@@ -94,6 +89,12 @@ class RoomController extends Controller
 			})->where('status','active');
 			}
 			
+		}
+
+		if($role != 'admin'){ 
+			$rooms = $rooms->where('status','active')->whereHas('companies', function ($query) {
+    			$query->where('status', 'active');
+			}); 
 		}
 		
 		$rooms = $rooms->paginate($items_per_page);

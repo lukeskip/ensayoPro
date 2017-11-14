@@ -69,16 +69,16 @@
 					<div class="medium-2 columns price">
 						${{$room->price}}
 					</div>
-					<div class="medium-1 columns price">
-						<div class="medium-2 columns status">
-							@if($room->status == 'active')
-								<i class="fa fa-check-circle-o confirmed hastooltip" title="Activa" aria-hidden="true"></i>
-							@elseif($room->status == 'inactive')
-								<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Inactiva"></i>
-							@elseif($room->status == 'cancelled')
-								<i class="fa fa-times-circle-o hastooltip cancelled" title="Cancelada" aria-hidden="true"></i>
-							@endif
-						</div>
+					<div class="medium-1 columns status">
+						
+						@if($room->status == 'active')
+							<i class="fa fa-check-circle-o confirmed hastooltip" title="Activa" aria-hidden="true"></i>
+						@elseif($room->status == 'inactive')
+							<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Inactiva"></i>
+						@elseif($room->status == 'cancelled')
+							<i class="fa fa-times-circle-o hastooltip cancelled" title="Cancelada" aria-hidden="true"></i>
+						@endif
+						
 					</div>
 
 				</div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Role as Role;
 use App\Company as Company;
+use App\Room as Room;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use App\User as User;
@@ -39,7 +41,12 @@ class CompanyController extends Controller
 
 	public function index()
 	{
-		$companies = Company::all();
+		$companies = Company::paginate();
+
+		// $companies = Company::with('rooms')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id');
+
+		// $companies = Room::leftJoin('companies', 'companies.id', '=', 'rooms.company_id')->select('companies.*','rooms.*')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*','companies.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id');
+		
 		return view('reyapp.companies')->with('companies',$companies);
 	}
 
@@ -144,9 +151,10 @@ class CompanyController extends Controller
 		$user_id = Auth::user()->id;
 		$company = Company::with('users')->find($id);
 		$company_user = $company->users->first()->id;
+		$role = User::find($user_id)->roles->first()->name;
 
 		// verificamos que el usuario sea dueño de la información
-		if($user_id != $company_user){
+		if($user_id != $company_user and $role != 'admin'){
 			return response()->json(['success' => false,'messages'=>'No tienes privilegios necesarios']); 
 		}
 
@@ -197,6 +205,24 @@ class CompanyController extends Controller
 		return view('reyapp.companies.settings')->with('company',$company);
 	}
 
+	public function edit_admin($id)
+	{
+		
+		$company = Company::find($id);
+
+		
+		if($company->status == 'inactive'){
+			$company['status'] = 'Inactiva';
+		}
+
+		if($company->status == 'active'){
+			$company['status'] = 'Activa';
+		}
+		
+
+		return view('reyapp.companies.settings')->with('company',$company);
+	}
+
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -209,7 +235,7 @@ class CompanyController extends Controller
 		$user_id = Auth::user()->id;
 		$company = Company::with('users')->find($id);
 		$company_user = $company->users->first()->id;
-		$role = User::find()->roles->first()->name;
+		$role = User::find($user_id)->roles->first()->name;
 
 		// verificamos que el usuario sea dueño de la información
 		if($user_id != $company_user  and $role != 'admin' ){

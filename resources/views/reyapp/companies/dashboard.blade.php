@@ -113,11 +113,10 @@
 @section('scripts')
 <script>
 	$(document).ready(function(){
-		$('.skillbar').each(function(){
-			$(this).find('.skillbar-bar').animate({
-				width:$(this).attr('data-percent')
-			},3000);
-		});
+
+		if('{{$company->status}}' == 'inactive'){
+			show_message('warning','Atención','Los datos de tu compañía están siendo validados, por lo que aún no está activa');
+		}
 	});
 </script>
 	

@@ -56,6 +56,9 @@ Route::group(['middleware' => ['auth','admin'],'prefix'=>'admin'], function () {
 	Route::put('/comentarios/{id}', 'CommentController@update')->name('admin');
 	Route::get('/comentarios/', 'CommentController@index')->name('admin');
 	Route::get('/salas/ajustes/{id}', 'RoomController@edit');
+
+	Route::get('/companies/', 'CompanyController@index');
+	Route::get('/company/ajustes/{id}', 'CompanyController@edit_admin');
 });
 
 Route::group(['middleware' => 'auth'], function () {

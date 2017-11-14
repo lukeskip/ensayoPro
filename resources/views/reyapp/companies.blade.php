@@ -11,6 +11,9 @@
 					<div class="medium-3 columns">
 						Califiación:
 					</div>
+					<div class="medium-3 columns">
+						Estatus:
+					</div>
 				</div>
 				@foreach ($companies as $company)
 				<div class="row list-item room-item">
@@ -18,7 +21,7 @@
 
 						<a href="/company/datalle/{{$company->id}}">{{$company->name}}</a>
 						<div class="info">
-							<a href="/company/ajustes/{{$company->id}}" class="blue tag">
+							<a href="/admin/company/ajustes/{{$company->id}}" class="blue tag">
 								Editar
 							</a href="#">
 							<a href="/company/datalle/{{$company->id}}" class="blue tag">Ver</a href="#">
@@ -42,6 +45,17 @@
 							<div class="text-center">
 								 Esta compañía aún no tiene calificaciones
 							</div>
+						@endif
+						
+					</div>
+					<div class="medium-3 columns rating_wrapper status">
+								
+						@if($company->status == 'active')
+							<i class="fa fa-check-circle-o confirmed hastooltip" title="Activa" aria-hidden="true"></i>
+						@elseif($company->status == 'inactive')
+							<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Inactiva"></i>
+						@elseif($company->status == 'cancelled')
+							<i class="fa fa-times-circle-o hastooltip cancelled" title="Cancelada" aria-hidden="true"></i>
 						@endif
 						
 					</div>

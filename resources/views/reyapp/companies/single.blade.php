@@ -35,7 +35,7 @@
 				</div>
 				@foreach ($rooms as $room)
 				<div class="row list-item room-item">
-					<div class="medium-4 columns text-center">
+					<div class="medium-3 columns text-center">
 
 						{{$room->companies->name}} ({{$room->name}})
 						
@@ -67,7 +67,7 @@
 						@endif
 						
 					</div>
-					<div class="medium-2 columns price">
+					<div class="medium-3 columns price">
 						${{$room->price}}
 					</div>
 
