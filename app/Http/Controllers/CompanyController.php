@@ -191,6 +191,7 @@ class CompanyController extends Controller
 		$user_id = Auth::user()->id;
 		$company = User::find($user_id);
 		$company = $company->companies->first();
+		$role = User::find($user_id)->roles->first()->name;
 
 		
 		if($company->status == 'inactive'){
@@ -202,14 +203,14 @@ class CompanyController extends Controller
 		}
 		
 
-		return view('reyapp.companies.settings')->with('company',$company);
+		return view('reyapp.companies.settings')->with('company',$company)->with('role',$role);
 	}
 
 	public function edit_admin($id)
 	{
-		
+		$user_id = Auth::user()->id;
 		$company = Company::find($id);
-
+		$role = User::find($user_id)->roles->first()->name;
 		
 		if($company->status == 'inactive'){
 			$company['status'] = 'Inactiva';
@@ -220,7 +221,8 @@ class CompanyController extends Controller
 		}
 		
 
-		return view('reyapp.companies.settings')->with('company',$company);
+
+		return view('reyapp.companies.settings')->with('company',$company)->with('role',$role);
 	}
 
 	/**

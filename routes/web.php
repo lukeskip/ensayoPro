@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
 	
 	Route::get('/dashboard', 'DashboardController@musician')->name('dashboardMusician');
 	
-	
+	Route::get('/usuarios/{id}', 'UserController@show');
 
 	
 
@@ -108,11 +108,11 @@ Route::group(['middleware' => 'auth'], function () {
 	$role = $user->roles->first()->name;
 	
 		if($role == 'admin'){
-			return redirect('admin/dashboard');
+			return redirect('/admin');
 		}
 
 		if($role == 'company'){
-			return redirect('company');
+			return redirect('/company');
 		}
 
 		if($role == 'musician'){

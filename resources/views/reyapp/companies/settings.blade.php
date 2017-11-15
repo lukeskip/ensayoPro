@@ -18,11 +18,21 @@
 			<div class="large-12 columns">
 				<h3>Información general</h3>
 			</div>
-			<div class="large-12 columns">
+			<div class="@if($role == 'admin'){{'large-6'}}@else{{'large-12'}}@endif columns">
 				<label>Nombre Comercial (*)</label>
 				<input class="input-group-field required" type="text" name="name" value="{{$company->name}}">
 			</div>
-
+			
+			@if($role == 'admin')
+			<div class="large-6 columns">
+				<label for="">Estatus</label>
+				<select name="status" id="">
+					<option value="active">Activo</option>
+					<option value="inactive">Inactivo</option>
+					<option value="deleted">Borrado</option>
+				</select>
+			</div>
+			@endif
 			
 		</div>		
 

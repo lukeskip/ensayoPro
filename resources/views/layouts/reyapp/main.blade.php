@@ -83,7 +83,7 @@
 					@if (Auth::user()->roles->first()->name == 'admin')
 
 						<li>
-							<a target="_blank" href="/users/{{Auth::user()->id}}">
+							<a target="_blank" href="/usuarios/{{Auth::user()->id}}">
 								<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
 							</a>
 						</li>
@@ -113,7 +113,7 @@
 					{{-- STARTS: Company Menu --}}
 					@elseif(Auth::user()->roles->first()->name == 'company')
 						<li>
-							<a target="_blank" href="/users/{{Auth::user()->id}}">
+							<a target="_blank" href="/usuarios/{{Auth::user()->id}}">
 								<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
 							</a>
 						</li>
