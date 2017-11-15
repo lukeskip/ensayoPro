@@ -29,7 +29,6 @@ class RoomController extends Controller
 	 */
 	public function index()
 	{   
-
 		$items_per_page = 10;
 		$order = 'quality_up';
 		$role  = '';

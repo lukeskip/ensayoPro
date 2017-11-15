@@ -85,11 +85,11 @@ Route::group(['middleware' => 'auth'], function () {
 		$role = $user->roles->first()->name;
 	
 		if($role == 'admin'){
-			return redirect('admin/dashboard');
+			return redirect('/admin');
 		}
 
 		if($role == 'company'){
-			return redirect('company/registro');
+			return redirect('/company/registro');
 		}
 
 		if($role == 'musician'){

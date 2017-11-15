@@ -245,7 +245,7 @@
 				  <option @if (in_array(4, $room->days)) {{'selected'}} @endif value="4">Jueves</option>
 				  <option @if (in_array(5, $room->days)) {{'selected'}} @endif value="5">Viernes</option>
 				  <option @if (in_array(6, $room->days)) {{'selected'}} @endif value="6">Sábado</option>
-				  <option @if (in_array(0, $room->days)) {{'selected'}} @endif value="7">Domingo</option>
+				  <option @if (in_array(0, $room->days)) {{'selected'}} @endif value="0">Domingo</option>
 
 				</select>
 				<label class="chosen-error error"></label>

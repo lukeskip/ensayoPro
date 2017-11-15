@@ -48,14 +48,14 @@
 			});
 
 			open_times.push({{$room->schedule_start}}); 
-			close_times.push({{$room->schedule_end}}); 
+			open_times.push({{$room->schedule_end}}); 
 
 
 		@endforeach
 
 		// Determinamos la hora más temprana de apertura de todas las salas como el inicio del horario y la más tardía como el final
-		schedule_start 	= _.first(open_times.sort());
-		schedule_end 	= _.last(close_times.sort());
+		schedule_start 	= _.first(_.sortBy(open_times));
+		schedule_end 	= _.last(_.sortBy(open_times));
 
 		// Determinamos qué días de la semana no están incluidos en ninguna sala para ocultarlos del calendario
 		hidden = _.difference(days,total);
