@@ -108,6 +108,12 @@
 							</a>
 						</li>
 
+						<li>
+							<a href="/logout">
+								<i class="fa fa-sign-out" aria-hidden="true"></i> Salir
+							</a>
+						</li>
+
 					{{-- ENDS: admin Menu --}}
 					
 					{{-- STARTS: Company Menu --}}
@@ -137,6 +143,11 @@
 								<i class="fa fa-calendar-o" aria-hidden="true"></i> Agenda
 							</a>
 						</li>
+						<li>
+							<a href="/logout">
+								<i class="fa fa-sign-out" aria-hidden="true"></i> Salir
+							</a>
+						</li>
 					{{-- ENDS: Company Menu --}}
 					
 					{{-- STARTS: Musician Menu --}}
@@ -163,26 +174,45 @@
 							</a>
 						</li>
 
+						<li>
+							<a href="/logout">
+								<i class="fa fa-sign-out" aria-hidden="true"></i> Salir
+							</a>
+						</li>
+
 					{{-- ENDS: Musician Menu --}}
 
-						@endif
-					@endif <!-- END IF AUTH-->
-				<li>
+					@endif
+
+				@else
+
+					<li>
+						
+						<a target="_blank" href="/login">
+							<i class="fa fa-sign-in" aria-hidden="true"></i> Logéate
+						</a>
+					</li>
+					<li>
+						
+						<a target="_blank" href="/registro">
+							<i class="fa fa-check-square-o" aria-hidden="true"></i> Regístrate
+						</a>
+					</li>
+					<li>
+						
+						<a target="_blank" href="http://reydecibel.com.mx">
+						<i class="fa fa-newspaper-o" aria-hidden="true"></i> Blog
+						</a>
+					</li>
+					@yield('menu_extra')
+					<li>
+						<a target="_blank" href="https://www.facebook.com/ReyDecibelMx/">
+						<i class="fa fa-facebook-official" aria-hidden="true"></i> Síguenos
+					</a>
 					
-					<a target="_blank" href="http://reydecibel.com.mx">
-					<i class="fa fa-newspaper-o" aria-hidden="true"></i> Blog
-					</a>
-				</li>
-				@yield('menu_extra')
-				<li>
-					<a target="_blank" href="https://www.facebook.com/ReyDecibelMx/">
-					<i class="fa fa-facebook-official" aria-hidden="true"></i> Síguenos
-				</a>
-				<li>
-					<a href="/logout">
-						<i class="fa fa-sign-out" aria-hidden="true"></i> Salir
-					</a>
-				</li>
+
+				@endif <!-- END IF AUTH-->
+				
 		    </ul>
 		    <div class="legal">
 

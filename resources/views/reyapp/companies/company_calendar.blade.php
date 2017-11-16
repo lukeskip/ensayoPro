@@ -1,7 +1,9 @@
-@extends('layouts.reyapp.landing')
+@extends('layouts.reyapp.main')
 @section('body_class', 'company_calendar')
 @section('styles')
 	<link rel="stylesheet" href="{{asset('plugins/fullcalendar/fullcalendar.min.css')}}">
+	<link rel="stylesheet" href="{{asset('plugins/swal-forms-master/live-demo/sweet-alert.css')}}">
+		<link rel="stylesheet" href="{{asset('plugins/swal-forms-master/swal-forms.css')}}">
 @endsection
 @section('content')
 <div class="timer_bar_wrapper">
@@ -27,6 +29,8 @@
 	<script src="{{asset('plugins/fullcalendar/fullcalendar.min.js')}}"></script>
 	<script src="{{asset('plugins/fullcalendar/locale/es.js')}}"></script>
 	<script src="{{asset('plugins/underscore/underscore-min.js')}}"></script>
+	<script src="{{asset('plugins/swal-forms-master/live-demo/sweet-alert.js')}}"></script>
+  	<script src="{{asset('plugins/swal-forms-master/swal-forms.js')}}"></script>
 
 	<script>
 		var open_times     = [];
