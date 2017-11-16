@@ -83,7 +83,7 @@
 					@if (Auth::user()->roles->first()->name == 'admin')
 
 						<li>
-							<a target="_blank" href="/usuarios/{{Auth::user()->id}}">
+							<a href="/usuarios/{{Auth::user()->id}}">
 								<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
 							</a>
 						</li>
@@ -119,7 +119,7 @@
 					{{-- STARTS: Company Menu --}}
 					@elseif(Auth::user()->roles->first()->name == 'company')
 						<li>
-							<a target="_blank" href="/usuarios/{{Auth::user()->id}}">
+							<a href="/usuarios/{{Auth::user()->id}}">
 								<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
 							</a>
 						</li>
@@ -154,7 +154,7 @@
 					@elseif (Auth::user()->roles->first()->name == 'musician')
 
 						<li>
-							<a target="_blank" href="/users/{{Auth::user()->id}}">
+							<a href="/users/{{Auth::user()->id}}">
 								<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
 							</a>
 						</li>
@@ -188,13 +188,13 @@
 
 					<li>
 						
-						<a target="_blank" href="/login">
+						<a href="/login">
 							<i class="fa fa-sign-in" aria-hidden="true"></i> Logéate
 						</a>
 					</li>
 					<li>
 						
-						<a target="_blank" href="/registro">
+						<a href="/registro">
 							<i class="fa fa-check-square-o" aria-hidden="true"></i> Regístrate
 						</a>
 					</li>
