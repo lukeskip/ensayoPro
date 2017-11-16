@@ -261,7 +261,6 @@
 				
 			});
 			
-			console.log(options);
 
 			swal.withFormAsync({
 				    title: title,

@@ -15,9 +15,9 @@
 	<div class="title"> Código de colores</div>
 	@foreach($rooms as $room)
 		<div class="room-item">
-			<div class="open">></div>
+			<div class="open"><</div>
 			<div class="color" style="background: {{$room->color}}"></div>
-			<div class="text">{{$room->name}} ({{$room->schedule_start}}hrs. a {{$room->schedule_end}}hrs.)</div>
+			<div class="text"><span class="more_short">{{$room->name}}</span> ({{$room->schedule_start}}hrs. a {{$room->schedule_end}}hrs.)</div>
 		</div>
 	@endforeach
 	
@@ -110,27 +110,41 @@
 		
 		// Mostramos el código de colores de las salas
 		$(document).ready(function(){
-			$('.room-keys').css('left','-280px');
-			room_keys = false;
-			$('.room-keys .open').click(function(){
-					$('.room-keys .open').html('<');
-					if(!room_keys){
-						$('.room-keys').animate({
-							left:0,
-						},function(){
-							room_keys = true;
-							
-						});
 
-					}else{
-						$('.room-keys .open').html('>');
-						$('.room-keys').animate({
-							left:-280,
-						},function(){
-							room_keys = false;
-							
-						});
-					}	
+			$('.more_short').each(function() {
+			    var content = $(this).html();
+			    if(content.length > 15) {
+
+			        var html = content.substr(0, 15);  
+			        $(this).html(html+'...')
+
+
+			    }
+
+			    
+			});
+
+				
+			room_keys = true;
+			$('.room-keys .open').click(function(){
+				$('.room-keys .open').html('<');
+				if(!room_keys){
+					$('.room-keys').animate({
+						left:0,
+					},function(){
+						room_keys = true;
+						
+					});
+
+				}else{
+					$('.room-keys .open').html('>');
+					$('.room-keys').animate({
+						left:-300,
+					},function(){
+						room_keys = false;
+						
+					});
+				}	
 			});
 			
 		});

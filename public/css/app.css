@@ -228,7 +228,7 @@ body{
 	position: absolute;
 	background: black;
 	bottom: 100px;
-	min-width:280px; 
+	min-width:300px; 
 	left:0;
 	z-index: 9999;
 	padding: 10px;
@@ -238,7 +238,7 @@ body{
 }
 
 .room-keys .open{
-	content: '>';
+	content: '<';
 	position: absolute;
 	top: -2px;
 	right:-35px;

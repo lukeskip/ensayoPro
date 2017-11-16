@@ -16,6 +16,8 @@ $(document).ready(function(){
         }
     });
 
+    
+
 	//ENDS: Read More Text
 
 	$(document).on('keyup',function(evt) {
