@@ -194,13 +194,13 @@ class CompanyController extends Controller
 		$role = User::find($user_id)->roles->first()->name;
 
 		
-		if($company->status == 'inactive'){
-			$company['status'] = 'Inactiva';
-		}
+		// if($company->status == 'inactive'){
+		// 	$company['status'] = 'Inactiva';
+		// }
 
-		if($company->status == 'active'){
-			$company['status'] = 'Activa';
-		}
+		// if($company->status == 'active'){
+		// 	$company['status'] = 'Activa';
+		// }
 		
 
 		return view('reyapp.companies.settings')->with('company',$company)->with('role',$role);
@@ -212,13 +212,13 @@ class CompanyController extends Controller
 		$company = Company::find($id);
 		$role = User::find($user_id)->roles->first()->name;
 		
-		if($company->status == 'inactive'){
-			$company['status'] = 'Inactiva';
-		}
+		// if($company->status == 'inactive'){
+		// 	$company['status'] = 'Inactiva';
+		// }
 
-		if($company->status == 'active'){
-			$company['status'] = 'Activa';
-		}
+		// if($company->status == 'active'){
+		// 	$company['status'] = 'Activa';
+		// }
 		
 
 
@@ -277,6 +277,7 @@ class CompanyController extends Controller
 		$company->city           = $request->city;
 		$company->phone          = $request->phone;
 		$company->rfc            = $request->rfc;
+		$company->status            = $request->status;
 		
 		
 		$company->bank           = $request->bank;

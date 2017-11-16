@@ -54,7 +54,7 @@
 							<i class="fa fa-check-circle-o confirmed hastooltip" title="Activa" aria-hidden="true"></i>
 						@elseif($company->status == 'inactive')
 							<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Inactiva"></i>
-						@elseif($company->status == 'cancelled')
+						@elseif($company->status == 'deleted')
 							<i class="fa fa-times-circle-o hastooltip cancelled" title="Cancelada" aria-hidden="true"></i>
 						@endif
 						

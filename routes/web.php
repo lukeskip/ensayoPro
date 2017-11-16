@@ -61,6 +61,8 @@ Route::group(['middleware' => ['auth','admin'],'prefix'=>'admin'], function () {
 	Route::get('/company/ajustes/{id}', 'CompanyController@edit_admin');
 });
 
+
+
 Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('salas/reservando/{room_id}', 'ReservationController@make_reservation');
@@ -70,6 +72,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/dashboard', 'DashboardController@musician')->name('dashboardMusician');
 	
 	Route::get('/usuarios/{id}', 'UserController@show');
+
+	Route::get('/bienvenido', 'AdminMusicianController@dashboard');
 
 	
 

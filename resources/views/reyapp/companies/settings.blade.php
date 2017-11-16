@@ -27,9 +27,11 @@
 			<div class="large-6 columns">
 				<label for="">Estatus</label>
 				<select name="status" id="">
-					<option value="active">Activo</option>
-					<option value="inactive">Inactivo</option>
-					<option value="deleted">Borrado</option>
+					<option @if($company->status == 'active') {{'selected'}} @endif value="active">
+						Activo
+					</option>
+					<option @if($company->status == 'inactive') {{'selected'}} @endif value="inactive">Inactivo</option>
+					<option @if($company->status == 'deleted') {{'selected'}} @endif value="deleted">Borrado</option>
 				</select>
 			</div>
 			@endif
