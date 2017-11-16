@@ -139,7 +139,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="/company/agenda" target="_blank">
+							<a href="/company/agenda">
 								<i class="fa fa-calendar-o" aria-hidden="true"></i> Agenda
 							</a>
 						</li>
