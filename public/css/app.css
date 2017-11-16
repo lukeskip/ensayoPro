@@ -1093,6 +1093,10 @@ h1 .duration{
 	padding: 5px;
 }
 
+#calendar .reservation{
+	background: #C73536;
+}
+
 #calendar .fc-day{
 	cursor: pointer
 }

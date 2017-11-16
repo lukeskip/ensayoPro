@@ -164,6 +164,11 @@
 							</a>
 						</li>
 						<li>
+							<a href="/musico/agenda">
+								<i class="fa fa-calendar-o" aria-hidden="true"></i> Agenda
+							</a>
+						</li>
+						<li>
 							<a href="/bandas">
 								<i class="fa fa-users" aria-hidden="true"></i> Tus bandas
 							</a>

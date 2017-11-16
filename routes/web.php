@@ -62,6 +62,13 @@ Route::group(['middleware' => ['auth','admin'],'prefix'=>'admin'], function () {
 });
 
 
+Route::group(['middleware' => ['auth','musician'],'prefix'=>'musico'], function () {
+	Route::get('/agenda', 'AdminMusicianController@calendar')->name('admin');
+	Route::resource('eventos', 'EventController');
+	
+});
+
+
 
 Route::group(['middleware' => 'auth'], function () {
 

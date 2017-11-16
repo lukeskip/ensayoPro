@@ -40,7 +40,7 @@
 
 		<div class="row {{ $errors->has('email') ? ' has-error' : '' }}">
 			
-			<div class="large-12 columns">
+			<div class="large-6 columns">
 				
 					<label>Email</label>
 					<input class="input-group-field" type="text" name="email" value="{{$user->email}}" placeholder="correo@correo.com">
@@ -48,6 +48,18 @@
 					@if ($errors->has('email'))
 						<label class="error">
 							<strong>{{ $errors->first('email') }}</strong>
+						</label>
+					@endif
+			</div>
+
+			<div class="large-6 columns">
+				
+					<label>Teléfono</label>
+					<input class="input-group-field" type="text" name="phone" value="{{$user->teléfono}}" placeholder="555-5555-55">
+
+					@if ($errors->has('phone'))
+						<label class="error">
+							<strong>{{ $errors->first('phone') }}</strong>
 						</label>
 					@endif
 			</div>

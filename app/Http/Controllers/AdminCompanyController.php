@@ -42,7 +42,7 @@ class AdminCompanyController extends Controller
 
   		$app_reservations = Reservation::whereIn('room_id', $room_ids)->with(['users','rooms','bands'])->where('is_admin','!=',true)->get();
  
-    	return view('reyapp.companies.company_calendar')->with('rooms',$rooms)->with('company_reservations',$company_reservations)->with('app_reservations',$app_reservations);
+    	return view('reyapp.companies.calendar')->with('rooms',$rooms)->with('company_reservations',$company_reservations)->with('app_reservations',$app_reservations);
 
     }
 

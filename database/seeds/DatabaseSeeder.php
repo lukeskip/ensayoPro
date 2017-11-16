@@ -77,7 +77,7 @@ class DatabaseSeeder extends Seeder
 			$user->email = 'musician@correo.com';
 			$user->password = bcrypt('secret');
 			$user->save();
-			$user->roles()->attach($role_company->id);
+			$user->roles()->attach($role_musician->id);
 			
 
 			factory(App\Room::class, 30)->create();
