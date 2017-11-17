@@ -4,7 +4,7 @@
 <div class="form_wrapper">
 	
 	<h1>Edita los datos de tu cuenta</h1>
-	<form class="form-horizontal" method="POST" action="{{ route('register') }}">
+	<form class="form-horizontal" method="PUT" action="/usuarios/{{$user->id}}">
 		{{ csrf_field() }}
 		
 		<div class="row">
@@ -55,7 +55,7 @@
 			<div class="large-6 columns">
 				
 					<label>Teléfono</label>
-					<input class="input-group-field" type="text" name="phone" value="{{$user->teléfono}}" placeholder="555-5555-55">
+					<input class="input-group-field" type="text" name="phone" value="{{$user->phone}}" placeholder="555-5555-55">
 
 					@if ($errors->has('phone'))
 						<label class="error">
@@ -67,7 +67,11 @@
 		</div>
 
 		<div class="row {{ $errors->has('password') ? ' has-error' : '' }}">
-		   
+			<div class="large-12 columns">
+				<h3>Cambiar contraseña</h3>
+				<p>Deja vacíos estos campos si deseas conservar tu contraseña</p>
+			</div>
+
 			<div class="large-6 columns">
 
 					<label>Contraseña:</label>
@@ -95,12 +99,26 @@
 		<hr>
 		<div class="row ">
 			<div class="large-12 columns">
-				<button type="submit" class="button expanded green">
+				<button type="submit" class="button expanded green send">
 					Guardar
 				</button>
 				
 			</div>
 		</div>
 	</form>
+
 </div>
+@endsection
+@section('scripts');
+<script>
+	
+	$(document).ready(function(){
+		$('.send').click(function(e){
+			e.preventDefault();
+			data = $('form').serialize();
+			conection('PUT', data,'/usuarios/'+{{$user->id}});
+		});
+	});
+	
+</script>
 @endsection

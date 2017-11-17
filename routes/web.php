@@ -78,7 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
 	
 	Route::get('/dashboard', 'DashboardController@musician')->name('dashboardMusician');
 	
-	Route::get('/usuarios/{id}', 'UserController@show');
+	Route::resource('/usuarios', 'UserController');
 
 	Route::get('/bienvenido', 'AdminMusicianController@dashboard');
 

@@ -2,7 +2,7 @@
 @section('styles')
 <link rel="stylesheet" href="{{asset('plugins/swal-forms-master/live-demo/sweet-alert.css')}}">
 <link rel="stylesheet" href="{{asset('plugins/swal-forms-master/swal-forms.css')}}">
-@endsection;
+@endsection
 @section('body_class', 'dashboard')
 @section('content')
 	

@@ -44,7 +44,7 @@ class AdminController extends Controller
             $room['ratings'] = $sumRatings;
         }
 
-
+        
         return view('reyapp.admin.dashboard')->with('rooms',$rooms)->with('reservations',$reservations)->with('comments',$comments);
 
     }
