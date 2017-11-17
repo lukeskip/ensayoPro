@@ -3,6 +3,7 @@
 @section('header')
 
 <link rel="stylesheet" href="{{asset('plugins/owlcarrousel/assets/owl.carousel.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/videoback/src/youtubebackground.css')}}">
 @endsection
 
 @section('content')
@@ -32,19 +33,24 @@
 </div>
 <div class="slider_wrapper">
 
-  <iframe style="position:absolute;top:0;left:0;margin-top:-10%;margin-left: -10% " frameborder="0" height="120%" width="120%" 
+  {{-- <iframe style="position:absolute;top:0;left:0;margin-top:-10%;margin-left: -10% " frameborder="0" height="120%" width="120%" 
     src="https://youtube.com/embed/YtLlUS-Hq5Q?autoplay=1&loop=1&controls=0&showinfo=0&autohide=1">
-  </iframe>
+  </iframe> --}}
+  <div id="background-video" class="background-video">
+    <img src="images/placeholder.jpg" alt="" class="placeholder-image">
+  </div>
   <div class="owl-carousel owl-theme">
     <div class="item">
       <h2>Encuentra un espacio chingón para ensayar</h2>
       <p>Califica y checa la opinión de otras bandas y reserva aquí en cualquier momento</p>
     </div>
-    <div class="item"><h4>2</h4></div>
+    <div class="item">
+      <h2>Ensaya con el amplo que siempre has querido</h2>
+      <p>Una sala de ensayo está equipada con lo mejor, ¿Marshall de bulbos?, ¿Ampeg de 400 watts? ¿Batería Tama? Encuéntralo en nuestra lista de las mejores salas de ensayo </p>
+    </div>
     <div class="item"><h4>3</h4></div>
 </div>
   <button class="button green large">REGÍSTRATE AHORA</button>
-  {{-- <div id="muteYouTubeVideoPlayer"></div> --}}
 </div>
 
 
@@ -258,6 +264,7 @@
 
 @section('scripts')
 
+<script src="{{asset('plugins/videoback/src/jquery.youtubebackground.js')}}"></script>
 <script src="{{asset('plugins/owlcarrousel/owl.carousel.min.js')}}"></script>
 <script async src="https://www.youtube.com/iframe_api"></script>
 <script>
@@ -272,30 +279,46 @@
     items: 1,
     navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
 })
- function onYouTubeIframeAPIReady() {
-  var player;
-  player = new YT.Player('muteYouTubeVideoPlayer', {
-    videoId: 'KCbCbUpURo8', // YouTube Video ID
-    width: with_window,               // Player width (in px)
-    height: 1000,              // Player height (in px)
-    playerVars: {
-      autoplay: 1,        // Auto-play the video on load
-      controls: 1,        // Show pause/play buttons in player
-      showinfo: 0,        // Hide the video title
-      modestbranding: 1,  // Hide the Youtube Logo
-      loop: 1,            // Run the video in a loop
-      fs: 0,              // Hide the full screen button
-      cc_load_policy: 0, // Hide closed captions
-      iv_load_policy: 3,  // Hide the Video Annotations
-      autohide: 0         // Hide video controls when playing
-    },
-    events: {
-      onReady: function(e) {
-        e.target.mute();
-      }
-    }
-  });
- }
+ // function onYouTubeIframeAPIReady() {
+ //  var player;
+ //  player = new YT.Player('muteYouTubeVideoPlayer', {
+ //    videoId: 'KCbCbUpURo8', // YouTube Video ID
+ //    width: with_window,               // Player width (in px)
+ //    height: 1000,              // Player height (in px)
+ //    playerVars: {
+ //      autoplay: 1,        // Auto-play the video on load
+ //      controls: 1,        // Show pause/play buttons in player
+ //      showinfo: 0,        // Hide the video title
+ //      modestbranding: 1,  // Hide the Youtube Logo
+ //      loop: 1,            // Run the video in a loop
+ //      fs: 0,              // Hide the full screen button
+ //      cc_load_policy: 0, // Hide closed captions
+ //      iv_load_policy: 3,  // Hide the Video Annotations
+ //      autohide: 0         // Hide video controls when playing
+ //    },
+ //    events: {
+ //      onReady: function(e) {
+ //        e.target.mute();
+ //      }
+ //    }
+ //  });
+// }
+
+ $('#background-video').YTPlayer({
+        fitToBackground: false,
+        videoId: 'YtLlUS-Hq5Q',
+        pauseOnScroll: false,
+        playerVars: {
+          modestbranding: 0,
+          autoplay: 1,
+          controls: 1,
+          showinfo: 0,
+          branding: 0,
+          rel: 0,
+          autohide: 0
+        }
+      });
+ 
 
  // Written by @labnol 
 </script>

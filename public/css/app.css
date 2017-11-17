@@ -2256,6 +2256,7 @@ h1 .duration{
 .owl-carousel{
 	background: rgba(0,0,0,.3);
 	height: 110%;
+	z-index: 9999;
 }
 
 .owl-carousel .item{
@@ -2291,6 +2292,15 @@ h1 .duration{
 	font-size: 2em;
 }
 
+.slider_wrapper .background-video{
+	position: absolute;
+	/*z-index: -20;*/
+}
+
+#ytplayer-shield{
+	display: none;
+}
+
 .slider_wrapper{
 	position: relative;
 	width: 100%; 
@@ -2307,6 +2317,6 @@ h1 .duration{
 	z-index: 2;
 }
 
-.slider_wrapper
+
 
 
