@@ -2274,7 +2274,7 @@ footer{
 }
 
 .owl-carousel .item{
-	padding: 100px;
+	padding: 10px;
 
 }
 
@@ -2322,7 +2322,7 @@ footer{
 	overflow: hidden;
 }
 
-.slider_wrapper button{
+.slider_wrapper .button{
 	width: 300px;
 	position: absolute;
 	top: 70%;
@@ -2349,6 +2349,11 @@ footer{
 	background: none;
 	color: white;
 	padding-bottom:100px;
+}
+
+.top-company p{
+	max-width: 1000px;
+	margin:auto;
 }
 
 .top-company h2{

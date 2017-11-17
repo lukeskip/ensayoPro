@@ -14,12 +14,12 @@
     <span data-responsive-toggle="topbar-responsive" data-hide-for="medium">
       <button class="menu-icon" type="button" data-toggle></button>
     </span>
-    <a class="topbar-responsive-logo" href="#"><img src=" http://reyapp.dev:8000/img/logo_rey.png " width="150" alt="logo"></a>
+    <a class="topbar-responsive-logo" href="#"><img src="{{asset('img/logo_rey.png')}}" width="150" alt="logo"></a>
   </div>
   <div id="topbar-responsive" class="topbar-responsive-links">
     <div class="top-bar-right">
       <ul class="menu simple vertical medium-horizontal">
-        <li><a href="/login/redirect">Iniciar Sesión</a></li>
+        <li><a href="/login">Iniciar Sesión</a></li>
         <li>
           <button type="button" class="button hollow topbar-responsive-button"><a href="/registro">Registrarme</a></button>
         </li>
@@ -33,24 +33,26 @@
 </div>
 <div class="slider_wrapper">
 
-  {{-- <iframe style="position:absolute;top:0;left:0;margin-top:-10%;margin-left: -10% " frameborder="0" height="120%" width="120%" 
-    src="https://youtube.com/embed/YtLlUS-Hq5Q?autoplay=1&loop=1&controls=0&showinfo=0&autohide=1">
-  </iframe> --}}
   <div id="background-video" class="background-video">
-    <img src="images/placeholder.jpg" alt="" class="placeholder-image">
+    <img src="{{asset('img/placeholder.jpg')}}" alt="" class="placeholder-image">
   </div>
   <div class="owl-carousel owl-theme">
+     <div class="item">
+      <h2>Ensaya con el amplo que siempre has querido</h2>
+      <p>Una sala de ensayo está equipada con lo mejor, ¿Marshall de bulbos?, ¿Ampeg de 400 watts? ¿Batería Tama? Encuéntralo en nuestra lista de las mejores salas de ensayo </p>
+    </div>
     <div class="item">
       <h2>Encuentra un espacio chingón para ensayar</h2>
       <p>Califica y checa la opinión de otras bandas y reserva aquí en cualquier momento</p>
     </div>
+    
     <div class="item">
-      <h2>Ensaya con el amplo que siempre has querido</h2>
-      <p>Una sala de ensayo está equipada con lo mejor, ¿Marshall de bulbos?, ¿Ampeg de 400 watts? ¿Batería Tama? Encuéntralo en nuestra lista de las mejores salas de ensayo </p>
+      <h2>Encuentra un espacio chingón para ensayar</h2>
+      <p>Califica y checa la opinión de otras bandas y reserva aquí en cualquier momento</p>
     </div>
-    <div class="item"><h4>3</h4></div>
+   
 </div>
-  <button class="button green large">REGÍSTRATE AHORA</button>
+  <a class="button green large" href="/registro">REGÍSTRATE AHORA</a>
 </div>
 
 
@@ -60,7 +62,8 @@
 <div id="main-content-section" data-magellan-target="main-content-section">
   <div class="top-company">
     <h1>¿Para qué una sala de ensayo?</h1>
-    <p class="text-center landing-subtitle">Simple, para dejar lo amateur y convertirte en todo un Pro</p>
+    <p class="text-center landing-subtitle">Una sala de ensayo es un espacio equipado con amplificadores (backline), consola, bocinas y todo lo necesario para que una banda ensaye cómodamente. Todas las bandas emergentes ensayan en este tipo de lugares.</p>
+    <p class="text-center landing-subtitle">Ensayo Pro es una plataforma que te permite comparar diferentes salas en tu ciudad y reservar tu ensayo aquí mismo y tener una agenda sincronizada con tu banda para que sean más productivos y puedan llegar más lejos.</p>
     <div class="row">
       <div class="row large-up-2 small-up-2">
         <div class="featured-image-block column">
@@ -71,19 +74,21 @@
 
         <div class="featured-image-block column">
           <img src="{{asset('img/musico_ensayo_2.png')}}" with='100%'/>
-          <h2 class="text-center bullets-company">Equipo Profesional</h2>
-          <p class="text-center description-salas">Deja de tocar con ese frankenstein, aquí hay equipo para Pro.</p>
+          <h2 class="text-center bullets-company">Pura cosa chida</h2>
+          <p class="text-center description-salas">Califica y comenta sobre tus salas favoritas así otros músicos podrán tomar buenas decisiones.</p>
+          
         </div>
         <div class="featured-image-block column">
           <img src="{{asset('img/musico_ensayo_3.png')}}" with='100%'/>
-          <h2 class="text-center bullets-company">Comodidad</h2>
-          <p class="text-center description-salas">Sabemos que mereces la mayor comodidad, por eso nos preocupamos por la calidad de las Salas de Ensayo. ¡Tenemos las mejores!</p>
+          <h2 class="text-center bullets-company">Equipo Profesional</h2>
+          <p class="text-center description-salas">Deja de tocar con ese frankenstein, aquí hay equipo para Pro.</p>
+          
         </div>
 
         <div class="featured-image-block column">
           <img src="{{asset('img/musico_ensayo_4.png')}}" with='100%'/>
           <h2 class="text-center bullets-company">Espacios Insonorizados</h2>
-          <p class="text-center description-salas">¿Cansado de que te digan que le bajes por que despiertas a la abuela? Tu sala de ensayo te está esperando.</p>
+          <p class="text-center description-salas">Diseña tu sonido sin que nadie te joda con que haces ruido.</p>
         </div>
       </div>
     </div>
