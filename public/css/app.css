@@ -2253,8 +2253,22 @@ h1 .duration{
 
 /*Owl Carrousel*/
 
+footer{
+	border-top:5px solid white;
+	background: black;
+	bottom: 0;
+	left:0;
+	width: 100%;
+	height: 80px;
+	text-align: center;
+	padding-top: 10px;
+	z-index: 1007;
+	font-size: .8em;
+	position: fixed;
+}
+
 .owl-carousel{
-	background: rgba(0,0,0,.3);
+	background: rgba(0,0,0,.5);
 	height: 110%;
 	z-index: 9999;
 }
@@ -2318,5 +2332,41 @@ h1 .duration{
 }
 
 
+.feature-item .feature-title{
+	padding: 0;
+	margin-bottom: 10px;
+}
 
+.feature-item .icon{
+	font-size: 2em;
+}
 
+.feature-item{
+	padding-bottom: 100px;
+}
+
+.top-company{
+	background: none;
+	color: white;
+	padding-bottom:100px;
+}
+
+.top-company h2{
+	margin-bottom: 10px;
+	color:white;
+}
+.top-company p{
+	font-size: 1.3em;
+}
+
+.top-company h3{
+
+}
+
+.bullets-company{
+	padding:0;
+}
+
+.description-salas{
+	padding: 0;
+}

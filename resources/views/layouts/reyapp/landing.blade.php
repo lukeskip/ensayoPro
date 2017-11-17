@@ -86,42 +86,10 @@
 
 	</div><!-- END OFF CANVAS WRAPPER-->
 
-			<footer class="marketing-site-footer">
-			  <div class="row medium-unstack">
-			    <div class="medium-6 columns">
-			      <h4 class="marketing-site-footer-name"><div><img src=" {{asset('img/logo_rey.png')}} " width="200" alt=""></div></h4>
-			      <p>Ensaya Pro es una marca de Rey Decibel.</p>
-						<p>Todos los Derechos Reservados Rey Decibel 2017. México</p>
-						<p><a href="http://www.reydecibel.com.mx/terminos-condiciones-generador-setlists/">Términos y condiciones</a></p>
-
-			    </div>
-			    <div class="medium-3 columns">
-			       <h4 class="marketing-site-footer-title">Contacto</h4>
-			      <div class="marketing-site-footer-block">
-			        <i class="fa fa-map-marker" aria-hidden="true"></i>
-			        <p>Calle falsa, número 123<br>Ciudad de México</p>
-			      </div>
-			      <div class="marketing-site-footer-block">
-			        <i class="fa fa-phone" aria-hidden="true"></i>
-			        <p>+52 (01) 555-5555</p>
-			      </div>
-			      <div class="marketing-site-footer-block">
-			        <i class="fa fa-envelope-o" aria-hidden="true"></i>
-			        <p>contacto@reydecibel.com.mx</p>
-			      </div>
-			    </div>
-			    <div class="medium-2 columns">
-			      <h4 class="marketing-site-footer-title">Social Media</h4>
-			      <div class="row small-up-3">
-							<ul class="menu marketing-site-footer-menu-social simple">
-				        <li><a href="#"><i class="fa fa-youtube-square" aria-hidden="true"></i></a></li>
-				         <li><a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
-				         <li><a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
-				      </ul>
-			      </div>
-			    </div>
-			  </div>
-			</footer>
+		<footer>
+			<div><img src=" {{asset('img/logo_rey.png')}} " width="100" alt=""></div>
+			Todos los derechos reservados,2017. <a style="color:white" href="http://www.reydecibel.com.mx/terminos-condiciones-generador-setlists/">Términos y condiciones</a>
+		</footer>
 
 		@yield('modal')
 

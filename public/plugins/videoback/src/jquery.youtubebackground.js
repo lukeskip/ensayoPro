@@ -55,7 +55,17 @@ if (typeof Object.create !== "function") {
           callback();
         };
       } else if (typeof YT === 'object')  {
-        callback();
+        if(typeof YT.Player !== 'undefined'){
+          callback();
+        } else{
+          window.dfd = $.Deferred();
+          window.onYouTubeIframeAPIReady = function() {
+            window.onYouTubeIframeAPIReady = null;
+            window.dfd.resolve( "done" );
+            callback();
+          };
+        }
+        
       } else {
         window.dfd.done(function( name ) {
           callback();
