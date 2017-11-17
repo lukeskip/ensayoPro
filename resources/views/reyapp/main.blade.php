@@ -1,8 +1,8 @@
 @extends('layouts.reyapp.landing')
 @section('body_class', 'landing')
 @section('header')
-{{-- Si quieres insertar algún archivo CSS va aquí, la siguiente linea es un ejemplo, el archivo tiene que estar cargado en la carpeta public --}}
-{{-- <link rel="stylesheet" href="{{asset('js/vendor/selectize/css/selectize.default.css')}}"> --}}
+
+<link rel="stylesheet" href="{{asset('plugins/owlcarrousel/assets/owl.carousel.css')}}">
 @endsection
 
 @section('content')
@@ -27,52 +27,28 @@
   </div>
 </nav>
 <!-- ENDS: top bar-->
-
-<!--STARTS: slider-->
-<div class="orbit clean-hero-slider" role="region" aria-label="Favorite Space Pictures" data-orbit>
-  <div class="orbit-wrapper">
-    <div class="orbit-controls">
-      <button class="orbit-previous"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
-      <button class="orbit-next"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
-    </div>
-    <ul class="orbit-container">
-      <li class="orbit-slide">
-        <figure class="orbit-figure">
-          <img class="orbit-image" src=" http://reyapp.dev:8000/img/back_bass.jpg" alt="image alt text">
-          <figcaption class="orbit-caption">
-            <h3>Encuentra un espacio adecuado para tu ensayo</h3>
-            <p>Deja de ensayar en la sala o en la vieja cochera, hoy es el día de profesionalizarte.</p>
-          </figcaption>
-        </figure>
-      </li>
-      <li class="orbit-slide">
-        <figure class="orbit-figure">
-          <img class="orbit-image" src="http://reyapp.dev:8000/img/back_drum.jpg" alt="image alt text">
-          <figcaption class="orbit-caption">
-            <h3>Práctica con equipo profesional</h3>
-            <p>¿No tienes para tu amplo soñado? Encuentra la sala con tu equipo ideal.</p>
-          </figcaption>
-        </figure>
-      </li>
-      <li class="orbit-slide">
-        <figure class="orbit-figure">
-          <img class="orbit-image" src="http://reyapp.dev:8000/img/back_guitar.jpg" alt="image alt text">
-          <figcaption class="orbit-caption">
-            <h3>Ensaya en un espacio cómodo</h3>
-            <p>La comodidad es fundamental para que sólo te preocupes por mejorar es a vuelta de coro.</p>
-          </figcaption>
-        </figure>
-      </li>
-    </ul>
-  </div>
-  <div class="bottom-content-section" data-magellan data-threshold="0">
-    <a href="#main-content-section"><i class="fa fa-chevron-down fa-2x" aria-hidden="true"></i></a>
-  </div>
-  <nav class="orbit-button">
-    <button class="button expanded"><a href="/registro">Registrarme</a></button>
-  </nav>
+<div class="top-bar-clone">
+  
 </div>
-{{-- ENDS: slider --}}
+<div class="slider_wrapper">
+
+  <iframe style="position:absolute;top:0;left:0;margin-top:-10%;margin-left: -10% " frameborder="0" height="120%" width="120%" 
+    src="https://youtube.com/embed/YtLlUS-Hq5Q?autoplay=1&loop=1&controls=0&showinfo=0&autohide=1">
+  </iframe>
+  <div class="owl-carousel owl-theme">
+    <div class="item">
+      <h2>Encuentra un espacio chingón para ensayar</h2>
+      <p>Califica y checa la opinión de otras bandas y reserva aquí en cualquier momento</p>
+    </div>
+    <div class="item"><h4>2</h4></div>
+    <div class="item"><h4>3</h4></div>
+</div>
+  <button class="button green large">REGÍSTRATE AHORA</button>
+  {{-- <div id="muteYouTubeVideoPlayer"></div> --}}
+</div>
+
+
+
 
 <!--STARTS: Benefits -->
 <div id="main-content-section" data-magellan-target="main-content-section">
@@ -83,25 +59,25 @@
       <div class="row large-up-2 small-up-2">
         <div class="featured-image-block column">
           <img src="http://reyapp.dev:8000/img/benefits-time.jpg" />
-          <h4 class="text-center bullets-company">Tiempo de Calidad</h4>
-          <h5 class="text-center description-salas">Ensaya desde que llegas hasta que te vas y no pierdas tiempo valioso.</h5>
+          <h3 class="text-center bullets-company">Tiempo de Calidad</h3>
+          <p class="text-center description-salas">Ensaya desde que llegas hasta que te vas y no pierdas tiempo valioso.</p>
         </div>
 
         <div class="featured-image-block column">
           <img src="http://reyapp.dev:8000/img/benefits-amp.jpg" />
-          <h4 class="text-center bullets-company">Equipo Profesional</h4>
-          <h5 class="text-center description-salas">Deja de tocar con ese frankenstein, aquí hay equipo para Pro.</h5>
+          <h3 class="text-center bullets-company">Equipo Profesional</h3>
+          <p class="text-center description-salas">Deja de tocar con ese frankenstein, aquí hay equipo para Pro.</p>
         </div>
         <div class="featured-image-block column">
           <img src="http://reyapp.dev:8000/img/benefits-confort.jpg" />
-          <h4 class="text-center bullets-company">Comodidad</h4>
-          <h5 class="text-center description-salas">Sabemos que mereces la mayor comodidad, por eso nos preocupamos por la calidad de las Salas de Ensayo. ¡Tenemos las mejores!</h5>
+          <h3 class="text-center bullets-company">Comodidad</h3>
+          <p class="text-center description-salas">Sabemos que mereces la mayor comodidad, por eso nos preocupamos por la calidad de las Salas de Ensayo. ¡Tenemos las mejores!</p>
         </div>
 
         <div class="featured-image-block column">
           <img src="http://reyapp.dev:8000/img/benefits-soundproof.jpg" />
-          <h4 class="text-center bullets-company">Espacios Insonorizados</h4>
-          <h5 class="text-center description-salas">¿Cansado de que te digan que le bajes por que despiertas a la abuela? Tu sala de ensayo te está esperando.</h5>
+          <h3 class="text-center bullets-company">Espacios Insonorizados</h3>
+          <p class="text-center description-salas">¿Cansado de que te digan que le bajes por que despiertas a la abuela? Tu sala de ensayo te está esperando.</p>
         </div>
       </div>
     </div>
@@ -281,6 +257,46 @@
 @endsection
 
 @section('scripts')
-{{-- Si quieres cargar un archivo de javascript como un plugin lo insertas aqui, la siguiente linea es un ejemplo, igual el archivo tiene que estar en la carpeta de public --}}
-{{-- <script src="{{asset('js/vendor/jquery.js')}}"></script> --}}
+
+<script src="{{asset('plugins/owlcarrousel/owl.carousel.min.js')}}"></script>
+<script async src="https://www.youtube.com/iframe_api"></script>
+<script>
+ with_window = $(window).width();
+ height_window = $(window).height();
+ top_bar_height = $('.top-bar').height();
+ $('.slider_wrapper').height(height_window - top_bar_height);
+ $('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    items: 1,
+    navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
+})
+ function onYouTubeIframeAPIReady() {
+  var player;
+  player = new YT.Player('muteYouTubeVideoPlayer', {
+    videoId: 'KCbCbUpURo8', // YouTube Video ID
+    width: with_window,               // Player width (in px)
+    height: 1000,              // Player height (in px)
+    playerVars: {
+      autoplay: 1,        // Auto-play the video on load
+      controls: 1,        // Show pause/play buttons in player
+      showinfo: 0,        // Hide the video title
+      modestbranding: 1,  // Hide the Youtube Logo
+      loop: 1,            // Run the video in a loop
+      fs: 0,              // Hide the full screen button
+      cc_load_policy: 0, // Hide closed captions
+      iv_load_policy: 3,  // Hide the Video Annotations
+      autohide: 0         // Hide video controls when playing
+    },
+    events: {
+      onReady: function(e) {
+        e.target.mute();
+      }
+    }
+  });
+ }
+
+ // Written by @labnol 
+</script>
 @endsection

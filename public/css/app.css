@@ -1701,7 +1701,7 @@ h1 .duration{
 }
 /*STARTS: TopBar***************************************************/
 .topbar-responsive {
-  background: #2c3840;
+  background: black;
 	width: 100%;
   padding: 1rem 1.5rem;
 	position: fixed;
@@ -1712,7 +1712,7 @@ h1 .duration{
   vertical-align: middle;
 }
 .topbar-responsive .menu {
-  background: #2c3840;
+  background: black;
 
 }
 .topbar-responsive .menu li:last-of-type {
@@ -2248,3 +2248,65 @@ h1 .duration{
     text-align: center;
   }
 }
+
+/*Video background*/
+
+/*Owl Carrousel*/
+
+.owl-carousel{
+	background: rgba(0,0,0,.3);
+	height: 110%;
+}
+
+.owl-carousel .item{
+	padding: 100px;
+
+}
+
+.owl-carousel .item h2{
+	font-size: 3em;
+}
+
+.owl-carousel .item p{
+	font-size:2em;
+	text-align: center;
+	
+}
+
+.top-bar-clone{
+	height: 100px;
+}
+
+.owl-prev{
+	position: absolute;
+	top:50%;
+	left: 20px;
+	font-size: 2em;
+}
+
+.owl-next{
+	position: absolute;
+	top:50%;
+	right: 20px;
+	font-size: 2em;
+}
+
+.slider_wrapper{
+	position: relative;
+	width: 100%; 
+	height: 1000px;
+	overflow: hidden;
+}
+
+.slider_wrapper button{
+	width: 300px;
+	position: absolute;
+	top: 70%;
+	left: 50%;
+	margin-left: -150px;
+	z-index: 2;
+}
+
+.slider_wrapper
+
+
