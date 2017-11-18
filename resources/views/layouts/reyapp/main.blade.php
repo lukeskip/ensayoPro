@@ -73,7 +73,7 @@
 
 		    <!-- Menu -->
 		    <div class="logo_menu ext-center">
-		    	<img src="{{asset('img/logo_rey.png')}}" alt="" width="200px;">
+		    	<img src="{{asset('img/logo_rey.png')}}" alt="" width="150px;">
 		    </div>
 
 		    <ul class="vertical menu">

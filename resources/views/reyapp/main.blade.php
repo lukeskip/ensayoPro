@@ -1,4 +1,4 @@
-@extends('layouts.reyapp.landing')
+@extends('layouts.reyapp.main')
 @section('body_class', 'landing')
 @section('header')
 
@@ -8,29 +8,8 @@
 
 @section('content')
 
-<!-- STARTS: top bar-->
-<nav class="top-bar topbar-responsive">
-  <div class="top-bar-title">
-    <span data-responsive-toggle="topbar-responsive" data-hide-for="medium">
-      <button class="menu-icon" type="button" data-toggle></button>
-    </span>
-    <a class="topbar-responsive-logo" href="#"><img src="{{asset('img/logo_rey.png')}}" width="150" alt="logo"></a>
-  </div>
-  <div id="topbar-responsive" class="topbar-responsive-links">
-    <div class="top-bar-right">
-      <ul class="menu simple vertical medium-horizontal">
-        <li><a href="/login">Iniciar Sesión</a></li>
-        <li>
-          <button type="button" class="button hollow topbar-responsive-button"><a href="/registro">Registrarme</a></button>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<!-- ENDS: top bar-->
-<div class="top-bar-clone">
-  
-</div>
+
+
 <div class="slider_wrapper">
 
   <div id="background-video" class="background-video">
@@ -38,18 +17,20 @@
   </div>
   <div class="owl-carousel owl-theme">
      <div class="item">
-      <h2>Ensaya con el amplo que siempre has querido</h2>
-      <p>Una sala de ensayo está equipada con lo mejor, ¿Marshall de bulbos?, ¿Ampeg de 400 watts? ¿Batería Tama? Encuéntralo en nuestra lista de las mejores salas de ensayo </p>
+      <div class="wrapper">
+        <div class="text-center"><img src="{{asset('img/logo_ensayo.png')}}"></div>
+        <h2>Ensaya con el amplo que siempre has querido</h2>
+        <p>Una sala de ensayo está equipada con lo mejor, ¿Marshall de bulbos?, ¿Ampeg de 400 watts? ¿Batería Tama? Encuéntralo en nuestra lista de las mejores salas de ensayo </p>
+      </div>
+      
     </div>
     <div class="item">
-      <h2>Encuentra un espacio chingón para ensayar</h2>
-      <p>Califica y checa la opinión de otras bandas y reserva aquí en cualquier momento</p>
+      <div class="wrapper">
+        <h2>Encuentra un espacio chingón para ensayar</h2>
+        <p>Califica y checa la opinión de otras bandas y reserva aquí en cualquier momento</p>
+      </div>
     </div>
     
-    <div class="item">
-      <h2>Encuentra un espacio chingón para ensayar</h2>
-      <p>Califica y checa la opinión de otras bandas y reserva aquí en cualquier momento</p>
-    </div>
    
 </div>
   <a class="button green large" href="/registro">REGÍSTRATE AHORA</a>
@@ -162,7 +143,7 @@ $(document).ready(function(){
 
  $('#background-video').YTPlayer({
         fitToBackground: false,
-        videoId: 'YtLlUS-Hq5Q',
+        videoId: 'V2fpgpanZAw',
         pauseOnScroll: false,
         playerVars: {
           modestbranding: 0,
