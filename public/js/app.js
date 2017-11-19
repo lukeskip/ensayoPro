@@ -2,7 +2,8 @@
 $(document).foundation();
 $(document).ready(function(){
 
-	//STARTS: Read More Text
+	$('.loader-wrapper').fadeOut();
+	
 
 	// Configure/customize these variables.
     var showChar = 150;  
@@ -130,6 +131,7 @@ $(document).ready(function(){
 
 	// clonamos el markup que agrega un input más de miembro.
 	$('body').on('click', '.add.member', function() {
+		console.log("hola");
 		$('.input_band_member_clone').clone().removeClass( "input_band_member_clone" ).appendTo('#paste');
 	});
 	
@@ -176,9 +178,9 @@ function register_band (){
 	// armamos una variable que utilizaremos en nuestro pool de conexiones
 	data = $("#band_data").serialize()+"&members="+JSON.stringify(members);
 
-	conection('POST',data,'/bandas',true).then(function(data) {
+	conection('POST',data,'/musico/bandas',true).then(function(data) {
 			if(data.success == true){
-				window.location.replace('/dashboard');
+				window.location.replace('/musico/bienvenido');
 			}else{
 				show_message('error','Error','Algo salió mal en el servidor, por favor inténtalo más tarde','/dashboard');
 			}

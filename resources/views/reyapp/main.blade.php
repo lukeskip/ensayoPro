@@ -19,15 +19,17 @@
      <div class="item">
       <div class="wrapper">
         <div class="text-center"><img src="{{asset('img/logo_ensayo.png')}}"></div>
+        <br>
         <h2>Ensaya con el amplo que siempre has querido</h2>
-        <p>Una sala de ensayo está equipada con lo mejor, ¿Marshall de bulbos?, ¿Ampeg de 400 watts? ¿Batería Tama? Encuéntralo en nuestra lista de las mejores salas de ensayo </p>
+        <p>Encuéntralo en nuestra lista de las mejores salas de ensayo. </p>
       </div>
       
     </div>
     <div class="item">
       <div class="wrapper">
+        <br><br><br>
         <h2>Encuentra un espacio chingón para ensayar</h2>
-        <p>Califica y checa la opinión de otras bandas y reserva aquí en cualquier momento</p>
+        <p>Califica y checa la opinión de otras bandas, además reserva aquí mismo tu ensayo en cualquier momento</p>
       </div>
     </div>
     
@@ -44,7 +46,7 @@
   <div class="top-company">
     <h1>¿Para qué una sala de ensayo?</h1>
     <p class="text-center landing-subtitle">Una sala de ensayo es un espacio equipado con amplificadores (backline), consola, bocinas y todo lo necesario para que una banda ensaye cómodamente. Todas las bandas emergentes ensayan en este tipo de lugares.</p>
-    <p class="text-center landing-subtitle">Ensayo Pro es una plataforma que te permite comparar diferentes salas en tu ciudad y reservar tu ensayo aquí mismo y tener una agenda sincronizada con tu banda para que sean más productivos y puedan llegar más lejos.</p>
+    <p class="text-center landing-subtitle">Ensayo Pro es una plataforma que te permite comparar diferentes salas de ensayo en tu ciudad y reservarlas aquí mismo y tener una agenda sincronizada con tu banda para que sean más productivos y puedan llegar más lejos.</p>
     <div class="row">
       <div class="row large-up-2 small-up-2">
         <div class="featured-image-block column">

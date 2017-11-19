@@ -109,7 +109,7 @@
 
 </div>
 @endsection
-@section('scripts');
+@section('scripts')
 <script>
 	
 	$(document).ready(function(){

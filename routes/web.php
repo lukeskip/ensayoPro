@@ -27,7 +27,7 @@ Route::get('/registro', function () {
 });
 Route::get('/registro/usuario/company', 'CompanyController@register_user')->name('register_user_company');
 
-Route::group(['middleware' => ['auth','company'],'prefix'=>'company'], function () {
+Route::group(['middleware' => ['auth','company','active'],'prefix'=>'company'], function () {
 
 	Route::get('/agenda/', 'AdminCompanyController@company_calendar');
 
@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth','company'],'prefix'=>'company'], function 
 	
 });
 
-Route::group(['middleware' => ['auth','admin'],'prefix'=>'admin'], function () {
+Route::group(['middleware' => ['auth','admin','active'],'prefix'=>'admin'], function () {
 	Route::get('/', 'AdminController@index')->name('admin');
 	Route::put('/comentarios/{id}', 'CommentController@update')->name('admin');
 	Route::get('/comentarios/', 'CommentController@index')->name('admin');
@@ -62,25 +62,31 @@ Route::group(['middleware' => ['auth','admin'],'prefix'=>'admin'], function () {
 });
 
 
-Route::group(['middleware' => ['auth','musician'],'prefix'=>'musico'], function () {
+Route::group(['middleware' => ['auth','musician','active'],'prefix'=>'musico'], function () {
 	Route::get('/agenda', 'AdminMusicianController@calendar')->name('admin');
 	Route::resource('eventos', 'EventController');
+	Route::get('/bienvenido', 'AdminMusicianController@dashboard');
+
+	Route::get('/bandas', 'BandController@index');
+	Route::post('/bandas', 'BandController@store');
+	Route::get('/bandas/{id}', 'BandController@edit');
+	Route::put('/bandas/{id}', 'BandController@update');
+	Route::put('/bandas_delete_member/', 'BandController@delete_member');
 	
+});
+Route::group(['middleware' => ['auth']], function () {
+	Route::get('/activa_tu_cuenta', 'UserController@active_form');
+	Route::get('/activa_tu_cuenta/{token}', 'UserController@active');
+	Route::get('/reenviar_bienvenida/', 'UserController@bienvenida');
 });
 
 
-
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','active']], function () {
 
 	Route::get('salas/reservando/{room_id}', 'ReservationController@make_reservation');
 	Route::post('salas/reservando/checkout', 'ReservationController@checkout');
-
-	
-	Route::get('/dashboard', 'DashboardController@musician')->name('dashboardMusician');
 	
 	Route::resource('/usuarios', 'UserController');
-
-	Route::get('/bienvenido', 'AdminMusicianController@dashboard');
 
 	
 
@@ -127,14 +133,14 @@ Route::group(['middleware' => 'auth'], function () {
 		}
 
 		if($role == 'musician'){
-			return redirect('/dashboard');
+			return redirect('/musico/bienvenido');
 		}
 	});
 
 	//ENDS: Redirigimos según role después de login
 
 	//STARTS: resources///////////////////////////////////////////// 
-	Route::resource('bandas', 'BandController');
+	// Route::resource('bandas', 'BandController');
 	Route::resource('reservaciones', 'ReservationController');
 	//ENDS: resources/////////////////////////////////////////////
 
@@ -179,6 +185,9 @@ Route::get('imagenes/{image}', function($image){
 // ENDS: Carga de imágenes fineuploader
 
 
+	Route::get('/mail_invitacion', function () {
+		return view('reyapp.invitation');
+	});
 
 
 

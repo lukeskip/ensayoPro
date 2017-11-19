@@ -51,7 +51,6 @@
 		<!-- STARTS: Preloader -->
 		<div class="loader-wrapper">
 			<div class="loader">
-				{{-- <img src="assets/img/elements/logo-full.png"> --}}
 				<div class="bars-animation">
 					<div class="bar one"></div>
 					<div class="bar two"></div>
@@ -72,9 +71,12 @@
 		    </button>
 
 		    <!-- Menu -->
-		    <div class="logo_menu ext-center">
-		    	<img src="{{asset('img/logo_rey.png')}}" alt="" width="150px;">
+		    <div class="logo_menu text-center">
+		    	<a href="/">
+		    		<img src="{{asset('img/logo_ensayo_white.png')}}" alt="" width="150px;">
+		    	</a>
 		    </div>
+		    <br><br>
 
 		    <ul class="vertical menu">
 				@if(!Auth::guest())
@@ -154,12 +156,12 @@
 					@elseif (Auth::user()->roles->first()->name == 'musician')
 
 						<li>
-							<a href="/users/{{Auth::user()->id}}">
+							<a href="/usuarios/{{Auth::user()->id}}">
 								<i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->name}}
 							</a>
 						</li>
 						<li>
-							<a href="/dashboard">
+							<a href="/musico/bienvenido">
 								<i class="fa fa-line-chart" aria-hidden="true"></i> Dashboard
 							</a>
 						</li>
@@ -169,7 +171,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="/bandas">
+							<a href="/musico/bandas">
 								<i class="fa fa-users" aria-hidden="true"></i> Tus bandas
 							</a>
 						</li>
@@ -223,15 +225,15 @@
 
 				Todos los derechos reservados,2017. <a style="color:white" target="_blank" href="http://www.reydecibel.com.mx/terminos-condiciones-generador-setlists/">Términos y condiciones</a>
 			</div>
+			<div class="logo_menu text-center">
+		    	<a href="http://reydecibel.com.mx" target="_blank"><img src="{{asset('img/logo_rey.png')}}" alt="" width="150px;"></a>
+		    </div>
 			<!-- ENDS: Menu -->
 	</div>
 
 	<div class="off-canvas-content" data-off-canvas-content>
 		 
 		<div class="beta">Alpha</div>
-		<div class="loader_wrapper">
-			<div class="loader"></div>
-		</div>	
 		<a class="menu_start" data-toggle="offCanvasLeft">
 			<i class="fa fa-bars" aria-hidden="true"></i>
 			MENÚ

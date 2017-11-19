@@ -1,9 +1,9 @@
-@extends('layouts.reyapp.landing')
+@extends('layouts.reyapp.main')
 
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="medium-6 medium-centered columns login">
+        <div class="large-6 medium-8 medium-centered columns login">
             <div class="panel panel-default">
                 <h2>Login</h2>
                 <div class="panel-body">

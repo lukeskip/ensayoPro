@@ -4,6 +4,7 @@ namespace App;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Mail;
 
 class User extends Authenticatable
 {
@@ -32,6 +33,25 @@ class User extends Authenticatable
             $this->api_token = str_random(60);
         }
 
+        if(empty($this->active_token)){
+            $active_token =  str_random(60);
+            $email        = $this->email;
+            $this->active_token = $active_token;
+
+            Mail::send('reyapp.welcome', ['token'=>$active_token,'email'=>$email], function ($message)use($email){
+
+                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Bienvenido a EnsayoPro');
+                $message->to($email);
+
+            });
+        }
+
+        
+
+        if(empty($this->active)){
+            $this->active = false;
+        }
+
         return parent::save($options);
     }
 
@@ -47,7 +67,7 @@ class User extends Authenticatable
 
     public function bands()
     {
-        return $this->belongsToMany('App\Band');
+        return $this->belongsToMany('App\Band','band_user');
     }
 
     public function reservations(){

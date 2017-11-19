@@ -7,9 +7,56 @@ use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User as User;
 use Illuminate\Support\Facades\Validator;
+use Mail;
 
 class UserController extends Controller
-{
+{   
+    public function bienvenida (){
+        $user = Auth::user();
+        $active = $user->active;
+        if(!$active){
+            $active_token = Auth::user()->active_token;
+            $email = $user->email;
+            Mail::send('reyapp.welcome', ['token'=>$active_token,'email'=>$email], function ($message)use($email){
+
+                    $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Bienvenido a EnsayoPro');
+                    $message->to($email);
+
+            });
+
+            return response()->json(['success' => true,'messages'=>'El correo fue reenviado correctamente']);
+        }else{
+            return response()->json(['success' => false,'messages'=>'Esta cuenta ya está activa']);
+        }
+        
+
+        
+    }
+    // Mostramos el mensaje pidiendo que active su cuenta y que revise en su correo
+    public function active_form()
+    {
+        $active = Auth::user()->active;
+        $message = '';
+        if(!$active){
+            $message = 'Tu cuenta aún está inactiva, tu cuenta de correo no ha sido validada, si no encuentras nuestro correo de bienvenida, revisa tu bandeja de correos no deseados';
+        }else{
+            $message = 'Tu cuenta está activa, ya puedes navegar por la página';
+        }
+
+        return view('reyapp.users.active')->with('message',$message)->with('active',$active);
+    }
+
+    public function active($token)
+    {
+        $user = User::where('active_token',$token)->first();
+        if($user){
+            $user->active = true;
+            $user->active_token = str_random(60);
+            $user->save(); 
+        }
+        
+
+        return redirect('/activa_tu_cuenta/');    }
     /**
      * Display a listing of the resource.
      *

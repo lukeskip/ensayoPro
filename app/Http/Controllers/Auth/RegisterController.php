@@ -7,6 +7,8 @@ use App\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Mail;
+
 
 class RegisterController extends Controller
 {
@@ -81,6 +83,9 @@ class RegisterController extends Controller
         }else{
             $user->roles()->attach(Role::where('name', 'musician')->first());
         }
+
+
+        
 
         return $user;
     }

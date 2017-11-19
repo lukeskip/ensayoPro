@@ -50,6 +50,7 @@
 		<div class="row" class="band_register">
 			<div class="large-12 columns">
 				<h3>Correos de los miembros de tu banda</h3>
+				<p>Pueden o no estar inscritos en esta plataforma</p>
 			</div>
 			<div class="large-12 columns input_band_member">
 				<div class="input-group">
@@ -95,7 +96,7 @@
 			</div>
 
 			<div class="large-6 columns">
-				<a  class="button expanded" href="/dashboard">
+				<a  class="button expanded" href="/musico/bienvenido">
 					Saltar, lo haré luego
 				</a>
 			</div>

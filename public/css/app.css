@@ -16,7 +16,9 @@ textarea{
 	white-space: pre-line;
 }
 
-
+.unregistered{
+	opacity: .5;
+}
 .tooltip{
 	max-width: 12rem;
 }
@@ -780,35 +782,6 @@ h3{
 
 }
 
-.loader_wrapper{
-	display: none;
-	background-color: rgba(0,0,0,.8);
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	z-index: 9999;
-	top:0;
-	left:0;
-}
-.loader{
-	width: 120px;
-	height: 120px;
-	background-color:white;
-	background-image: url(../img/loader.gif);
-	background-position: center center;
-	background-repeat: no-repeat;
-	border-radius: 5px;
-	top: 50%;
-	left:50%;
-	margin-top: -100px;
-	margin-left: -60px;
-	position: absolute;
-	z-index: 9999;
-	-webkit-box-shadow: 2px 6px 51px 0px rgba(0,0,0,0.25);
-	-moz-box-shadow: 2px 6px 51px 0px rgba(0,0,0,0.25);
-	box-shadow: 2px 6px 51px 0px rgba(0,0,0,0.25);
-
-}
 
 a:hover, a:focus{
 	color:white;
@@ -1808,8 +1781,8 @@ h1 .duration{
 	bottom: 0;
 	right:0;
 	position: fixed;
-	z-index: 9999;
-	display: none;
+	z-index: 9999999;
+	display: block;
 }
 .loader {
   display: block;
@@ -2505,24 +2478,35 @@ footer{
 	font-size: 2.5em;
 }
 
+@media screen and (max-width: 700px) {
+	.owl-carousel .item h2{
+		font-size: 2em;
+	}
+	.owl-carousel .item p{
+		font-size:1em;
+		text-align: center;
+	}
+}
+
 .owl-carousel .item p{
 	font-size:1.5em;
 	text-align: center;
 	
 }
+
+
+
+.owl-next{
+	position: absolute;
+	top:40%;
+	right: 20px;
+	font-size: 2em;
 }
 
 .owl-prev{
 	position: absolute;
-	top:50%;
+	top:40%;
 	left: 20px;
-	font-size: 2em;
-}
-
-.owl-next{
-	position: absolute;
-	top:50%;
-	right: 20px;
 	font-size: 2em;
 }
 
@@ -2595,3 +2579,52 @@ footer{
 .description-salas{
 	padding: 0;
 }
+
+
+/*STARTS: BAND EDIT******************************/
+
+.band_edit .members_re{
+	margin-bottom: 30px;
+}
+
+.band_edit .member.unregistered {
+	opacity: 1;
+}
+
+.band_edit .member.registered{
+	font-size: 1em;
+	color:white;
+	padding: 5px 10px;
+	border-radius: 5px;
+	margin-top: 10px;
+	display: inline-block;
+	margin-top: 10px;
+	cursor: pointer;
+	background: #2FAB31;
+
+}
+
+.band_edit .members_un{
+	position: relative;
+}
+
+.band_edit .members_un .delete{
+	position: absolute;
+	top:3px;
+	right:20px;
+	color:black;
+	font-size: 1.5em;
+	cursor: pointer!important;
+}
+
+.band_edit .members_un .resend{
+	position: absolute;
+	top:3px;
+	right:60px;
+	color:black;
+	font-size: 1.5em;
+	cursor: pointer!important;
+}
+
+
+/*ENDS: BAND EDIT********************************/

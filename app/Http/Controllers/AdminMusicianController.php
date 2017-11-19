@@ -14,12 +14,21 @@ class AdminMusicianController extends Controller
 	public function dashboard()
 	{   
 		$user_id = Auth::user()->id;
-		$user = User::find($user_id);
+		$user 	 = User::with(['bands','reservations'])->find($user_id);
+		
+		$bands   = $user->bands;
+		$bands_ids = [];
+
+
+		foreach ($bands as $band) {
+			$bands_ids[] = $band->id;
+		}
+	
 
 		if($user->bands->count() < 1){
 		   $reservations = $user->reservations;  
 		}else{
-			$reservations = $user->bands->reservations;
+			$reservations = $user->reservations->whereIn('band_id',$bands_ids);
 		}
 		
 		
