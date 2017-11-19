@@ -19,6 +19,32 @@ textarea{
 .unregistered{
 	opacity: .5;
 }
+
+.tag{
+	font-size: 1em;
+	color:white;
+	padding: 5px 10px;
+	border-radius: 5px;
+	margin-top: 10px;
+	display: inline-block;
+	margin-top: 10px;
+	cursor: default;
+	
+}
+
+.tag.green{
+	background: #2FAB31;
+}
+
+.tag.black{
+	background: black;
+}
+
+.tag.small{
+	font-size: .8em;
+}
+
+
 .tooltip{
 	max-width: 12rem;
 }

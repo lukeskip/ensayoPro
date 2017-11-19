@@ -11,6 +11,17 @@ use Mail;
 
 class UserController extends Controller
 {   
+
+    public function finish_register ($token){
+        $user = User::where('active_token',$token)->first();
+        if(!$user->active){
+            return view('reyapp.users.finish_register')->with('user',$user);
+        }else{
+            return redirect('/musico/bienvenido'); 
+        }
+        
+    }
+
     public function bienvenida (){
         $user = Auth::user();
         $active = $user->active;
@@ -38,7 +49,7 @@ class UserController extends Controller
         $active = Auth::user()->active;
         $message = '';
         if(!$active){
-            $message = 'Tu cuenta aún está inactiva, tu cuenta de correo no ha sido validada, si no encuentras nuestro correo de bienvenida, revisa tu bandeja de correos no deseados';
+            $message = 'Tu cuenta de correo no ha sido validada, si no encuentras nuestro correo de bienvenida, revisa tu bandeja de correos no deseados';
         }else{
             $message = 'Tu cuenta está activa, ya puedes navegar por la página';
         }
@@ -56,7 +67,8 @@ class UserController extends Controller
         }
         
 
-        return redirect('/activa_tu_cuenta/');    }
+        return redirect('/activa_tu_cuenta/');    
+    }
     /**
      * Display a listing of the resource.
      *
@@ -163,6 +175,7 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->active = true;
 
         $user->save();
         

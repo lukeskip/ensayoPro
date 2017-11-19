@@ -23,7 +23,7 @@ class BandController extends Controller
 		$user_id = Auth::user()->id;
 		$user   = User::with('bands')->find($user_id);
 		$bands  = $user->bands;
-		return view('reyapp.musicians.bands')->with('bands',$bands);
+		return view('reyapp.musicians.bands')->with('bands',$bands)->with('user',$user);
 	}
 
 	/**
@@ -87,7 +87,7 @@ class BandController extends Controller
 				$band->users()->save($user);
 
 				$user->roles()->attach($role_id);
-				$token = $user->api_token;
+				$token = $user->active_token;
 				$email = $user->email;
 
 
@@ -208,7 +208,7 @@ class BandController extends Controller
 				$band->users()->save($user);
 
 				$user->roles()->attach($role_id);
-				$token = $user->api_token;
+				$token = $user->active_token;
 				$email = $user->email;
 
 

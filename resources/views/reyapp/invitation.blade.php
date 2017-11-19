@@ -8,7 +8,7 @@
   	<p>Para unirte solo necesitas completar tu registro.</p>
 	<br><br>
 	<p>
-	<a href="{{url('/')}}/invitation/{{$token}}" style="background: #2FAB31;color:white;padding: 15px; text-align: center; border-radius: 10px; text-decoration: none;font-size: 20px;">
+	<a href="{{url('/')}}/finaliza_tu_registro/{{$token}}" style="background: #2FAB31;color:white;padding: 15px; text-align: center; border-radius: 10px; text-decoration: none;font-size: 20px;">
 		Terminar mi registro
 	</a>
 

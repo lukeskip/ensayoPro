@@ -14,27 +14,25 @@
 					<div class="medium-4 columns show-for-medium">
 						Nombre 
 					</div>
-					<div class="medium-4 columns show-for-medium">
-						Género
-					</div>
-					<div class="medium-4 columns show-for-medium">
+					<div class="medium-8 columns show-for-medium">
 						Miembros
 					</div>
 				</div>
 				@foreach($bands as $band)
 					<div class="row list-item">
 						<div class="medium-4 columns">
-							<a href="/musico/bandas/{{$band->id}}">{{$band->name}}</a> 
+							@if($band->registrant == Auth::user()->id)
+								<a href="/musico/bandas/{{$band->id}}">{{$band->name}}</a>
+							@else
+								{{$band->name}}
+							@endif 
 						</div>
-						<div class="medium-4 columns ">
-							{{$band->genre}} 
-						</div>
-						<div class="medium-4 columns ">
+						<div class="medium-8 columns ">
 							@foreach($band->users as $user)
 								@if($user->name != '')
-									<div>{{$user->name}} {{$user->lastname}}</div>
+									<div class="tag green small">{{$user->name}}</div>
 								@else
-									<div class="unregistered hastooltip" title="Aún no culmina su registro">
+									<div class="tag black small unregistered hastooltip" title="Aún no culmina su registro">
 										{{$user->email}}
 									</div>
 								@endif

@@ -52,37 +52,40 @@
 			</div>
 
 			<div id="paste" class="members">
-				@foreach($members_re as $user)
+				<div class="large-12 columns members_re">
+					@foreach($members_re as $user)
 
-					<div class="large-12 columns members_re">
-						<span class="member registered">
-							{{$user->name}} {{$user->lastname}}
-							<a href="#" class="delete" data-band="{{$band->id}}" data-id="{{$user->id}}">
-								<i class="fa fa-times" aria-hidden="true"></i>
-							</a>
-						</span>
-					</div>
-
-				@endforeach
-				
-				@foreach($members_un as $user)
-
-					<div class="large-12 columns input_band_member members_un">
-						<div class="input-group">
-							<a class="delete hastooltip" data-band="{{$band->id}}" data-id="{{$user->id}}" title="Saca a este miembro de la banda">
-								<i class="fa fa-times" aria-hidden="true"></i>
-							</a>
-							<a class="resend hastooltip" data-band="{{$band->id}}" data-id="{{$user->id}}" title="Reenvía la invitación">
-								<i class="fa fa-envelope-o" aria-hidden="true"></i>
-							</a>
-							<span class="input-group-label">
-								Email
+						
+							<span class="member registered">
+								{{$user->name}} {{$user->lastname}}
+								<a href="#" class="delete" data-band="{{$band->id}}" data-id="{{$user->id}}">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</a>
 							</span>
-						  	<input class="input-group-field member old required unregistered" type="email" placeholder="ej. guitarrista@correo.com" name="email" value="{{$user->email}}" data-id="{{$user->id}}">
-						</div>
-					</div>
-					
-				@endforeach
+						
+
+					@endforeach
+				</div>
+				<div class="large-12 columns input_band_member members_un">
+					@foreach($members_un as $user)
+
+						
+							<div class="input-group">
+								<a class="delete hastooltip" data-band="{{$band->id}}" data-id="{{$user->id}}" title="Saca a este miembro de la banda">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</a>
+								<a class="resend hastooltip" data-band="{{$band->id}}" data-id="{{$user->id}}" title="Reenvía la invitación">
+									<i class="fa fa-envelope-o" aria-hidden="true"></i>
+								</a>
+								<span class="input-group-label">
+									Email
+								</span>
+							  	<input class="input-group-field member old required unregistered" type="email" placeholder="ej. guitarrista@correo.com" name="email" value="{{$user->email}}" data-id="{{$user->id}}">
+							</div>
+						
+						
+					@endforeach
+				</div>
 						
 					
 

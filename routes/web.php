@@ -27,6 +27,9 @@ Route::get('/registro', function () {
 });
 Route::get('/registro/usuario/company', 'CompanyController@register_user')->name('register_user_company');
 
+Route::get('/finaliza_tu_registro/{token}', 'UserController@finish_register');
+
+
 Route::group(['middleware' => ['auth','company','active'],'prefix'=>'company'], function () {
 
 	Route::get('/agenda/', 'AdminCompanyController@company_calendar');
@@ -74,6 +77,7 @@ Route::group(['middleware' => ['auth','musician','active'],'prefix'=>'musico'], 
 	Route::put('/bandas_delete_member/', 'BandController@delete_member');
 	
 });
+
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/activa_tu_cuenta', 'UserController@active_form');
 	Route::get('/activa_tu_cuenta/{token}', 'UserController@active');
