@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
 			$user->email = 'admin@correo.com';
 			$user->password = bcrypt('secret');
 			$user->active_token = str_random(60);
+			$user->active = true;
 			$user->save();
 			$user->roles()->attach($role->id);
 
@@ -60,6 +61,7 @@ class DatabaseSeeder extends Seeder
 			$user->email = 'company@correo.com';
 			$user->password = bcrypt('secret');
 			$user->active_token = str_random(60);
+			$user->active = true;
 			$user->save();
 			$user->roles()->attach($role_company->id);
 
@@ -70,6 +72,7 @@ class DatabaseSeeder extends Seeder
 			$user->email = 'company_2@correo.com';
 			$user->password = bcrypt('secret');
 			$user->active_token = str_random(60);
+			$user->active = true;
 			$user->save();
 			$user->roles()->attach($role_company->id);
 
@@ -80,6 +83,7 @@ class DatabaseSeeder extends Seeder
 			$user->email = 'musician@correo.com';
 			$user->password = bcrypt('secret');
 			$user->active_token = str_random(60);
+			$user->active = true;
 			$user->save();
 			$user->roles()->attach($role_musician->id);
 			
