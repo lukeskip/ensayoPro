@@ -8,8 +8,10 @@ use App\User as User;
 use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Http\Request;
 use DateTime;
+use Jenssegers\Date\Date;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Mail;
 
 
 class ReservationController extends Controller
@@ -127,7 +129,9 @@ class ReservationController extends Controller
             'room_id'       => 'required|integer',
             'start'         => 'required|date', 
             'end'           => 'required|date',
-            'email'         => 'sometimes|nullable|email',       
+            // 'email'         => 'sometimes|nullable|email', 
+            'email'         => 'required|email', 
+            'phone'         => 'required|max:255',       
         );
 
         // Validamos todos los campos
@@ -135,7 +139,7 @@ class ReservationController extends Controller
 
         // Si la validación falla, nos detenemos y mandamos false
         if ($validator->fails()) {
-            return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
+            return response()->json(['success' => false,'message'=>'Hay campos con información inválida, recuerda que todos los campos son obligatorios']);
         }
 
         $user_id        = Auth::user()->id;
@@ -222,8 +226,44 @@ class ReservationController extends Controller
                 $band = Band::find($request->band);
                 $reservation->attach($band);
             }
+            // Carbon::setLocale('es');
+
+            if($room->company_address){
+                $room['address']        = $room->companies->address;
+                $room['colony']         = $room->companies->colony;
+                $room['deputation']     = $room->companies->deputation;
+                $room['postal_code']    = $room->companies->postal_code;
+                $room['latitude']       = $room->companies->latitude;
+                $room['longitude']      = $room->companies->longitude;
+                $room['city']           = $room->companies->city;
+            }
+
+            $room_name  = $room->name;
+            $date       = new Date($starts);;
+            $date       = $date->format('l j F Y ');
+            $starts     = new Date($starts);
+            $ends       = new Date($ends);
+            $starts     = $starts->format('H:i');
+            $ends       = $ends->format('H:i');
+            $email      = $request->email;
+            $latitude   = $room->latitude;
+            $longitude  = $room->logitude;
+            $address    = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city ;
+            $company    = $room->companies->name;
+
             
+            Mail::send('reyapp.reminder', ['room_name'=>$room_name,'starts'=>$starts,'ends'=>$ends,'date'=>$date,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company], function ($message)use($email,$room_name){
+
+                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$room_name);
+                $message->to($email);
+
+            });
+
             return response()->json(['success' => true , 'title' => $description,'id'=>$reservation->id,'color'=>$room->color]);
+
+
+
+            
 
         }else{
             // Si si se empalma mandamos mensaje de error

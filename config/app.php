@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -177,6 +177,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Trexology\Promocodes\PromocodesServiceProvider::class,
         'Buzz\LaravelGoogleCaptcha\CaptchaServiceProvider',
+        'Jenssegers\Date\DateServiceProvider',
 
         /*
          * Application Service Providers...
@@ -244,6 +245,7 @@ return [
         'Promocodes' => Trexology\Promocodes\Facades\Promocodes::class,
         'Captcha' => '\Buzz\LaravelGoogleCaptcha\CaptchaFacade',
         'Carbon' => 'Carbon\Carbon',
+        'Date' => Jenssegers\Date\Date::class,
 
     ],
 

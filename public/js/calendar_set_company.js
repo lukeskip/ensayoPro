@@ -186,6 +186,7 @@ $(document).ready(function() {
 			    ]
 			  }).then(function (context) {
 			  	if(context._isConfirm){
+			  		
 			  		conection('POST',context.swalForm,'/reservaciones',true).then(function(data) {
   						if(data.success == true){
 						  addEvent(data.id,start,end,data.color,data.title);
@@ -193,6 +194,8 @@ $(document).ready(function() {
 							show_message('error','¡Error!',data.message);
 						}
 					});
+			  		
+			  		
 	
 			  	}
 			    

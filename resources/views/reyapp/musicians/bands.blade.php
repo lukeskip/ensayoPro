@@ -27,7 +27,7 @@
 								{{$band->name}}
 							@endif 
 						</div>
-						<div class="medium-8 columns ">
+						<div class="medium-8 columns text-left">
 							@foreach($band->users as $user)
 								@if($user->name != '')
 									<div class="tag green small">{{$user->name}}</div>

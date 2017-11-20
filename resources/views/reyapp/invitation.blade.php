@@ -4,13 +4,14 @@
 @endsection
 
 @section('content')
-  	<p>Fuiste invitado por <strong>{{$name}}</strong> como parte de {{$band}} a <strong>EnsayoPro</strong> una plataforma creada por <strong>Rey Decibel</strong>, que les ayudará a profesionarlizarse como banda, podrán llevar un calendario de actividades y reservar sus ensayos en las principales Salas de tu Ciudad.</p>
-  	<p>Para unirte solo necesitas completar tu registro.</p>
+  	<p style="font-size: 20px;">Fuiste invitado por <strong>{{$name}}</strong> como parte de {{$band}} a <strong>EnsayoPro</strong> una plataforma creada por <strong>Rey Decibel</strong>, que les ayudará a profesionarlizarse como banda, podrán llevar un calendario de actividades y reservar sus ensayos en las principales Salas de tu Ciudad.</p>
+  	<p style="font-size: 20px;">Para unirte solo necesitas completar tu registro.</p>
 	<br><br>
+	
 	<p>
-	<a href="{{url('/')}}/finaliza_tu_registro/{{$token}}" style="background: #2FAB31;color:white;padding: 15px; text-align: center; border-radius: 10px; text-decoration: none;font-size: 20px;">
-		Terminar mi registro
-	</a>
+		<a href="{{url('/')}}/finaliza_tu_registro/{{$token}}" style="background: #2FAB31;color:white;padding: 15px; text-align: center; border-radius: 10px; text-decoration: none;font-size: 20px;">
+			Terminar mi registro
+		</a>
 
 	</p>
 	

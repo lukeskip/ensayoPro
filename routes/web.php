@@ -189,8 +189,8 @@ Route::get('imagenes/{image}', function($image){
 // ENDS: Carga de imágenes fineuploader
 
 
-	Route::get('/mail_invitacion', function () {
-		return view('reyapp.invitation');
+	Route::get('/mail_test', function () {
+		return view('reyapp.reminder');
 	});
 
 
