@@ -96,16 +96,16 @@
   });
 </script>
 <script type="text/javascript" >
-$(document).ready(function() {
-	$('.checkout').hide();
-	  $('body').on('change', '#sel-type', function(event) {
-	  	var item = $(this).val();
-	  	$('.checkout').hide();
-	  	$('#'+item).show();
+// $(document).ready(function() {
+// 	$('.checkout').hide();
+// 	  $('body').on('change', '#sel-type', function(event) {
+// 	  	var item = $(this).val();
+// 	  	$('.checkout').hide();
+// 	  	$('#'+item).show();
 
 
-	});
-});
+// 	});
+// });
 </script>
 
 	

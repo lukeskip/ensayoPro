@@ -36,7 +36,7 @@
 				</div>
 			</div>
 			<div class="clarification display">
-				<form id="checkout" method="POST" action="/salas/reservando/checkout">
+				<form id="checkout" method="POST" action="/checkout">
 				{{ csrf_field() }}
 				<input type="hidden" name="events" class="events">
 				<input type="hidden" name="room_id" class="room_id" value="{{$room->id}}">

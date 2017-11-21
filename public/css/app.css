@@ -1181,9 +1181,11 @@ h1 .duration{
 .checkout .price-info{
 	font-size: 2em;
 	text-align: right;
-	margin-top: 20px;
 	margin-bottom: 20px;
-	padding: 20px;
+}
+
+.checkout .price-info label{
+	background: white;
 }
 
 .checkout .price-info hr{
@@ -1223,11 +1225,16 @@ h1 .duration{
 	margin:0;
 }
 
+.checkout label{
+	background: black;
+}
+
 .checkout .content ul .list-item{
 	color:#333;
 	min-height: 120px;
 	padding: 0;
 	margin-bottom: 10px;
+	background: #EEE;
 }
 
 .checkout .content ul .list-item:last-child{
@@ -1243,8 +1250,12 @@ h1 .duration{
 	text-align: center;
 }
 
-.checkout .content ul .list-item:nth-child(even) .icon-date{
+/*.checkout .content ul .list-item:nth-child(even) .icon-date{
 	background: #EEE;
+}*/
+
+.checkout .method{
+	display: none;
 }
 
 .checkout .content ul .list-item .icon-date .day{

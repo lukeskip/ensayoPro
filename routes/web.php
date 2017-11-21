@@ -13,11 +13,10 @@
 
 Auth::routes();
 
-Route::get('/test', function () {
-   return view('reyapp.test');
-});
+Route::post('/checkout','PaymentController@payment_form');
 // Route::get('/payments', 'PaymentController@index');
 // Route::post('/checkout', 'PaymentController@checkout');
+
 Route::post('/card', 'PaymentController@CreatePayCard');
 Route::post('/oxxo', 'PaymentController@CreatePayOxxo');
 
@@ -97,7 +96,7 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth','active']], function () {
 
 	Route::get('salas/reservando/{room_id}', 'ReservationController@make_reservation');
-	Route::post('salas/reservando/checkout', 'ReservationController@checkout');
+	Route::post('salas/reservando/confirmacion', 'ReservationController@checkout');
 	
 	Route::resource('/usuarios', 'UserController');
 
@@ -175,8 +174,7 @@ Route::group(['middleware' => ['auth','active']], function () {
 
 });
 
-Route::get('/payments', 'PaymentController@index');
-Route::post('/checkout', 'PaymentController@checkout');
+
 
 Route::resource('comentarios', 'CommentController');
 Route::resource('ratings', 'RatingController');

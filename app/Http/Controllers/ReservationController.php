@@ -90,7 +90,7 @@ class ReservationController extends Controller
         }
         
         $price = $total_h * $room->price;
-        return view('reyapp.rooms.checkout')->with('room',$room)->with('events',$events)->with('price',$price)->with('hours',$total_h);
+        return view('reyapp.rooms.confirmation')->with('room',$room)->with('events',$events)->with('price',$price)->with('hours',$total_h);
     }
 
     /**
