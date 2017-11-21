@@ -7,24 +7,21 @@
 @endsection
 
 @section('content')
-<select name="payment_method" id="sel-type">
-						<option value="">--selecciona tu forma de pago--</option>
-						<option value="card">Tarjeta de Crédito o débito</option>
-						<option value="oxxo">Pago en Oxxo</option>
+	<select name="payment_method" id="sel-type">
+		<option value="">--selecciona tu forma de pago--</option>
+		<option value="card">Tarjeta de Crédito o débito</option>
+		<option value="oxxo">Pago en Oxxo</option>
+	</select>
 
-					</select>
 	<div id="card" class="checkout">
 		
 		<div class="content row no-margin">
 			<div class="large-8 columns no-padding">
 				<h3>Pago con tarjeta</h3>
-			
 			</div>
 			<div class="large-4 columns">
 			
-				
-					
-					<form action="/card" method="POST" id="card-form">
+				<form action="/card" method="POST" id="card-form">
 		
 					Sala: <input name="room" type="text" size="20" value="sala 12">
 				
@@ -55,16 +52,14 @@
 			</div>
 			<div class="large-4 columns">
 			
-					<form action="/oxxo" method="POST">
-						 <input name="room" type="text" size="20" value="sala 12">
-						 <input name="price" type="text" size="20" value="10000">
-						 <input name="quantity" type="text" size="20" value="3">
-						 
-						 <input name="name" type="text" size="20" value="John Spencer">
-						 <input name="tel" type="text" size="20" value="+5213353319758">
-						 <input name="email" type="text" size="20" value="email@email.com">
-
-						 
+				<form action="/oxxo" method="POST">
+					 <input name="room" type="text" size="20" value="sala 12">
+					 <input name="price" type="text" size="20" value="10000">
+					 <input name="quantity" type="text" size="20" value="3">
+					 
+					 <input name="name" type="text" size="20" value="John Spencer">
+					 <input name="tel" type="text" size="20" value="+5213353319758">
+					 <input name="email" type="text" size="20" value="email@email.com">
 					<button class="button green expanded">Pagar</button>
 				</form>
 			</div>
@@ -101,15 +96,15 @@
   });
 </script>
 <script type="text/javascript" >
-	$(document).ready(function() {
-$('.checkout').hide();
-  $('body').on('change', '#sel-type', function(event) {
-  	var item = $(this).val();
-  	$('.checkout').hide();
-  	$('#'+item).show();
+$(document).ready(function() {
+	$('.checkout').hide();
+	  $('body').on('change', '#sel-type', function(event) {
+	  	var item = $(this).val();
+	  	$('.checkout').hide();
+	  	$('#'+item).show();
 
 
-  });
+	});
 });
 </script>
 

@@ -13,6 +13,14 @@
 
 Auth::routes();
 
+Route::get('/test', function () {
+   return view('reyapp.test');
+});
+// Route::get('/payments', 'PaymentController@index');
+// Route::post('/checkout', 'PaymentController@checkout');
+Route::post('/card', 'PaymentController@CreatePayCard');
+Route::post('/oxxo', 'PaymentController@CreatePayOxxo');
+
 Route::get('logout', function (){
 	Auth::logout();
 	return redirect('/login');
@@ -25,6 +33,7 @@ Route::get('/', function () {
 Route::get('/registro', function () {
     return view('reyapp.register');
 });
+
 Route::get('/registro/usuario/company', 'CompanyController@register_user')->name('register_user_company');
 
 Route::get('/finaliza_tu_registro/{token}', 'UserController@finish_register');

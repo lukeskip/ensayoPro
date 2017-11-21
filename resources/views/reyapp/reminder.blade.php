@@ -4,9 +4,9 @@
 @endsection
 
 @section('content')
-	 <h1>Comprobante de Reservación</h1>
+	 <h1>Recordatorio de Ensayo</h1>
 	<p style="font-size: 20px;">
-		Has generado una reservación en <strong> {{$room_name}} de {{$company}}</strong>. Recuerda llegar puntual a tu ensayo para que lo aproveches mejor. La dirección y fecha se describen abajo: 
+		Has generado una reservación en <strong> {{$room_name}} de {{$company}}</strong>.  Recuerda llegar puntual a tu ensayo para que lo aproveches mejor. La dirección y fecha se describen abajo: 
 	</p>
 	
 	<p>
@@ -15,7 +15,7 @@
 		<strong style="font-size: 30px">{{$date}}</strong>
 	</p>
 	<p>
-		Ubicación: {{$address}}
+		Ubicación: {{$address}}, {{$latitude}}, {{$longitude}}
 	</p>
 	<p>
 		<br><br>
