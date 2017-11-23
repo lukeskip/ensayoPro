@@ -15,8 +15,15 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('code');
-            $table->integer('reservation_id');
+            $table->string('code');
+            $table->string('amount');
+            $table->string('quantity');
+            $table->string('method');
+            $table->string('reference')->nullable();
+            $table->string('expires_at')->nullable();
+            $table->integer('company_id');
+            $table->integer('room_id');
+            $table->string('status');
             $table->timestamps();
         });
     }

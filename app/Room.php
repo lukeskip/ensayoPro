@@ -30,4 +30,9 @@ class Room extends Model
     {
         return $this->hasMany('App\Comment');
     }
+
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
 }

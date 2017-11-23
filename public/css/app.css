@@ -1146,6 +1146,29 @@ h1 .duration{
 	font-size: .8em;
 }
 
+.reservation-desktop .display.clarification button{
+	margin-top: 20px;
+}
+
+.reservation-desktop .display.clarification label{
+	color:#333;
+	text-align: left;
+	margin-top:10px;
+}
+
+.reservation-desktop .display.clarification label.error{
+	margin-top: 0;
+	color: #C73536;
+}
+
+.reservation-desktop .display.clarification input,.reservation-desktop .display.clarification select{
+	margin-bottom: 0;
+}
+
+.reservation-desktop .display.clarification .method{
+	display: none;
+}
+
 .timer_bar_wrapper{
 	height: 20px;
 	background: #A22A2C;
@@ -1171,7 +1194,7 @@ h1 .duration{
 }
 /*ENDS: Calendar*************************************/
 
-/*STARTS: Checkout********************************************/
+/*STARTS: Checkout ahora Confirmation********************************************/
 
 .checkout{
 	background: white;
@@ -1179,9 +1202,12 @@ h1 .duration{
 }
 
 .checkout .price-info{
-	font-size: 2em;
 	text-align: right;
 	margin-bottom: 20px;
+}
+
+.checkout .price-info p{
+	font-size: 2em;
 }
 
 .checkout .price-info label{
@@ -1226,7 +1252,9 @@ h1 .duration{
 }
 
 .checkout label{
-	background: black;
+	color:#333;
+	background: white;
+	padding-left: 5px;
 }
 
 .checkout .content ul .list-item{
@@ -1279,6 +1307,15 @@ h1 .duration{
 .checkout .content ul .list-item .title{
 	padding: 10px;
 	display: block;
+}
+.checkout .instructions{
+	padding: 20px;
+}
+
+.checkout .instructions .reference{
+	color:#C73536;
+	font-size: 3em;
+	text-align: center;
 }
 /*ENDS: Checkout********************************************/
 

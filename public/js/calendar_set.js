@@ -5,17 +5,13 @@ $(document).ready(function() {
 
 		var max_time 	= 300;//segundos para recargar la página 
 		var event_id 	= 0;
-		var title 		= $("option:selected").text();
 
 		$('.band').on('change', function (e) {
-			if($(this).val() != 0){
-				title = $("option:selected").text();
+			console.log('adios');
+			if($(this).val() != ''){
+				title = $(this).find("option:selected").text();
 				console.log(title);
-			}else{
-				title = 'Tu ensayo';
 			}
-   		 	
-    		console.log(title);
 		});
 
 		function addEvent( start, end) {
@@ -102,7 +98,20 @@ $(document).ready(function() {
 
 			$('.total-hours .number').html(total_hours);
 			$('.total-price .number').html(price);
+			$('.amount').val(total_hours);
+			
 		}
+
+		// Damos el tamaño del height del calendario segun tamaño de la pantalla
+		
+		width = $(window).width();
+		if(width <= 1024){
+			height = 450;
+		}else{
+			height = 650;
+		}	
+		
+	
 
 		$('#calendar').fullCalendar({
 			header: {
@@ -125,7 +134,7 @@ $(document).ready(function() {
 			maxTime: schedule_end+ ":00:00",
 			// defaultDate: '2017-09-12',
 			slotLabelFormat:"HH:mm",
-			contentHeight: 450,
+			contentHeight: height,
 			navLinks: true, // can click day/week names to navigate views
 			editable: false,
 			selectable: true,

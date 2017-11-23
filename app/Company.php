@@ -20,4 +20,9 @@ class Company extends Model
     {
         return $this->hasMany('App\MediaItem');
     }
+
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
 }

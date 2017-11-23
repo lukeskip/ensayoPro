@@ -25,7 +25,7 @@ class Reservation extends Model
     }
 
     public function payments(){
-        return $this->hasMany('App\Payment');
+        return $this->belongsTo('App\Room','room_id');
     }
 
     public function bands()

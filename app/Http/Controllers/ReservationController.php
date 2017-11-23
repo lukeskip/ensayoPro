@@ -22,76 +22,19 @@ class ReservationController extends Controller
     {
         
         if($room_id != ''){
-            $user_id = Auth::user()->id;
+            $user = Auth::user();
+            $user_id = $user->id;
             $bands = User::find($user_id)->bands;
             $room = Room::find($room_id);
-            $reservations = Reservation::where('room_id',$room_id)->get();
-            return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands)->with('reservations',$reservations); 
+            $reservations = Reservation::where('room_id',$room_id)->where('status','!=','cancelled')->get();
+            return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands)->with('reservations',$reservations)->with('user',$user); 
         }else{
             return redirect('/salas');
         }
         
     }
 
-    // Pantalla Checkout para usuario 'musician'
-    public function checkout(Request $request)
-    {   
-        $room_id    = $request->room_id;
-        $room       = Room::find($room_id);
-        $events     = json_decode($request->events,true);
-        $total_h    = 0;
-        
-        for($i=0;$i<count($events);$i++){
-            $starts_check = $events[$i]['start'];
-            $ends_check =$events[$i]['end'];
-
-            $reservations_check = Reservation::where(
-            function ($query) use ($starts_check) {
-                $query->where('starts', '<',$starts_check)
-                ->where('ends', '>',$starts_check);
-            })->orWhere(function ($query) use ($ends_check) {
-                $query->where('starts', '<',$ends_check)
-                ->where('ends', '>',$ends_check);
-             })->orWhere(function ($query) use ($starts_check,$ends_check) {
-                $query->where('starts', '>',$starts_check)
-                ->where('ends', '<',$ends_check);
-            })->get();
-
-            
-
-            // Si se empalmó revisamos que no sea en la misma sala
-            $reservations_check = $reservations_check->where('room_id',$room_id);
-
-            // Si no existe otra reservación en ese horario y esa misma sala ponemos el status en available
-            if($reservations_check->isEmpty()){
-                $prefix = substr($room->companies()->first()->name, 0, 4);
-                $prefix = str_replace(' ', '', $prefix);
-                $random = str_random(8);
-                $code   = strtoupper($prefix.$random);
-
-                $months = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
-                
-                $events[$i]['code']         = $code; 
-                $events[$i]['status']       = 'available';
-                $start                      = new Carbon($events[$i]['start']);
-                $end                        = new Carbon($events[$i]['end']);
-                $events[$i]['day']          = $start->format('d');
-                $events[$i]['month']        = $months[$start->format('m')];
-                $events[$i]['start_time']   = $start->format('H:i');
-                $events[$i]['end_time']     = $end->format('H:i');
-                
-               
-                $total_h += $start->diffInHours($end);     
-
-
-            }else{
-                $events[$i]['status'] = 'unavailable';
-            }
-        }
-        
-        $price = $total_h * $room->price;
-        return view('reyapp.rooms.confirmation')->with('room',$room)->with('events',$events)->with('price',$price)->with('hours',$total_h);
-    }
+    
 
     /**
      * Display a listing of the resource.
@@ -129,9 +72,7 @@ class ReservationController extends Controller
             'room_id'       => 'required|integer',
             'start'         => 'required|date', 
             'end'           => 'required|date',
-            // 'email'         => 'sometimes|nullable|email', 
-            'email'         => 'required|email', 
-            'phone'         => 'required|max:255',       
+            'email'         => 'sometimes|nullable|email',       
         );
 
         // Validamos todos los campos
@@ -184,13 +125,13 @@ class ReservationController extends Controller
         $reservations_check = Reservation::where(
             function ($query) use ($starts_check) {
                 $query->where('starts', '<',$starts_check)
-                ->where('ends', '>',$starts_check);
+                ->where('ends', '>',$starts_check)->where('status','!=','cancelled');
             })->orWhere(function ($query) use ($ends_check) {
                 $query->where('starts', '<',$ends_check)
-                ->where('ends', '>',$ends_check);
+                ->where('ends', '>',$ends_check)->where('status','!=','cancelled');
              })->orWhere(function ($query) use ($starts_check,$ends_check) {
                 $query->where('starts', '>',$starts_check)
-                ->where('ends', '<',$ends_check);
+                ->where('ends', '<',$ends_check)->where('status','!=','cancelled');
             })->get();
 
         // Si se empalmó revisamos que no sea en la misma sala
@@ -207,9 +148,6 @@ class ReservationController extends Controller
 
             $reservation->status      = 'confirmed';
             $reservation->is_admin    = true;
-
-            
-
             
         
             $prefix = substr($room->companies()->first()->name, 0, 4);
@@ -251,13 +189,15 @@ class ReservationController extends Controller
             $address    = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city ;
             $company    = $room->companies->name;
 
-            
-            Mail::send('reyapp.reminder', ['room_name'=>$room_name,'starts'=>$starts,'ends'=>$ends,'date'=>$date,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company], function ($message)use($email,$room_name){
+            if($request->has('email')){
+                Mail::send('reyapp.reminder', ['room_name'=>$room_name,'starts'=>$starts,'ends'=>$ends,'date'=>$date,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company], function ($message)use($email,$room_name){
 
                 $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$room_name);
                 $message->to($email);
 
-            });
+                });  
+            }
+            
 
             return response()->json(['success' => true , 'title' => $description,'id'=>$reservation->id,'color'=>$room->color]);
 

@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
 			$user->name = 'Sergio';
 			$user->lastname = 'García';
 			$user->email = 'admin@correo.com';
+			$user->phone = '5555555555';
 			$user->password = bcrypt('secret');
 			$user->active_token = str_random(60);
 			$user->active = true;
@@ -59,6 +60,7 @@ class DatabaseSeeder extends Seeder
 			$user->name = 'Humberto';
 			$user->lastname = 'Barba';
 			$user->email = 'company@correo.com';
+			$user->phone = '5555555555';
 			$user->password = bcrypt('secret');
 			$user->active_token = str_random(60);
 			$user->active = true;
@@ -70,6 +72,7 @@ class DatabaseSeeder extends Seeder
 			$user->name = 'Humberto';
 			$user->lastname = 'Barba';
 			$user->email = 'company_2@correo.com';
+			$user->phone = '5555555555';
 			$user->password = bcrypt('secret');
 			$user->active_token = str_random(60);
 			$user->active = true;
@@ -81,6 +84,7 @@ class DatabaseSeeder extends Seeder
 			$user->name = 'Carlos';
 			$user->lastname = 'Barba';
 			$user->email = 'musician@correo.com';
+			$user->phone = '5555555555';
 			$user->password = bcrypt('secret');
 			$user->active_token = str_random(60);
 			$user->active = true;
