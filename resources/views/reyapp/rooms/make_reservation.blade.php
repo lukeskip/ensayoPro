@@ -36,7 +36,7 @@
 				</div>
 			</div>
 			<div class="clarification display">
-					@if($user->bands->count() > 1)
+					@if($user->bands->count() > 0)
 						<label for="">
 							Elige tu banda <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Le llegará un aviso a los miembros de tu banda"></i>
 						</label>
@@ -101,9 +101,9 @@
 							<input name="email" type="text" size="20" value="{{$user->email}}">
 
 							<label>
-								Número de Tarjeta <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="16 dígitos" value="5555555555554444"></i>
+								Número de Tarjeta <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="16 dígitos"></i>
 							</label>
-							<input type="text" size="20" value="" data-conekta="card[number]" name="card_number">
+							<input type="text" size="20" data-conekta="card[number]" name="card_number" value="5555555555554444">
 							
 							<label>
 								CVC
@@ -191,6 +191,8 @@
 
 		@if($user->bands->count() < 1)
 			title = '{{$user->name}} {{$user->lastname}}';
+		@else
+			title = '{{$user->bands->first()->name}}'
  		@endif
 
 		hidden = _.difference(days,[{{$room->days}}]);
