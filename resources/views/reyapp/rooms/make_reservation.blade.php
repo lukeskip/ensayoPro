@@ -101,7 +101,7 @@
 							<input name="email" type="text" size="20" value="{{$user->email}}">
 
 							<label>
-								Número de Tarjeta <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="16 dígitos"></i>
+								Número de Tarjeta <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="16 dígitos" value="5555555555554444"></i>
 							</label>
 							<input type="text" size="20" value="" data-conekta="card[number]" name="card_number">
 							
