@@ -49,7 +49,7 @@
 							{{$reservation->rooms->name}}
 						</div>
 						<div class="medium-2 columns price">
-							{{$reservation->price}}
+							${{$reservation->payments->amount}}
 						</div>
 						<div class="medium-2 columns status">
 							@if($reservation->status == 'confirmed')

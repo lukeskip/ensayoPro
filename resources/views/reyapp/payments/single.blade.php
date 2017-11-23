@@ -16,6 +16,7 @@
 				<h2>Resumen de reservaciones</h2>
 				<ul>	
 					@foreach($payment->reservations as $reservations)
+
 						<li class="list-item {{$reservations->status}}">
 							<div class="icon-date">
 								<span class="day">{{$reservations->day}}</span>
@@ -26,7 +27,7 @@
 								<span class="end_time time">{{$reservations->ends}}hrs.</span> <br>
 								@if($reservations->band_id!='')
 									<span class="title">
-										Se enviará invitación a {{$reservations->bands->name}}
+										Se enviará invitación a {{$reservations->description}}
 									</span>
 								@endif
 							</div>

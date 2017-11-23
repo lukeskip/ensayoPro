@@ -43,6 +43,7 @@ class PaymentController extends Controller
 						$description  = $events[$i]['title'];
 						$starts_check = new Carbon($events[$i]['start']);
         				$ends_check   = new Carbon($events[$i]['end']);
+        				$band_id      = $events[$i]['band'];
 
         				$starts_check = $starts_check->modify('+1 minutes');
         				$ends_check   = $ends_check->modify('-1 minutes');
@@ -79,6 +80,7 @@ class PaymentController extends Controller
 								$events[$i]['month']        = $months[$start->format('m')-1];
 								$events[$i]['start_time']   = $start->format('H:i');
 								$events[$i]['end_time']     = $end->format('H:i');
+
 							
 								 
 								$reservation              = new Reservation();
@@ -86,6 +88,7 @@ class PaymentController extends Controller
 								$reservation->starts      = $start;
 								$reservation->ends        = $end;
 								$reservation->user_id     = $user_id;
+								$reservation->band_id     = $band_id;
 
 								$reservation->status      = 'pending';
 								$reservation->is_admin    = true;
@@ -411,7 +414,7 @@ class PaymentController extends Controller
  					$reservation['starts'] 	= $starts_display;
  					$reservation['ends'] 	= $ends_display;
  					$reservation['month'] 	= $starts->format('F');
-               $reservation['day'] 		= $starts->format('d');
+               		$reservation['day'] 		= $starts->format('d');
  				}
  				
 
