@@ -49,7 +49,7 @@
 							{{$reservation->rooms->name}}
 						</div>
 						<div class="medium-2 columns price">
-							${{$reservation->payments->amount}}
+							${{$reservation->payments['amount']}}
 						</div>
 						<div class="medium-2 columns status">
 							@if($reservation->status == 'confirmed')
@@ -64,12 +64,11 @@
 					</div>
 				@endforeach
 
-			<div class="row">
-				<div class="large-12 columns text-center">
-					<br>
-					<a class="button black" href="/admin/reservaciones">Ver todas</a>
-				</div>
+		<div class="row">
+			<div class="large-12 columns">
+				{!! $reservations->appends(Request::capture()->except('page'))->render() !!}
 			</div>
+		</div>
 				
 		</div>
 		

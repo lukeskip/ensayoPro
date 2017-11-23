@@ -206,6 +206,7 @@ class PaymentController extends Controller
 						$description  = $events[$i]['title'];
 						$starts_check = new Carbon($events[$i]['start']);
         				$ends_check   = new Carbon($events[$i]['end']);
+        				$band_id      = $events[$i]['band'];
 
         				$starts_check = $starts_check->modify('+1 minutes');
         				$ends_check   = $ends_check->modify('-1 minutes');
@@ -249,6 +250,7 @@ class PaymentController extends Controller
 								$reservation->starts      = $start;
 								$reservation->ends        = $end;
 								$reservation->user_id     = $user_id;
+								$reservation->band_id     = $band_id;
 
 								$reservation->status      = 'pending';
 								$reservation->is_admin    = true;

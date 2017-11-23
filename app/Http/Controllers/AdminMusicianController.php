@@ -23,15 +23,9 @@ class AdminMusicianController extends Controller
 		foreach ($bands as $band) {
 			$bands_ids[] = $band->id;
 		}
-	
 
-		if($user->bands->count() < 1){
-		   $reservations = $user->reservations;  
-		}else{
-			$reservations = $user->reservations->whereIn('band_id',$bands_ids);
-		}
 		
-		
+		$reservations 	= Reservation::where('user_id',$user_id)->orWhereIn('band_id',$bands_ids)->orderBy('id','desc')->paginate(10);
 
 		return view('reyapp.musicians.dashboard')->with('reservations',$reservations);
 	}
