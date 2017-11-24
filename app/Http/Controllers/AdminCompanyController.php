@@ -21,6 +21,9 @@ class AdminCompanyController extends Controller
 		$company 	= $user->companies()->first();
 		$hours  	= 0;
 		$room_ids  	= [];
+		$day1 = Date::parse('last tuesday')->startOfDay();
+	    $day2 = Date::parse('next monday')->endOfDay();
+	    $incomings = 0;
 		
 		if ($company !== null) {
 			
@@ -29,8 +32,7 @@ class AdminCompanyController extends Controller
 			}
 
 			// si tiene una companía revisamos los payments en su nombre [[Settings]]
-			$day1 = Date::parse('last tuesday')->startOfDay();
-	        $day2 = Date::parse('next monday')->endOfDay();
+			
 
 			$payments = Payment::where('company_id',$company->id)->whereBetween('created_at',[$day1,$day2])->where('status','paid')->get();
 

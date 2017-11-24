@@ -241,9 +241,16 @@ class RoomController extends Controller
 		$room->schedule_start   = $request->schedule_start;
 		$room->schedule_end     = $request->schedule_end;
 		$room->color            = $request->color;
-		$days                   = implode(',', $request->days);
-		$room->days             = $days;
 		$room->status           = 'inactive';
+		
+		// Si el valor es -1 agregamos todos los días al string
+		if(in_array('-1',$request->days)){
+			$days = '0,1,2,3,4,5,6';
+		}else{
+			$days = implode(',', $request->days);
+		}
+		$room->days             = $days;
+		
 		
 
 		if($request->company_address){

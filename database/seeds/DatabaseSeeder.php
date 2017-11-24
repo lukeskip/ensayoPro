@@ -92,15 +92,15 @@ class DatabaseSeeder extends Seeder
 			$user->roles()->attach($role_musician->id);
 			
 
-			factory(App\Room::class, 30)->create();
+			factory(App\Room::class, 5)->create();
 
-			factory(App\Company::class, 5)->create()->each(function ($u) {
-        		$u->users()->attach(rand(2,3));
+			factory(App\Company::class, 1)->create()->each(function ($u) {
+        		$u->users()->attach(2);
     		});
 
-			factory(App\Reservation::class, 100)->create([
-				'user_id' => 2
-			]);
+			// factory(App\Reservation::class, 100)->create([
+			// 	'user_id' => 2
+			// ]);
 
 			factory(App\Comment::class, 50)->create();
 

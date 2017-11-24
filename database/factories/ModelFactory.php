@@ -73,8 +73,8 @@ $factory->define(App\Room::class, function (Faker\Generator $faker) {
         'description'		=> $faker->realText(200),
         'equipment'			=> $faker->realText(100),
         'days'				=> '0,1,2,3,4,5,6',
-        'schedule_start'	=> 6,
-        'schedule_end'		=> 17,
+        'schedule_start'	=> 9,
+        'schedule_end'		=> 23,
         'colony' 			=> $faker->state,
         'deputation' 		=> $faker->state,
         'postal_code' 		=> $faker->postcode,
@@ -82,8 +82,8 @@ $factory->define(App\Room::class, function (Faker\Generator $faker) {
         'latitude' 			=> $faker->latitude(),
         'longitude' 		=> $faker->longitude(),
         'price' 			=> $faker->randomElement([100 ,150, 200]),
-        'status' 			=> $faker->randomElement(['active' ,'inactive', 'deleted']),
-        'company_id' 		=> rand(1, 5)
+        'status' 			=> $faker->randomElement(['active']),
+        'company_id' 		=> 1
         
     ];
 });
