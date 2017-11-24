@@ -53,8 +53,9 @@ class AdminCompanyController extends Controller
 			}
 			
 			$reservation['date'] = $date_starts->format('d F h:i').' a '.$date_ends->format('h:i');
-			$reservation['total'] = $reservation->payments->amount;
-
+			if(count($reservation->payments) > 0){
+				$reservation['total'] = $reservation->payments->amount;
+			}
 			
 		}
 
