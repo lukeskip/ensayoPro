@@ -97,7 +97,7 @@ class PaymentController extends Controller
 								
 
 								$reservation->status      = 'pending';
-								$reservation->is_admin    = true;
+								$reservation->is_admin    = false;
 						
 								$prefix = substr($room->companies()->first()->name, 0, 4);
 								$prefix = str_replace(' ', '', $prefix);
@@ -263,7 +263,7 @@ class PaymentController extends Controller
 								}
 
 								$reservation->status      = 'pending';
-								$reservation->is_admin    = true;
+								$reservation->is_admin    = false;
 						
 								$prefix = substr($room->companies()->first()->name, 0, 4);
 								$prefix = str_replace(' ', '', $prefix);
