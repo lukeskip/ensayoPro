@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+
 		// avisamos sobre el tiempo de caducidad de los datos solo una vez por sesión
 		if (sessionStorage.getItem('refreshmsg') !== 'true') {
 			show_message('warning','Atención','esta ventana se recargará cada 5 minutos para actualizar los datos');
@@ -96,8 +97,12 @@ $(document).ready(function() {
 			},
 			events: reservations,
 			eventRender: function(event, element, view) {
-
-
+				console.log(event);
+				// Agregamos tootip de pending si es el caso
+				// if (event.className == 'app-reservation pending') {
+				// 	console.log('Pendiente');
+				// 	element.addClass('hastootip').attr('title','Esta reservación está pendiente de pago vía oxxo');
+				// }
 
 				// Agregamos el botón para eliminar la reservación
 				if (view.name== 'agendaDay' && event.className =='company-reservation') {

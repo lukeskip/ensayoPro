@@ -1,8 +1,11 @@
-@extends('layouts.reyapp.landing')
+@extends('layouts.reyapp.main')
 
 @section('content')
 @if(isset($message))
 	<h1>{{$message}}</h1>
+	<div class="text-center">
+		<a href="/company/" class="button green">Ir al dashboard</a>
+	</div>
 @else
 <div class="form_wrapper">
 	<form id="form_comp">

@@ -7,10 +7,8 @@ $(document).ready(function() {
 		var event_id 	= 0;
 
 		$('.band').on('change', function (e) {
-			console.log('adios');
 			if($(this).val() != ''){
 				title = $(this).find("option:selected").text();
-				console.log(title);
 			}
 		});
 

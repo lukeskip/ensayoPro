@@ -37,13 +37,13 @@ class PaymentController extends Controller
 				$events      = json_decode($request->events,true);
 				$total_h     = 0;
 				$ids         = array();
+				$band_id	 = 0;
 				
 				for($i=0;$i<count($events);$i++){
 					
 						$description  = $events[$i]['title'];
 						$starts_check = new Carbon($events[$i]['start']);
         				$ends_check   = new Carbon($events[$i]['end']);
-        				$band_id      = $events[$i]['band'];
 
         				$starts_check = $starts_check->modify('+1 minutes');
         				$ends_check   = $ends_check->modify('-1 minutes');
@@ -88,7 +88,13 @@ class PaymentController extends Controller
 								$reservation->starts      = $start;
 								$reservation->ends        = $end;
 								$reservation->user_id     = $user_id;
-								$reservation->band_id     = $band_id;
+								
+								// Si el request incluye una banda se agrega si no se deja en blanco
+								if(array_key_exists('band', $events[$i])) {
+    								$band_id = $events[$i]['band'];
+    								$reservation->band_id  = $band_id;
+								}
+								
 
 								$reservation->status      = 'pending';
 								$reservation->is_admin    = true;
@@ -157,9 +163,9 @@ class PaymentController extends Controller
 						$payment->code   		= $pI;
 						$payment->amount 		= $pA/100;
 						$payment->method 		= $pM;
-						$payment->company_id = $room->companies->id;
-						$payment->room_id 	= $room->id;
-						$payment->quantity	= $pQ;
+						$payment->company_id 	= $room->companies->id;
+						$payment->room_id 		= $room->id;
+						$payment->quantity		= $pQ;
 						$payment->status		= $pS;
 						$payment->save();
 
@@ -206,7 +212,6 @@ class PaymentController extends Controller
 						$description  = $events[$i]['title'];
 						$starts_check = new Carbon($events[$i]['start']);
         				$ends_check   = new Carbon($events[$i]['end']);
-        				$band_id      = $events[$i]['band'];
 
         				$starts_check = $starts_check->modify('+1 minutes');
         				$ends_check   = $ends_check->modify('-1 minutes');
@@ -250,7 +255,12 @@ class PaymentController extends Controller
 								$reservation->starts      = $start;
 								$reservation->ends        = $end;
 								$reservation->user_id     = $user_id;
-								$reservation->band_id     = $band_id;
+								
+								// Si el request incluye una banda se agrega si no se deja en blanco
+								if(array_key_exists('band', $events[$i])) {
+    								$band_id = $events[$i]['band'];
+    								$reservation->band_id  = $band_id;
+								}
 
 								$reservation->status      = 'pending';
 								$reservation->is_admin    = true;
@@ -335,12 +345,12 @@ class PaymentController extends Controller
 				$payment->code   		= $pI;
 				$payment->amount 		= $pA/100;
 				$payment->method 		= $pM;
-				$payment->company_id = $room->companies->id;
-				$payment->room_id 	= $room->id;
-				$payment->quantity	= $pQ;
+				$payment->company_id 	= $room->companies->id;
+				$payment->room_id 		= $room->id;
+				$payment->quantity		= $pQ;
 				$payment->status		= $pS;
-				$payment->reference  = $pR;
-				$payment->expires_at = $pE;
+				$payment->reference  	= $pR;
+				$payment->expires_at 	= $pE;
 				$payment->save();
 
 				Reservation::whereIn('id', $ids)->update(['payment_id'=>$payment->id]);

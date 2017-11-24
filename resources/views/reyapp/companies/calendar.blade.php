@@ -104,7 +104,7 @@
 					'start' 	: '{{$reservation->starts}}',
 					'end'   	: '{{$reservation->ends}}',
 					'color' 	: '{{$reservation->rooms->color}}',
-					'className' : 'app-reservation', 
+					'className' : 'app-reservation {{$reservation->status}}', 
 			});
 		@endforeach
 		

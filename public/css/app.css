@@ -331,6 +331,17 @@ body.company_calendar{
 	opacity: .8;
 }
 
+.company_calendar #calendar .app-reservation.pending:before{
+	content: '';
+	display: block;
+	width: 10px;
+	height: 100%;
+	background: red;
+	position: absolute;
+	top: 0;
+	right:0;
+}
+
 .company_calendar #calendar .fc-time-grid-event{
 	border:2px solid white;
 }
@@ -1626,6 +1637,10 @@ h1 .duration{
 .comments-wrapper .comment-form{
 	background: white;
 	padding: 20px 50px;
+}
+
+.comments-wrapper .comment-form label{
+	color:#333;
 }
 
 .comment{

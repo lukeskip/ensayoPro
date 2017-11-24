@@ -7,6 +7,7 @@ use App\Reservation as Reservation;
 use Illuminate\Support\Facades\Auth as Auth;
 use App\User as User;
 use App\Event as Event;
+use Jenssegers\Date\Date;
 
 class AdminMusicianController extends Controller
 {
@@ -26,6 +27,12 @@ class AdminMusicianController extends Controller
 
 		
 		$reservations 	= Reservation::where('user_id',$user_id)->orWhereIn('band_id',$bands_ids)->orderBy('id','desc')->paginate(10);
+
+		foreach ($reservations as $reservation) {
+			$date_starts = new Date($reservation['starts']);
+			$date_ends = new Date($reservation['ends']);
+			$reservation['date'] = $date_starts->format('d F h:i').' a '.$date_ends->format('h:i');
+		}
 
 		return view('reyapp.musicians.dashboard')->with('reservations',$reservations);
 	}

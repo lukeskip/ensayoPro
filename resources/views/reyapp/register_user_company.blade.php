@@ -1,4 +1,4 @@
-@extends('layouts.reyapp.landing')
+@extends('layouts.reyapp.main')
 
 @section('content')
 	<div class="form_wrapper">

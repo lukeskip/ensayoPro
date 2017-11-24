@@ -15,41 +15,49 @@
 						Precio/Hora:
 					</div>
 				</div>
-				@foreach ($rooms as $room)
-				<div class="row list-item room-item">
-					<div class="medium-6 columns">
+				@if(!$rooms->isEmpty())
+					@foreach ($rooms as $room)
+						<div class="row list-item room-item">
+							<div class="medium-6 columns">
 
-						
-						{{$room->companies->name}} ({{$room->name}})
-						
-						<div class="info">
-							<a href="/company/salas/editar/{{$room->id}}" class="tag blue">Editar</a href="#">
-							<a href="/salas/{{$room->id}}" class="tag blue">Ver</a href="#">
-							{{-- <a href="#" class="discount">Descuento -20%</a href="#"> --}}
+								
+								{{$room->companies->name}} ({{$room->name}})
+								
+								<div class="info">
+									<a href="/company/salas/editar/{{$room->id}}" class="tag blue">Editar</a href="#">
+									<a href="/salas/{{$room->id}}" class="tag blue">Ver</a href="#">
+									{{-- <a href="#" class="discount">Descuento -20%</a href="#"> --}}
+								</div>
+								
+							</div>
+							<div class="medium-3 columns ">
+								@if($room->opinions > 0)
+									<div class="skillbar clearfix " data-percent="{{$room->score}}%" >
+										<div class="skillbar-bar"></div>
+									</div>
+									<div class="text-center">
+										 {{$room->opinions}} calificaciones
+									</div>
+								@else
+									<div class="text-center">
+										 Esta sala aún no tiene calificaciones
+									</div>
+								@endif
+								
+							</div>
+							<div class="medium-3 columns price">
+								${{$room->price}}
+							</div>
+
 						</div>
-						
+					@endforeach
+				@else
+					<div class="row list-item">
+						<div class="large-12 columnsaa">
+							Aún no has registrado una sala
+						</div>
 					</div>
-					<div class="medium-3 columns ">
-						@if($room->opinions > 0)
-							<div class="skillbar clearfix " data-percent="{{$room->score}}%" >
-								<div class="skillbar-bar"></div>
-							</div>
-							<div class="text-center">
-								 {{$room->opinions}} calificaciones
-							</div>
-						@else
-							<div class="text-center">
-								 Esta sala aún no tiene calificaciones
-							</div>
-						@endif
-						
-					</div>
-					<div class="medium-3 columns price">
-						${{$room->price}}
-					</div>
-
-				</div>
-				@endforeach
+				@endif
 		</div>
 		<div class="medium-3 columns">
 			<a href="/company/registro/salas" class="button expanded green">Registrar Sala</a>
