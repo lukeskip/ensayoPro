@@ -42,7 +42,7 @@ class AdminCompanyController extends Controller
 			}
 		}
 
-		$reservations = Reservation::whereIn('room_id', $room_ids)->whereBetween('created_at',[$day1,$day2])->with(['users','rooms','bands'])->get();
+		$reservations = Reservation::whereIn('room_id', $room_ids)->where('is_admin',false)->whereBetween('created_at',[$day1,$day2])->with(['users','rooms','bands'])->get();
 
 		foreach ($reservations as $reservation) {
 			$date_starts = new Date($reservation['starts']);
