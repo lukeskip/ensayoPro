@@ -7,6 +7,7 @@ use App\Reservation as Reservation;
 use App\Room as Room;
 use App\User as User;
 use App\Payment as Payment;
+use App\Setting as Setting;
 use Illuminate\Support\Facades\Auth as Auth;
 use Carbon\Carbon;
 use Mail;
@@ -38,6 +39,11 @@ class PaymentController extends Controller
 				$total_h     = 0;
 				$ids         = array();
 				$band_id	 = 0;
+				$max_card 	 = Setting::where('slug','max_card')->first()->value;
+
+				if(count($events) < 1){
+					return response()->json(['success' => false,'message'=> 'Tienes que seleccionar un horario']);
+				}
 				
 				for($i=0;$i<count($events);$i++){
 					
@@ -116,7 +122,12 @@ class PaymentController extends Controller
 								return response()->json(['success' => false,'message'=> 'Alguien más tomó uno de tus horarios']);
 						}
 				}
-				
+
+
+				if($total_h > $max_card){
+					Reservation::whereIn('id', $ids)->update(['status' => 'cancelled']);
+					return response()->json(['success' => false,'message'=>'Con esta forma de pago solo puedes reservar hasta '.$max_card.' horas']); 
+				}
 				$price = $total_h * $room->price;
 
 				$valid_order =
@@ -206,6 +217,11 @@ class PaymentController extends Controller
 				$events      = json_decode($request->events,true);
 				$total_h     = 0;
 				$ids         = array();
+				$max_oxxo 	 = Setting::where('slug','max_oxxo')->first()->value;
+
+				if(count($events) < 1){
+					return response()->json(['success' => false,'message'=> 'Tienes que seleccionar un horario']);
+				}
 				
 				for($i=0;$i<count($events);$i++){
 					
@@ -281,6 +297,13 @@ class PaymentController extends Controller
 						}else{
 								return response()->json(['success' => false,'message'=> 'Alguien más tomó uno de tus horarios']);
 						}
+				}
+
+				
+
+				if($total_h > $max_oxxo){
+					Reservation::whereIn('id', $ids)->update(['status' => 'cancelled']);
+					return response()->json(['success' => false,'message'=>'Con esta forma de pago solo puedes reservar hasta '.$max_oxxo.' horas']); 
 				}
 				
 				$price = $total_h * $room->price;

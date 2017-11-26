@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Reservation as Reservation;
 use App\Room as Room;
 use App\User as User;
+use App\Setting as Setting;
 use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Http\Request;
 use DateTime;
@@ -22,12 +23,15 @@ class ReservationController extends Controller
     {
         
         if($room_id != ''){
-            $user = Auth::user();
-            $user_id = $user->id;
-            $bands = User::find($user_id)->bands;
-            $room = Room::find($room_id);
-            $reservations = Reservation::where('room_id',$room_id)->where('status','!=','cancelled')->get();
-            return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands)->with('reservations',$reservations)->with('user',$user); 
+            $user           = Auth::user();
+            $user_id        = $user->id;
+            $bands          = $user->bands;
+            $settings       = Setting::where('slug','max_oxxo')->orWhere('slug','max_card')->get();
+            $max_card       = $settings->where('slug','max_card')->first()->value;
+            $max_oxxo       = $settings->where('slug','max_oxxo')->first()->value;
+            $room           = Room::find($room_id);
+            $reservations   = Reservation::where('room_id',$room_id)->where('status','!=','cancelled')->get();
+            return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands)->with('reservations',$reservations)->with('user',$user)->with('max_oxxo',$max_oxxo)->with('max_card',$max_card); 
         }else{
             return redirect('/salas');
         }
@@ -257,16 +261,49 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $code)
     {
-        $user_id = Auth::user()->id;
+        $user_id     = Auth::user()->id;
         $reservation = Reservation::where('code',$code)->first();
-        $reservation->updated;
+        $room_id    = $reservation->rooms->id;
+
+        $starts_check = new Carbon($request->starts);
+        $ends_check   = new Carbon($request->ends);
+       
         if($user_id == $reservation->user_id){
             if($reservation->updated != true){
-                $reservation->starts     = new Date ($request->starts);
-                $reservation->ends       = new Date ($request->ends);
-                $reservation->updated    = true;
-                $reservation->save();
-                return response()->json(['success' => true]); 
+
+
+                $starts_check = $starts_check->modify('+1 minutes');
+                $ends_check   = $ends_check->modify('-1 minutes');
+
+                // Revisamos que la reservación no se empalme con otra
+                $reservations_check = Reservation::where(
+                    function ($query) use ($starts_check) {
+                        $query->where('starts', '<',$starts_check)
+                        ->where('ends', '>',$starts_check)->where('status','!=','cancelled');
+                    })->orWhere(function ($query) use ($ends_check) {
+                        $query->where('starts', '<',$ends_check)
+                        ->where('ends', '>',$ends_check)->where('status','!=','cancelled');
+                     })->orWhere(function ($query) use ($starts_check,$ends_check) {
+                        $query->where('starts', '>',$starts_check)
+                        ->where('ends', '<',$ends_check)->where('status','!=','cancelled');
+                })->get();
+
+                // Si se empalmó revisamos que no sea en la misma sala
+                $reservations_check = $reservations_check->where('room_id',$room_id);
+
+                // Si no existe otra reservación en ese horario y esa misma sala lo guardamos
+                if($reservations_check->isEmpty()){
+                    $reservation->starts     = new Date ($request->starts);
+                    $reservation->ends       = new Date ($request->ends);
+                    $reservation->updated    = true;
+                    $reservation->save();
+                    return response()->json(['success' => true]); 
+                }else{
+                    return response()->json(['success' => true,'message'=>'Ese horario no está disponible']);
+                }   
+
+
+                
             }else{
                 return response()->json(['success' => false, 'message' => 'Solo puedes reagendar cada reservación una vez']);
             }

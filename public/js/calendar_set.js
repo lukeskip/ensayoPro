@@ -5,11 +5,13 @@ $(document).ready(function() {
 
 		var max_time 	= 300;//segundos para recargar la página 
 		var event_id 	= 0;
+		var total_hours = 0;
 
 		$('.band').on('change', function (e) {
 			if($(this).val() != ''){
 				title = $(this).find("option:selected").text();
 			}
+			
 		});
 
 		function addEvent( start, end) {
@@ -24,6 +26,7 @@ $(document).ready(function() {
 				start: start,
 				end: end,
 				id: event_id,
+				editable:true,
 				// color:'#2FAB31',
 			};
 			
@@ -71,34 +74,7 @@ $(document).ready(function() {
 			
 		}
 
-		function counting_hours(){
-			var total_hours = 0;
-			events = $('#calendar').fullCalendar( 'clientEvents' );
-			$.each(events, function( index, event ) {
-  				if(event.className == 'new-reservation'){
-	  				start_actual_time  =  event.start;
-					end_actual_time    =  event.end;
-
-					start_time = new Date(start_actual_time);
-					end_time = new Date(end_actual_time);
-
-					diff = end_actual_time - start_actual_time;
-
-					diffSeconds = diff/1000;
-					hours = Math.floor(diffSeconds/3600);
-	  				total_hours = total_hours + hours;
-  				}
-	  			
-			});
-			
-
-			var price = total_hours * room_price;
-
-			$('.total-hours .number').html(total_hours);
-			$('.total-price .number').html(price);
-			$('.amount').val(total_hours);
-			
-		}
+		
 
 		// Damos el tamaño del height del calendario segun tamaño de la pantalla
 		
@@ -147,13 +123,22 @@ $(document).ready(function() {
 				
 			},
 			eventResize: function(event, delta, revertFunc) {
+				// Revisamos el evento dure al menos 2 horas
+				start_time = new Date(event.start);
+				end_time   = new Date(event.end);
 
-				// alert(event.title + " end is now " + event.end.format());
+				diff = end_time - start_time;
 
-				// if (!confirm("is this okay?")) {
-				// 	revertFunc();
-				// }
+				diffSeconds = diff/1000;
+				diff_hours = Math.floor(diffSeconds/3600);
 
+				if (create == true && diff_hours < 2){
+					revertFunc();
+					show_message('error','¡Error!','Tienes que reservar al menos 2 horas, puedes hacerlo arrastrando el cursor lentamente');	
+				
+				}
+
+				counting_hours();
 			},
 			select: function(start, end, allDay,view) {
 
@@ -199,6 +184,49 @@ $(document).ready(function() {
 
 		
 });
+
+function counting_hours(){
+	console.log('sdfsdf');
+	total_hours = 0;
+	events = $('#calendar').fullCalendar( 'clientEvents' );
+	$.each(events, function( index, event ) {
+			if(event.className == 'new-reservation'){
+				start_actual_time  =  event.start;
+			end_actual_time    =  event.end;
+
+			start_time = new Date(start_actual_time);
+			end_time = new Date(end_actual_time);
+
+			diff = end_actual_time - start_actual_time;
+
+			diffSeconds = diff/1000;
+			hours = Math.floor(diffSeconds/3600);
+				total_hours = total_hours + hours;
+			}
+	});
+	
+
+	var price = total_hours * room_price;
+
+	$('.total-hours .number').html(total_hours);
+	$('.total-price .number').html(price);
+	$('.amount').val(total_hours);
+
+	if($(".payment_method option:selected").val() == 'oxxo' && total_hours > max_oxxo){
+		$('#oxxo-form').find("button").prop("disabled", true);
+		show_message('error','¡Error!','No puedes reservar más de '+max_oxxo+' horas con este método de pago');
+	}else{
+		$('#oxxo-form').find("button").prop("disabled", false);
+	}
+
+	if($(".payment_method option:selected").val() == 'credit_card' && total_hours > max_card){
+		$('#credit-form').find("button").prop("disabled", true);
+		show_message('error','¡Error!','No puedes reservar más de '+max_card+' horas con este método de pago');
+	}else{
+		$('#credit-form').find("button").prop("disabled", true);
+	}
+	
+}
 
 function checkout(){
 	events_array = [];

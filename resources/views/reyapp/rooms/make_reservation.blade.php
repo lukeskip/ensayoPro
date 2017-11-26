@@ -210,6 +210,8 @@
 		var reservations   = [];
 		var hidden		   = [];
 		var days = [0,1, 2, 3, 4, 5, 6];
+		var max_oxxo = {{$max_oxxo}};
+		var max_card = {{$max_card}};
 
 		@if($user->bands->count() < 1)
 			title = '{{$user->name}} {{$user->lastname}}';
@@ -261,6 +263,7 @@
 
 		$(document).ready(function(){
 			$( ".payment_method" ).change(function() {
+				counting_hours();
 				if($(this).val()== 'credit_card'){
 					$('.credit_card').fadeIn('slow');
 					$('.oxxo').fadeOut('fast');
@@ -325,8 +328,7 @@
 						window.location.replace("/confirmacion/"+answer.code);
 					
 					}else{
-						console.log(answer.message[0]['errorStack']);
-						show_message('error','¡Error!',answer.message[0]['errorStack']);
+						show_message('error','¡Error!',answer.message);
 					}
     			});
 

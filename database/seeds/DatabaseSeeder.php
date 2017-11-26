@@ -109,6 +109,25 @@ class DatabaseSeeder extends Seeder
 			$setting->slug = 'cancel_time';
 			$setting->value = '48';
 			$setting->save();
+
+
+			// Creamos el setting max_oxxo
+			$setting = new Setting;
+			$setting->type = 'number';
+			$setting->label = 'Máximo de horas Oxxo';
+			$setting->description = 'Es el máximo de horas que un usuario puede reservar vía oxxo';
+			$setting->slug = 'max_oxxo';
+			$setting->value = '6';
+			$setting->save();
+
+			// Creamos el setting max_card
+			$setting = new Setting;
+			$setting->type = 'number';
+			$setting->label = 'Máximo de horas Tarjeta';
+			$setting->description = 'Es el máximo de horas que un usuario puede reservar vía tarjeta de crédito o débito';
+			$setting->slug = 'max_card';
+			$setting->value = '15';
+			$setting->save();
 			
 			
 
