@@ -15,7 +15,7 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code');
+            $table->string('code')->index();
             $table->datetime('starts');
             $table->datetime('ends');
             $table->string('description')->nullable();
@@ -25,6 +25,7 @@ class CreateReservationsTable extends Migration
             $table->integer('band_id')->nullable();
             $table->integer('payment_id')->nullable();
             $table->boolean('is_admin');
+            $table->boolean('updated')->default(false);
             $table->enum('status', ['confirmed', 'pending','cancelled']);
             $table->softDeletes();
             $table->timestamps();

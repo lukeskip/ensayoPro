@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User as User;
 use App\Role;
+use App\Setting as Setting;
 
 class DatabaseSeeder extends Seeder
 {
@@ -90,6 +91,25 @@ class DatabaseSeeder extends Seeder
 			$user->active = true;
 			$user->save();
 			$user->roles()->attach($role_musician->id);
+
+			// Creamos el setting commission
+			$setting = new Setting;
+			$setting->type = 'number';
+			$setting->label = 'Comisión';
+			$setting->slug = 'comission';
+			$setting->description = 'Es la comisión que cobrarás por cada reservación';
+			$setting->value = '.10';
+			$setting->save();
+
+			// Creamos el setting cancel_time
+			$setting = new Setting;
+			$setting->type = 'number';
+			$setting->label = 'Tiempo de cancelación';
+			$setting->description = 'Es el tiempo que tendrá el usuario para poder cancelar su reservación';
+			$setting->slug = 'cancel_time';
+			$setting->value = '48';
+			$setting->save();
+			
 			
 
 			factory(App\Room::class, 5)->create();

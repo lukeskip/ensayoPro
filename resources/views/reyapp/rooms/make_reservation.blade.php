@@ -1,18 +1,18 @@
 @extends('layouts.reyapp.main')
-
+@section('body_class', 'full')
 @section('styles')
 	<link rel="stylesheet" href="{{asset('plugins/fullcalendar/fullcalendar.min.css')}}">
 @endsection
 @section('content')
 
-<div class="row desktop">
+<div class="row full desktop">
 	<div class="large-12 columns no-padding">
 		<div class="timer_bar_wrapper">
 			<div class="timer_bar"></div>
 			<div class="timer_bar_text">Esta ventana se recargará en 5 minutos</div>
 		</div>
 	</div>
-	<div class="large-9 columns no-padding calendar-wrapper">
+	<div class="large-8 columns no-padding calendar-wrapper">
 		<div class="calendar-header">
 			<h1>{{$room->companies->name}}</h1>
 			<h2>{{$room->name}} (${{$room->price}}/Hora)</h2>
@@ -20,7 +20,7 @@
 		<div id='calendar'></div>
 	</div>
 
-	<div class="large-3 columns no-padding">
+	<div class="large-4 columns no-padding">
 		<div class="reservation-desktop">
 			<div class="total-hours display">
 				
@@ -36,6 +36,8 @@
 				</div>
 			</div>
 			<div class="clarification display">
+				
+
 					@if($user->bands->count() > 0)
 						<label for="">
 							Elige tu banda <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Le llegará un aviso a los miembros de tu banda"></i>
@@ -84,69 +86,88 @@
 					<div class="credit_card method">
 						<form action="/card" method="POST" id="card-form">
 							{{ csrf_field() }}
-
+							
 							<input type="hidden" name="events" class="events">
 							<input type="hidden" name="room_id" class="room_id" value="{{$room->id}}">
 							<input type="hidden" name="amount" class="amount" value="">
-
-							<label>
-								Nombre <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Como aparece en la tarjeta"></i>
-							</label>
-							<input name="name" type="text" size="20" value="{{$user->name}} {{$user->lastname}}" data-conekta="card[name]">
-					
-							<label for="">Teléfono</label>
-							<input name="phone" type="text" size="20" value="{{$user->phone}}">
-								
-							<label for="">Email:</label>
-							<input name="email" type="text" size="20" value="{{$user->email}}">
-
-							<label>
-								Número de Tarjeta <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="16 dígitos"></i>
-							</label>
-							<input type="text" size="20" data-conekta="card[number]" name="card_number" value="5555555555554444">
-							
-							<label>
-								CVC
-								<i class="fa fa-question-circle hastooltip" aria-hidden="true" title="3 dígitos que aparecen en el reverso"></i>
-							</label>
-							<input type="text" size="4" value="123" data-conekta="card[cvc]" name="cvc">
-							
-							<label>Fecha de expiración (MM/AAAA)</label>
-							<div class="large-6 columns no-padding">
-								<select data-conekta="card[exp_month]" name="month" id="">
-									<option value="">Mes</option>
-									<option value="01">Enero</option>
-									<option value="02">Febrero</option>
-									<option value="03">Marzo</option>
-									<option value="04">Abril</option>
-									<option value="05">Mayo</option>
-									<option value="06">Junio</option>
-									<option value="07">Julio</option>
-									<option value="08">Agosto</option>
-									<option value="09">Septiembre</option>
-									<option value="10">Octubre</option>
-									<option value="11">Noviembre</option>
-									<option value="12">Diciembre</option>
-								</select>	
+							<div class="row">
+								<div class="small-12 columns">
+									<label>
+										Nombre <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Como aparece en la tarjeta"></i>
+									</label>
+									<input name="name" type="text" size="20" value="{{$user->name}} {{$user->lastname}}" data-conekta="card[name]">
+									</div>
 							</div>
-							<div class="large-6 columns no-padding">
-								<select data-conekta="card[exp_year]" name="year" id="">
-									<option value="">Año</option>
-									<option value="2017">2017</option>
-									<option value="2018">2018</option>
-									<option value="2019">2019</option>
-									<option value="2020">2020</option>
-									<option value="2021">2021</option>
-									<option value="2022">2022</option>
-									<option value="2023">2023</option>
-									<option value="2024">2024</option>
-									<option value="2025">2025</option>
-									<option value="2026">2026</option>
-									<option value="2027">2027</option>
-									<option value="2028">2028</option>
-									<option value="2029">2029</option>
-								</select>
+							<div class="row">
+								<div class="small-5 columns">
+									<label for="">Teléfono</label>
+									<input name="phone" type="text" size="20" value="{{$user->phone}}">
+								</div>
+								<div class="small-7 columns">
+									<label for="">Email:</label>
+									<input name="email" type="text" size="20" value="{{$user->email}}">
+								</div>
 							</div>
+							
+							
+							<div class="row">
+								<div class="small-8 columns">
+									<label>
+										Número de Tarjeta <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="16 dígitos"></i>
+									</label>
+									<input type="text" size="20" data-conekta="card[number]" name="card_number" value="5555555555554444">
+								</div>
+								<div class="small-4 columns">
+									<label>
+										CVC
+										<i class="fa fa-question-circle hastooltip" aria-hidden="true" title="3 dígitos que aparecen en el reverso"></i>
+									</label>
+									<input type="text" size="4" value="123" data-conekta="card[cvc]" name="cvc">
+								</div>
+							</div>
+							
+							
+							<div class="row">
+								<div class="small-12 columns">
+									<label>Fecha de expiración (MM/AAAA)</label>
+									<div class="large-6 columns no-padding">
+										<select data-conekta="card[exp_month]" name="month" id="">
+											<option value="">Mes</option>
+											<option value="01">Enero</option>
+											<option value="02">Febrero</option>
+											<option value="03">Marzo</option>
+											<option value="04">Abril</option>
+											<option value="05">Mayo</option>
+											<option value="06">Junio</option>
+											<option value="07">Julio</option>
+											<option value="08">Agosto</option>
+											<option value="09">Septiembre</option>
+											<option value="10">Octubre</option>
+											<option value="11">Noviembre</option>
+											<option value="12">Diciembre</option>
+										</select>	
+									</div>
+									<div class="large-6 columns no-padding">
+										<select data-conekta="card[exp_year]" name="year" id="">
+											<option value="">Año</option>
+											<option value="2017">2017</option>
+											<option value="2018">2018</option>
+											<option value="2019">2019</option>
+											<option value="2020">2020</option>
+											<option value="2021">2021</option>
+											<option value="2022">2022</option>
+											<option value="2023">2023</option>
+											<option value="2024">2024</option>
+											<option value="2025">2025</option>
+											<option value="2026">2026</option>
+											<option value="2027">2027</option>
+											<option value="2028">2028</option>
+											<option value="2029">2029</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
 							
 								
 							<input name="tel" type="hidden" size="20" value="+5213353319758">
@@ -168,6 +189,7 @@
 	</div>
 	
 </div>
+
 @endsection
 @section('scripts')
 	<script src="{{asset('plugins/fullcalendar/lib/moment.min.js')}}"></script>
@@ -197,7 +219,7 @@
 
 		hidden = _.difference(days,[{{$room->days}}]);
 
-		@foreach($reservations as $reservation)
+		@foreach($reservations as $reservation)	
 			reservations.push({
 					'id'    	: {{$reservation->id}},
 					'title' 	: 'Ocupado',
@@ -205,6 +227,8 @@
 					'end'   	: '{{$reservation->ends}}',
 					'className' : 'occupied', 
 			});
+
+			
 		@endforeach  
 	
 		Conekta.setPublishableKey("{{env('CONEKTA_PUBLIC_KEY')}}");

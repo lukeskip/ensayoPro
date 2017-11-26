@@ -7,6 +7,7 @@ use App\Reservation as Reservation;
 use Illuminate\Support\Facades\Auth as Auth;
 use App\User as User;
 use App\Event as Event;
+use App\Setting as Setting;
 use Jenssegers\Date\Date;
 
 class AdminMusicianController extends Controller
@@ -46,12 +47,30 @@ class AdminMusicianController extends Controller
 			$bands_ids[] = $band->id;
 		}
 
-		$bands = $user->bands; 
-		$reservations = Reservation::whereIn('band_id', $bands_ids)->orWhere('user_id',$user_id)->get();
+		$cancel_time = Setting::where('slug','cancel_time')->first()->value;
 
-		$events		  = Event::whereIn('band_id', $bands_ids)->orWhere('user_id',$user_id)->get();
+		$bands = $user->bands; 
+		$reservations = Reservation::whereIn('band_id', $bands_ids)->orWhere('user_id',$user_id)->with('rooms')->get();
+
+		foreach ($reservations as $reservation) {
+			$start  	= new Date ($reservation->starts);
+			$now		= Date::now();
+			$difference = $now->diffInHours($start);
+			if($difference > $cancel_time){
+				$reservation['class'] = 'cancel';
+			}
+
+			$company = $reservation->rooms->companies;
+
+			if($reservation->rooms->company_address){
+				$reservation->description = $company->name." ".$company->address.", ".$company->colony.", ".$company->deputation;
+			}
+			
+		}
+
+		$events	 = Event::whereIn('band_id', $bands_ids)->orWhere('user_id',$user_id)->get();
  
-		return view('reyapp.musicians.calendar')->with('reservations',$reservations)->with('events',$events)->with('bands',$bands);
+		return view('reyapp.musicians.calendar')->with('reservations',$reservations)->with('events',$events)->with('bands',$bands)->with('cancel_time',$cancel_time)->with('user_id',$user_id);
 	}
 	/**
 	 * Display a listing of the resource.

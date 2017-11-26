@@ -83,6 +83,8 @@ Route::group(['middleware' => ['auth','musician','active'],'prefix'=>'musico'], 
 	Route::get('/bandas/{id}', 'BandController@edit');
 	Route::put('/bandas/{id}', 'BandController@update');
 	Route::put('/bandas_delete_member/', 'BandController@delete_member');
+
+	Route::put('/reservaciones/{id}', 'ReservationController@cancel');
 	
 });
 
@@ -95,8 +97,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::group(['middleware' => ['auth','active']], function () {
 
-	Route::get('salas/reservando/{room_id}', 'ReservationController@make_reservation');
-	Route::post('salas/reservando/confirmacion', 'ReservationController@checkout');
+	Route::get('/salas/reservando/{room_id}', 'ReservationController@make_reservation');
+	Route::post('/salas/reservando/confirmacion', 'ReservationController@checkout');
+
+	Route::get('/salas/reservacion/edicion/{code}', 'ReservationController@edit');
+	Route::put('/salas/reservacion/edicion/{code}', 'ReservationController@update');
 	
 	Route::resource('/usuarios', 'UserController');
 

@@ -7,6 +7,7 @@ use App\Company as Company;
 use App\Room as Room;
 use App\Payment as Payment;
 use App\Reservation as Reservation;
+use App\Setting as Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use App\User as User;
@@ -43,6 +44,10 @@ class AdminCompanyController extends Controller
 				$incomings += $payment->amount;
 			}
 		}
+		$comission = Setting::where('slug','comission')->first()->value;
+		$comission = $incomings * $comission;
+
+		$incomings = number_format($incomings - $comission,2);
 
 		$reservations = Reservation::whereIn('room_id', $room_ids)->where('is_admin',false)->whereBetween('created_at',[$day1,$day2])->with(['users','rooms','bands'])->get();
 
@@ -55,6 +60,7 @@ class AdminCompanyController extends Controller
 			}
 			
 			$reservation['date'] = $date_starts->format('d F h:i').' a '.$date_ends->format('h:i');
+			
 			if(count($reservation->payments) > 0){
 				$reservation['total'] = $reservation->payments->amount;
 			}
@@ -78,10 +84,10 @@ class AdminCompanyController extends Controller
 		}
 
 		// Las reservaciones que generó el administrador de la sala
-		$company_reservations = Reservation::whereIn('room_id', $room_ids)->with(['users','rooms'])->where('is_admin',true)->get();
+		$company_reservations = Reservation::where('status','!=','cancelled')->whereIn('room_id', $room_ids)->with(['users','rooms'])->where('is_admin',true)->get();
 
 		// Las reservaciones generadas a través de la plataforma
-		$app_reservations = Reservation::whereIn('room_id', $room_ids)->with(['users','rooms','bands'])->where('is_admin','!=',true)->get();
+		$app_reservations = Reservation::where('status','!=','cancelled')->whereIn('room_id', $room_ids)->with(['users','rooms','bands'])->where('is_admin','!=',true)->get();
 
 		return view('reyapp.companies.calendar')->with('rooms',$rooms)->with('company_reservations',$company_reservations)->with('app_reservations',$app_reservations);
 

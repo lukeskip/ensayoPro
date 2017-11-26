@@ -130,12 +130,13 @@ $(document).ready(function() {
 			slotDuration: '00:60:00',
 			minTime: schedule_start+ ":00:00",
 			maxTime: schedule_end+ ":00:00",
-			// defaultDate: '2017-09-12',
+			eventDurationEditable:false,
+			defaultDate: default_date,
 			slotLabelFormat:"HH:mm",
 			contentHeight: height,
 			navLinks: true, // can click day/week names to navigate views
 			editable: false,
-			selectable: true,
+			selectable: false,
 			selectOverlap:false,
 			eventOverlap: false,
 			selectMinDistance:25,
@@ -155,6 +156,9 @@ $(document).ready(function() {
 				// }
 
 			},
+			eventDrop: function(event, delta, revertFunc) {
+				checkout(event.start,event.end);
+			},
 			select: function(start, end, allDay,view) {
 
 				addEvent(start,end);
@@ -162,15 +166,8 @@ $(document).ready(function() {
 			},
 			events : reservations,
 			eventRender: function(event, element, view) {
-				if (view.name== 'agendaDay' && event.className =='new-reservation') {
-					element.find(".fc-content").prepend('<span class="closeon"><i class="fa fa-window-close" aria-hidden="true"></i></span>');
-				}
 				
-				// Eliminamos la reservación del calendario delete
-				element.find(".closeon").on('click', function() {
-					$('#calendar').fullCalendar('removeEvents',event.id);
-					counting_hours();	
-				});
+		
 			},	
 			dayClick: function(date, jsEvent, view) {
 
@@ -196,25 +193,34 @@ $(document).ready(function() {
 		
 		}
 
+		$('.save').click(function(e){
+			e.preventDefault()
+			data = $('.edit_form').serialize();
+			conection('PUT',data,'/salas/reservacion/edicion/'+code,true).then(function(data){
+				if(data.success== true){
+					show_message('success','¡Listo!','Tu reservación ha sido cambiada');
+				}else{
+					show_message('error','¡Error!',data.message);
+				}
+
+			});
+		});
+
 
 		
 });
 
-function checkout(){
+function checkout(start,end){
+	console.log(start);
 	events_array = [];
 	events = $('#calendar').fullCalendar( 'clientEvents' );
 	$.each(events, function( index, event ) {
-		if (event.className != 'occupied' && event.className != 'cancelled'){
-			events_array.push({
-				'band'  : event.band,
-				'title' : event.title,
-				'start' : event.start,
-				'end' 	: event.end 
-			});	
+		if (event.className == 'edit'){
+			starts 	= start;
+			ends 	= end;	
 		}
-		
 	});
 
-	$('.events').val(JSON.stringify(events_array));
-	$('#checkout').submit();
+	$('.starts').val(starts);
+	$('.ends').val(ends);
 }

@@ -233,7 +233,6 @@
 
 	<div class="off-canvas-content" data-off-canvas-content>
 		 
-		<div class="beta">Alpha</div>
 		<a class="menu_start" data-toggle="offCanvasLeft">
 			<i class="fa fa-bars" aria-hidden="true"></i>
 			MENÚ

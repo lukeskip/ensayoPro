@@ -86,7 +86,7 @@
 						Ingresos 
 						<span><i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Esta semana vía la plataforma"></i></span>
 					</div>
-					<div class="number">{{number_format($incomings,2)}}</div>
+					<div class="number">{{$incomings}}</div>
 				</div>
 
 				<div class="hours">

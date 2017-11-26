@@ -29,20 +29,22 @@
 		// Construimos un objeto con las reservaciones de otros usuarios y que se hicieron por la base de datos
 		@foreach($reservations as $reservation)
 			@if($reservation->bands->count() > 0)
-				var title = '{{$reservation->bands->first()->name}}'
+				var title = "{{$reservation->bands->first()->name}}"
 			@elseif($reservation->description!='')
 				var title = '{{$reservation->description}}'
 			@else
-				var title = '{{$reservation->users->name}} {{$reservation->users->lastname}}'
+				var title = "{{$reservation->users->name}} {{$reservation->users->lastname}}"
 			@endif
 			 
 			reservations.push({
-
+					'id' 		: '{{$reservation->code}}',
 					'title' 	: '{{$reservation->description}}',
 					'start' 	: '{{$reservation->starts}}',
 					'end'   	: '{{$reservation->ends}}',
-					'className' : 'reservation', 
+					'className' : 'reservation {{$reservation->class}}', 
+					'updated'	: '{{$reservation->updated}}'
 			});
+
 		@endforeach
 
 		@foreach($events as $event)

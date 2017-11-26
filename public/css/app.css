@@ -16,6 +16,10 @@ textarea{
 	white-space: pre-line;
 }
 
+.row.full{
+	max-width: 100%;
+}
+
 .unregistered{
 	opacity: .5;
 }
@@ -123,7 +127,7 @@ body{
 }
 
 .button.red{
-	color:#C73536;
+	background:#C73536;
 	color:white;
 }
 .button.blue{
@@ -171,32 +175,42 @@ body{
 	line-height: 25px;
 }
 
-.dashboard .list-item .status{
+.list-item .status{
 	text-align: center;
-	font-size: 1.5em;
-	height: 20px
+	font-size: 2em;
+	line-height: 1em;
+	height: 20px;
+	margin-bottom: 20px;
 }
 
-/*.dashboard .list-item .status .confirmed,
-.dashboard .list-item .status .pending,
-.dashboard .list-item .status .cancelled{
-	background: white;
+
+.list-item .status .pending,
+ .list-item .status .cancelled,.list-item .status .confirmed{
+	margin-top: 20px;
+}
+
+ /*.list-item .status .pending,
+ .list-item .status .cancelled,.list-item .status .confirmed{
+	background: rgba(250,250,250,1);
 	padding: 2px;
-	border-radius: 100%;
+	width: 40px;
+	height: 40px;
+	padding-top: 4px;
+	margin-top: 20px;
 }*/
 
-.dashboard .list-item .status.confirmed{
-	background: #2FAB31;
+/* .list-item .status .confirmed{
+	color: #2FAB31;
 
 }
 
-.dashboard .list-item .status.pending{
-	background: #1891FC;
+.list-item .status .pending{
+	color: #1891FC;
 }
 
-.dashboard .list-item .status.cancelled{
-	background: black;
-}
+.list-item .status .cancelled{
+	color: #C73536;;
+}*/
 
 .dashboard .list-header{
 
@@ -229,7 +243,7 @@ body{
 }
 
 .dashboard .list-item{
-	/*color: #333;*/
+	color: #333;
 }
 
 .dashboard .status .confirmed{
@@ -241,6 +255,28 @@ body{
 }
 /*ENDS: Dashboard****************************************/
 
+/*STARTS: Edition calendar*/
+
+body.full{
+	margin-top: -20px;
+}
+.full .container{
+	width:100%;
+	max-width: 100%;
+	margin-top: 0;
+	padding: 0;
+}
+
+.full .reservation-desktop{
+	margin-bottom: 100px;
+}
+
+/*.full .menu_start{
+	top:130px;
+	left:120px;
+}*/
+
+/*ENDS: Edition Calendar*/
 
 
 /*STARTS: Company Calendar*******************************/
@@ -523,6 +559,9 @@ body.company_calendar{
 
 /*FORM*/
 
+textarea.input-group-field{
+	white-space: normal;
+}
 .rating{
 	display: none;
 }
@@ -839,7 +878,7 @@ a:hover, a:focus{
 	}
 }
 
-h1,h2,h3{
+h1,h2,h3,h4{
 	font-family: 'Raleway', sans-serif;
 	font-weight: 900;
 	text-align: center;
@@ -847,6 +886,11 @@ h1,h2,h3{
 
 h2,h3{
 	text-transform: uppercase;
+}
+
+h4{
+	text-transform: uppercase;
+	font-size: 1em;
 }
 nav.main{
 	margin-bottom: 30px;
@@ -1030,6 +1074,17 @@ h1 .duration{
 }
 
 /*STARTS: Calendar***********************************/
+
+#calendar .button.red{
+	background:#C73536;
+	color:white;
+	border:1px solid red;
+}
+
+#calendar .cancel_reservation{
+	margin-top: 10px;
+	margin-left: 20px;
+}
 .desktop{
 	background: white;
 }
@@ -1073,6 +1128,12 @@ h1 .duration{
 	z-index: 2;
 }
 
+#calendar .fc-content .cancel_reservation{
+	position: absolute;
+	top: 10px;
+	right:20px;
+	z-index: 2;
+}
 
 
 #calendar{
@@ -1115,6 +1176,10 @@ h1 .duration{
 	display:none;
 }
 
+#calendar.edit .fc-month-view .occupied{
+	display:block;
+}
+
 #calendar .fc-event.occupied{
 	background:#C73536;
 }
@@ -1128,6 +1193,17 @@ h1 .duration{
 }
 .reservation-desktop{
 	background: white;
+}
+
+.reservation-desktop h3{
+	color:#333;
+}
+
+.reservation-desktop h4{
+	color:#333;
+}
+.reservation-desktop p{
+	color:#333;
 }
 
 .reservation-desktop .display{

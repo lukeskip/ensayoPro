@@ -73,17 +73,54 @@ $(document).ready(function() {
 			eventRender: function(event, element, view) {
 
 
+				// Agregamos el botón para eliminar la reservación
+				if (view.name== 'agendaDay' && event.className.includes('cancel') && event.updated == 0) {
+					element.find(".fc-content").append('<span class="cancel_reservation hastooltip" title="Cancelar reservación"><i class="fa fa-window-close" aria-hidden="true"></i></span>');
+					
+				}
 
 				// Agregamos el botón para eliminar la reservación
 				if (view.name== 'agendaDay' && event.className =='event') {
 					// $(element).css('max-width','80%');
 					element.find(".fc-content").prepend('<span class="closeon"><i class="fa fa-window-close" aria-hidden="true"></i></span>');
 				}
-				// Eliminamos la reservación del calendario delete
+				
+				// Eliminamos el evento del calendario 
 				element.find(".closeon").on('click', function() {
 					delete_reservation(event.id,event.title);
-	
 				});
+
+				// Se cancela la reservación
+				element.find(".cancel_reservation").on('click', function() {
+					cancel_reservation(event.id,event.title);
+				});
+
+
+				element.find('.hastooltip').on({
+				    mouseenter: function () {
+						// Hover over code
+						var title = $(this).attr('title');
+						$(this).data('tipText', title).removeAttr('title');
+						$('<p class="tooltip"></p>')
+						.text(title)
+						.appendTo('body')
+						.fadeIn('slow');
+				    },
+				    mouseleave: function () {
+						// Hover out code
+						$(this).attr('title', $(this).data('tipText'));
+						$('.tooltip').remove();
+				    },
+				    mousemove: function(e){
+						var mousex = e.pageX + 20; //Get X coordinates
+						var mousey = e.pageY + 10; //Get Y coordinates
+						$('.tooltip')
+						.css({ top: mousey, left: mousex })
+				    } 
+
+				});
+
+	
 			},	
 			dayClick: function(date, jsEvent, view) {
 
@@ -113,7 +150,7 @@ $(document).ready(function() {
 		function delete_reservation (id,title){
 			swal({
 			  title: '¿Estás Seguro?',
-			  text: "Seguro que quieres borrar la entrada  '"+title+"' Ya no podrás deshacer está acción",
+			  text: "¿Seguro que quieres borrar la entrada  '"+title+"?' Ya no podrás deshacer está acción",
 			  type: 'warning',
 			  showCancelButton: true,
 			  confirmButtonColor: '#C73536',
@@ -130,6 +167,24 @@ $(document).ready(function() {
 							show_message('error','Hubo un error','Hubo un error en el servidor');
 						}
 					});
+
+				});
+			})
+		}
+
+		function cancel_reservation (code){
+			swal({
+			  title: '¿Estás Seguro?',
+			  text: "¿Seguro que quieres cancelar esta reservación? Sólo podrás reagendar pero no tener el dinero de vuelta.",
+			  type: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#C73536',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'Entiendo, continuar',
+			  cancelButtonText: 'No',
+			},function () {
+				return new Promise(function (resolve, reject) {
+					window.location.replace('/salas/reservacion/edicion/'+code);
 
 				});
 			})

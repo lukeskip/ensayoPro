@@ -230,9 +230,22 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($code)
     {
-        //
+        
+            $user = Auth::user();
+            $user_id = $user->id;
+            $reservation = Reservation::where('code',$code)->first();
+            if($reservation->updated){
+                redirect('/musico/agenda');
+            }
+            $room_id = $reservation->room_id;
+            $room = Room::find($room_id);
+            $reservation = $room->reservations->where('code',$code)->first();
+          
+            return view('reyapp.rooms.edit_reservation')->with('room',$room)->with('user',$user)->with('code',$code)->with('reservation',$reservation);
+            
+        
     }
 
     /**
@@ -242,9 +255,24 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $code)
     {
-        //
+        $user_id = Auth::user()->id;
+        $reservation = Reservation::where('code',$code)->first();
+        $reservation->updated;
+        if($user_id == $reservation->user_id){
+            if($reservation->updated != true){
+                $reservation->starts     = new Date ($request->starts);
+                $reservation->ends       = new Date ($request->ends);
+                $reservation->updated    = true;
+                $reservation->save();
+                return response()->json(['success' => true]); 
+            }else{
+                return response()->json(['success' => false, 'message' => 'Solo puedes reagendar cada reservación una vez']);
+            }
+        }else{
+            return response()->json(['success' => false, 'message' => 'No tienes privilegios para cambiar esta reservación']);
+        }
     }
 
     /**
@@ -262,5 +290,17 @@ class ReservationController extends Controller
             $reservation->delete();
         }
         return response()->json(['success' => true]);
+    }
+
+    public function cancel($id)
+    {   
+        $user_id = Auth::user()->id;
+        $reservation = Reservation::find($id);
+        if($user_id == $reservation->user_id);{
+            $reservation->status = 'cancelled';
+            $reservation->save();
+            return response()->json(['success' => true]);
+        }
+        
     }
 }

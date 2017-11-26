@@ -135,6 +135,7 @@ $(document).ready(function(){
 		$('.input_band_member_clone').clone().removeClass( "input_band_member_clone" ).appendTo('#paste');
 	});
 	
+	
 
 	// Mostramos tooltips
 	$('.hastooltip').hover(function(){
