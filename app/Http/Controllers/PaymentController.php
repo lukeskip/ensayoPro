@@ -187,10 +187,14 @@ class PaymentController extends Controller
 					 
 						
 					} catch (\Conekta\ProcessingError $e){ 
-						
 						Reservation::whereIn('id', $ids)->update(['status' => 'cancelled']);
-						return response()->json(['success' => false,'message' => $e->details[0]]);
-					
+						
+						$message = json_decode($e->errorStack);
+						$message = $message->details[0]->message;
+
+						return response()->json(['success' => false,'message' => $message]);
+						 
+						
 					} catch (\Conekta\ParameterValidationError $e){
 
 						Reservation::whereIn('id', $ids)->update(['status' => 'cancelled']);

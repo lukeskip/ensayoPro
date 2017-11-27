@@ -115,7 +115,7 @@
 									<label>
 										Número de Tarjeta <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="16 dígitos"></i>
 									</label>
-									<input type="text" size="20" data-conekta="card[number]" name="card_number" value="5555555555554444">
+									<input type="text" size="20" data-conekta="card[number]" name="card_number" {{-- value="5555555555554444" --}}>
 								</div>
 								<div class="small-4 columns">
 									<label>
