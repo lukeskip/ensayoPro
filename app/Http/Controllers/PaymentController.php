@@ -414,7 +414,7 @@ class PaymentController extends Controller
 			$body = @file_get_contents('php://input');
 			$data = json_decode($body);
 			http_response_code(200); // Return 200 OK
-			$code = $data[0]->payment_method->reference;
+			$code = $data->data->payment_method->reference;
 			Mail::send('reyapp.mail_test', ['code'=>$code], function ($message)use($code){
 
 				$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de');
