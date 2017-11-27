@@ -76,7 +76,7 @@
 							<label for="">Email:</label>
 							<input name="email" type="text" size="20" value="{{$user->email}}">
 								
-							<button type="submit" class="button green expanded">Reservar</button>
+							<button type="submit" class="oxxo_button button green expanded">Reservar</button>
 							
 						</form>
 					</div>
@@ -212,6 +212,7 @@
 		var days = [0,1, 2, 3, 4, 5, 6];
 		var max_oxxo = {{$max_oxxo}};
 		var max_card = {{$max_card}};
+		var min_available_oxxo = {{$min_available_oxxo}};
 
 		@if($user->bands->count() < 1)
 			title = '{{$user->name}} {{$user->lastname}}';

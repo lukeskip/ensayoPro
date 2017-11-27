@@ -108,6 +108,7 @@ $(document).ready(function() {
 			maxTime: schedule_end+ ":00:00",
 			// defaultDate: '2017-09-12',
 			slotLabelFormat:"HH:mm",
+			timeFormat: 'H:mm',
 			contentHeight: height,
 			navLinks: true, // can click day/week names to navigate views
 			editable: false,
@@ -185,24 +186,38 @@ $(document).ready(function() {
 		
 });
 
+
+
 function counting_hours(){
-	console.log('sdfsdf');
 	total_hours = 0;
+	too_soon	= false;
 	events = $('#calendar').fullCalendar( 'clientEvents' );
 	$.each(events, function( index, event ) {
-			if(event.className == 'new-reservation'){
-				start_actual_time  =  event.start;
+		if(event.className == 'new-reservation'){
+			start_actual_time  =  event.start;
 			end_actual_time    =  event.end;
+			now 			   = new Date();
+			start_payment 	   = new Date(event.start.format("MMM DD, YYYY HH:MM"));
 
-			start_time = new Date(start_actual_time);
-			end_time = new Date(end_actual_time);
+			start_time 	= new Date(start_actual_time);
+			end_time 	= new Date(end_actual_time);
 
 			diff = end_actual_time - start_actual_time;
-
 			diffSeconds = diff/1000;
 			hours = Math.floor(diffSeconds/3600);
-				total_hours = total_hours + hours;
+			total_hours = total_hours + hours;
+
+			diff_payment = start_payment - now;
+			diff_payment_seconds = diff_payment/1000;
+			diff_payment_hours = Math.floor(diff_payment_seconds/3600);
+
+			console.log('diferencia: '+ diff_payment_hours);
+
+			if(diff_payment_hours < min_available_oxxo){
+				too_soon = true;
 			}
+
+		}
 	});
 	
 
@@ -215,6 +230,9 @@ function counting_hours(){
 	if($(".payment_method option:selected").val() == 'oxxo' && total_hours > max_oxxo){
 		$('#oxxo-form').find("button").prop("disabled", true);
 		show_message('error','¡Error!','No puedes reservar más de '+max_oxxo+' horas con este método de pago');
+	}else if($(".payment_method option:selected").val() == 'oxxo' && too_soon){
+		show_message('error','¡Error!','No puedes utilizar este método de pago con menos de  '+min_available_oxxo+' horas antes de tu ensayo');
+		$('#oxxo-form').find("button").prop("disabled", true);
 	}else{
 		$('#oxxo-form').find("button").prop("disabled", false);
 	}
@@ -236,8 +254,8 @@ function checkout(){
 			events_array.push({
 				'band'  : event.band,
 				'title' : event.title,
-				'start' : event.start,
-				'end' 	: event.end 
+				'start' : new Date(event.start.format("MMM DD, YYYY HH:MM")),
+				'end' 	: new Date(event.end.format("MMM DD, YYYY HH:MM"))
 			});	
 		}
 		

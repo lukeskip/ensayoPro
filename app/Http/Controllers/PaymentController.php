@@ -218,16 +218,27 @@ class PaymentController extends Controller
 				$total_h     = 0;
 				$ids         = array();
 				$max_oxxo 	 = Setting::where('slug','max_oxxo')->first()->value;
+				$min_available_oxxo 	 = Setting::where('slug','min_available_oxxo')->first()->value;
 
 				if(count($events) < 1){
 					return response()->json(['success' => false,'message'=> 'Tienes que seleccionar un horario']);
 				}
 				
 				for($i=0;$i<count($events);$i++){
+					$now 			= Date::now();
+					$starts_check 	= new Date($events[$i]['start']);
+					$diff = $now->diffInHours($starts_check);
+					if($diff < $min_available_oxxo){
+						return response()->json(['success' => false,'message'=> 'No puedes utilizar este método de pago con menos de  '.$min_available_oxxo.' horas antes de tu ensayo']);
+					}
+				}
+				
+				for($i=0;$i<count($events);$i++){
 					
-						$description  = $events[$i]['title'];
-						$starts_check = new Carbon($events[$i]['start']);
-        				$ends_check   = new Carbon($events[$i]['end']);
+						$description  		= $events[$i]['title'];
+						$starts_check 		= new Carbon($events[$i]['start']);
+        				$ends_check   		= new Carbon($events[$i]['end']);
+        				$reserv_insert  	= array();	
 
         				$starts_check = $starts_check->modify('+1 minutes');
         				$ends_check   = $ends_check->modify('-1 minutes');

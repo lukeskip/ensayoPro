@@ -1,7 +1,12 @@
-
+var options = {
+	timeZone: 'Europe/London',
+	year: 'numeric', month: 'numeric', day: 'numeric',
+	hour: 'numeric', minute: 'numeric', second: 'numeric',
+};
+formatter = new Intl.DateTimeFormat([], options);
 $(document).foundation();
 $(document).ready(function(){
-
+	
 	$('.loader-wrapper').fadeOut();
 	
 

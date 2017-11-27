@@ -128,7 +128,17 @@ class DatabaseSeeder extends Seeder
 			$setting->slug = 'max_card';
 			$setting->value = '15';
 			$setting->save();
+
+			// Creamos el setting min_available_oxxo
+			$setting = new Setting;
+			$setting->type = 'number';
+			$setting->label = 'Mínimo de anticipación para pagos oxxo';
+			$setting->description = 'Es el mínimo de horas de anticipación para que un usuario pueda ocupar el pago con oxxo';
+			$setting->slug = 'min_available_oxxo';
+			$setting->value = '24';
+			$setting->save();
 			
+
 			
 
 			factory(App\Room::class, 5)->create();

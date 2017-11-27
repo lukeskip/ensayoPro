@@ -23,15 +23,16 @@ class ReservationController extends Controller
     {
         
         if($room_id != ''){
-            $user           = Auth::user();
-            $user_id        = $user->id;
-            $bands          = $user->bands;
-            $settings       = Setting::where('slug','max_oxxo')->orWhere('slug','max_card')->get();
-            $max_card       = $settings->where('slug','max_card')->first()->value;
-            $max_oxxo       = $settings->where('slug','max_oxxo')->first()->value;
-            $room           = Room::find($room_id);
-            $reservations   = Reservation::where('room_id',$room_id)->where('status','!=','cancelled')->get();
-            return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands)->with('reservations',$reservations)->with('user',$user)->with('max_oxxo',$max_oxxo)->with('max_card',$max_card); 
+            $user               = Auth::user();
+            $user_id            = $user->id;
+            $bands              = $user->bands;
+            $settings           = Setting::all();
+            $max_card           = $settings->where('slug','max_card')->first()->value;
+            $max_oxxo           = $settings->where('slug','max_oxxo')->first()->value;
+            $min_available_oxxo = $settings->where('slug','min_available_oxxo')->first()->value;
+            $room               = Room::find($room_id);
+            $reservations       = Reservation::where('room_id',$room_id)->where('status','!=','cancelled')->get();
+            return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands)->with('reservations',$reservations)->with('user',$user)->with('max_oxxo',$max_oxxo)->with('max_card',$max_card)->with('min_available_oxxo',$min_available_oxxo); 
         }else{
             return redirect('/salas');
         }
