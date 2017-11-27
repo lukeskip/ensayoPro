@@ -33,7 +33,7 @@ Route::get('/registro', function () {
     return view('reyapp.register');
 });
 
-Route::post('/confirmed_oxxo','PaymentController@confirm');
+Route::post('/confirmed_oxxo','PaymentController@confirmation');
 
 Route::get('/registro/usuario/company', 'CompanyController@register_user')->name('register_user_company');
 
