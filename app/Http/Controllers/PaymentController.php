@@ -230,6 +230,7 @@ class PaymentController extends Controller
 					$diff = $now->diffInHours($starts_check);
 					if($diff < $min_available_oxxo){
 						return response()->json(['success' => false,'message'=> 'No puedes utilizar este método de pago con menos de  '.$min_available_oxxo.' horas antes de tu ensayo']);
+					
 					}
 				}
 				

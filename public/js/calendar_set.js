@@ -213,9 +213,9 @@ function counting_hours(){
 
 			console.log('diferencia: '+ diff_payment_hours);
 
-			if(diff_payment_hours < min_available_oxxo){
-				too_soon = true;
-			}
+			// if(diff_payment_hours < min_available_oxxo){
+			// 	too_soon = true;
+			// }
 
 		}
 	});
@@ -254,8 +254,8 @@ function checkout(){
 			events_array.push({
 				'band'  : event.band,
 				'title' : event.title,
-				'start' : new Date(event.start.format("MMM DD, YYYY HH:MM")),
-				'end' 	: new Date(event.end.format("MMM DD, YYYY HH:MM"))
+				'start' : event.start,
+				'end' 	: event.end
 			});	
 		}
 		
