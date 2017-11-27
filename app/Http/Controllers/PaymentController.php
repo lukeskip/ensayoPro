@@ -407,9 +407,8 @@ class PaymentController extends Controller
 
 		}
 
-		public function confirmation($code){
-			
-
+		public function confirmation(){
+			http_response_code(200); 
 		}
 
 		//Manejo de respuestas
