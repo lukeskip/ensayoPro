@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-	<h1>{{$status}}</h1>
+	<h1>{{print_r($status)}}</h1>
   	<p style="font-size: 20px;">Fuiste invitado por  como parte de a <strong>EnsayoPro</strong> una plataforma creada por <strong>Rey Decibel</strong>, que les ayudará a profesionarlizarse como banda, podrán llevar un calendario de actividades y reservar sus ensayos en las principales Salas de tu Ciudad.</p>
   	<p style="font-size: 20px;">Para unirte solo necesitas completar tu registro.</p>
 	<br><br>
