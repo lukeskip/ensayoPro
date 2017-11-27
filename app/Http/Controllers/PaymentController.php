@@ -196,14 +196,17 @@ class PaymentController extends Controller
 						 
 						
 					} catch (\Conekta\ParameterValidationError $e){
-
+						$message = json_decode($e->errorStack);
+						$message = $message->details[0]->message;
+						return response()->json(['success' => false,'message' => $message]);
 						Reservation::whereIn('id', $ids)->update(['status' => 'cancelled']);
 						
-						// return response()->json(['success' => false,'message'=>$e->details->message]);
 				} 
 				catch (\Conekta\Handler $e){
+						$message = json_decode($e->errorStack);
+						$message = $message->details[0]->message;
+						return response()->json(['success' => false,'message' => $message]);
 						Reservation::whereIn('id', $ids)->update(['status' => 'cancelled']);
-						// return response()->json(['success' => false,'message'=>$e->details->message]);
 
 
 				}
@@ -411,7 +414,7 @@ class PaymentController extends Controller
 			$body = @file_get_contents('php://input');
 			$data = json_decode($body);
 			http_response_code(200); // Return 200 OK
-			$status = $data->type;
+			$status = $data->object->id;
 			Mail::send('reyapp.mail_test', ['status'=>$status], function ($message)use($status){
 
 				$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de');
