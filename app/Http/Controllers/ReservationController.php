@@ -32,7 +32,13 @@ class ReservationController extends Controller
             $min_available_oxxo = $settings->where('slug','min_available_oxxo')->first()->value;
             $room               = Room::find($room_id);
             $reservations       = Reservation::where('room_id',$room_id)->where('status','!=','cancelled')->get();
-            return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands)->with('reservations',$reservations)->with('user',$user)->with('max_oxxo',$max_oxxo)->with('max_card',$max_card)->with('min_available_oxxo',$min_available_oxxo); 
+
+            if($room->status == 'active' and $room->companies->status=='active'){
+                return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands)->with('reservations',$reservations)->with('user',$user)->with('max_oxxo',$max_oxxo)->with('max_card',$max_card)->with('min_available_oxxo',$min_available_oxxo); 
+            }else{
+                return redirect('/salas');
+            }
+            
         }else{
             return redirect('/salas');
         }
