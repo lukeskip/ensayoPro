@@ -213,9 +213,9 @@ function counting_hours(){
 
 			console.log('diferencia: '+ diff_payment_hours);
 
-			// if(diff_payment_hours < min_available_oxxo){
-			// 	too_soon = true;
-			// }
+			if(diff_payment_hours < min_available_oxxo){
+				too_soon = true;
+			}
 
 		}
 	});
