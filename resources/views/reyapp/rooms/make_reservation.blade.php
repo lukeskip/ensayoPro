@@ -109,7 +109,6 @@
 								</div>
 							</div>
 							
-							
 							<div class="row">
 								<div class="small-8 columns">
 									<label>
@@ -122,7 +121,7 @@
 										CVC
 										<i class="fa fa-question-circle hastooltip" aria-hidden="true" title="3 dígitos que aparecen en el reverso"></i>
 									</label>
-									<input type="text" size="4" value="123" data-conekta="card[cvc]" name="cvc">
+									<input type="text" size="4" {{-- value="123" --}} data-conekta="card[cvc]" name="cvc">
 								</div>
 							</div>
 							
