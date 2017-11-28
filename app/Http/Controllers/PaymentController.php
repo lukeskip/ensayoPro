@@ -414,8 +414,8 @@ class PaymentController extends Controller
 			$body = @file_get_contents('php://input');
 			$data = json_decode($body);
 			http_response_code(200); // Return 200 OK 
-		    // $code =  $data->data->object->payment_method->reference;
-		    $code = 'hola';
+		    $code =  $data->data->object->payment_method->reference;
+		    // $code = 'hola';
 			
 			// if ($data->type == 'charge.paid'){
 			  	Mail::send('reyapp.mail_test', ['code'=>$code], function ($message)use($code){
