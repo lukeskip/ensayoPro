@@ -49,7 +49,7 @@
 							Aún no has registrado una banda
 						</div>
 					</div>
-				@endif;
+				@endif
 				
 		</div>
 		

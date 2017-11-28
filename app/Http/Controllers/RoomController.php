@@ -90,6 +90,19 @@ class RoomController extends Controller
 			
 		}
 
+		if(request()->has('ciudad')){
+			if($role == 'admin'){ 
+				$rooms = $rooms->where('city',request()->ciudad)->orWhereHas('companies', function ($query) {
+    			$query->where('city', 'like', request()->ciudad);
+			});
+			}else{
+				$rooms = $rooms->where('city',request()->ciudad)->orWhereHas('companies', function ($query) {
+    			$query->where('city', 'like', request()->ciudad);
+			})->where('status','active');
+			}
+			
+		}
+
 		if($role != 'admin'){ 
 			$rooms = $rooms->where('status','active')->whereHas('companies', function ($query) {
     			$query->where('status', 'active');
@@ -109,6 +122,7 @@ class RoomController extends Controller
 				$room['postal_code']    = $room->companies->postal_code;
 				$room['latitude']       = $room->companies->latitude;
 				$room['longitude']      = $room->companies->longitude;
+				$room['city']      		= $room->companies->city;
 			}
 			
 			// Cuantificamos y promediamos las calificaiones
@@ -129,8 +143,8 @@ class RoomController extends Controller
 		$companies = Company::orderBy('name', 'desc')->get();
 		$order = request()->order;
 		$deputations = $rooms->unique('deputation')->values()->all();
-
-		return view('reyapp.rooms.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order)->with('role',$role)->with('deputations',$deputations);
+		$cities = $rooms->unique('city')->values()->all();
+		return view('reyapp.rooms.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order)->with('role',$role)->with('deputations',$deputations)->with('cities',$cities);
 	}
 
 

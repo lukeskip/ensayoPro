@@ -14,13 +14,29 @@
 
 			{{-- ENDS:Hidden fields --}}
 
-			<div class="medium-5 columns no-padding">
+			<div class="medium-4 columns no-padding padding-right">
+				
+				<div class="input-group">
+					<span class="input-group-label">
+						Ciudad:
+					</span>
+					<select class="input-group-field change_submit" name="ciudad" class="area">
+						<option value="">Todas</option>
+						@foreach($cities as $city)
+							<option @if(request('ciudad') == $city->city) {{'selected'}} @endif value="{{$city->city}}">{{$city->city}}</option>
+						@endforeach
+					</select>
+				</div>
+				
+			</div>
+
+			<div class="medium-4 columns no-padding">
 				
 				<div class="input-group">
 					<span class="input-group-label">
 						Ordernar:
 					</span>
-					<select class="input-group-field" name="order" id="order_input">
+					<select class="input-group-field change_submit" name="order" id="order_input">
 						<option @if(request('order') == 'quality_up') selected @endif value="quality_up">Calificación ascendente</option>
 						<option @if(request('order') == 'quality_down') selected @endif value="quality_down">Calificación descendente</option>
 						<option @if(request('order') == 'price_up') selected @endif value="price_up">Precio ascendente</option>
@@ -32,13 +48,13 @@
 			</div>
 		
 			
-			<div class="medium-5 columns no-padding padding-left">
+			<div class="medium-4 columns no-padding padding-left">
 				
 				<div class="input-group">
 					<span class="input-group-label">
 						Ubicación:
 					</span>
-					<select class="input-group-field" name="deleg" class="area">
+					<select class="input-group-field change_submit" name="deleg" class="area">
 						<option value="">Todas</option>
 						@foreach($deputations as $deputation)
 							<option @if(request('deleg') == $deputation->deputation) {{'selected'}} @endif value="{{$deputation->deputation}}">{{$deputation->deputation}}</option>
@@ -48,12 +64,14 @@
 				
 			</div>
 
-			<div class="medium-2 columns no-padding padding-left">
+			
+
+			{{-- <div class="medium-2 columns no-padding padding-left">
 				
 				    <input type="submit" class="button filter green expanded no-shadow" value="Filtrar">
 				 
 				
-			</div>
+			</div> --}}
 		</form>
 		
 	</div>
@@ -89,6 +107,7 @@
 									Ver
 								</a href="#">
 							@endif
+							<a href="/salas/?ciudad={{$room->city}}" class="city tag green">{{$room->city}}</a href="#">
 							<a href="/salas/?colonia={{$room->colony}}" class="colony tag">{{$room->colony}}</a href="#">
 							<a href="/salas/?deleg={{$room->deputation}}" class="deputation tag">{{$room->deputation}}</a href="#">
 							
@@ -134,6 +153,10 @@
 <script src="{{asset('plugins/bar-rating/jquery.barrating.min.js')}}"></script>
 <script>
 	$(document).ready(function(){
+
+		$( ".change_submit" ).change(function() {
+  			$('#order_form').submit();
+		});
 
 		$('.rating').each(function() {
 	        $(this).barrating({
