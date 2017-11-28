@@ -413,23 +413,17 @@ class PaymentController extends Controller
 		public function confirmation(){
 			$body = @file_get_contents('php://input');
 			$data = json_decode($body);
-			http_response_code(200); // Return 200 OK
-			$code = $data->id;
-			Mail::send('reyapp.mail_test', ['code'=>$code], function ($message)use($code){
-
-				$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de');
-				$message->to('contacto@reydecibel.com.mx');
-
-			});
+			http_response_code(200); // Return 200 OK 
+		    $code =  $data->data->object->payment_method->reference;
 			
-			// if ($data->type == 'charge.paid'){
-			//   Mail::send('reyapp.mail_test', ['status'=>$status], function ($message)use($status){
+			if ($data->type == 'charge.paid'){
+			  	Mail::send('reyapp.mail_test', ['code'=>$code], function ($message)use($code){
 
-			// 	$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de');
-			// 	$message->to('contacto@reydecibel.com.mx');
+					$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de');
+					$message->to('contacto@reydecibel.com.mx');
 
-			// 	});
-			// } 
+				});
+			} 
 		}
 
 		//Manejo de respuestas
