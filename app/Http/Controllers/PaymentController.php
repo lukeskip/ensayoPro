@@ -412,11 +412,13 @@ class PaymentController extends Controller
 
 		public function confirmation(){
 			$body = @file_get_contents('php://input');
+
 			$data = json_decode($body);
 			http_response_code(200); // Return 200 OK 
-		    
+	
 			if ($data->type == 'charge.paid'){
-				$code =  $data->data->object->payment_method->reference;
+				// $reference =  $data->data->object->payment_method->reference;
+				$code =  $data->data->object->order_id;
 			  	Mail::send('reyapp.mail_test', ['code'=>$code], function ($message)use($code){
 
 					$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de');
