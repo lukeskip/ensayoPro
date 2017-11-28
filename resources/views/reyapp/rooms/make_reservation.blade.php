@@ -253,9 +253,9 @@
     		});
 		};
 		var conektaErrorResponseHandler = function(response) {
-			var $form = $("#card-form");
-			$form.find(".card-errors").text(response.message_to_purchaser);
-			$form.find("button").prop("disabled", false);
+			// s$form.find("button").prop("disabled", false);
+			$('.loader-wrapper').fadeOut();
+			show_message('error','¡Error!',response.message_to_purchaser);
 		};
 
 		

@@ -211,8 +211,6 @@ function counting_hours(){
 			diff_payment_seconds = diff_payment/1000;
 			diff_payment_hours = Math.floor(diff_payment_seconds/3600);
 
-			console.log('diferencia: '+ diff_payment_hours);
-
 			if(diff_payment_hours < min_available_oxxo){
 				too_soon = true;
 			}
