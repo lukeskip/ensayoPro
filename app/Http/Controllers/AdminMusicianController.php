@@ -27,7 +27,7 @@ class AdminMusicianController extends Controller
 		}
 
 		
-		$reservations 	= Reservation::where('user_id',$user_id)->orWhereIn('band_id',$bands_ids)->orderBy('id','desc')->paginate(10);
+		$reservations 	= Reservation::where('user_id',$user_id)->where('status','!=','cancelled')->orWhereIn('band_id',$bands_ids)->where('status','!=','cancelled')->orderBy('id','desc')->paginate(10);
 
 		foreach ($reservations as $reservation) {
 			$date_starts = new Date($reservation['starts']);
