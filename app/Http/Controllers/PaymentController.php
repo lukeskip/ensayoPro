@@ -417,14 +417,14 @@ class PaymentController extends Controller
 		    // $code =  $data->data->object->payment_method->reference;
 		    $code = 'hola';
 			
-			if ($data->type == 'charge.paid'){
+			// if ($data->type == 'charge.paid'){
 			  	Mail::send('reyapp.mail_test', ['code'=>$code], function ($message)use($code){
 
 					$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de');
 					$message->to('contacto@reydecibel.com.mx');
 
 				});
-			} 
+			// } 
 		}
 
 		//Manejo de respuestas
