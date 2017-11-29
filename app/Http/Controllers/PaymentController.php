@@ -171,7 +171,7 @@ class PaymentController extends Controller
 						// $rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS,'price'=>$price);
 
 						$payment         		= new Payment;
-						$payment->code   		= $pI;
+						$payment->order_id  	= $pI;
 						$payment->amount 		= $pA/100;
 						$payment->method 		= $pM;
 						$payment->company_id 	= $room->companies->id;
@@ -182,7 +182,7 @@ class PaymentController extends Controller
 
 						Reservation::whereIn('id', $ids)->update(['status' => 'confirmed','payment_id'=>$payment->id]);
 						
-						return response()->json(['success' => true,'message'=>$pS,'code'=>$payment->code]);
+						return response()->json(['success' => true,'message'=>$pS,'code'=>$payment->order_id]);
 
 					 
 						
@@ -384,7 +384,7 @@ class PaymentController extends Controller
 				// $rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS,'price'=>$price);
 
 				$payment         		= new Payment;
-				$payment->code   		= $pI;
+				$payment->order_id   	= $pI;
 				$payment->amount 		= $pA/100;
 				$payment->method 		= $pM;
 				$payment->company_id 	= $room->companies->id;
@@ -397,7 +397,7 @@ class PaymentController extends Controller
 
 				Reservation::whereIn('id', $ids)->update(['payment_id'=>$payment->id]);
 				
-				return response()->json(['success' => true,'message'=>$pS,'code'=>$payment->code]);
+				return response()->json(['success' => true,'message'=>$pS,'code'=>$payment->order_id]);
 
 			} catch (\Conekta\ProcessingError $e){ 
 				return $this->Response(0,$e);
@@ -412,19 +412,30 @@ class PaymentController extends Controller
 
 		public function confirmation(){
 			$body = @file_get_contents('php://input');
-
 			$data = json_decode($body);
 			http_response_code(200); // Return 200 OK 
 	
 			if ($data->type == 'charge.paid'){
-				// $reference =  $data->data->object->payment_method->reference;
-				$code =  $data->data->object->order_id;
-			  	Mail::send('reyapp.mail_test', ['code'=>$code], function ($message)use($code){
+				$reference 	=  $data->data->object->payment_method->reference;
+				$order_id 	=  $data->data->object->order_id;
+				$status 	=  $data->data->object->status;
 
-					$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de');
-					$message->to('contacto@reydecibel.com.mx');
+				$payment = Payment::where('order_id',$order_id)->first();
 
-				});
+				$payment->status = $status;
+
+				foreach ($payment->reservations as $reservation) {
+					$reservation->status = 'confirmed';
+				}
+
+				$payment->save();
+
+			 //  	Mail::send('reyapp.mail_test', ['code'=>$code], function ($message)use($code){
+
+				// 	$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de');
+				// 	$message->to('contacto@reydecibel.com.mx');
+
+				// });
 			} 
 		}
 
@@ -470,17 +481,17 @@ class PaymentController extends Controller
 		 * @param  int  $id
 		 * @return \Illuminate\Http\Response
 		 */
-		public function show($code)
+		public function show($order_id)
 		{
-				$payment = Payment::where('code',$code)->with('reservations')->get()->first();
+				$payment = Payment::where('order_id',$order_id)->with('reservations')->get()->first();
  				foreach ($payment->reservations as $reservation) {
- 					$starts 				  		= new Date ($reservation->starts);
+ 					$starts 				  	= new Date ($reservation->starts);
  					$starts_display 	  		= $starts->format('H:i');
  					$ends 				  		= new Date($reservation->ends);
  					$ends_display 		  		= $ends->format('H:i');
- 					$reservation['starts'] 	= $starts_display;
- 					$reservation['ends'] 	= $ends_display;
- 					$reservation['month'] 	= $starts->format('F');
+ 					$reservation['starts'] 		= $starts_display;
+ 					$reservation['ends'] 		= $ends_display;
+ 					$reservation['month'] 		= $starts->format('F');
                		$reservation['day'] 		= $starts->format('d');
  				}
  				

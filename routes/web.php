@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::get('/confirmacion/{code}','PaymentController@show');
+Route::get('/confirmacion/{order_id}','PaymentController@show');
 // Route::get('/payments', 'PaymentController@index');
 // Route::post('/checkout', 'PaymentController@checkout');
 
