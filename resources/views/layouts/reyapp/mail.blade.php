@@ -13,7 +13,7 @@
             </td>
         </tr>
         <tr >
-            <td style="padding:0;padding-top:40px;text-align:center">
+            <td style="padding:0;text-align:center">
                 @yield('image')
             </td>
         </tr>

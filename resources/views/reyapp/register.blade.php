@@ -103,7 +103,7 @@
 		</div>
 		<hr>
 		<div class="row">
-			<div class="large-4 columns text-center">
+			<div class="medium-4 columns text-center">
 				{!! Captcha::display() !!}
 				@if ($errors->has('g-recaptcha-response'))
 					<label class="error">
@@ -111,7 +111,7 @@
 					</label>
 				@endif
 			</div>
-			<div class="large-8 columns">
+			<div class="medium-8 columns">
 				<div class="disclaimer">
 					Haciendo click en "Registrar" <a href="#">aceptas los términos y condiciones</a> así como el <a href="#">aviso de privacidad</a> que puedes visitar en los enlaces antes mencionados.
 				</div>

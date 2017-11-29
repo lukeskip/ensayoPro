@@ -199,15 +199,20 @@
 			<div class="large-12 columns">
 				<h3>Características</h3>
 			</div>
-			<div class="large-6 columns">
+			<div class="large-4 columns">
 				<label>Descripción <i class="fa fa-question-circle hastooltip" title="Escribe una descripción breve, ej: Sala amplia cómoda para bandas de hasta 6 miembros" aria-hidden="true"></i></label>
 				<textarea class="input-group-field required" type="text" name="description">{{$room->description}}</textarea>
 
 			</div>
 
-			<div class="large-6 columns">		
+			<div class="large-4 columns">		
 				<label>Equipamiento <i class="fa fa-question-circle hastooltip" title="Escribe un item por línea, ej. Amplificador Marshall a Bulbos mod..." aria-hidden="true"></i></label>
 				<textarea class="input-group-field required" type="text" name="equipment" placeholder="Escribe un item por línea">{{$room->equipment}}</textarea>
+			</div>
+
+			<div class="large-4 columns">		
+				<label>Instrcciones <i class="fa fa-question-circle hastooltip" title="Escribe las indicaciones para quienes renten tu sala" aria-hidden="true"></i></label>
+				<textarea class="input-group-field required" type="text" name="instructions" placeholder="Ej. El baterista deberá de llevar sus platos y pedal de bombo...">{{$room->instructions}}</textarea>
 			</div>
 
 		</div>

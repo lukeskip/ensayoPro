@@ -32,6 +32,7 @@ class PaymentController extends Controller
 		public function CreatePayCard(Request $request)
 		{
 				$user        = Auth::user();
+				$email		 = $user->email;
 				$user_id     = $user->id;
 				$room_id     = $request->room_id;
 				$room        = Room::find($room_id);
@@ -50,6 +51,14 @@ class PaymentController extends Controller
 						$description  = $events[$i]['title'];
 						$starts_check = new Carbon($events[$i]['start']);
         				$ends_check   = new Carbon($events[$i]['end']);
+
+        				// formateamos el inicio y fin del ensayo para envio de correo
+        				$mail_starts  = new Date($events[$i]['start']);
+        				$mail_ends    = new Date($events[$i]['end']);
+
+        				$events[$i]['mail_time'] = $mail_starts->format('H:i').' a '.$mail_ends->format('H:i');
+
+        				$events[$i]['mail_date'] = $mail_starts->format('l j F Y ');
 
         				$starts_check = $starts_check->modify('+1 minutes');
         				$ends_check   = $ends_check->modify('-1 minutes');
@@ -180,8 +189,38 @@ class PaymentController extends Controller
 						$payment->status		= $pS;
 						$payment->save();
 
-						Reservation::whereIn('id', $ids)->update(['status' => 'confirmed','payment_id'=>$payment->id]);
+						// Extraemos las variables para el envío de correo
+						 if($room->company_address){
+			                $room['address']        = $room->companies->address;
+			                $room['colony']         = $room->companies->colony;
+			                $room['deputation']     = $room->companies->deputation;
+			                $room['postal_code']    = $room->companies->postal_code;
+			                $room['latitude']       = $room->companies->latitude;
+			                $room['longitude']      = $room->companies->longitude;
+			                $room['city']           = $room->companies->city;
+            			}
 						
+						$room_name  	= $room->name;
+						$latitude		= $room->latitude;
+						$longitude		= $room->latitude;
+						$instructions 	= $room->instructions;
+						$company 		= $room->companies->name;
+						$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
+						
+
+
+						// confirmamos el estatus de la reservación
+						Reservation::whereIn('id', $ids)->update(['status' => 'confirmed','payment_id'=>$payment->id]);
+
+						// Enviamos correo de confirmación
+						Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'events'=>$events,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($email,$company){
+
+		                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
+		                $message->to($email);
+
+		                });
+						
+						// Enviamos respuesta en formato JSON
 						return response()->json(['success' => true,'message'=>$pS,'code'=>$payment->order_id]);
 
 					 
@@ -247,6 +286,14 @@ class PaymentController extends Controller
 						$starts_check 		= new Carbon($events[$i]['start']);
         				$ends_check   		= new Carbon($events[$i]['end']);
         				$reserv_insert  	= array();	
+
+        				// formateamos el inicio y fin del ensayo para envio de correo
+        				$mail_starts  = new Date($events[$i]['start']);
+        				$mail_ends    = new Date($events[$i]['end']);
+
+        				$events[$i]['mail_time'] = $mail_starts->format('H:i').' a '.$mail_ends->format('H:i');
+
+        				$events[$i]['mail_date'] = $mail_starts->format('l j F Y ');
 
         				$starts_check = $starts_check->modify('+1 minutes');
         				$ends_check   = $ends_check->modify('-1 minutes');
@@ -414,6 +461,8 @@ class PaymentController extends Controller
 			$body = @file_get_contents('php://input');
 			$data = json_decode($body);
 			http_response_code(200); // Return 200 OK 
+			$events = [];
+
 	
 			if ($data->type == 'charge.paid'){
 				$reference 	=  $data->data->object->payment_method->reference;
@@ -423,20 +472,42 @@ class PaymentController extends Controller
 				$payment = Payment::where('order_id',$order_id)->first();
 
 				$payment->status = $status;
-
+				$room = $payment->reservations->first()->rooms;
+				$email = $payment->users->email;
 				foreach ($payment->reservations as $reservation) {
+
+
+
 					$reservation->status = 'confirmed';
 					$reservation->save();
+
+					// formateamos el inicio y fin del ensayo para envio de correo
+    				$mail_starts  = new Date($events[$i]['start']);
+    				$mail_ends    = new Date($events[$i]['end']);
+
+    				$events['mail_time']= $mail_starts->format('H:i').' a '.$mail_ends->format('H:i');
+    				
+    				$events['mail_date']= $mail_starts->format('l j F Y ');
 				}
+
+				$room_name  	= $room->name;
+				$latitude		= $room->latitude;
+				$longitude		= $room->latitude;
+				$instructions 	= $room->instructions;
+				$company 		= $room->companies->name;
+				$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
+
 
 				$payment->save();
 
-			 //  	Mail::send('reyapp.mail_test', ['code'=>$code], function ($message)use($code){
+				// Enviamos correo de confirmación
+				Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'events'=>$events,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($email,$company){
 
-				// 	$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de');
-				// 	$message->to('contacto@reydecibel.com.mx');
+                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
+                $message->to($email);
 
-				// });
+                });
+			
 			} 
 		}
 

@@ -231,6 +231,7 @@ class RoomController extends Controller
 			'name'              => 'required|max:255',
 			'description'       => 'required|max:1000',
 			'equipment'         => 'required|max:1000',
+			'instructions'      => 'max:1000',
 			'days'              => 'required|max:255',
 			'schedule_start'    => 'required|max:3', 
 			'schedule_end'      => 'required|max:3',
@@ -255,6 +256,7 @@ class RoomController extends Controller
 		$room->schedule_start   = $request->schedule_start;
 		$room->schedule_end     = $request->schedule_end;
 		$room->color            = $request->color;
+		$room->instructions     = $request->instructions;
 		$room->status           = 'inactive';
 		
 		// Si el valor es -1 agregamos todos los días al string
@@ -394,6 +396,7 @@ class RoomController extends Controller
 			'name'              => 'required|max:255',
 			'description'       => 'required|max:1000',
 			'equipment'         => 'required|max:1000',
+			'instructions'      => 'max:1000',
 			'days'              => 'required|max:255',
 			'schedule_start'    => 'required|max:3', 
 			'schedule_end'      => 'required|max:3',
@@ -415,6 +418,7 @@ class RoomController extends Controller
 		$room->price            = $request->price;
 		$room->description      = $request->description;
 		$room->equipment        = $request->equipment;
+		$room->instructions     = $request->instructions;
 		$room->schedule_start   = $request->schedule_start;
 		$room->schedule_end     = $request->schedule_end;
 		$room->color            = $request->color;

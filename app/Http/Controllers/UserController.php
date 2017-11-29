@@ -28,7 +28,7 @@ class UserController extends Controller
         if(!$active){
             $active_token = Auth::user()->active_token;
             $email = $user->email;
-            Mail::send('reyapp.welcome', ['token'=>$active_token,'email'=>$email], function ($message)use($email){
+            Mail::send('reyapp.mails.welcome', ['token'=>$active_token,'email'=>$email], function ($message)use($email){
 
                     $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Bienvenido a EnsayoPro');
                     $message->to($email);

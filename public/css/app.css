@@ -1082,6 +1082,22 @@ h1 .duration{
 }
 
 /*STARTS: Calendar***********************************/
+.company .fc-agenda-view .fc-content .fc-time,.fc-agenda-view .fc-content .fc-title{
+	display: inline-block;
+}
+
+
+.company .fc-view-container {
+  width: auto;
+}
+
+.company .fc-view-container .fc-month-view {
+  overflow-x: scroll;
+}
+
+.company .fc-view-container .fc-month-view > table {
+  min-width: 800px;
+}
 
 #calendar .button.red{
 	background:#C73536;
@@ -1126,7 +1142,7 @@ h1 .duration{
 
 #calendar .fc-v-event .fc-title{
 	font-size: 1.5em;
-	padding-left: 20px;
+	padding-left: 10px;
 }
 
 #calendar .fc-content .closeon{

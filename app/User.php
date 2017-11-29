@@ -38,8 +38,8 @@ class User extends Authenticatable
             $email        = $this->email;
             $this->active_token = $active_token;
             
-            if(empty($this->name == '')){
-                Mail::send('reyapp.welcome', ['token'=>$active_token,'email'=>$email], function ($message)use($email){
+            if(!empty($this->name)){
+                Mail::send('reyapp.mails.welcome', ['token'=>$active_token,'email'=>$email], function ($message)use($email){
 
                     $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Bienvenido a EnsayoPro');
                     $message->to($email);

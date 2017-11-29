@@ -20,6 +20,5 @@
 	
 	<br><br>
 
-	<p><a href="#">Deseo borrar mis datos de esta lista de correos</a></p>
 
 @endsection

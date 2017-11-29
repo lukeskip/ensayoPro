@@ -175,7 +175,6 @@ class ReservationController extends Controller
                 $band = Band::find($request->band);
                 $reservation->attach($band);
             }
-            // Carbon::setLocale('es');
 
             if($room->company_address){
                 $room['address']        = $room->companies->address;
@@ -187,23 +186,24 @@ class ReservationController extends Controller
                 $room['city']           = $room->companies->city;
             }
 
-            $room_name  = $room->name;
-            $date       = new Date($starts);;
-            $date       = $date->format('l j F Y ');
-            $starts     = new Date($starts);
-            $ends       = new Date($ends);
-            $starts     = $starts->format('H:i');
-            $ends       = $ends->format('H:i');
-            $email      = $request->email;
-            $latitude   = $room->latitude;
-            $longitude  = $room->logitude;
-            $address    = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city ;
-            $company    = $room->companies->name;
+            $room_name      = $room->name;
+            $instructions   = $room->instructions;
+            $date           = new Date($starts);;
+            $date           = $date->format('l j F Y ');
+            $starts         = new Date($starts);
+            $ends           = new Date($ends);
+            $starts         = $starts->format('H:i');
+            $ends           = $ends->format('H:i');
+            $email          = $request->email;
+            $latitude       = $room->latitude;
+            $longitude      = $room->longitude;
+            $address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
+            $company        = $room->companies->name;
 
             if($request->has('email')){
-                Mail::send('reyapp.reminder', ['room_name'=>$room_name,'starts'=>$starts,'ends'=>$ends,'date'=>$date,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company], function ($message)use($email,$room_name){
+                Mail::send('reyapp.mails.reminder', ['room_name'=>$room_name,'starts'=>$starts,'ends'=>$ends,'date'=>$date,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($email,$company){
 
-                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$room_name);
+                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
                 $message->to($email);
 
                 });  
