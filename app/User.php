@@ -98,5 +98,10 @@ class User extends Authenticatable
         return $this->hasManyThrough('App\Room', 'App\Company');
     }
 
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
+
 
 }
