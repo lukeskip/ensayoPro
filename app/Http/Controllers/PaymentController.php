@@ -468,43 +468,43 @@ class PaymentController extends Controller
 				$order_id 	=  $data->data->object->order_id;
 				$status 	=  $data->data->object->status;
 
-				// $payment = Payment::where('order_id','ord_2he4mojNE3qBKLUnS')->first();
+				$payment = Payment::where('order_id','$order_id')->first();
 
-				// $payment->status = 'paid';
-				// $room = $payment->reservations->first()->rooms;
-				// $email = $payment->reservations->first()->users->email;
-				// foreach ($payment->reservations as $reservation) {
-
-
-				// 	$reservation->status = 'confirmed';
-				// 	$reservation->save();
-
-				// 	// formateamos el inicio y fin del ensayo para envio de correo
-    // 				$mail_starts  = new Date($reservation->starts);
-    // 				$mail_ends    = new Date($reservation->starts);
-    // 				$events[] = array(
-    // 					'mail_time'=> $mail_starts->format('H:i').' a '.$mail_ends->format('H:i'),
-    // 					'mail_date'=> $mail_starts->format('l j F Y '),
-    // 				);
-				// }
-
-				// $room_name  	= $room->name;
-				// $latitude		= $room->latitude;
-				// $longitude		= $room->latitude;
-				// $instructions 	= $room->instructions;
-				// $company 		= $room->companies->name;
-				// $address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
+				$payment->status = 'paid';
+				$room = $payment->reservations->first()->rooms;
+				$email = $payment->reservations->first()->users->email;
+				foreach ($payment->reservations as $reservation) {
 
 
-				// $payment->save();
+					$reservation->status = 'confirmed';
+					$reservation->save();
 
-				// // Enviamos correo de confirmación
-				// Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'events'=>$events,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($email,$company){
+					// formateamos el inicio y fin del ensayo para envio de correo
+    				$mail_starts  = new Date($reservation->starts);
+    				$mail_ends    = new Date($reservation->starts);
+    				$events[] = array(
+    					'mail_time'=> $mail_starts->format('H:i').' a '.$mail_ends->format('H:i'),
+    					'mail_date'=> $mail_starts->format('l j F Y '),
+    				);
+				}
 
-    //             $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
-    //             $message->to($email);
+				$room_name  	= $room->name;
+				$latitude		= $room->latitude;
+				$longitude		= $room->latitude;
+				$instructions 	= $room->instructions;
+				$company 		= $room->companies->name;
+				$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
 
-    //             });
+
+				$payment->save();
+
+				// Enviamos correo de confirmación
+				Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'events'=>$events,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($email,$company){
+
+                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
+                $message->to($email);
+
+                });
 			}		
 			
 		}
