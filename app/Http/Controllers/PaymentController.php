@@ -426,6 +426,7 @@ class PaymentController extends Controller
 
 				foreach ($payment->reservations as $reservation) {
 					$reservation->status = 'confirmed';
+					$reservation->save();
 				}
 
 				$payment->save();
