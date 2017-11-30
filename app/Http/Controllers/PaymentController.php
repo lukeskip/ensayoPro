@@ -8,6 +8,7 @@ use App\Room as Room;
 use App\User as User;
 use App\Payment as Payment;
 use App\Setting as Setting;
+use App\Band as Band;
 use Illuminate\Support\Facades\Auth as Auth;
 use Carbon\Carbon;
 use Mail;
@@ -212,13 +213,13 @@ class PaymentController extends Controller
 						// confirmamos el estatus de la reservación
 						Reservation::whereIn('id', $ids)->update(['status' => 'confirmed','payment_id'=>$payment->id]);
 
-						// Enviamos correo de confirmación
-						Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'events'=>$events,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($email,$company){
+						// // Enviamos correo de confirmación
+						// Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'reservations'=>$events,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($email,$company){
 
-		                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
-		                $message->to($email);
+		    //             $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
+		    //             $message->to($email);
 
-		                });
+		    //             });
 						
 						// Enviamos respuesta en formato JSON
 						return response()->json(['success' => true,'message'=>$pS,'code'=>$payment->order_id]);
@@ -468,13 +469,14 @@ class PaymentController extends Controller
 				$order_id 	=  $data->data->object->order_id;
 				$status 	=  $data->data->object->status;
 
-				$payment = Payment::where('order_id',$order_id)->first();
-
+			
 				if($payment->status == 'pending_payment'){
 
-				
+					$payment 	= Payment::where('order_id',$order_id)->first();
+					$room 		= $payment->reservations->first()->rooms;
+					$emails  	= array();
+					$user_email = Auth::user()->email;
 					$payment->status = $status;
-					$room = $payment->reservations->first()->rooms;
 
 					// Extraemos las variables para el envío de correo
 					 if($room->company_address){
@@ -487,44 +489,134 @@ class PaymentController extends Controller
 		                $room['city']           = $room->companies->city;
         			}
 
-					$email = $payment->reservations->first()->users->email;
-					foreach ($payment->reservations as $reservation) {
+
+		        	// agrupamos las reservaciones por banda
+					$reservations = $payment->reservations->groupBy('band_id');
 
 
-						$reservation->status = 'confirmed';
-						$reservation->save();
+					// Iteramos a partir de cada grupo (uno por banda) de reservaciones
+					$reservations->each(function($group, $index)use($room,$user_email,$status) {
+					    
+					    // Declaramos las variables para el envío de correo
+						$company 		= $room->companies->name;
+						$room_name  	= $room->name;
+						$latitude		= $room->latitude;
+						$longitude		= $room->latitude;
+						$instructions 	= $room->instructions;
+						$company 		= $room->companies->name;
+						$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
 
-						// formateamos el inicio y fin del ensayo para envio de correo
-	    				$mail_starts  = new Date($reservation->starts);
-	    				$mail_ends    = new Date($reservation->ends);
-	    				$events[] = array(
-	    					'mail_time'=> $mail_starts->format('H:i').' a '.$mail_ends->format('H:i'),
-	    					'mail_date'=> $mail_starts->format('l j F Y '),
-	    				);
-					}
+						foreach ($group as $reservation) {
 
-					$room_name  	= $room->name;
-					$latitude		= $room->latitude;
-					$longitude		= $room->latitude;
-					$instructions 	= $room->instructions;
-					$company 		= $room->companies->name;
-					$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
+							$reservation->status = 'confirmed';
+							$reservation->save();
+
+							$mail_starts  = new Date($reservation->starts);
+			    			$mail_ends    = new Date($reservation->ends);
+							$reservation->mail_time =  $mail_starts->format('H:i').' a '.$mail_ends->format('H:i');
+			    			$reservation->mail_date = $mail_starts->format('l j F Y ');
+
+						}
+
+						// Determinamos la banda de la reservación
+						if($group[0]->band_id){
+							$band = Band::find($group[0]->band_id);
+							foreach ($band->users as $user) {
+								// Obtenemos los correos de los usuarios en esa banda
+								$emails[] = $user->email;
+							};
+						}else{
+							$emails = array($user_email);
+						}
+
+						$payment->status = $status;
+						$payment->save();
+
+					    // Enviamos correo de confirmación para cada banda con todas las reservaciones que le corresponden a cada una
+						Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'reservations'=>$group,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($emails,$company){
+
+		                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
+		                $message->to($emails);
+
+		                });
+
+			
+					});
 
 
-					$payment->save();
 
-					// Enviamos correo de confirmación
-					Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'events'=>$events,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($email,$company){
-
-	                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
-	                $message->to($email);
-
-	                });
 	            }
 			}		
 			
 		}
 
+		public function confirm_test(){
+			$payment 	= Payment::where('order_id','ord_2heKhjzuHpW2UKYSb')->first();
+			$room 		= $payment->reservations->first()->rooms;
+			$emails  	= array();
+			$user_email = Auth::user()->email;
+
+			// Extraemos las variables para el envío de correo
+			 if($room->company_address){
+                $room['address']        = $room->companies->address;
+                $room['colony']         = $room->companies->colony;
+                $room['deputation']     = $room->companies->deputation;
+                $room['postal_code']    = $room->companies->postal_code;
+                $room['latitude']       = $room->companies->latitude;
+                $room['longitude']      = $room->companies->longitude;
+                $room['city']           = $room->companies->city;
+			}
+
+			
+			// agrupamos las reservaciones por banda
+			$reservations = $payment->reservations->groupBy('band_id');
+
+
+			// Iteramos a partir de cada grupo (uno por banda) de reservaciones
+			$reservations->each(function($group, $index)use($room,$user_email) {
+			    
+			    // Declaramos las variables para el envío de correo
+				$company 		= $room->companies->name;
+				$room_name  	= $room->name;
+				$latitude		= $room->latitude;
+				$longitude		= $room->latitude;
+				$instructions 	= $room->instructions;
+				$company 		= $room->companies->name;
+				$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
+
+				foreach ($group as $reservation) {
+					$mail_starts  = new Date($reservation->starts);
+	    			$mail_ends    = new Date($reservation->ends);
+					$reservation->mail_time =  $mail_starts->format('H:i').' a '.$mail_ends->format('H:i');
+	    			$reservation->mail_date = $mail_starts->format('l j F Y ');
+				}
+
+				// echo $group[0]->band_id.'<br>';
+
+				// Determinamos la banda de la reservación
+				if($group[0]->band_id){
+					$band = Band::find($group[0]->band_id);
+					foreach ($band->users as $user) {
+						// Obtenemos los correos de los usuarios en esa banda
+						$emails[] = $user->email;
+					};
+				}else{
+					$emails = array($user_email);
+				}
+
+
+			    // Enviamos correo de confirmación para cada banda con todas las reservaciones que le corresponden a cada una
+				Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'reservations'=>$group,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($emails,$company){
+
+                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
+                $message->to($emails);
+
+                });
+
+	
+			});
+
+		}
 		//Manejo de respuestas
 		private function Response($success,$result)
 		{

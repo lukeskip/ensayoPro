@@ -11,9 +11,8 @@ class Band extends Model
         return $this->belongsToMany('App\User','band_user');
     }
 
-    public function reservations()
-    {
-        return $this->belongsToMany('App\Reservation','band_reservation');
+    public function reservations(){
+        return $this->hasMany('App\Reservation');
     }
 
     public function events(){

@@ -12,13 +12,13 @@
 	
 	<p>
 		<br>
-		@for($i=0;$i<count($events);$i++)
+		@foreach($reservations as $reservation)
 			<div>
-				<strong style="font-size: 50px;">{{$events[$i]['mail_time']}}</strong><br>
-				<strong style="font-size: 30px">{{$events[$i]['mail_date']}}</strong>
+				<strong style="font-size: 50px;">{{$reservation->mail_time}}</strong><br>
+				<strong style="font-size: 30px">{{$reservation->mail_date}}</strong>
 			</div>
 			<hr>
-		@endfor
+		@endforeach
 	</p>
 	<p>
 		Ubicación: {{$address}}

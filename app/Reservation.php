@@ -28,8 +28,7 @@ class Reservation extends Model
         return $this->belongsTo('App\Payment','payment_id');
     }
 
-    public function bands()
-    {
-        return $this->belongsToMany('App\Band','band_reservation');
+    public function bands(){
+        return $this->belongsTo('App\Band','band_id');
     }
 }

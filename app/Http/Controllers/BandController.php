@@ -91,7 +91,7 @@ class BandController extends Controller
 				$email = $user->email;
 
 
-				Mail::send('reyapp.invitation', ['name'=>$name,'token'=>$token,'band'=>$band_name], function ($message)use($email,$band_name){
+				Mail::send('reyapp.mails.invitation', ['name'=>$name,'token'=>$token,'band'=>$band_name], function ($message)use($email,$band_name){
 
 				$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de '.$band_name);
 				$message->to($email);
@@ -212,7 +212,7 @@ class BandController extends Controller
 				$email = $user->email;
 
 
-				Mail::send('reyapp.invitation', ['name'=>$name,'token'=>$token,'band'=>$band_name], function ($message)use($email,$band_name){
+				Mail::send('reyapp.mails.invitation', ['name'=>$name,'token'=>$token,'band'=>$band_name], function ($message)use($email,$band_name){
 
 				$message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Eres parte de '.$band_name);
 				$message->to($email);
