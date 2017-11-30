@@ -213,13 +213,7 @@ class PaymentController extends Controller
 						// confirmamos el estatus de la reservación
 						Reservation::whereIn('id', $ids)->update(['status' => 'confirmed','payment_id'=>$payment->id]);
 
-						// // Enviamos correo de confirmación
-						// Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'reservations'=>$events,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($email,$company){
-
-		    //             $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
-		    //             $message->to($email);
-
-		    //             });
+				
 						
 						// Enviamos respuesta en formato JSON
 						return response()->json(['success' => true,'message'=>$pS,'code'=>$payment->order_id]);
@@ -471,7 +465,7 @@ class PaymentController extends Controller
 				$payment 	= Payment::where('order_id',$order_id)->first();
 
 			
-				if($payment->status == 'pending_payment'){
+				
 
 					$room 		= $payment->reservations->first()->rooms;
 					$emails  	= array();
@@ -541,9 +535,6 @@ class PaymentController extends Controller
 			
 					});
 
-
-
-	            }
 			}		
 			
 		}
