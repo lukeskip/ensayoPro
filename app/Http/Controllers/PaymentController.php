@@ -459,7 +459,7 @@ class PaymentController extends Controller
 			http_response_code(200); // Return 200 OK 
 	
 			if ($data->type == 'charge.paid'){
-				$reference 	=  $data->data->object->payment_method->reference;
+				// $reference 	=  $data->data->object->payment_method->reference;
 				$order_id 	=  $data->data->object->order_id;
 				$status 	=  $data->data->object->status;
 				$payment 	= Payment::where('order_id',$order_id)->first();
