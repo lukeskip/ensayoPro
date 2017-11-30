@@ -77,14 +77,15 @@ $(document).ready(function() {
 		
 
 		// Damos el tamaño del height del calendario segun tamaño de la pantalla
+		// width = $(window).width();
+		// height = $(window).height();
+		// if(width <= 1024){
+		// 	height = 450;
+		// }else{
+		// 	height = height-40;
+		// }	
 		
-		width = $(window).width();
-		if(width <= 1024){
-			height = 450;
-		}else{
-			height = 550;
-		}	
-		
+		var window_height = $(window).height()-200;
 	
 
 		$('#calendar').fullCalendar({
@@ -109,7 +110,7 @@ $(document).ready(function() {
 			// defaultDate: '2017-09-12',
 			slotLabelFormat:"HH:mm",
 			timeFormat: 'H:mm',
-			contentHeight: height,
+			contentHeight: window_height,
 			navLinks: true, // can click day/week names to navigate views
 			editable: false,
 			selectable: true,

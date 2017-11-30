@@ -101,13 +101,7 @@ $(document).ready(function() {
 		}
 
 		// Damos el tamaño del height del calendario segun tamaño de la pantalla
-		
-		width = $(window).width();
-		if(width <= 1024){
-			height = 450;
-		}else{
-			height = 650;
-		}	
+		var window_height = $(window).height()-200;
 		
 	
 
@@ -133,7 +127,7 @@ $(document).ready(function() {
 			eventDurationEditable:false,
 			defaultDate: default_date,
 			slotLabelFormat:"HH:mm",
-			contentHeight: height,
+			contentHeight: window_height,
 			navLinks: true, // can click day/week names to navigate views
 			editable: false,
 			selectable: false,

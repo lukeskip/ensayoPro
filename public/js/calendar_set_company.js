@@ -10,7 +10,7 @@ $(document).ready(function() {
 		var max_time 	= 300;//segundos para recargar la página 
 		var event_id = 0;
 
-		var window_height = $(window).height()-150;
+		var window_height = $(window).height()-200;
 
 		function addEvent(id,start, end , color = '#2FAB31',title) {
 			
