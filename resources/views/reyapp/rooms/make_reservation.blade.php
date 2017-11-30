@@ -38,14 +38,14 @@
 			<div class="clarification display">
 				
 
-					@if($user->bands->count() > 0)
+					@if($user->bands)
 						<label for="">
 							Elige tu banda <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Le llegará un aviso a los miembros de tu banda"></i>
 						</label>
 						<select  name="band" class="band" id="" >
 							<option value="">Banda...</option>
 							@foreach($bands as $band)
-								<option selected value="{{$band->id}}">{{$band->name}}</option>
+								<option value="{{$band->id}}">{{$band->name}}</option>
 							@endforeach
 						</select>
 					@endif
@@ -216,7 +216,7 @@
 		@if($user->bands->count() < 1)
 			title = '{{$user->name}} {{$user->lastname}}';
 		@else
-			title = '{{$user->bands->first()->name}}'
+			title = $('.band').find("option:selected").text();
  		@endif
 
 		hidden = _.difference(days,[{{$room->days}}]);

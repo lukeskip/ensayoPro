@@ -82,7 +82,7 @@ $(document).ready(function() {
 		if(width <= 1024){
 			height = 450;
 		}else{
-			height = 650;
+			height = 550;
 		}	
 		
 	

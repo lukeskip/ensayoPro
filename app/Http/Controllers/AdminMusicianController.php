@@ -32,7 +32,7 @@ class AdminMusicianController extends Controller
 		foreach ($reservations as $reservation) {
 			$date_starts = new Date($reservation['starts']);
 			$date_ends = new Date($reservation['ends']);
-			$reservation['date'] = $date_starts->format('d F h:i').' a '.$date_ends->format('h:i');
+			$reservation['date'] = $date_starts->format('d F H:i').'hrs. a '.$date_ends->format('H:i').'hrs.';
 		}
 
 		return view('reyapp.musicians.dashboard')->with('reservations',$reservations);

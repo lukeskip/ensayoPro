@@ -401,48 +401,40 @@ class PaymentController extends Controller
 
 		try {
 			$order = \Conekta\Order::create($valid_order);
-					$pI = $order['id'];
-					$pM = $order->charges[0]->payment_method->type;
-					$pR = $order->charges[0]->payment_method->reference;
-					$pS = $order['payment_status'];
+			$pI = $order['id'];
+			$pM = $order->charges[0]->payment_method->type;
+			$pR = $order->charges[0]->payment_method->reference;
+			$pS = $order['payment_status'];
 
-					$rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS);
-				//INFORMACIÓN IMPORTANTE DEL JSON DE RESPUESTA.
-				// ID: $order->id
-				// Método de pago: $order->charges[0]->payment_method->service_name
-				// Referencia: $order->charges[0]->payment_method->reference
-				// Total: $order->amount/100 . $order->currency (lo manda en centavos, por eso se divide entre 100)
-				// Orden:
-				// Cantidad:  $order->line_items[0]->quantity
-				// Nombre: $order->line_items[0]->name
-				// Precio unitario $order->line_items[0]->unit_price/100
-
-				$pI = $order['id'];
-				$pM = $order->charges[0]->payment_method->type;
-				$pS = $order['payment_status'];
-				$pA = $order->amount;
-				$pQ = $order->line_items[0]->quantity;
-				$pE = $order->charges[0]->payment_method->expires_at;
-				// $rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS,'price'=>$price);
-
-				$payment         		= new Payment;
-				$payment->order_id   	= $pI;
-				$payment->amount 		= $pA/100;
-				$payment->method 		= $pM;
-				$payment->company_id 	= $room->companies->id;
-				$payment->room_id 		= $room->id;
-				$payment->quantity		= $pQ;
-				$payment->status		= $pS;
-				$payment->reference  	= $pR;
-				$payment->expires_at 	= $pE;
-				$payment->save();
-
-				Reservation::whereIn('id', $ids)->update(['payment_id'=>$payment->id]);
+			$rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS);
 				
-				return response()->json(['success' => true,'message'=>$pS,'code'=>$payment->order_id]);
 
-			} catch (\Conekta\ProcessingError $e){ 
-				return $this->Response(0,$e);
+			$pI = $order['id'];
+			$pM = $order->charges[0]->payment_method->type;
+			$pS = $order['payment_status'];
+			$pA = $order->amount;
+			$pQ = $order->line_items[0]->quantity;
+			$pE = $order->charges[0]->payment_method->expires_at;
+			// $rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS,'price'=>$price);
+
+			$payment         		= new Payment;
+			$payment->order_id   	= $pI;
+			$payment->amount 		= $pA/100;
+			$payment->method 		= $pM;
+			$payment->company_id 	= $room->companies->id;
+			$payment->room_id 		= $room->id;
+			$payment->quantity		= $pQ;
+			$payment->status		= $pS;
+			$payment->reference  	= $pR;
+			$payment->expires_at 	= $pE;
+			$payment->save();
+
+			Reservation::whereIn('id', $ids)->update(['payment_id'=>$payment->id]);
+			
+			return response()->json(['success' => true,'message'=>$pS,'code'=>$payment->order_id]);
+
+		} catch (\Conekta\ProcessingError $e){ 
+			return $this->Response(0,$e);
 		} catch (\Conekta\ParameterValidationError $e){
 				return $this->Response(0,$e);
 		} 
@@ -465,146 +457,80 @@ class PaymentController extends Controller
 				$payment 	= Payment::where('order_id',$order_id)->first();
 
 
-					$room 		= $payment->reservations->first()->rooms;
-					$emails  	= array();
-					$user_email = 'contacto@chekogarcia.com.mx';
-					$payment->status = $status;
-					$payment->save();
+				$room 		= $payment->reservations->first()->rooms;
+				$emails  	= array();
+				$user_email = 'contacto@chekogarcia.com.mx';
+				$payment->status = $status;
+				$payment->save();
 
-					// Extraemos las variables para el envío de correo
-					 if($room->company_address){
-		                $room['address']        = $room->companies->address;
-		                $room['colony']         = $room->companies->colony;
-		                $room['deputation']     = $room->companies->deputation;
-		                $room['postal_code']    = $room->companies->postal_code;
-		                $room['latitude']       = $room->companies->latitude;
-		                $room['longitude']      = $room->companies->longitude;
-		                $room['city']           = $room->companies->city;
-        			}
-
-
-		        	// agrupamos las reservaciones por banda
-					$reservations = $payment->reservations->groupBy('band_id');
+				// Extraemos las variables para el envío de correo
+				 if($room->company_address){
+	                $room['address']        = $room->companies->address;
+	                $room['colony']         = $room->companies->colony;
+	                $room['deputation']     = $room->companies->deputation;
+	                $room['postal_code']    = $room->companies->postal_code;
+	                $room['latitude']       = $room->companies->latitude;
+	                $room['longitude']      = $room->companies->longitude;
+	                $room['city']           = $room->companies->city;
+    			}
 
 
-					// Iteramos a partir de cada grupo (uno por banda) de reservaciones
-					$reservations->each(function($group, $index)use($room,$user_email,$status) {
-					    
-					    // Declaramos las variables para el envío de correo
-						$company 		= $room->companies->name;
-						$room_name  	= $room->name;
-						$latitude		= $room->latitude;
-						$longitude		= $room->latitude;
-						$instructions 	= $room->instructions;
-						$company 		= $room->companies->name;
-						$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
+	        	// agrupamos las reservaciones por banda
+				$reservations = $payment->reservations->groupBy('band_id');
 
-						foreach ($group as $reservation) {
 
-							$reservation->status = 'confirmed';
-							$reservation->save();
+				// Iteramos a partir de cada grupo (uno por banda) de reservaciones
+				$reservations->each(function($group, $index)use($room,$user_email,$status) {
+				    
+				    // Declaramos las variables para el envío de correo
+					$company 		= $room->companies->name;
+					$room_name  	= $room->name;
+					$latitåude		= $room->latitude;
+					$longitude		= $room->latitude;
+					$instructions 	= $room->instructions;
+					$company 		= $room->companies->name;
+					$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
 
-							$mail_starts  = new Date($reservation->starts);
-			    			$mail_ends    = new Date($reservation->ends);
-							$reservation->mail_time =  $mail_starts->format('H:i').' a '.$mail_ends->format('H:i');
-			    			$reservation->mail_date = $mail_starts->format('l j F Y ');
+					foreach ($group as $reservation) {
 
-						}
+						$reservation->status = 'confirmed';
+						$reservation->save();
 
-						// Determinamos la banda de la reservación
-						if($group[0]->band_id){
-							$band = Band::find($group[0]->band_id);
-							foreach ($band->users as $user) {
-								// Obtenemos los correos de los usuarios en esa banda
-								$emails[] = $user->email;
-							};
-						}else{
-							$emails = array($user_email);
-						}
+						$mail_starts  = new Date($reservation->starts);
+		    			$mail_ends    = new Date($reservation->ends);
+						$reservation->mail_time =  $mail_starts->format('H:i').' a '.$mail_ends->format('H:i');
+		    			$reservation->mail_date = $mail_starts->format('l j F Y ');
 
-					    // Enviamos correo de confirmación para cada banda con todas las reservaciones que le corresponden a cada una
-						Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'reservations'=>$group,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($emails,$company){
+					}
 
-		                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
-		                $message->to($emails);
+					// Determinamos la banda de la reservación
+					if($group[0]->band_id){
+						$band = Band::find($group[0]->band_id);
+						foreach ($band->users as $user) {
+							// Obtenemos los correos de los usuarios en esa banda
+							$emails[] = $user->email;
+						};
+					}else{
+						$emails = array($user_email);
+					}
 
-		                });
+				    // Enviamos correo de confirmación para cada banda con todas las reservaciones que le corresponden a cada una
+					Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'reservations'=>$group,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($emails,$company){
 
-			
-					});
+	                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
+	                $message->to($emails);
+
+	                });
+
+		
+				});
 
 
 			}		
 			
 		}
 
-		public function confirm_test(){
-			$payment 	= Payment::where('order_id','ord_2heKhjzuHpW2UKYSb')->first();
-			$room 		= $payment->reservations->first()->rooms;
-			$emails  	= array();
-			$user_email = Auth::user()->email;
-
-			// Extraemos las variables para el envío de correo
-			 if($room->company_address){
-                $room['address']        = $room->companies->address;
-                $room['colony']         = $room->companies->colony;
-                $room['deputation']     = $room->companies->deputation;
-                $room['postal_code']    = $room->companies->postal_code;
-                $room['latitude']       = $room->companies->latitude;
-                $room['longitude']      = $room->companies->longitude;
-                $room['city']           = $room->companies->city;
-			}
-
-			
-			// agrupamos las reservaciones por banda
-			$reservations = $payment->reservations->groupBy('band_id');
-
-
-			// Iteramos a partir de cada grupo (uno por banda) de reservaciones
-			$reservations->each(function($group, $index)use($room,$user_email) {
-			    
-			    // Declaramos las variables para el envío de correo
-				$company 		= $room->companies->name;
-				$room_name  	= $room->name;
-				$latitude		= $room->latitude;
-				$longitude		= $room->latitude;
-				$instructions 	= $room->instructions;
-				$company 		= $room->companies->name;
-				$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
-
-				foreach ($group as $reservation) {
-					$mail_starts  = new Date($reservation->starts);
-	    			$mail_ends    = new Date($reservation->ends);
-					$reservation->mail_time =  $mail_starts->format('H:i').' a '.$mail_ends->format('H:i');
-	    			$reservation->mail_date = $mail_starts->format('l j F Y ');
-				}
-
-				// echo $group[0]->band_id.'<br>';
-
-				// Determinamos la banda de la reservación
-				if($group[0]->band_id){
-					$band = Band::find($group[0]->band_id);
-					foreach ($band->users as $user) {
-						// Obtenemos los correos de los usuarios en esa banda
-						$emails[] = $user->email;
-					};
-				}else{
-					$emails = array($user_email);
-				}
-
-
-			    // Enviamos correo de confirmación para cada banda con todas las reservaciones que le corresponden a cada una
-				Mail::send('reyapp.mails.confirmation', ['room_name'=>$room_name,'reservations'=>$group,'latitude'=>$latitude,'longitude'=>$longitude,'address'=>$address,'company'=>$company,'instructions'=>$instructions], function ($message)use($emails,$company){
-
-                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$company);
-                $message->to($emails);
-
-                });
-
-	
-			});
-
-		}
+		
 		//Manejo de respuestas
 		private function Response($success,$result)
 		{
