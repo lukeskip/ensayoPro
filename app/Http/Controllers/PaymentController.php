@@ -475,6 +475,18 @@ class PaymentController extends Controller
 				
 					$payment->status = $status;
 					$room = $payment->reservations->first()->rooms;
+
+					// Extraemos las variables para el envío de correo
+					 if($room->company_address){
+		                $room['address']        = $room->companies->address;
+		                $room['colony']         = $room->companies->colony;
+		                $room['deputation']     = $room->companies->deputation;
+		                $room['postal_code']    = $room->companies->postal_code;
+		                $room['latitude']       = $room->companies->latitude;
+		                $room['longitude']      = $room->companies->longitude;
+		                $room['city']           = $room->companies->city;
+        			}
+
 					$email = $payment->reservations->first()->users->email;
 					foreach ($payment->reservations as $reservation) {
 
