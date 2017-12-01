@@ -43,7 +43,7 @@
 							Elige tu banda <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Le llegará un aviso a los miembros de tu banda"></i>
 						</label>
 						<select  name="band" class="band" id="" >
-							<option value="">Banda...</option>
+							<option value="0">Sin banda...</option>
 							@foreach($bands as $band)
 								<option value="{{$band->id}}">{{$band->name}}</option>
 							@endforeach

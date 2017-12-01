@@ -36,18 +36,25 @@
 					@endforeach
 				</ul>
 				<div class="instructions">
-					<h3>Instrucciones</h3>
-					@if($payment->method == 'oxxo' and $payment->status == 'pending_payment')
 					
+					@if($payment->method == 'oxxo' and $payment->status == 'pending_payment')
+						<h3>Instrucciones</h3>
 						<p>
 							Este pago aún está pendiente por lo que tu reservación aun no está confirmada.
 						</p>
+						<ol>
+							<li>Acude a la tienda OXXO más cercana. <a href="https://www.google.com.mx/maps/search/oxxo/" target="_blank">Encuéntrala aquí</a>.</li>
+							<li>Indica en caja que quieres ralizar un pago de <strong>OXXOPay</strong>.</li>
+							<li>Dicta al cajero el número de referencia en esta ficha para que tecleé directamete en la pantalla de venta.</li>
+							<li>Realiza el pago correspondiente con dinero en efectivo.</li>
+							<li>Al confirmar tu pago, el cajero te entregará un comprobante impreso. <strong>En el podrás verificar que se haya realizado correctamente.</strong> Conserva este comprobante de pago.</li>
+						</ol>
 						<p>
-							Acude a la sucursal Oxxo más cercana y realiza tu pago con el número de referencia:
 							<div class="reference">{{$payment->reference}}</div>
 						</p>
 					@elseif ('credit')
-						
+						<h3>Instrucciones</h3>
+						<p>{{$payment->reservations->first()->rooms->instructions}}</p>
 					@endif
 
 				</div>

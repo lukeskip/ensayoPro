@@ -10,60 +10,60 @@
 		
 		{{-- STARTS: Comentarios --}}
 		<div class="large-12 columns">
-				<div class="row list-header">
-					<div class="medium-12-columns">
-						<h3>Comentarios Pendientes</h3>
-					</div>
-					<div class="medium-3 columns show-for-medium">
-						Sala/Compañía
-					</div>
-					<div class="medium-7 columns show-for-medium">
-						Descripción
-					</div>
-					<div class="medium-2 columns show-for-medium">
-						Estatus
-					</div>
+			<div class="row list-header">
+				<div class="medium-12-columns">
+					<h3>Comentarios Pendientes</h3>
 				</div>
-				@foreach($comments as $comment)
-					<div class="row list-item " 
+				<div class="medium-3 columns show-for-medium">
+					Sala/Compañía
+				</div>
+				<div class="medium-7 columns show-for-medium">
+					Descripción
+				</div>
+				<div class="medium-2 columns show-for-medium">
+					Estatus
+				</div>
+			</div>
+				
+			@foreach($comments as $comment)
+					
+				<div class="row list-item ">
+					<div class="medium-3 columns ">
+						<a href="/salas/{{$comment->rooms->id}}">
+							{{$comment->rooms->name}}
+						</a>
+						<a href="/admin/company/{{$comment->rooms->companies->id}}">
+							({{$comment->rooms->companies->name}})
+						</a>
 						
-					>
-						<div class="medium-3 columns ">
-							<a href="/salas/{{$comment->rooms->id}}">
-								{{$comment->rooms->name}}
-							</a>
-							<a href="/admin/company/{{$comment->rooms->companies->id}}">
-								({{$comment->rooms->companies->name}})
-							</a>
-							
-						</div>
-						<div class="medium-7 columns ">
-							<span class="more">
-								<strong style="color:black">{{$comment->title}}</strong>
-								{{$comment->description}}
-							</span>
-							
-						</div>
-						<div class="medium-2 columns status">
-							<a class="comment_form" href="#"
-								data-id="{{$comment->id}}" 
-								data-title="{{$comment->description}}"
-								data-status="{{$comment->status}}"
-							>
-
-								@if($comment->status == 'approved')
-									<i class="fa fa-check-circle-o confirmed hastooltip" title="Aprobado" aria-hidden="true"></i>
-								@elseif($comment->status == 'pending')
-									<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Pendiente"></i>
-								@elseif($comment->status == 'rejected')
-									<i class="fa fa-times-circle-o hastooltip cancelled" title="Rechazado" aria-hidden="true"></i>
-								@endif
-
-							</a>
-						</div>
-
 					</div>
-				@endforeach
+					<div class="medium-7 columns ">
+						<span class="more">
+							<strong style="color:black">{{$comment->title}}</strong>
+							{{$comment->description}}
+						</span>
+						
+					</div>
+					<div class="medium-2 columns status">
+						<a class="comment_form" href="#"
+							data-id="{{$comment->id}}" 
+							data-title="{{$comment->description}}"
+							data-status="{{$comment->status}}"
+						>
+
+							@if($comment->status == 'approved')
+								<i class="fa fa-check-circle-o confirmed hastooltip" title="Aprobado" aria-hidden="true"></i>
+							@elseif($comment->status == 'pending')
+								<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Pendiente"></i>
+							@elseif($comment->status == 'rejected')
+								<i class="fa fa-times-circle-o hastooltip cancelled" title="Rechazado" aria-hidden="true"></i>
+							@endif
+
+						</a>
+					</div>
+
+				</div>
+			@endforeach
 
 			<div class="row">
 				<div class="large-12 columns text-center">
@@ -108,7 +108,7 @@
 							
 						</div>
 						<div class="medium-3 columns ">
-							@if($reservation->bands->count() > 0)
+							@if($reservation->bands)
 								{{$reservation->bands->first()->name}}
 							@elseif($reservation->description!='')
 								{{$reservation->description}}
@@ -146,8 +146,7 @@
 	
 		{{-- ENDS: reservaciones --}}
 
-		{{-- STARTS: reservaciones --}}
-	
+		{{-- STARTS: Salas --}}
 		<div class="large-12 columns reservations">
 			<div class="row list-header">
 				<div class="medium-12-columns">
@@ -210,7 +209,7 @@
 				</div>
 			</div>
 		</div>
-		{{-- ENDS: reservaciones --}}
+		{{-- ENDS: Salas --}}
 	</div>
 	
 

@@ -49,7 +49,7 @@ class AdminCompanyController extends Controller
 
 		$incomings = number_format($incomings - $comission,2);
 
-		$reservations = Reservation::whereIn('room_id', $room_ids)->where('is_admin',false)->whereBetween('created_at',[$day1,$day2])->with(['users','rooms','bands'])->get();
+		$reservations = Reservation::whereIn('room_id', $room_ids)->where('is_admin',false)->whereBetween('created_at',[$day1,$day2])->with(['users','rooms','bands'])->paginate(10);
 
 		foreach ($reservations as $reservation) {
 			$date_starts = new Date($reservation['starts']);

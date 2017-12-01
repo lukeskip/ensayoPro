@@ -543,7 +543,13 @@ class PaymentController extends Controller
 
 		public function index()
 		{
-				return view ('reyapp.payments.index');
+			$payments = Payment::paginate();
+			foreach ($payments as $payment) {
+				$date = new Date($payment->updated_at);
+				$date = $date->format('l j F Y H:i');
+				$payment->date = $date;
+			}
+			return view ('reyapp.payments.list')->with('payments',$payments);
 		}
 
 		/**

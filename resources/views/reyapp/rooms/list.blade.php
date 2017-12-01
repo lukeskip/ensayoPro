@@ -3,9 +3,20 @@
 <link rel="stylesheet" href="{{asset('plugins/bar-rating/themes/fontawesome-stars.css')}}">
 @endsection
 @section('content')
-	<div class="row">
-		<form id="order_form" class="search" method="get" action="/salas">
-			
+	<form id="order_form" class="search" method="get" action="/salas">
+		@if ($role == 'admin')
+			<div class="row">
+				<div class="medium-4 columns no-padding padding-right end">
+					<div class="input-group">
+					  <input class="input-group-field" type="text" name='buscar' value="{{request('buscar')}}">
+					  <div class="input-group-button">
+					    <input type="submit" class="button green" value="Buscar">
+					  </div>
+					</div>
+				</div>
+			</div>
+		@endif
+		<div class="row">
 			{{-- STARTS:Hidden fields --}}
 
 			@if(request()->has('colonia'))
@@ -13,7 +24,6 @@
 			@endif
 
 			{{-- ENDS:Hidden fields --}}
-
 			<div class="medium-4 columns no-padding padding-right">
 				
 				<div class="input-group">
@@ -37,10 +47,10 @@
 						Ordernar:
 					</span>
 					<select class="input-group-field change_submit" name="order" id="order_input">
-						<option @if(request('order') == 'quality_up') selected @endif value="quality_up">Calificación ascendente</option>
-						<option @if(request('order') == 'quality_down') selected @endif value="quality_down">Calificación descendente</option>
-						<option @if(request('order') == 'price_up') selected @endif value="price_up">Precio ascendente</option>
-						<option @if(request('order') == 'price_down') selected @endif value="price_down">Precio descendente</option>
+						<option @if(request('order') == 'quality_up') selected @endif value="quality_up">Peores calificados</option>
+						<option @if(request('order') == 'quality_down') selected @endif value="quality_down">Mejores calificados</option>
+						<option @if(request('order') == 'price_up') selected @endif value="price_up">Precio más bajo</option>
+						<option @if(request('order') == 'price_down') selected @endif value="price_down">Precio más alto</option>
 						{{-- <option value="discounts">Ofertas</option> --}}
 					</select>
 				</div>
@@ -63,18 +73,10 @@
 				</div>
 				
 			</div>
-
-			
-
-			{{-- <div class="medium-2 columns no-padding padding-left">
-				
-				    <input type="submit" class="button filter green expanded no-shadow" value="Filtrar">
-				 
-				
-			</div> --}}
-		</form>
+		</div>
+	</form>
 		
-	</div>
+	
 	<div class="row">
 		<div class="large-12 columns">
 				<div class="row list-header show-for-medium">

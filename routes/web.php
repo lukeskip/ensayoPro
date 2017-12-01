@@ -70,6 +70,9 @@ Route::group(['middleware' => ['auth','admin','active'],'prefix'=>'admin'], func
 	Route::put('/comentarios/{id}', 'CommentController@update')->name('admin');
 	Route::get('/comentarios/', 'CommentController@index')->name('admin');
 	Route::get('/salas/ajustes/{id}', 'RoomController@edit');
+	Route::get('/salas/', 'RoomController@index');
+	Route::get('/pagos/', 'PaymentController@index');
+	Route::get('/pagos/{order_id}/', 'PaymentController@show');
 
 	Route::get('/companies/', 'CompanyController@index');
 	Route::get('/company/ajustes/{id}', 'CompanyController@edit_admin');

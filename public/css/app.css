@@ -194,7 +194,7 @@ body{
 
 .list-item .status .pending,
  .list-item .status .cancelled,.list-item .status .confirmed{
-	margin-top: 20px;
+	/*margin-top: 20px;*/
 }
 
  /*.list-item .status .pending,
@@ -1316,14 +1316,20 @@ h1 .duration{
 .checkout .price-info{
 	text-align: right;
 	margin-bottom: 20px;
+	font-size: 2em;
 }
 
 .checkout .price-info p{
 	font-size: 2em;
 }
 
+.checkout .price-info h3{
+	font-size: .7em;
+}
+
 .checkout .price-info label{
 	background: white;
+	font-size: .6em;
 }
 
 .checkout .price-info hr{

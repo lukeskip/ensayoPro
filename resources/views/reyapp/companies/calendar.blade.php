@@ -90,7 +90,7 @@
 
 		// Construimos un objeto con las reservaciones de otros usuarios y que se hicieron por la base de datos
 		@foreach($app_reservations as $reservation)
-			@if($reservation->bands->count() > 0)
+			@if($reservation->bands)
 				var title = '{{$reservation->bands->first()->name}}'
 			@elseif($reservation->description!='')
 				var title = '{{$reservation->description}}'

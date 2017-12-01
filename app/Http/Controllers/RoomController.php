@@ -67,11 +67,11 @@ class RoomController extends Controller
 		if(request()->has('colonia')){	
 			if($role == 'admin'){ 
 				$rooms = $rooms->where('colony',request()->colonia)->orWhereHas('companies', function ($query) {
-	    			$query->where('colony', 'like', request()->colonia);
+	    			$query->where('colony', 'like',request()->deleg);
 				});
 			}else{
-				$rooms = $rooms->where('colony',request()->colonia)->orWhereHas('companies', function ($query) {
-    			$query->where('colony', 'like', request()->colonia);
+				$rooms = $rooms->where('colony',request()->deleg )->orWhereHas('companies', function ($query) {
+    			$query->where('colony', 'like', request()->deleg );
 				})->where('status','active');
 			}
 			
@@ -79,12 +79,12 @@ class RoomController extends Controller
 
 		if(request()->has('deleg')){
 			if($role == 'admin'){ 
-				$rooms = $rooms->where('deputation',request()->deleg)->orWhereHas('companies', function ($query) {
-    			$query->where('deputation', 'like', request()->deleg);
+				$rooms = $rooms->where('deputation',request()->deleg )->orWhereHas('companies', function ($query) {
+    			$query->where('deputation', 'like', request()->deleg );
 			});
 			}else{
-				$rooms = $rooms->where('deputation',request()->deleg)->orWhereHas('companies', function ($query) {
-    			$query->where('deputation', 'like', request()->deleg);
+				$rooms = $rooms->where('deputation', request()->deleg )->orWhereHas('companies', function ($query) {
+    			$query->where('deputation', 'like', request()->deleg );
 			})->where('status','active');
 			}
 			
@@ -92,15 +92,20 @@ class RoomController extends Controller
 
 		if(request()->has('ciudad')){
 			if($role == 'admin'){ 
-				$rooms = $rooms->where('city',request()->ciudad)->orWhereHas('companies', function ($query) {
-    			$query->where('city', 'like', request()->ciudad);
+				$rooms = $rooms->where('city',request()->ciudad )->orWhereHas('companies', function ($query) {
+    			$query->where('city', 'like', request()->ciudad );
 			});
 			}else{
-				$rooms = $rooms->where('city',request()->ciudad)->orWhereHas('companies', function ($query) {
+				$rooms = $rooms->where('city',request()->ciudad )->orWhereHas('companies', function ($query) {
     			$query->where('city', 'like', request()->ciudad);
 			})->where('status','active');
 			}
 			
+		}
+
+		if(request()->has('buscar')){	
+			$rooms = $rooms->where('name', 'LIKE', '%' . request()->buscar . '%');
+		
 		}
 
 		if($role != 'admin'){ 

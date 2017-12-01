@@ -40,7 +40,7 @@
 								</div>
 								<div class="medium-3 columns">
 									{{substr($reservation->description,0,0)}}
-									@if($reservation->bands->count() > 0)
+									@if($reservation->bands)
 										{{$reservation->bands->first()->name}}
 
 									@elseif($reservation->description!='')
@@ -75,7 +75,11 @@
 							</div>
 						</div>
 					@endif
-					
+					<div class="row">
+						<div class="large-12 columns">
+							{!! $reservations->appends(Request::capture()->except('page'))->render() !!}
+						</div>
+					</div>
 			</div>
 			<div class="large-3 columns">
 				<a class="button expanded green" href="/company/agenda" target="_blank">

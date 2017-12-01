@@ -146,7 +146,7 @@
 				<div class="large-4 columns">
 					
 					<label>Delegación o Municipio</label>
-					<input class="input-group-field deputation get_loc required" type="text" name="deputation" placeholder="Delegación o municipio" value="{{$room->deputy}}">
+					<input class="input-group-field deputation get_loc required" type="text" name="deputation" placeholder="Delegación o municipio" value="{{$room->deputation}}">
 					
 				</div>
 

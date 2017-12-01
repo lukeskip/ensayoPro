@@ -94,7 +94,7 @@ $factory->define(App\Comment::class, function (Faker\Generator $faker) {
         'title' 			=> $faker->realText(30),
         'description' 		=> $faker->realText(200),
         'user_id' 			=> rand(1, 4),
-        'room_id' 			=> rand(1, 30),
+        'room_id' 			=> rand(1, 5),
         'status' 			=> $faker->randomElement(['approved' ,'pending', 'rejected']),
     ];
 });

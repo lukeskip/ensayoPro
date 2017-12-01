@@ -105,8 +105,14 @@
 							</a>
 						</li>
 						<li>
-							<a href="admin/salas">
+							<a href="/admin/salas">
 								<i class="fa fa-calendar-o" aria-hidden="true"></i> Reservaciones
+							</a>
+						</li>
+
+						<li>
+							<a href="/admin/pagos">
+								<i class="fa fa-credit-card-alt" aria-hidden="true"></i> Pagos
 							</a>
 						</li>
 

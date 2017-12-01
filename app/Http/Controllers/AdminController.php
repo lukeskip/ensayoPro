@@ -49,6 +49,12 @@ class AdminController extends Controller
 
     }
 
+    public function rooms(){
+        $rooms = Room::leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'DESC')->paginate(10);
+
+        return view('reyapp.admin.rooms')->with('rooms',$rooms);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

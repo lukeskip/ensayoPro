@@ -1,7 +1,7 @@
 @extends('layouts.reyapp.main')
 
 @section('content')
-	<h2>Tus compañías</h2>
+	<h2>Compañías</h2>
 	<div class="row">
 		<div class="large-12 columns">
 				<div class="row list-header show-for-medium">
