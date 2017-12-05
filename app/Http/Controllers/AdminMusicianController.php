@@ -50,7 +50,7 @@ class AdminMusicianController extends Controller
 		$cancel_time = Setting::where('slug','cancel_time')->first()->value;
 
 		$bands = $user->bands; 
-		$reservations = Reservation::whereIn('band_id', $bands_ids)->orWhere('user_id',$user_id)->with('rooms')->get();
+		$reservations = Reservation::whereIn('band_id', $bands_ids)->where('status','!=','cancelled')->orWhere('user_id',$user_id)->with('rooms')->where('status','!=','cancelled')->get();
 
 		foreach ($reservations as $reservation) {
 			$start  	= new Date ($reservation->starts);
