@@ -6,7 +6,7 @@
 @if ($level == 'error')
 # Whoops!
 @else
-# Hello!
+# Hola!
 @endif
 @endif
 
@@ -30,7 +30,7 @@
             $color = 'blue';
     }
 ?>
-@component('mail::button', ['url' => $actionUrl, 'color' => $color])
+@component('mail::button', ['url' => $actionUrl, 'color' => 'green'])
 {{ $actionText }}
 @endcomponent
 @endisset
@@ -45,14 +45,13 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-Regards,<br>{{ config('app.name') }}
+Saludos, EnsayoPro
 @endif
 
 {{-- Subcopy --}}
 @isset($actionText)
 @component('mail::subcopy')
-If you’re having trouble clicking the "{{ $actionText }}" button, copy and paste the URL below
-into your web browser: [{{ $actionUrl }}]({{ $actionUrl }})
+Si estás teniendo problemas para dar click en el botón "{{ $actionText }}", copia y pega el siguiente link en tu navegador: [{{ $actionUrl }}]({{ $actionUrl }})
 @endcomponent
 @endisset
 @endcomponent

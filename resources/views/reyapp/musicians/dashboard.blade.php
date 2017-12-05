@@ -64,8 +64,14 @@
 					@endforeach
 				@else
 					<div class="row list-item">
-						<div class="large-12 columnsaa">
+						<div class="large-12 columns">
 							Aún no tienes reservaciones
+						</div>
+					</div>
+					<div class="row ">
+						<div class="large-12 columns text-center">
+							<br><br>
+							<a href="/salas/" class="button green">Reserva tu primer ensayo</a>
 						</div>
 					</div>
 				@endif
