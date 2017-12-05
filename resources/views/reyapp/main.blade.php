@@ -8,8 +8,6 @@
 
 @section('content')
 
-
-
 <div class="slider_wrapper">
 
   <div id="background-video" class="background-video">
@@ -39,51 +37,47 @@
 </div>
 
 
-
-
 <!--STARTS: Benefits -->
-<div id="main-content-section" data-magellan-target="main-content-section">
-  <div class="top-company">
-    <h1>¿Para qué una sala de ensayo?</h1>
-    <p class="text-center landing-subtitle">Una sala de ensayo es un espacio equipado con amplificadores (backline), consola, bocinas y todo lo necesario para que una banda ensaye cómodamente. Todas las bandas emergentes ensayan en este tipo de lugares.</p>
-    <p class="text-center landing-subtitle">Ensayo Pro es una plataforma que te permite comparar diferentes salas de ensayo en tu ciudad y reservarlas aquí mismo y tener una agenda sincronizada con tu banda para que sean más productivos y puedan llegar más lejos.</p>
-    <div class="row">
-      <div class="row">
-        <div class="columns medium-6 text-center">
-          <img src="{{asset('img/musico_ensayo_1.png')}}" with='100%'/>
-          <h2 class="text-center bullets-company">Tiempo de Calidad</h2>
-          <p class="text-center description-salas">Ensaya desde que llegas hasta que te vas y no pierdas tiempo valioso.</p>
-        </div>
 
-        <div class="columns medium-6 text-center">
-          <img src="{{asset('img/musico_ensayo_2.png')}}" with='100%'/>
-          <h2 class="text-center bullets-company">Pura cosa chida</h2>
-          <p class="text-center description-salas">Califica y comenta sobre tus salas favoritas así otros músicos podrán tomar buenas decisiones.</p>
-          
-        </div>
-        <div class="columns medium-6 text-center">
-          <img src="{{asset('img/musico_ensayo_3.png')}}" with='100%'/>
-          <h2 class="text-center bullets-company">Equipo Profesional</h2>
-          <p class="text-center description-salas">Deja de tocar con ese frankenstein, aquí hay equipo para Pro.</p>
-          
-        </div>
-
-        <div class="columns medium-6 text-center">
-          <img src="{{asset('img/musico_ensayo_4.png')}}" with='100%'/>
-          <h2 class="text-center bullets-company">Espacios Insonorizados</h2>
-          <p class="text-center description-salas">Diseña tu sonido sin que nadie te joda con que haces ruido.</p>
-        </div>
+<div class="top-company">
+  <h1>¿Para qué una sala de ensayo?</h1>
+  <p class="text-center landing-subtitle">Una sala de ensayo es un espacio equipado con amplificadores (backline), consola, bocinas y todo lo necesario para que una banda ensaye cómodamente. Todas las bandas emergentes ensayan en este tipo de lugares.</p>
+  <p class="text-center landing-subtitle">Ensayo Pro es una plataforma que te permite comparar diferentes salas de ensayo en tu ciudad y reservarlas aquí mismo y tener una agenda sincronizada con tu banda para que sean más productivos y puedan llegar más lejos.</p>
+  <div class="row a">
+      <div class="columns medium-6 text-center">
+        <img src="{{asset('img/musico_ensayo_1.png')}}" with='100%'/>
+        <h2 class="text-center bullets-company">Tiempo de Calidad</h2>
+        <p class="text-center description-salas">Ensaya desde que llegas hasta que te vas y no pierdas tiempo valioso.</p>
       </div>
-    </div>
+
+      <div class="columns medium-6 text-center">
+        <img src="{{asset('img/musico_ensayo_2.png')}}" with='100%'/>
+        <h2 class="text-center bullets-company">Pura cosa chida</h2>
+        <p class="text-center description-salas">Califica y comenta sobre tus salas favoritas así otros músicos podrán tomar buenas decisiones.</p>
+        
+      </div>
+      <div class="columns medium-6 text-center">
+        <img src="{{asset('img/musico_ensayo_3.png')}}" with='100%'/>
+        <h2 class="text-center bullets-company">Equipo Profesional</h2>
+        <p class="text-center description-salas">Deja de tocar con ese frankenstein, aquí hay equipo para Pro.</p>
+        
+      </div>
+
+      <div class="columns medium-6 text-center">
+        <img src="{{asset('img/musico_ensayo_4.png')}}" with='100%'/>
+        <h2 class="text-center bullets-company">Espacios Insonorizados</h2>
+        <p class="text-center description-salas">Diseña tu sonido sin que nadie te joda con que haces ruido.</p>
+      </div>
   </div>
 </div>
+
 {{-- ENDS: Benefits --}}
 
 <!--STARTS: Feature -->
 <div class="feature">
   <h2>Aquí encuentras la mejor sala para ensayar.</h2>
   <p  class="landing-subtitle text-center">Sabemos la importancia de los ensayos, por ello hemos puesto atención en los detalles</p>
-  <div class="row">
+  <div class="row b">
     <div class="feature-item small-12 medium-4 columns hide-for-small-only">
       <div class="icon"><i class="fa fa-star fa-2x" aria-hidden="true"></i></div>
       <h3 class="feature-title text-center">Ranking para mejorar</h3>
@@ -100,7 +94,7 @@
       <p class="marketing-site-features-desc">¿Tienes diversas bandas? No te preocupes, podrás saber cuál ensayo le corresponde a cada una.</p>
     </div>
   </div>
-    <div class="row">
+  <div class="row d">
     <div class="feature-item small-12 medium-4 columns">
       <div class="icon"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i></div>
       <h3 class="feature-title text-center">El mejor precio cerca de ti</h3>

@@ -1,5 +1,24 @@
 @import url('https://fonts.googleapis.com/css?family=Kanit:400,900|Raleway:400,900');
 
+html,body{
+	font-family: 'Raleway', sans-serif;
+	height: 100%;
+	padding: 0;
+	margin:0;
+}
+
+body{
+	height: 100%;
+	width:100%;
+	background-attachment: fixed;
+	background-color: #AF0929;
+	background-image:url(../img/back.jpg);
+	background-position: center;
+	background-size: cover;
+	font-family: 'Raleway', sans-serif;
+	color:white;
+}
+
 h1,h2,h3{
 	margin-bottom: 20px;
 }
@@ -63,25 +82,6 @@ textarea{
 	padding-bottom: 11px;
 }
 
-html,body{
-	font-family: 'Raleway', sans-serif;
-	height: 100%;
-	padding: 0;
-	margin:0;
-
-}
-
-body{
-	height: 100%;
-	width:100%;
-	background-attachment: fixed;
-	background-color: #AF0929;
-	background-image:url(../img/back.jpg);
-	background-position: center;
-	background-size: cover;
-	font-family: 'Raleway', sans-serif;
-	color:white;
-}
 
 .hastooltip{
 	cursor: default;
