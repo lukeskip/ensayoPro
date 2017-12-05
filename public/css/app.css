@@ -2291,7 +2291,7 @@ h1 .duration{
 }
 .landing-subtitle {
 	font-size: 20px;
-	padding: 0 90px 20px;
+	padding: 0 40px 20px;
 }
 /*STARTS: TopBar***************************************************/
 .topbar-responsive {
@@ -2632,6 +2632,10 @@ h1 .duration{
 
 /*Video background*/
 
+.placeholder-image{
+	position: static!important;
+}
+
 /*Owl Carrousel*/
 
 
@@ -2677,6 +2681,22 @@ footer{
 @media screen and (max-width: 700px) {
 	.owl-carousel .item h2{
 		font-size: 2em;
+	}
+	.owl-carousel .item p{
+		font-size:1em;
+		text-align: center;
+	}
+}
+
+@media screen and (max-width: 550px) {
+	.owl-carousel .item img{
+		max-width: 150px;
+	}
+	.owl-carousel .item{
+		padding: 10px 40px;
+	}
+	.owl-carousel .item h2{
+		font-size: 1.5em;
 	}
 	.owl-carousel .item p{
 		font-size:1em;

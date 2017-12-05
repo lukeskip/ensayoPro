@@ -1,11 +1,11 @@
-@extends('layouts.reyapp.landing')
+@extends('layouts.reyapp.main')
 
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="mediium-6 medium-centered login">
+        <div class="medium-6 medium-centered login">
             <div class="panel panel-default">
-                <div class="panel-heading">Reinicia tu contraseñaaaa</div>
+                <div class="panel-heading">Reinicia tu contraseña</div>
 
                 <div class="panel-body">
                     @if (session('status'))
