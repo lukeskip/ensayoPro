@@ -33,6 +33,7 @@ Route::get('/', function () {
 // Landing Company
 Route::get('/unete', function () {
     return view('reyapp.landing_company');
+    
 });
 
 Route::get('/registro', function () {
