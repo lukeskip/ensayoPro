@@ -1830,48 +1830,32 @@ h1 .duration{
     right: 20px;
 }
 /*ENDS: Lightbox***********************************************/
+/*DATE PICKER********************************************************/
 
-/*STARTS: Date picker**********************************************/
-/*DATE PICKER*/
-.fullday{
-	background: red;
-}
-
-#datepicker{
-	cursor: pointer;
+.ui-datepicker-calendar{
+	background-color: white;
 }
 
 .ui-widget-content, .ui-widget.ui-widget-content{
 	background: none;
 }
 
-.ui-datepicker {
-    height: 500px ;
-    padding: 0.2em 0.2em 0;
-    width: 100%;
+.ui-datepicker-calendar thead{
+	color: black;
 }
 
-.ui-datepicker{
- font-size:1.5em;
-}
-.ui-widget-header{
-	background:black;
-	color:white;
-
-}
-
-.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
-	background:#333333;
-	color:white;
-	border:0;
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active{
+	background: #eee;
 }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover{
-	background:#CF2832;
-	color:white;
-	border:0;
+	border:none;
 }
-/*ENDS: datepicker************************************************/
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+	border:none;
+}
+/*ENDS: DATE PICKER**************************************************/
 
 /*STARTS: Sweet alert*****************************************************/
 .sweet-alert{

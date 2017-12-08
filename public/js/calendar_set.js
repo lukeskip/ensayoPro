@@ -118,8 +118,8 @@ $(document).ready(function() {
 			eventOverlap: false,
 			selectMinDistance:25,
 			selectConstraint:{
-				start: schedule_start+':00', // a start time (10am in this example)
-				end: schedule_end+':00', // an end time (6pm in this example)
+				start: schedule_start+':00', 
+				end: schedule_end+':00', 
 				dow: [0, 1, 2, 3, 4, 5, 6 ]
 				// days of week. an array of zero-based day of week integers (0=Sunday)
 				

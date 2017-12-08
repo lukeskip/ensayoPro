@@ -21,7 +21,7 @@ class Company
         if($role == 'company' or $role == 'admin'){
             return $next($request);
         }else if($role == 'musician'){
-           return redirect('/dashboard'); 
+           return redirect('/musico/bienvenido'); 
         }
         
         

@@ -45,6 +45,11 @@ class ReservationController extends Controller
         
     }
 
+    // AQUÍ REVISAMOS PRECIO EN PRIMERA INSTANCIA
+    public function check_price(){
+        
+    }
+
     
 
     /**
@@ -70,7 +75,7 @@ class ReservationController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     * AQUÍ, SE GUARDAN LAS RESERVACIONES DEL ADMINISTRADOR DE COMPAÑÍA LAS DEL USUARIO SE GUARDAN DESDE EL PAYMENTCONTROLLER
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -127,7 +132,6 @@ class ReservationController extends Controller
         if($close_time < $ends_time){
             return response()->json(['success' => false,'message'=> 'La sala '.$room->name.' cierra a las '.$close_time]); 
         }
-
 
         $starts_check = $starts_check->modify('+1 minutes');
         $ends_check   = $ends_check->modify('-1 minutes');
@@ -211,9 +215,6 @@ class ReservationController extends Controller
             
 
             return response()->json(['success' => true , 'title' => $description,'id'=>$reservation->id,'color'=>$room->color]);
-
-
-
             
 
         }else{

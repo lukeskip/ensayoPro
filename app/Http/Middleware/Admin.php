@@ -23,7 +23,7 @@ class Admin
         }else if($role == 'company'){
            return redirect('company'); 
         }else if($role == 'musician'){
-           return redirect('/dashboard'); 
+           return redirect('/musico/bienvenido'); 
         }
     }
 }

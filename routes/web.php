@@ -25,8 +25,14 @@ Route::get('logout', function (){
 	return redirect('/login');
 });
 
+// Landing Músicos
 Route::get('/', function () {
     return view('reyapp.main');
+});
+
+// Landing Company
+Route::get('/unete', function () {
+    return view('reyapp.landing_company');
 });
 
 Route::get('/registro', function () {
@@ -42,6 +48,8 @@ Route::get('/finaliza_tu_registro/{token}', 'UserController@finish_register');
 
 
 Route::group(['middleware' => ['auth','company','active'],'prefix'=>'company'], function () {
+
+	Route::get('/promocodigos/', 'PromocodeController@create');
 
 	Route::get('/agenda/', 'AdminCompanyController@company_calendar');
 

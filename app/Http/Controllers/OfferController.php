@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Offer;
 use Illuminate\Http\Request;
 
-class PromocodeController extends Controller
+class OfferController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +24,7 @@ class PromocodeController extends Controller
      */
     public function create()
     {
-        return view('reyapp.promocodes.create');
+        //
     }
 
     /**
@@ -40,10 +41,10 @@ class PromocodeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Offer  $offer
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Offer $offer)
     {
         //
     }
@@ -51,22 +52,22 @@ class PromocodeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Offer  $offer
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Offer $offer)
     {
-        return view('reyapp.promocodes.create');
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Offer  $offer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Offer $offer)
     {
         //
     }
@@ -74,10 +75,10 @@ class PromocodeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Offer  $offer
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Offer $offer)
     {
         //
     }

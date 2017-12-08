@@ -35,4 +35,9 @@ class Room extends Model
     {
         return $this->hasMany('App\Payment');
     }
+
+    public function offers()
+    {
+        return $this->hasMany('App\Offer');
+    }
 }
