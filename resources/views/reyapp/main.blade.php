@@ -144,7 +144,7 @@ $(document).ready(function(){
         playerVars: {
           modestbranding: 0,
           autoplay: 1,
-          controls: 1,
+          controls: 0,
           showinfo: 0,
           branding: 0,
           rel: 0,
