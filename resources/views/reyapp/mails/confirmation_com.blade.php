@@ -12,13 +12,13 @@
 	
 	<p>
 		<br>
-		@foreach($reservations as $reservation)
+		@for($i=0;$i<count($reservations);$i++){
 			<div>
-				<strong style="font-size: 50px;">{{$reservation->mail_time}}</strong><br>
-				<strong style="font-size: 30px">{{$reservation->mail_date}}</strong>
+				<strong style="font-size: 50px;">{{$reservations[$i]['mail_time']}}</strong><br>
+				<strong style="font-size: 30px">{{$reservations[$i]['mail_date']}}</strong>
 			</div>
 			<hr>
-		@endforeach
+		@endfor
 	</p>
 	<br>
 	<h3>Estas fueron las instrucciones que le enviamos a las bandas, si algo está mal cambialo en la sección "Mis salas" de EnsayoPro</h3>
