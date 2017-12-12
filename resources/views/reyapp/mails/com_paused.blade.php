@@ -6,7 +6,7 @@
 
 @section('content')
   	<h1>Tu cuenta ha sido pausada</h1>
-  	<p>Debido a que notamos que no te has conectado a EnsayoPro en 48 horas, hemos pausado tu cuenta para evitar malos entendidos con los reservantes en caso de que por alguna razón no estes utilizando la plataforma para generar las reservaciones.</p>
+  	<p>Debido a que notamos que no te has conectado a EnsayoPro en {{$max_hours}} horas, hemos pausado tu cuenta para evitar malos entendidos con los reservantes en caso de que por alguna razón no estes utilizando la plataforma para generar las reservaciones.</p>
 	<p>
 
 	<p>Para reactivar tu cuenta solo tienes que logearte</p>
