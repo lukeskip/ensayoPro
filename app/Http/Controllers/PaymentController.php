@@ -455,7 +455,7 @@ class PaymentController extends Controller
 				$order_id 	=  $data->data->object->order_id;
 				$status 	=  $data->data->object->status;
 				$payment 	=  Payment::where('order_id',$order_id)->first();
-				
+
 				$room 		= $payment->reservations->first()->rooms;
 				$emails  	= array();
 				$user_email = $payment->reservations->first()->users->email;
@@ -483,6 +483,8 @@ class PaymentController extends Controller
 				$instructions 	= $room->instructions;
 				$company 		= $room->companies->name;
 				$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
+
+				$reservations = $payment->reservations->get();
 
     			// Enviamos un correo a la compañía con la información de todas las reservaciones
 				Mail::send('reyapp.mails.confirmation_com', ['room_name'=>$room_name,'reservations'=>$reservations,'company'=>$company,'instructions'=>$instructions], function ($message)use($company_email,$room_name){
