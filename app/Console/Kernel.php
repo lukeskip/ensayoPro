@@ -38,15 +38,18 @@ class Kernel extends ConsoleKernel
             foreach ($users as $user) {
                 $email = $user->email;
                 foreach ($user->companies as $company) {
-                    $company->status = 'paused';
-                    $company->save();
+                    if($company->status == 'active'){
+                        $company->status = 'paused';
+                        $company->save();
 
-                    Mail::send('reyapp.mails.com_paused', ['max_hours'=>$max_hours], function ($message)use($email){
+                        Mail::send('reyapp.mails.com_paused', ['max_hours'=>$max_hours], function ($message)use($email){
 
-                    $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tu compañía ha sido pausada');
-                    $message->to($email);
+                        $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tu compañía ha sido pausada');
+                        $message->to($email);
 
-                    });
+                        });  
+                    }
+                    
                 }
             }
             
