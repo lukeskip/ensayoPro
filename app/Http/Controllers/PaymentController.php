@@ -454,7 +454,7 @@ class PaymentController extends Controller
 				// $reference 	=  $data->data->object->payment_method->reference;
 				$order_id 	=  $data->data->object->order_id;
 				$status 	=  $data->data->object->status;
-				$payment 	= Payment::where('order_id',$order_id)->first();
+				$payment 	=  Payment::where('order_id',$order_id)->first();
 
 
 				$room 		= $payment->reservations->first()->rooms;
@@ -462,6 +462,8 @@ class PaymentController extends Controller
 				$user_email = 'contacto@chekogarcia.com.mx';
 				$payment->status = $status;
 				$payment->save();
+
+				$company_email = $payment->companies->email;
 
 				// Extraemos las variables para el envío de correo
 				 if($room->company_address){
@@ -474,6 +476,22 @@ class PaymentController extends Controller
 	                $room['city']           = $room->companies->city;
     			}
 
+    			// Declaramos las variables para el envío de correo
+				$company 		= $room->companies->name;
+				$room_name  	= $room->name;
+				$latitude		= $room->latitude;
+				$longitude		= $room->latitude;
+				$instructions 	= $room->instructions;
+				$company 		= $room->companies->name;
+				$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
+
+    			// Enviamos un correo a la compañía con la información de todas las reservaciones
+				Mail::send('reyapp.mails.confirmation_com', ['room_name'=>$room_name,'reservations'=>$reservations,'company'=>$company,'instructions'=>$instructions], function ($message)use($company_email,$room_name){
+
+                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$room_name);
+                $message->to($company_email);
+
+                });
 
 	        	// agrupamos las reservaciones por banda
 				$reservations = $payment->reservations->groupBy('band_id');
@@ -481,15 +499,6 @@ class PaymentController extends Controller
 
 				// Iteramos a partir de cada grupo (uno por banda) de reservaciones
 				$reservations->each(function($group, $index)use($room,$user_email,$status) {
-				    
-				    // Declaramos las variables para el envío de correo
-					$company 		= $room->companies->name;
-					$room_name  	= $room->name;
-					$latitåude		= $room->latitude;
-					$longitude		= $room->latitude;
-					$instructions 	= $room->instructions;
-					$company 		= $room->companies->name;
-					$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
 
 					foreach ($group as $reservation) {
 
