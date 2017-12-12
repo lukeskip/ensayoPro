@@ -11,8 +11,6 @@
 |
 */
 
-use Jenssegers\Date\Date;
-
 Auth::routes();
 
 Route::get('/confirmacion/{order_id}','PaymentController@show');
@@ -45,7 +43,7 @@ Route::get('/registro', function () {
 });
 
 Route::post('/confirmed_oxxo','PaymentController@confirmation');
-Route::get('/confirmed','PaymentController@confirm_test');
+// Route::get('/confirmed','PaymentController@confirm_test');
 
 Route::get('/registro/usuario/company', 'CompanyController@register_user')->name('register_user_company');
 
