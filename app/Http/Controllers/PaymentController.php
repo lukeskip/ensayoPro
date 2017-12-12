@@ -501,6 +501,15 @@ class PaymentController extends Controller
 				// Iteramos a partir de cada grupo (uno por banda) de reservaciones
 				$reservations->each(function($group, $index)use($room,$user_email,$status) {
 
+					// Declaramos las variables para el envío de correo
+					$company 		= $room->companies->name;
+					$room_name  	= $room->name;
+					$latitude		= $room->latitude;
+					$longitude		= $room->latitude;
+					$instructions 	= $room->instructions;
+					$company 		= $room->companies->name;
+					$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
+					
 					foreach ($group as $reservation) {
 
 						$reservation->status = 'confirmed';
