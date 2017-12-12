@@ -459,7 +459,7 @@ class PaymentController extends Controller
 
 				$room 		= $payment->reservations->first()->rooms;
 				$emails  	= array();
-				$user_email = 'contacto@chekogarcia.com.mx';
+				$user_email = $payment->reservations->first()->users->email;
 				$payment->status = $status;
 				$payment->save();
 
