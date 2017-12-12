@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Company as Company;
 use App\Setting as Setting;
+use App\User as User;
 use Jenssegers\Date\Date;
 
 class Kernel extends ConsoleKernel
