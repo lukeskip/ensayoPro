@@ -35,13 +35,21 @@ class Kernel extends ConsoleKernel
             $limit          = $now->subHours($max_hours);
             $users          = User::where('last_login','<=',$limit)->with('companies')->get();
             foreach ($users as $user) {
+                $email = $user->email;
                 foreach ($user->companies as $company) {
                     $company->status = 'paused';
                     $company->save();
+
+                    Mail::send('reyapp.mails.com_paused', ['max_hours'=>$max_hours], function ($message)use($email){
+
+                    $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tu compañía ha sido pausada');
+                    $message->to($email);
+
+                    });
                 }
             }
             
-        })->daily();
+        })->everyFiveMinutes();
     }
 
     /**
