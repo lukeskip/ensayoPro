@@ -456,7 +456,7 @@ class PaymentController extends Controller
 				$status 	=  $data->data->object->status;
 				$payment 	=  Payment::where('order_id',$order_id)->first();
 
-
+				$hola 		= $adios;
 				$room 		= $payment->reservations->first()->rooms;
 				$emails  	= array();
 				$user_email = $payment->reservations->first()->users->email;
