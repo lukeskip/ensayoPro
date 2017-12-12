@@ -4,6 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Company as Company;
+use App\Setting as Setting;
+use Jenssegers\Date\Date;
 
 class Kernel extends ConsoleKernel
 {
@@ -23,9 +26,21 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    {
-        // $schedule->command('inspire')
-        //          ->hourly();
+    {   
+
+        $schedule->call(function () {
+            $max_hours      = Setting::where('slug','max_log_hours')->first()->value;
+            $now            = new Date();
+            $limit          = $now->subHours($max_hours);
+            $users          = User::where('last_login','<=',$limit)->with('companies')->get();
+            foreach ($users as $user) {
+                foreach ($user->companies as $company) {
+                    $company->status = 'paused';
+                    $company->save();
+                }
+            }
+            
+        })->everyMinute();
     }
 
     /**

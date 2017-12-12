@@ -11,6 +11,8 @@
 |
 */
 
+use Jenssegers\Date\Date;
+
 Auth::routes();
 
 Route::get('/confirmacion/{order_id}','PaymentController@show');
@@ -24,6 +26,8 @@ Route::get('logout', function (){
 	Auth::logout();
 	return redirect('/login');
 });
+
+
 
 // Landing Músicos
 Route::get('/', function () {

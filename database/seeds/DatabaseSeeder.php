@@ -137,6 +137,15 @@ class DatabaseSeeder extends Seeder
 			$setting->slug = 'min_available_oxxo';
 			$setting->value = '24';
 			$setting->save();
+
+			// Creamos el setting min_available_oxxo
+			$setting = new Setting;
+			$setting->type = 'number';
+			$setting->label = 'Compañía tiempo sin loggeo antes de pausa';
+			$setting->description = 'Máximo de horas que una compañía puede estar sin logearse';
+			$setting->slug = 'max_log_hours';
+			$setting->value = '24';
+			$setting->save();
 			
 
 			
