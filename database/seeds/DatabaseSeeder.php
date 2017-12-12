@@ -99,7 +99,6 @@ class DatabaseSeeder extends Seeder
 			$setting->slug = 'comission';
 			$setting->description = 'Es la comisión que cobrarás por cada reservación se escribe en decimales';
 			$setting->value = '.10';
-			$setting->rules = 'required,'
 			$setting->save();
 
 			// Creamos el setting client_commission 
