@@ -486,6 +486,18 @@ class PaymentController extends Controller
 
 				$reservations = $payment->reservations;
 
+				foreach ($reservations as $reservation) {
+
+					$reservation->status = 'confirmed';
+					$reservation->save();
+
+					$mail_starts  = new Date($reservation->starts);
+	    			$mail_ends    = new Date($reservation->ends);
+					$reservation->mail_time =  $mail_starts->format('H:i').' a '.$mail_ends->format('H:i');
+	    			$reservation->mail_date = $mail_starts->format('l j F Y ');
+
+				}
+
     			// Enviamos un correo a la compañía con la información de todas las reservaciones
 				Mail::send('reyapp.mails.confirmation_com', ['room_name'=>$room_name,'reservations'=>$reservations,'company'=>$company,'instructions'=>$instructions], function ($message)use($company_email,$room_name){
 
@@ -509,7 +521,7 @@ class PaymentController extends Controller
 					$instructions 	= $room->instructions;
 					$company 		= $room->companies->name;
 					$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
-					
+
 					foreach ($group as $reservation) {
 
 						$reservation->status = 'confirmed';
