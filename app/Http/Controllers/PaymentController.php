@@ -462,7 +462,7 @@ class PaymentController extends Controller
 				$payment->status = $status;
 				$payment->save();
 
-				$company_email = $payment->companies->email;
+				$company_email = $payment->companies->users->first()->email;
 
 				// Extraemos las variables para el envío de correo
 				 if($room->company_address){
