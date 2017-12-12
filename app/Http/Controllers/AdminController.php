@@ -9,6 +9,7 @@ use App\Room as Room;
 use App\User as User;
 use App\Company as Company;
 use App\Comment as Comment;
+use App\Setting as Setting;
 use App\Reservation as Reservation;
 
 
@@ -53,6 +54,34 @@ class AdminController extends Controller
         $rooms = Room::leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id')->orderBy('average', 'DESC')->paginate(10);
 
         return view('reyapp.admin.rooms')->with('rooms',$rooms);
+    }
+
+    public function settings()
+    {
+        $settings = Setting::all();
+        return view('reyapp.admin.settings')->with('settings',$settings);
+    }
+
+    public function settings_save(Request $request)
+    {
+        // Registramos las reglas de validación
+        
+        foreach ($request->all() as $key => $value) {
+            if($value != ''){
+                $setting = Setting::where('slug',$key)->get()->first();
+                $setting->value = $value;
+                $setting->save();
+            }else{
+                return response()->json(['success' => false,'message'=>'Hay campos vacíos']);
+            }
+            
+        }
+
+        return response()->json(['success' => true,'message'=>'Los cambios fueron guardados']);
+        
+
+
+
     }
 
     /**

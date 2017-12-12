@@ -118,6 +118,12 @@
 						</li>
 
 						<li>
+							<a href="/admin/ajustes">
+								<i class="fa fa-cogs" aria-hidden="true"></i> Ajustes
+							</a>
+						</li>
+
+						<li>
 							<a href="/logout">
 								<i class="fa fa-sign-out" aria-hidden="true"></i> Salir
 							</a>

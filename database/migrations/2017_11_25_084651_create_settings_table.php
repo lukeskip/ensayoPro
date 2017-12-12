@@ -20,6 +20,7 @@ class CreateSettingsTable extends Migration
             $table->enum('type', ['boolean', 'number', 'date', 'text', 'select', 'textarea']);
             $table->string('slug')->unique()->index();
             $table->text('value');
+            $table->text('rules')->nullable();
             $table->string('user_id')->nullable();
             $table->timestamps();
         });

@@ -84,6 +84,8 @@ Route::group(['middleware' => ['auth','admin','active'],'prefix'=>'admin'], func
 	Route::get('/salas/', 'RoomController@index');
 	Route::get('/pagos/', 'PaymentController@index');
 	Route::get('/pagos/{order_id}/', 'PaymentController@show');
+	Route::get('/ajustes/', 'AdminController@settings');
+	Route::put('/settings_save/', 'AdminController@settings_save');
 
 	Route::get('/companies/', 'CompanyController@index');
 	Route::get('/company/ajustes/{id}', 'CompanyController@edit_admin');
