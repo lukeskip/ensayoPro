@@ -10,35 +10,6 @@
 
 @section('content')
 
-<div class="slider_wrapper">
-
-  <div id="background-video" class="background-video">
-    <img src="{{asset('img/placeholder.jpg')}}" alt="" class="placeholder-image">
-  </div>
-  <div class="owl-carousel owl-theme">
-     <div class="item">
-      <div class="wrapper">
-        <div class="text-center"><img src="{{asset('img/logo_ensayo.png')}}"></div>
-        <br>
-        <h2>Ensaya con el amplo que siempre has querido</h2>
-        <p class="show-for-medium">Encuéntralo en nuestra lista de las mejores salas de ensayo. </p>
-      </div>
-      
-    </div>
-    <div class="item">
-      <div class="wrapper">
-        <br><br><br>
-        <h2>Encuentra un espacio chingón para ensayar</h2>
-        <p class="show-for-medium">Califica y checa la opinión de otras bandas, además reserva aquí mismo tu ensayo en cualquier momento</p>
-      </div>
-    </div>
-    
-   
-</div>
-  <a class="button green large" href="/registro">REGÍSTRATE AHORA</a>
-</div>
-
-
 <!--STARTS: Benefits -->
 
 <div class="top-company_landing">
@@ -70,10 +41,11 @@
         <p class="text-center description-salas">Desde cualquier dispositivo lleva el control de tus Salas de Ensayo, ingresa y forma parte de Ensayo Pro.</p>
       </div>
   </div>
-</div>
-</div>
+  </div>
   <a class="button green large" href="/registro">REGÍSTRATE AHORA</a>
 </div>
+</div>
+
 
 {{-- ENDS: Benefits --}}
 
