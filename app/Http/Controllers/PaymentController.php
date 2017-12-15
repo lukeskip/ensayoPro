@@ -574,13 +574,18 @@ class PaymentController extends Controller
 
 		public function index()
 		{
-			$payments = Payment::paginate();
+			
+			$payments = Payment::where('order_id', 'LIKE', '%' . request()->buscar . '%')->paginate();
+			
 			foreach ($payments as $payment) {
+			
 				$date = new Date($payment->updated_at);
 				$date = $date->format('l j F Y H:i');
 				$payment->date = $date;
 			}
-			return view ('reyapp.payments.list')->with('payments',$payments);
+
+			$max = $payments->max('amount');
+			return view ('reyapp.payments.list')->with('payments',$payments)->with('max',$max);
 		}
 
 		/**
