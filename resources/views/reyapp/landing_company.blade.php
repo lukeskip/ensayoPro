@@ -41,36 +41,38 @@
 
 <!--STARTS: Benefits -->
 
-<div class="top-company">
-  <h1>¿Para qué una sala de ensayo?</h1>
-  <p class="text-center landing-subtitle">Una sala de ensayo es un espacio equipado con amplificadores (backline), consola, bocinas y todo lo necesario para que una banda ensaye cómodamente. Todas las bandas emergentes ensayan en este tipo de lugares.</p>
-  <p class="text-center landing-subtitle">Ensayo Pro es una plataforma que te permite comparar diferentes salas de ensayo en tu ciudad y reservarlas aquí mismo y tener una agenda sincronizada con tu banda para que sean más productivos y puedan llegar más lejos.</p>
+<div class="top-company_landing">
+  <h1>Es momento de que tu sala de ensayo te haga crecer.</h1>
+  <p class="text-center landing-subtitle">En Ensayo pro buscamos compañías que quieren crecer y llevar su negocio más allá de su colonia, de su delegación, de su ciudad...</p>
   <div class="row a">
-      <div class="columns medium-6 text-center">
-        <img src="{{asset('img/musico_ensayo_1.png')}}" with='100%'/>
-        <h2 class="text-center bullets-company">Tiempo de Calidad</h2>
-        <p class="text-center description-salas">Ensaya desde que llegas hasta que te vas y no pierdas tiempo valioso.</p>
+      <div class="columns medium-3 text-center">
+        <img src="{{asset('img/company_1.png')}}" with='100%'/>
+        <h2 class="text-center bullets-company">Obten más ingresos</h2>
+        <p class="text-center description-salas">Ensayo Pro te permitirá tener una mayor visualización por parte de Músicos que están en búsqueda de Salas de Ensayo. En promedio más de 500 busquedas se hacen mensualmente en google... ¿Cómo lo sabemos? todas llegan orgánicamente a reydecibel.com.mx</p>
       </div>
 
-      <div class="columns medium-6 text-center">
-        <img src="{{asset('img/musico_ensayo_2.png')}}" with='100%'/>
-        <h2 class="text-center bullets-company">Pura cosa chida</h2>
-        <p class="text-center description-salas">Califica y comenta sobre tus salas favoritas así otros músicos podrán tomar buenas decisiones.</p>
+      <div class="columns medium-3 text-center">
+        <img src="{{asset('img/company_2.png')}}" with='100%'/>
+        <h2 class="text-center bullets-company">Conoce a tu competencia</h2>
+        <p class="text-center description-salas">Saber en donde te encuentras parado te dará mayores beneficios sin gastar un centavo en estudios de mercado o mistery shopers, desde ahora saber lo qué tu competencia ofrece y lo que los músicos búscan te llevará un paso adelante</p>
         
       </div>
-      <div class="columns medium-6 text-center">
-        <img src="{{asset('img/musico_ensayo_3.png')}}" with='100%'/>
-        <h2 class="text-center bullets-company">Equipo Profesional</h2>
-        <p class="text-center description-salas">Deja de tocar con ese frankenstein, aquí hay equipo para Pro.</p>
+      <div class="columns medium-3 text-center">
+        <img src="{{asset('img/company_3.png')}}" with='100%'/>
+        <h2 class="text-center bullets-company">Para cobrar están los bancos, tú estás para crecer.</h2>
+        <p class="text-center description-salas">Las reservaciones se concretarán en cuanto el músico haya hecho el pago correspondiente a las horas seleccionadas</p>
         
       </div>
 
-      <div class="columns medium-6 text-center">
-        <img src="{{asset('img/musico_ensayo_4.png')}}" with='100%'/>
-        <h2 class="text-center bullets-company">Espacios Insonorizados</h2>
-        <p class="text-center description-salas">Diseña tu sonido sin que nadie te joda con que haces ruido.</p>
+      <div class="columns medium-3 text-center">
+        <img src="{{asset('img/company_4.png')}}" with='100%'/>
+        <h2 class="text-center bullets-company">Consulta tu dashboard desde celular, tablet o pc.</h2>
+        <p class="text-center description-salas">Desde cualquier dispositivo lleva el control de tus Salas de Ensayo, ingresa y forma parte de Ensayo Pro.</p>
       </div>
   </div>
+</div>
+</div>
+  <a class="button green large" href="/registro">REGÍSTRATE AHORA</a>
 </div>
 
 {{-- ENDS: Benefits --}}
@@ -80,17 +82,17 @@
   <h2>Aquí encuentras la mejor sala para ensayar.</h2>
   <p  class="landing-subtitle text-center">Sabemos la importancia de los ensayos, por ello hemos puesto atención en los detalles</p>
   <div class="row b">
-    <div class="feature-item small-12 medium-4 columns hide-for-small-only">
+    <div class="feature-item small-12 medium-4 columns">
       <div class="icon"><i class="fa fa-star fa-2x" aria-hidden="true"></i></div>
       <h3 class="feature-title text-center">Ranking para mejorar</h3>
       <p class="marketing-site-features-desc">Con esto podremos contar con mejores servicios.</p>
     </div>
-    <div class="feature-item small-12 medium-4 columns hide-for-small-only">
+    <div class="feature-item small-12 medium-4 columns">
       <div class="icon"><i class="fa fa-comments-o fa-2x" aria-hidden="true"></i></div>
       <h3 class="feature-title text-center">Comentarios para todos</h3>
       <p class="marketing-site-features-desc">¿Las estrellas no lo es todo? Deja tu comentario sobre la Sala Pro que reservaste.</p>
     </div>
-    <div class="feature-item small-12 medium-4 columns hide-for-small-only">
+    <div class="feature-item small-12 medium-4 columns">
       <div class="icon"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></div>
       <h3 class="feature-title text-center">Diversificación</h3>
       <p class="marketing-site-features-desc">¿Tienes diversas bandas? No te preocupes, podrás saber cuál ensayo le corresponde a cada una.</p>
