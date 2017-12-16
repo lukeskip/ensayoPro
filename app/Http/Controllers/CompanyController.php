@@ -277,7 +277,7 @@ class CompanyController extends Controller
 		$company->city           = $request->city;
 		$company->phone          = $request->phone;
 		$company->rfc            = $request->rfc;
-		$company->status            = $request->status;
+		
 		
 		
 		$company->bank           = $request->bank;
@@ -286,6 +286,10 @@ class CompanyController extends Controller
 		if ($request->has('latitude') and $request->has('longitude')) {
 			$company->latitude       = $request->latitude;
 			$company->longitude      = $request->longitude;
+		}
+
+		if ($request->has('status')) {
+			$company->status = $request->status;
 		}
 
 

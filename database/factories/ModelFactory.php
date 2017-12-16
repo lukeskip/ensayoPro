@@ -59,7 +59,7 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
         'clabe' 		=> 31823741823746,
         'bank' 			=> $faker->company,
         'account_holder'=> $faker->name,
-        'status' 		=> $faker->randomElement(['active' ,'inactive', 'deleted']),
+        'status' 		=> $faker->randomElement(['active' ,'inactive']),
         
     ];
 });

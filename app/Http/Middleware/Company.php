@@ -15,8 +15,9 @@ class Company
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
-        $role = Auth::user()->roles->first()->name;
+    {   
+        $user = Auth::user();
+        $role = $user->roles->first()->name;
         
         if($role == 'company' or $role == 'admin'){
             return $next($request);

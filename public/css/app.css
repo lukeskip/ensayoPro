@@ -650,6 +650,19 @@ textarea.input-group-field{
 	margin:auto;
 }
 
+.form_wrapper #slider-range{
+	background: rgba(0,0,0,.3);
+}
+
+.form_wrapper .slider_number{
+	margin-top: -5px;
+}
+
+.form_wrapper #slider-range{
+	width: 90%;
+	margin:10px auto 0 auto;
+}
+
 .form_wrapper .disclaimer{
 	padding: 10px;
 }

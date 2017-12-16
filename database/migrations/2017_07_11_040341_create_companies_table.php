@@ -29,7 +29,7 @@ class CreateCompaniesTable extends Migration
             $table->string('clabe');
             $table->string('bank');
             $table->string('account_holder');
-            $table->enum('status', ['active', 'inactive','deleted']);
+            $table->enum('status', ['active', 'inactive','paused','deleted']);
             $table->timestamps();
         });
     }

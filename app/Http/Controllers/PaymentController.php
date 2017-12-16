@@ -454,14 +454,15 @@ class PaymentController extends Controller
 				// $reference 	=  $data->data->object->payment_method->reference;
 				$order_id 	=  $data->data->object->order_id;
 				$status 	=  $data->data->object->status;
-				$payment 	= Payment::where('order_id',$order_id)->first();
-
+				$payment 	=  Payment::where('order_id',$order_id)->first();
 
 				$room 		= $payment->reservations->first()->rooms;
 				$emails  	= array();
-				$user_email = 'contacto@chekogarcia.com.mx';
+				$user_email = $payment->reservations->first()->users->email;
 				$payment->status = $status;
 				$payment->save();
+
+				$company_email = $payment->companies->users->first()->email;
 
 				// Extraemos las variables para el envío de correo
 				 if($room->company_address){
@@ -474,6 +475,36 @@ class PaymentController extends Controller
 	                $room['city']           = $room->companies->city;
     			}
 
+    			// Declaramos las variables para el envío de correo
+				$company 		= $room->companies->name;
+				$room_name  	= $room->name;
+				$latitude		= $room->latitude;
+				$longitude		= $room->latitude;
+				$instructions 	= $room->instructions;
+				$company 		= $room->companies->name;
+				$address        = $room->address.', '.$room->colony.', '.$room->deputation.', '.$room->city;
+
+				$reservations = $payment->reservations;
+
+				foreach ($reservations as $reservation) {
+
+					$reservation->status = 'confirmed';
+					$reservation->save();
+
+					$mail_starts  = new Date($reservation->starts);
+	    			$mail_ends    = new Date($reservation->ends);
+					$reservation->mail_time =  $mail_starts->format('H:i').' a '.$mail_ends->format('H:i');
+	    			$reservation->mail_date = $mail_starts->format('l j F Y ');
+
+				}
+
+    			// Enviamos un correo a la compañía con la información de todas las reservaciones
+				Mail::send('reyapp.mails.confirmation_com', ['room_name'=>$room_name,'reservations'=>$reservations,'company'=>$company,'instructions'=>$instructions], function ($message)use($company_email,$room_name){
+
+                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en '.$room_name);
+                $message->to($company_email);
+
+                });
 
 	        	// agrupamos las reservaciones por banda
 				$reservations = $payment->reservations->groupBy('band_id');
@@ -481,11 +512,11 @@ class PaymentController extends Controller
 
 				// Iteramos a partir de cada grupo (uno por banda) de reservaciones
 				$reservations->each(function($group, $index)use($room,$user_email,$status) {
-				    
-				    // Declaramos las variables para el envío de correo
+
+					// Declaramos las variables para el envío de correo
 					$company 		= $room->companies->name;
 					$room_name  	= $room->name;
-					$latitåude		= $room->latitude;
+					$latitude		= $room->latitude;
 					$longitude		= $room->latitude;
 					$instructions 	= $room->instructions;
 					$company 		= $room->companies->name;
@@ -543,13 +574,18 @@ class PaymentController extends Controller
 
 		public function index()
 		{
-			$payments = Payment::paginate();
+			
+			$payments = Payment::where('order_id', 'LIKE', '%' . request()->buscar . '%')->paginate();
+			
 			foreach ($payments as $payment) {
+			
 				$date = new Date($payment->updated_at);
 				$date = $date->format('l j F Y H:i');
 				$payment->date = $date;
 			}
-			return view ('reyapp.payments.list')->with('payments',$payments);
+
+			$max = $payments->max('amount');
+			return view ('reyapp.payments.list')->with('payments',$payments)->with('max',$max);
 		}
 
 		/**
