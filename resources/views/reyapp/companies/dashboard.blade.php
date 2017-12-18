@@ -15,7 +15,7 @@
 							<h3>Reservaciones esta semana</h3>
 						</div>
 						<div class="medium-3 columns show-for-medium">
-							Usuario 
+							Fecha 
 						</div>
 						<div class="medium-3 columns show-for-medium">
 							Banda
