@@ -354,6 +354,7 @@
 				'id'  :id,
 			});
     	}).on("complete", function (event, id, name, response) {
+    		console.log(response.name);
     		room_images.push({
 				'name'  :response.name,
 				'path'	:'uploader/completed'
