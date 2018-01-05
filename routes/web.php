@@ -111,6 +111,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/activa_tu_cuenta', 'UserController@active_form');
 	Route::get('/activa_tu_cuenta/{token}', 'UserController@active');
 	Route::get('/reenviar_bienvenida/', 'UserController@bienvenida');
+	Route::resource('/usuarios', 'UserController');
 });
 
 
@@ -122,7 +123,6 @@ Route::group(['middleware' => ['auth','active']], function () {
 	Route::get('/salas/reservacion/edicion/{code}', 'ReservationController@edit');
 	Route::put('/salas/reservacion/edicion/{code}', 'ReservationController@update');
 	
-	Route::resource('/usuarios', 'UserController');
 
 	
 
