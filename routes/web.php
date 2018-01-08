@@ -32,6 +32,10 @@ Route::get('/', function () {
     return view('reyapp.main');
 });
 
+Route::get('/phpinfo', function () {
+    return phpinfo();
+});
+
 // Landing Company
 Route::get('/unete', function () {
     return view('reyapp.landing_company');
