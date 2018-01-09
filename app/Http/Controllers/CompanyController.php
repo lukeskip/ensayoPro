@@ -101,7 +101,8 @@ class CompanyController extends Controller
 			'postal_code'       => 'required|max:20',
 			'city'              => 'required|max:100',
 			'phone'             => 'required|max:30',
-			'rfc'               => 'required|max:30',
+			// 'rfc'            => 'required|max:30',
+			// 'legalname'      => 'required|max:255',
 			'latitude'          => 'required|max:20',
 			'longitude'         => 'required|max:20',       
 		);

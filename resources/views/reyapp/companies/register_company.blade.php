@@ -97,12 +97,12 @@
 				</div>
 				<div class="large-6 columns">
 					<label>Razón Social</label>	
-					<input class="input-group-field city get_loc" type="text" name="legalname">
+					<input class="input-group-field" type="text" name="legalname">
 				</div>
 
 				<div class="large-6 columns">
 					<label>RFC</label>	
-					<input class="input-group-field city get_loc" type="text" name="rfc">
+					<input class="input-group-field" type="text" name="rfc">
 				</div>
 
 				
