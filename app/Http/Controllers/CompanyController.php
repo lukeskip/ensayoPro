@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use App\User as User;
 use Illuminate\Support\Facades\Validator;
+use Mail;
 
 class CompanyController extends Controller
 {
@@ -133,9 +134,26 @@ class CompanyController extends Controller
 		$company->bank           = $request->bank;
 		$company->account_holder = $request->account_holder;
 		$company->status         = 'inactive';
+		$emails 				 = [];	
 		
 		$user = User::findOrFail($user_id);
 		$user->companies()->save($company);
+
+		$users_emails = User::whereHas('roles', function ($query) {
+    		$query->where('name', '=', 'admin');
+		})->get();
+
+		foreach ($users_emails as $user) {
+			// Obtenemos los correos de los usuarios en esa banda
+			$emails[] = $user->email;
+		};
+
+		Mail::send('reyapp.mails.newcompany', ['company'=>$company->name], function ($message)use($emails,$company){
+
+	        $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una nueva compañía por aprobar '.$company->name);
+	        $message->to($emails);
+
+        });
 
 		return response()->json(['success' => true]);
 

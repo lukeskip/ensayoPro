@@ -42,13 +42,13 @@
 									{{substr($reservation->description,0,0)}}
 									@if($reservation->bands)
 										{{$reservation->bands->first()->name}}
-
 									@elseif($reservation->description!='')
-										<span class="hastooltip" title="{{$reservation->description}}">{{substr($reservation->description,0,10)}}...</span>
+										<span class="hastooltip" title="{{$reservation->description}} {{$reservation->payments->order_id}}">{{substr($reservation->description." ".$reservation->payments->order_id,0,10)}}...</span>
 									@else
 										{{'Sin banda'}}
 									@endif
 									
+
 								</div>
 								<div class="medium-2 columns ">
 									{{$reservation->rooms->name}}

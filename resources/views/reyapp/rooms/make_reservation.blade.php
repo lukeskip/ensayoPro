@@ -37,15 +37,14 @@
 			</div>
 			<div class="clarification display">
 				
-
-					@if($user->bands)
+					@if($user->bands->count() > 0)
 						<label for="">
 							Elige tu banda <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Le llegará un aviso a los miembros de tu banda"></i>
 						</label>
 						<select  name="band" class="band" id="" >
 							<option value="0">Sin banda...</option>
 							@foreach($bands as $band)
-								<option value="{{$band->id}}">{{$band->name}}</option>
+								<option selected value="{{$band->id}}">{{$band->name}}</option>
 							@endforeach
 						</select>
 					@endif

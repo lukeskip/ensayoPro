@@ -38,7 +38,7 @@
 							<div class="medium-3 columns ">
 								@if($reservation->band_id)
 									{{$reservation->bands->name}}
-								@elseif($reservation->description!='')
+								@elseif($reservation->description=='')
 									Sin banda
 								@else
 									{{'Sin banda'}}

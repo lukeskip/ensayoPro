@@ -36,6 +36,14 @@ Route::get('/phpinfo', function () {
     return phpinfo();
 });
 
+Route::get('/prueba', function () {
+    return $emails = App\User::whereHas('roles', function ($query) {
+    		$query->where('name', '=', 'admin');
+	})->get();
+});
+
+
+
 // Landing Company
 Route::get('/unete', function () {
     return view('reyapp.landing_company');

@@ -59,6 +59,7 @@ class EventController extends Controller
         $starts         = $request->start;
         $ends           = $request->end;
 
+
         
 
         $event              = new Event();
@@ -68,7 +69,7 @@ class EventController extends Controller
         $event->user_id     = $user_id;
         
         if($request->has('band_id')){
-          $event->band_id     = $band_id;  
+          $event->band_id     = $request->band_id;  
         }
         
 
