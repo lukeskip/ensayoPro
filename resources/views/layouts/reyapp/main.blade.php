@@ -271,10 +271,6 @@
 	</div><!-- END OFF CANVAS WRAPPER-->
 	
 		<footer>
-			<script language="JavaScript" type="text/javascript">
-			TrustLogo("http://ensayopro.com.mx/img/comodo_secure_seal_113x59_transp.png", "CL1", "none");
-			</script>
-			<a  href="https://ssl.comodo.com" id="comodoTL">SSL Certificates</a>
 			<div><img src=" {{asset('img/logo_rey.png')}} " width="100" alt=""></div>
 			Todos los derechos reservados,2017. <a style="color:white" href="http://www.reydecibel.com.mx/terminos-condiciones-generador-setlists/">Términos y condiciones</a>
 		</footer>
