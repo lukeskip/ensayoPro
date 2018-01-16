@@ -181,7 +181,7 @@
 				<br><br>
 				<div class="small">Este sitio está protegido por:</div>
 				<script language="JavaScript" type="text/javascript">
-				TrustLogo("http://ensayopro.com.mx/img/comodo_secure_seal_113x59_transp.png", "CL1", "none");
+				TrustLogo("https://ensayopro.com.mx/img/comodo_secure_seal_113x59_transp.png", "CL1", "none");
 				</script>
 				<a  href="https://ssl.comodo.com" id="comodoTL">SSL Certificates</a>
 					
