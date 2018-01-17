@@ -37,7 +37,11 @@
 			@foreach($users as $user)
 				<div class="row list-item">
 					<div class="medium-3 columns">
+						@if($user->name== '')
+							Invitado
+						@else
 						<a href="/usuarios/{{$user->id}}">{{$user->name}} {{$user->lastname}}</a>
+						@endif
 					</div>
 					<div class="medium-4 columns">
 						{{$user->email}}
