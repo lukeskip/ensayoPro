@@ -24,10 +24,10 @@
 				<div class="medium-3 columns show-for-medium">
 					Nombre 
 				</div>
-				<div class="medium-3 columns show-for-medium">
+				<div class="medium-4 columns show-for-medium">
 					Email
 				</div>
-				<div class="medium-3 columns show-for-medium">
+				<div class="medium-2 columns show-for-medium">
 					Rol
 				</div>
 				<div class="medium-3 columns show-for-medium">
@@ -39,17 +39,17 @@
 					<div class="medium-3 columns">
 						<a href="/usuarios/{{$user->id}}">{{$user->name}} {{$user->lastname}}</a>
 					</div>
-					<div class="medium-3 columns">
+					<div class="medium-4 columns">
 						{{$user->email}}
 					</div>
-					<div class="medium-3 columns ">
+					<div class="medium-2 columns ">
 						{{$user->roles->first()->name}}
 					</div>
 					<div class="medium-3 columns status">
 						@if($user->active)
 							<i class="fa fa-check-circle-o confirmed hastooltip" title="Activa" aria-hidden="true"></i>
 						@else
-							<i class="fa fa-times-circle-o hastooltip cancelled" title="Cancelada" aria-hidden="true"></i>
+							<i class="fa fa-times-circle-o hastooltip cancelled" title="Inactiva" aria-hidden="true"></i>
 						@endif
 					</div>
 				</div>
