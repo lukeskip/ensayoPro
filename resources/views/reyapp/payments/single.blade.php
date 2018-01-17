@@ -65,8 +65,9 @@
 					<h3>Desglose</h3>
 					<div><label>Horas totales:</label>{{$payment->quantity}}</div>
 					<div><label>Precio Unitario:</label>${{$payment->rooms->price}}</div>
+					<div><label>Comisión Ensayo Pro:</label>${{$payment->comission}}</div>
 					<hr>
-					<div><label>Importe pagado:</label> ${{$payment->amount}}</div>
+					<div><label>Importe pagado:</label> ${{$payment->total}}</div>
 					
 				</div>
 			</div>
