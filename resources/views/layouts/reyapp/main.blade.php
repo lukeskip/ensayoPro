@@ -100,6 +100,11 @@
 							</a>
 						</li>
 						<li>
+							<a href="/admin/users">
+								<i class="fa fa-users" aria-hidden="true"></i> Usuarios
+							</a>
+						</li>
+						<li>
 							<a href="/admin/companies">
 								<i class="fa fa-users" aria-hidden="true"></i> Compañías
 							</a>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User as User;
+use App\Role as Role;
 use Illuminate\Support\Facades\Validator;
 use Mail;
 
@@ -111,15 +112,16 @@ class UserController extends Controller
         $user_id = Auth::user()->id;
         $user    = User::find($user_id);
         $role    = $user->roles->first()->name;
+        $roles   = Role::all();
 
         if($role == 'admin'){
             $user = User::find($id); 
         }else if($user_id != $id){
-
             return redirect('/usuarios/'.$user_id);
         }
 
-        return view('reyapp.users.single')->with('user',$user)->with('role',$role);
+
+        return view('reyapp.users.single')->with('user',$user)->with('role',$role)->with('roles',$roles);
     }
 
     /**
@@ -144,7 +146,7 @@ class UserController extends Controller
     {
         
         $user = User::find($id);
-        $role = $user->roles->first()->name;
+        $role = $user->roles->first();
 
         // Registramos las reglas de validación
         $rules = array(
@@ -163,11 +165,15 @@ class UserController extends Controller
             return response()->json($validator->messages(), 200);
         }
 
-        if($user->id != $id and $role !='admin'){
+        if($user->id != $id and $role->name !='admin'){
             return response()->json(['success' => false,'messages'=>'No tienes privilegios necesarios']);
         }
 
-
+        if($request->has('role')){
+            $user->roles()->detach($role->id);
+            $role = Role::where('token',$request->role)->first();
+            $user->roles()->attach($role->id);
+        }
 
         
         $user ->name = $request->name;

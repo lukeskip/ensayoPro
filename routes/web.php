@@ -101,6 +101,8 @@ Route::group(['middleware' => ['auth','admin','active'],'prefix'=>'admin'], func
 
 	Route::get('/companies/', 'CompanyController@index');
 	Route::get('/company/ajustes/{id}', 'CompanyController@edit_admin');
+
+	Route::get('/users/', 'AdminController@users');
 });
 
 

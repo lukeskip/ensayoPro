@@ -42,6 +42,7 @@ class PaymentController extends Controller
 				$ids         = array();
 				$band_id	 = 0;
 				$max_card 	 = Setting::where('slug','max_card')->first()->value;
+				$user_comission 	 	= Setting::where('slug','user_comission')->first()->value;
 
 				if(count($events) < 1){
 					return response()->json(['success' => false,'message'=> 'Tienes que seleccionar un horario']);
@@ -144,14 +145,21 @@ class PaymentController extends Controller
 				array(
 						'line_items'=> array(
 								array(
-										'name'        => $room->name,
-										'description' => 'Renta de instalaciones',
-										'unit_price'  => $room->price * 100,//El costo se pasa en centavos
-										'quantity'    => $total_h
+									'name'        => $room->name,
+									'description' => 'Renta de instalaciones',
+									'unit_price'  => $room->price * 100,//El costo se pasa en centavos
+									'quantity'    => $total_h
+								),
+								array(
+									'name'        => "Cargo por servicio",
+									'description' => 'Cargo por servicio',
+									'unit_price'  => $user_comission * 100,//El costo se pasa en centavos
+									'quantity'    => 1
 								)
+
 						),
 						'currency'    => 'MXN',
-					//'metadata'    => array('test' => 'extra info'),
+						//'metadata'    => array('test' => 'extra info'),
 						'charges'     => array(
 							array(
 									'payment_method' => array(
@@ -174,19 +182,22 @@ class PaymentController extends Controller
 
 						$pI = $order['id'];
 						$pM = $order->charges[0]->payment_method->type;
-						$pR = 0;
 						$pS = $order['payment_status'];
-						$pA = $order->amount;
-						$pQ = $order->line_items[0]->quantity;
+						$pT = $order->amount / 100; //Total de la transacción
+						$pQ = $order->line_items[1]->quantity;
+						$pC = $order->line_items[0]->unit_price / 100;
+						$pA = ($order->line_items[1]->unit_price * $order->line_items[1]->quantity) / 100;//cargo sin contar la comision
 						// $rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS,'price'=>$price);
 
 						$payment         		= new Payment;
-						$payment->order_id  	= $pI;
-						$payment->amount 		= $pA/100;
+						$payment->order_id   	= $pI;
+						$payment->amount 		= $pA;
+						$payment->total 		= $pT;
 						$payment->method 		= $pM;
 						$payment->company_id 	= $room->companies->id;
 						$payment->room_id 		= $room->id;
 						$payment->quantity		= $pQ;
+						$payment->comission		= $pC;
 						$payment->status		= $pS;
 						$payment->save();
 
@@ -260,6 +271,7 @@ class PaymentController extends Controller
 				$ids         = array();
 				$max_oxxo 	 = Setting::where('slug','max_oxxo')->first()->value;
 				$min_available_oxxo 	 = Setting::where('slug','min_available_oxxo')->first()->value;
+				$user_comission 	 	= Setting::where('slug','user_comission')->first()->value;
 
 				if(count($events) < 1){
 					return response()->json(['success' => false,'message'=> 'Tienes que seleccionar un horario']);
@@ -378,8 +390,15 @@ class PaymentController extends Controller
 								'description' => 'Renta de instalaciones',
 								'unit_price'  => $room->price * 100,//El costo se pasa en centavos
 								'quantity'    => $total_h
+							),
+							array(
+								'name'        => "Cargo por servicio",
+								'description' => 'Cargo por servicio',
+								'unit_price'  => $user_comission * 100,//El costo se pasa en centavos
+								'quantity'    => 1
 							)
 				),
+
 				'currency'      => 'MXN',
 					// 'metadata'    => array('test' => 'extra info'),
 				'charges'     => array(
@@ -412,18 +431,22 @@ class PaymentController extends Controller
 			$pI = $order['id'];
 			$pM = $order->charges[0]->payment_method->type;
 			$pS = $order['payment_status'];
-			$pA = $order->amount;
-			$pQ = $order->line_items[0]->quantity;
+			$pT = $order->amount /100; //Total de la transacción
+			$pQ = $order->line_items[1]->quantity;
+			$pC = $order->line_items[0]->unit_price / 100;
+			$pA = ($order->line_items[1]->unit_price * $order->line_items[1]->quantity) / 100;//cargo sin contar la comision
 			$pE = $order->charges[0]->payment_method->expires_at;
 			// $rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS,'price'=>$price);
 
 			$payment         		= new Payment;
 			$payment->order_id   	= $pI;
-			$payment->amount 		= $pA/100;
+			$payment->amount 		= $pA;
+			$payment->total 		= $pT;
 			$payment->method 		= $pM;
 			$payment->company_id 	= $room->companies->id;
 			$payment->room_id 		= $room->id;
 			$payment->quantity		= $pQ;
+			$payment->comission		= $pC;
 			$payment->status		= $pS;
 			$payment->reference  	= $pR;
 			$payment->expires_at 	= $pE;

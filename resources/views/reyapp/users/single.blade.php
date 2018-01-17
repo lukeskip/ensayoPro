@@ -63,6 +63,17 @@
 						</label>
 					@endif
 			</div>
+			@if($role == 'admin')
+				<div class="large-6 columns">
+					
+						<label>Rol</label>
+						<select name="role" id="">
+							@foreach($roles as $role_db)
+								<option @if($user->roles->first()->name == $role_db->name) selected @endif value="{{$role_db->token}}">{{$role_db->name}}</option>
+							@endforeach
+						</select>
+				</div>
+			@endif
 
 		</div>
 

@@ -83,7 +83,7 @@
 							{{$payment->method}}
 						</div>
 						<div class="large-2 columns ">
-							${{$payment->amount}}
+							${{$payment->total}}
 						</div>
 						<div class="large-3 columns ">
 							{{$payment->order_id}}
@@ -130,7 +130,7 @@
 	      min: 0,
 	      max: {{$max}},
 	      step: 50,
-	      values: [ {{request('from')}}, {{request('to')}} ],
+	      // values: [ {{request('from')}}, {{request('to')}} ],
 	      slide: function( event, ui ) {
 	        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
 	      }

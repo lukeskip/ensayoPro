@@ -35,12 +35,17 @@ textarea{
 	white-space: pre-line;
 }
 
+
 .row.full{
 	max-width: 100%;
 }
 
 .unregistered{
 	opacity: .5;
+}
+
+.money:before{
+	content:'$';
 }
 
 .tag{

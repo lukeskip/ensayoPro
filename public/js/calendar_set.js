@@ -219,8 +219,12 @@ function counting_hours(){
 		}
 	});
 	
-
-	var price = total_hours * room_price;
+	if(total_hours < 1){
+		var price = 0;
+	}else{
+		var price = (total_hours * room_price) + user_comission;
+	}
+	
 
 	$('.total-hours .number').html(total_hours);
 	$('.total-price .number').html(price);

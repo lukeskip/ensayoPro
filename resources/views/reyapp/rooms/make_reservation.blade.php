@@ -30,9 +30,12 @@
 				<div class="text">Horas reservadas</div>
 			</div>
 			<div class="total-price display">
-				<div class="text">Costo total</div>
-				<div class="number">
-					$0
+				<div class="text">
+					Costo total + comisión ( <span class="hastooltip" title="Costo del servicio">${{$user_comission}} 
+					 )</span>
+				</div>
+				<div class="number money">
+					0
 				</div>
 			</div>
 
@@ -218,6 +221,7 @@
 		var max_oxxo = {{$max_oxxo}};
 		var max_card = {{$max_card}};
 		var min_available_oxxo = {{$min_available_oxxo}};
+		var user_comission = {{$user_comission}};
 
 		@if($user->bands->count() < 1)
 			title = '{{$user->name}} {{$user->lastname}}';
@@ -264,8 +268,6 @@
 			show_message('error','¡Error!',response.message_to_purchaser);
 		};
 
-		
-		
 
 		$(document).ready(function(){
 			$( ".payment_method" ).change(function() {

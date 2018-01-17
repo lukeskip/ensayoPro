@@ -149,4 +149,16 @@ class AdminController extends Controller
     {
         //
     }
+
+    public function users(){
+        $users = User::orderBy('name','ASC');
+        if(request()->has('buscar')){
+           $users->where('name', 'LIKE', '%' . request()->buscar . '%')->orWhere('email', 'LIKE', '%' . request()->buscar . '%');
+        }
+        $users = $users->paginate();
+        return view('reyapp.admin.users')->with('users',$users);
+
+    }
+
+    
 }

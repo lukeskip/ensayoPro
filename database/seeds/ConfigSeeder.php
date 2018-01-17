@@ -1,0 +1,88 @@
+<?php
+
+use Illuminate\Database\Seeder;
+use App\Setting as Setting;
+
+class ConfigSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // Creamos el setting commission
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Comisión';
+		$setting->slug = 'comission';
+		$setting->description = 'Es la comisión que cobrarás por cada reservación se escribe en decimales';
+		$setting->value = '.10';
+		$setting->save();
+
+		// Creamos el setting client_commission 
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Comisión cliente';
+		$setting->slug = 'client_commission';
+		$setting->description = 'Es la comisión que cobrarás al cliente por el total de su pago se escribe en decimales';
+		$setting->value = '.025';
+		$setting->save();
+
+		// Creamos el setting cancel_time
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Tiempo de cancelación';
+		$setting->description = 'Es el tiempo que tendrá el usuario para poder cancelar su reservación se expresa en horas';
+		$setting->slug = 'cancel_time';
+		$setting->value = '48';
+		$setting->save();
+
+
+		// Creamos el setting max_oxxo
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Máximo de horas Oxxo';
+		$setting->description = 'Es el máximo de horas que un usuario puede reservar vía oxxo';
+		$setting->slug = 'max_oxxo';
+		$setting->value = '6';
+		$setting->save();
+
+		// Creamos el setting max_card
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Máximo de horas Tarjeta';
+		$setting->description = 'Es el máximo de horas que un usuario puede reservar vía tarjeta de crédito o débito';
+		$setting->slug = 'max_card';
+		$setting->value = '15';
+		$setting->save();
+
+		// Creamos el setting min_available_oxxo
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Mínimo de anticipación para pagos oxxo';
+		$setting->description = 'Es el mínimo de horas de anticipación para que un usuario pueda ocupar el pago con oxxo';
+		$setting->slug = 'min_available_oxxo';
+		$setting->value = '24';
+		$setting->save();
+
+		// Creamos el setting max_log_hours
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Compañía tiempo sin logeo antes de pausa';
+		$setting->description = 'Máximo de horas que una compañía puede estar sin logearse';
+		$setting->slug = 'max_log_hours';
+		$setting->value = '24';
+		$setting->save();
+
+		// Creamos el setting max_log_hours
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Comision por servicio';
+		$setting->description = 'Es la comisión que se le cobra al usuario por el uso de la plataforma';
+		$setting->slug = 'user_comission';
+		$setting->value = '6';
+		$setting->save();
+    }
+}
