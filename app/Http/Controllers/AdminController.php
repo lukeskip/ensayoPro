@@ -155,10 +155,10 @@ class AdminController extends Controller
         if(request()->has('buscar')){
            $users->where('name', 'LIKE', '%' . request()->buscar . '%')->orWhere('email', 'LIKE', '%' . request()->buscar . '%');
         }
-        $users = $users->paginate();
+        $users = $users->paginate(15);
         return view('reyapp.admin.users')->with('users',$users);
 
     }
 
-    
+
 }

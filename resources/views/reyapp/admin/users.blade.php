@@ -38,7 +38,7 @@
 				<div class="row list-item">
 					<div class="medium-3 columns">
 						@if($user->name== '')
-							Invitado
+							<a href="/usuarios/{{$user->id}}">Invitado</a>
 						@else
 						<a href="/usuarios/{{$user->id}}">{{$user->name}} {{$user->lastname}}</a>
 						@endif
