@@ -272,7 +272,7 @@ class CompanyController extends Controller
 			'postal_code'       => 'required|max:20',
 			'city'              => 'required|max:100',
 			'phone'             => 'required|max:30',
-			'rfc'               => 'required|max:30',
+			'rfc'               => 'max:30',
 			'latitude'          => 'max:20',
 			'longitude'         => 'max:20',       
 		);

@@ -103,6 +103,7 @@ Route::group(['middleware' => ['auth','admin','active'],'prefix'=>'admin'], func
 	Route::get('/company/ajustes/{id}', 'CompanyController@edit_admin');
 
 	Route::get('/users/', 'AdminController@users');
+	Route::get('/reservaciones/', 'ReservationController@index');
 });
 
 

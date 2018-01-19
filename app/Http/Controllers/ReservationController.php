@@ -60,8 +60,15 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::all();
-        return view('reyapp.dashboard')->with('reservations',$reservations);
+        $reservations = Reservation::orderBy('created_at');
+        // Agregar la parte de buscar
+        // if(request()->has('buscar')){
+        //    $users->where('name', 'LIKE', '%' . request()->buscar . '%')->orWhere('email', 'LIKE', '%' . request()->buscar . '%');
+        // }
+
+        $reservations = $reservations->paginate(15);
+
+        return view('reyapp.admin.reservations')->with('reservations',$reservations);
     }
 
     /**
