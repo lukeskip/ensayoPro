@@ -36,13 +36,19 @@ Route::get('/phpinfo', function () {
     return phpinfo();
 });
 
-Route::get('/prueba', function () {
-    return $emails = App\User::whereHas('roles', function ($query) {
-    		$query->where('name', '=', 'admin');
-	})->get();
+// Route::get('/prueba', function () {
+//     return $emails = App\User::whereHas('roles', function ($query) {
+//     		$query->where('name', '=', 'admin');
+// 	})->get();
+// });
+
+Route::get('/terminos-y-condiciones', function(){
+	return view('reyapp.mandatories.terms');
 });
 
-
+Route::get('/aviso-de-privacidad', function(){
+	return view('reyapp.mandatories.privacy');
+});
 
 // Landing Company
 Route::get('/unete', function () {

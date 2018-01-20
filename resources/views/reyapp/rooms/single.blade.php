@@ -30,7 +30,6 @@
 				<div class="text-center">
 					<label for="">@if($room->score) Califica esta sala @else Sé el primero en calificar esta sala @endif</label>
 					<select name="rating" class="hidden rating">
-						<option value="0">0</option>
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
