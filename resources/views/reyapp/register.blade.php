@@ -113,7 +113,7 @@
 			</div>
 			<div class="medium-8 columns">
 				<div class="disclaimer">
-					Haciendo click en "Registrar" aceptas los <strong><a href="/terminos-y-condiciones">Términos y Condiciones</a></strong> así como el <a href="/aviso-de-privacidad">aviso de privacidad</a> que puedes visitar en los enlaces antes mencionados.
+					Haciendo click en "Registrar" aceptas los <strong><a href="/terminos-y-condiciones">Términos y Condiciones</a></strong> así como el <strong><a href="/aviso-de-privacidad">Aviso de Privacidad</a></strong> que puedes visitar en los enlaces antes mencionados.
 				</div>
 			</div>
 		</div>
