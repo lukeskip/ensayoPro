@@ -42,7 +42,7 @@ Route::get('/phpinfo', function () {
 // 	})->get();
 // });
 
-Route::get('/terminos-y-condiciones', function(){
+Route::get('/terminos_y_condiciones', function(){
 	return view('reyapp.mandatories.terms');
 });
 
