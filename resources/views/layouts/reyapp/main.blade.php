@@ -277,7 +277,7 @@
 	
 		<footer>
 			<div><img src=" {{asset('img/logo_rey.png')}} " width="100" alt=""></div>
-			Todos los derechos reservados,2017. <a style="color:white" href="http://www.reydecibel.com.mx/terminos-condiciones-generador-setlists/">Términos y condiciones</a>
+			Todos los derechos reservados,2017. <a style="color:white" href="/terminos-y-condiciones">Términos y condiciones</a>
 		</footer>
 
 		@yield('modal')
