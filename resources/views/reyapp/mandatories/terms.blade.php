@@ -65,13 +65,13 @@ Ensayopro.com.mx no se hace responsable por el mal manejo del número de CLABE, 
 <h2>Agendar ensayos.</h2>
 
 <p>Un ensayo quedará agendado en cuanto se haga el pago completo por la misma mediante el sistema de pagos en tiendas oxxo por el total del monto final.
-El Músico contará con un periodo de 24 horas para concluir el pago correspondiente, mientras tanto el horario seleccionado quedará bloqueado. En caso de no realizar el pago dentro de las 24 horas de pago, el ensayo quedará cancelado de forma automática.</p>
+El Músico contará con un periodo de 12 horas para concluir el pago correspondiente, mientras tanto el horario seleccionado quedará bloqueado. En caso de no realizar el pago dentro de las 12 horas de pago, el ensayo quedará cancelado de forma automática.</p>
 
-<h2>Cancelaciones.</h2> 
+<h2>Cancelaciones y devoluciones.</h2>
 
-<p>En caso de no poder concluir con el pago en el periodo de las 24 horas asignadas, el músico deberá de cancelar el ensayo.</p>
+<p>En caso de haber concluido con el pago de las horas contratadas y el Músico necesite cancelar el ensayo, éste deberá de realizarlo 24 horas antes de la fecha mediante el botón de cancelación y el sistema permitirá re-agenar la fecha. Si el plazo de 24 horas ha concluido el ensayo no podrá ser cancelado ni re-agendado.</p>
 
-<p>En caso de haber concluido con el pago de las horas contratadas y el Músico necesite cancelar el ensayo, éste deberá de realizarlo 24 horas antes de la fecha mediante el botón de cancelación y el sistema permitirá re-agenar la fecha. Si el ensayo se cancela después de las 24 horas antes del ensayo éste quedará cancelado y no se podrá re-agendar ni hacer devolución del dinero.</p>
+<p>El dinero pagado será devuelto sólo en caso de que la compañía cancele definitivamente el ensayo bajo las condiciones que se mencionan en el título "Cancelaciones por parte de las compañías", sin embargo, el músico podrá solicitar re-agendar su ensayo con las condiciones antes mencionadas.</p> 
 
 <p>Ejemplo: Tu ensayo es el lunes a las 13 horas y cancelas el domingo a las 12 horas (se re-agenda)
 Tu ensayo es el lunes a las 13 horas y cancelas el domingo a las 21 horas (no se re-agenda)</p>
