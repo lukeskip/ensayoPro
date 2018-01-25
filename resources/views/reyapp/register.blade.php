@@ -113,7 +113,7 @@
 			</div>
 			<div class="medium-8 columns">
 				<div class="disclaimer">
-					Haciendo click en "Registrar" aceptas los <strong><a href="/terminos_y_condiciones">Términos y Condiciones</a></strong> así como el <strong><a href="/aviso-de-privacidad">Aviso de Privacidad</a></strong> que puedes visitar en los enlaces antes mencionados.
+					Haciendo click en "Registrar" aceptas los <strong><a href="/terminos_y_condiciones">Términos y Condiciones</a></strong> así como el <strong><a href="/aviso-de-privacidad">Aviso de Privacidad</a></strong> que puedes visitar en los enlaces antes mencionados, además aceptas que Rey Decibel a través de ENsayoPro te contacte a tu correo para temas propios de la plataforma.
 				</div>
 			</div>
 		</div>

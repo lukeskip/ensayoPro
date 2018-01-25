@@ -84,6 +84,38 @@ class RegisterController extends Controller
             $user->roles()->attach(Role::where('name', 'musician')->first());
         }
 
+        $email = $data['email'];
+        $fname = $data['name'];
+        $lname = $data['lastname'];
+        $debug = isset($_POST["debug"])?$_POST["debug"]:0;
+        $apikey = 'e943f205e43e7e2b323ecb0df36738b5-us13';
+        $listid = '40842ca585';
+        $server = 'us13.';
+        $auth = base64_encode( 'user:'.$apikey );
+        $data = array(
+            'apikey'        => $apikey,
+            'email_address' => $email,
+            'status'        => 'subscribed',
+            'merge_fields'  => array(
+                'FNAME' => $fname,
+                'LNAME' => $lname,
+                )
+        );
+        $json_data = json_encode($data);
+        
+        if($fname!='' and $lname!='' and $email!=''){
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://'.$server.'api.mailchimp.com/3.0/lists/'.$listid.'/members/');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',
+                'Authorization: Basic '.$auth));
+            curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-MCAPI/2.0');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+            $result = curl_exec($ch);
+        }
 
         
 
