@@ -65,6 +65,7 @@ class Kernel extends ConsoleKernel
                 $reservation->status = "cancelled";
                 $reservation->save();     
             }
+            return $reservations;
         })->everyMinute()->emailOutputTo('contacto@chekogarcia.com.mx');;
     }
 
