@@ -52,13 +52,13 @@
 							@endforeach
 						</select>
 					@endif
-					<label for="">Método de pago</label>
+					{{-- <label for="">Método de pago</label>
 					<select name="payment_method" id="" class="payment_method">
 						<option value="">Método de pago</option>
 						<option value="credit_card">Tarjeta de Crédito o débito</option>
 						<option value="oxxo">Pago en Oxxo</option>
 
-					</select>
+					</select> --}}
 
 					{{-- STARTS: Oxxo form --}}
 					<div class="oxxo method">
@@ -270,19 +270,23 @@
 
 
 		$(document).ready(function(){
-			$( ".payment_method" ).change(function() {
-				counting_hours();
-				if($(this).val()== 'credit_card'){
-					$('.credit_card').fadeIn('slow');
-					$('.oxxo').fadeOut('fast');
-				}else if($(this).val()== 'oxxo'){
-					$('.oxxo').fadeIn('slow');
-					$('.credit_card').fadeOut('fast');
-				}else if($(this).val()== ''){
-					$('.oxxo').fadeOut('fast');
-					$('.credit_card').fadeOut('fast');
-				}
-			});
+			// Selección de método de pago
+			// $( ".payment_method" ).change(function() {
+			// 	counting_hours();
+			// 	if($(this).val()== 'credit_card'){
+			// 		$('.credit_card').fadeIn('slow');
+			// 		$('.oxxo').fadeOut('fast');
+			// 	}else if($(this).val()== 'oxxo'){
+			// 		$('.oxxo').fadeIn('slow');
+			// 		$('.credit_card').fadeOut('fast');
+			// 	}else if($(this).val()== ''){
+			// 		$('.oxxo').fadeOut('fast');
+			// 		$('.credit_card').fadeOut('fast');
+			// 	}
+			// });
+			
+			// Momentáneamente estamos mostrando solo el método de pago vía oxxo
+			$('.oxxo').fadeIn('slow');
 		});
 
 		$.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" });

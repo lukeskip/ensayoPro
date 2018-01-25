@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Ensaya Pro</title>
+		<title>EnsayoPro</title>
 		<link rel="stylesheet" href="{{asset('js/vendor/selectize/css/selectize.default.css')}}">
 		<link rel="stylesheet" href="{{asset('css/foundation.css')}}">
 
@@ -49,6 +49,7 @@
 		document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
 		//]]>
 		</script>
+		@yield('metatags')
 
 	</head>
 	<body class="@yield('body_class')">
