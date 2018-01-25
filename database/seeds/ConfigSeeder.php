@@ -84,5 +84,14 @@ class ConfigSeeder extends Seeder
 		$setting->slug = 'user_comission';
 		$setting->value = '6';
 		$setting->save();
+
+		// Creamos el setting max_log_hours
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Caducidad Oxxo';
+		$setting->description = 'Es el tiempo que tiene un usuario para pagar el importe marcado vía oxxo, por tanto también es el tiempo de caducidad de código de referencia';
+		$setting->slug = 'expiration_oxxo';
+		$setting->value = '12';
+		$setting->save();
     }
 }

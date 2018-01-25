@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Company as Company;
 use App\Setting as Setting;
 use App\User as User;
+use App\Reservation as Reservation;
 use Mail;
 use Jenssegers\Date\Date;
 
@@ -54,6 +55,17 @@ class Kernel extends ConsoleKernel
             }
             
         })->daily();
+
+        $schedule->call(function () {
+            $reservations = Reservation::where('starts', '>=', Date::today())->whereHas('payments', function ($query) {
+                $query->where('status','pending_payment')->where('expires_at', '<=', strtotime(Date::today()));
+            })->get();
+
+            foreach ($reservations as $reservation) {   
+                $reservation->status = "cancelled";
+                $reservation->save();     
+            }
+        })->everyMinute();
     }
 
     /**

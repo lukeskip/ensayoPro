@@ -36,11 +36,7 @@ Route::get('/phpinfo', function () {
     return phpinfo();
 });
 
-// Route::get('/prueba', function () {
-//     return $emails = App\User::whereHas('roles', function ($query) {
-//     		$query->where('name', '=', 'admin');
-// 	})->get();
-// });
+Route::get('/prueba', 'ReservationController@prueba');
 
 Route::get('/terminos_y_condiciones', function(){
 	return view('reyapp.mandatories.terms');

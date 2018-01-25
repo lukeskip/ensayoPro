@@ -272,6 +272,7 @@ class PaymentController extends Controller
 				$max_oxxo 	 = Setting::where('slug','max_oxxo')->first()->value;
 				$min_available_oxxo 	 = Setting::where('slug','min_available_oxxo')->first()->value;
 				$user_comission 	 	= Setting::where('slug','user_comission')->first()->value;
+				$expiration_oxxo 	 = Setting::where('slug','expiration_oxxo')->first()->value;
 
 				if(count($events) < 1){
 					return response()->json(['success' => false,'message'=> 'Tienes que seleccionar un horario']);
@@ -380,8 +381,8 @@ class PaymentController extends Controller
 				}
 				
 				$price = $total_h * $room->price;
-
-				$expire = strtotime(date("Y-m-d H:i:s")) + "36000";
+				$expiration_oxxo = ($expiration_oxxo * 60) * 60;
+				$expire = strtotime(date("Y-m-d H:i:s")) + $expiration_oxxo;
 				$valid_order =
 				array(
 						'line_items'=> array(

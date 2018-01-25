@@ -61,6 +61,8 @@
 					</select> --}}
 
 					{{-- STARTS: Oxxo form --}}
+					<h2>Pago vía Oxxo</h2>
+					<p>Tendrás {{$expiration_oxxo}} horas para liquidar el pago</p>
 					<div class="oxxo method">
 						<form id="oxxo-form" action="/oxxo" method="POST">
 							{{ csrf_field() }}
@@ -332,17 +334,36 @@
 				amount: 'required'
 			},
 			submitHandler: function(form) {
-    			$('.loader-wrapper').css('display','block');
-    			checkout();
-    			data = $(form).serialize();
-				conection('POST',data,'/oxxo',true).then(function(answer){
-					if(answer.success == true){
-						window.location.replace("/confirmacion/"+answer.code);
+    			
+
+				swal({
+					title: "¿Estas seguro?",
+					text: "Tendrás {{$expiration_oxxo}} horas para liquidar el pago, de lo contrario se te penalizará y en caso de volver a incurrir podrás ser bloqueado ",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: '#36A939',
+					confirmButtonText: 'Sí, reserva mi ensayo!',
+					cancelButtonText: "No, cancelar!",
+					cancelButtonColor: '#CD2B37'
+				}).then(function() {
+					$('.loader-wrapper').css('display','block');
+					checkout();
+    				data = $(form).serialize();
+					conection('POST',data,'/oxxo',true).then(function(answer){
+						if(answer.success == true){
+							window.location.replace("/confirmacion/"+answer.code);
+						
+						}else{
+							show_message('error','¡Error!',answer.message);
+						}
+	    			});
+				},function(dismiss) {
 					
-					}else{
-						show_message('error','¡Error!',answer.message);
-					}
-    			});
+				});
+
+				
+
+				
 
 
   			},

@@ -31,11 +31,12 @@ class ReservationController extends Controller
             $max_oxxo           = $settings->where('slug','max_oxxo')->first()->value;
             $min_available_oxxo = $settings->where('slug','min_available_oxxo')->first()->value;
             $user_comission = $settings->where('slug','user_comission')->first()->value;
+            $expiration_oxxo     = Setting::where('slug','expiration_oxxo')->first()->value;
             $room               = Room::find($room_id);
             $reservations       = Reservation::where('room_id',$room_id)->where('status','!=','cancelled')->get();
 
             if($room->status == 'active' and $room->companies->status=='active'){
-                return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands)->with('reservations',$reservations)->with('user',$user)->with('max_oxxo',$max_oxxo)->with('max_card',$max_card)->with('min_available_oxxo',$min_available_oxxo)->with('user_comission',$user_comission); 
+                return view('reyapp.rooms.make_reservation')->with('room',$room)->with('bands',$bands)->with('reservations',$reservations)->with('user',$user)->with('max_oxxo',$max_oxxo)->with('max_card',$max_card)->with('min_available_oxxo',$min_available_oxxo)->with('user_comission',$user_comission)->with('expiration_oxxo',$expiration_oxxo); 
             }else{
                 return redirect('/salas');
             }
@@ -355,5 +356,19 @@ class ReservationController extends Controller
             return response()->json(['success' => true]);
         }
         
+    }
+
+    public function prueba(){
+
+        $reservations = Reservation::where('starts', '>=', Date::today())->whereHas('payments', function ($query) {
+                $query->where('status','pending_payment')->where('expires_at', '<=', strtotime(Date::today()));
+        })->get();
+
+        foreach ($reservations as $reservation) {   
+            $reservation->status = "cancelled";
+            $reservation->save();     
+        }
+        
+        return $reservations;
     }
 }
