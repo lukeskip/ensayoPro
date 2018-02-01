@@ -24,9 +24,9 @@
 
 		<link rel="stylesheet" href="{{asset('css/app.css')}}">
 		
-		<meta property="og:url"                content="http://setlist.reydecibel.com.mx" />
-		<meta property="og:title"              content="Generador de Setlist" />
-		<meta property="og:description"        content="Esta es una gran herramienta, indispensable para bandas independientes" />
+		<meta property="og:url"                content="https://ensayopro.com.mx" />
+		<meta property="og:title"              content="EnsayoPro" />
+		<meta property="og:description"        content="Es una plataforma en la que podrás encontrar todas las opciones de sala de ensayo y podrás reservarlas aquí mismo" />
 		<meta property="og:image"              content="{{asset('img/facebook_share.png')}}" />
 
 		<script type="text/javascript">
