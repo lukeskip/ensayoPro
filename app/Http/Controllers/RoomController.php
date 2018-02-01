@@ -62,6 +62,8 @@ class RoomController extends Controller
 				$rooms = $rooms->orderBy('average','DESC');
 			}
 
+		}else{
+			$rooms = $rooms->orderBy('average','DESC');
 		}
 
 		if(request()->has('colonia')){	

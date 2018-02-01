@@ -47,8 +47,8 @@
 						Ordernar:
 					</span>
 					<select class="input-group-field change_submit" name="order" id="order_input">
-						<option @if(request('order') == 'quality_up') selected @endif value="quality_up">Peores calificados</option>
 						<option @if(request('order') == 'quality_down') selected @endif value="quality_down">Mejores calificados</option>
+						<option @if(request('order') == 'quality_up') selected @endif value="quality_up">Peores calificados</option>
 						<option @if(request('order') == 'price_up') selected @endif value="price_up">Precio más bajo</option>
 						<option @if(request('order') == 'price_down') selected @endif value="price_down">Precio más alto</option>
 						{{-- <option value="discounts">Ofertas</option> --}}
