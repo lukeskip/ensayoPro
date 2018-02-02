@@ -15,6 +15,7 @@ $(document).ready(function() {
 		});
 
 		function addEvent( start, end) {
+			
 			create = true;
 			
 			// Contruimos el objeto del nuevo evento
@@ -40,8 +41,6 @@ $(document).ready(function() {
 			diff_hours = Math.floor(diffSeconds/3600);
 
 			
-
-
 			// Buscamos eventos contiguos, si existen los pegamos
 			events = $('#calendar').fullCalendar( 'clientEvents' );
 			$.each(events, function( index, event ) {
@@ -64,7 +63,19 @@ $(document).ready(function() {
 			});
 
 			if(create == true && diff_hours >= 2){
-				$('#calendar').fullCalendar('renderEvent', new_event, true);
+				event = {'starts':start_time,'ends':end_time,'room_id':room_id};
+					 
+				conection('POST',event,'/musico/checkprice',true).then(function(data){
+					
+					if(data.success == true){
+						$('#calendar').fullCalendar('renderEvent', new_event, true);
+		
+					}else{
+						show_message('warning','Atención',data.message);
+					}
+				});
+
+				
 
 			}else if (create == true && diff_hours < 2){
 				show_message('error','¡Error!','Tienes que reservar al menos 2 horas, puedes hacerlo arrastrando el cursor lentamente');	
@@ -248,6 +259,8 @@ function counting_hours(){
 	}
 	
 }
+
+
 
 function checkout(){
 	events_array = [];

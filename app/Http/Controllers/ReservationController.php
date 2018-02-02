@@ -13,6 +13,9 @@ use Jenssegers\Date\Date;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Mail;
+use DatePeriod;
+use DateInterval;
+
 
 
 class ReservationController extends Controller
@@ -48,8 +51,24 @@ class ReservationController extends Controller
     }
 
     // AQUÍ REVISAMOS PRECIO EN PRIMERA INSTANCIA
-    public function check_price(){
+    public function checkprice(Request $request)
+    {
+        $starts = $request->starts;
+        $ends   = $request->ends;
+        $total  = 0;
         
+        $begin  = new DateTime($starts);
+        $end    = new DateTime($ends);
+
+        $interval = new DateInterval('PT1H');
+        $daterange = new DatePeriod($begin, $interval ,$end);
+
+        foreach($daterange as $date){
+            echo $request->room_id . "<br>";
+        }
+    
+        
+        return response()->json(['success' => true,'message'=>$total]);
     }
 
     

@@ -49,7 +49,6 @@ Route::get('/aviso-de-privacidad', function(){
 // Landing Company
 Route::get('/unete', function () {
     return view('reyapp.landing_company');
-    
 });
 
 Route::get('/registro', function () {
@@ -122,6 +121,7 @@ Route::group(['middleware' => ['auth','musician','active'],'prefix'=>'musico'], 
 
 	Route::put('/reservaciones/{id}', 'ReservationController@cancel');
 	
+	Route::post('/checkprice', 'ReservationController@checkprice');
 });
 
 Route::group(['middleware' => ['auth']], function () {

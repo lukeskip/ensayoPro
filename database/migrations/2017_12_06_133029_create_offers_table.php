@@ -17,8 +17,13 @@ class CreateOffersTable extends Migration
             $table->increments('id');
             $table->integer('company_id');
             $table->integer('room_id');
+            $table->datetime('valid_starts');
+            $table->datetime('valid_ends');
             $table->datetime('starts');
             $table->datetime('ends');
+            $table->enum('type');
+            $table->number('value');
+            $table->number('rule');
             $table->timestamps();
         });
     }
