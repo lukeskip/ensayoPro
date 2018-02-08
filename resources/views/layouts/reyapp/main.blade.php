@@ -159,6 +159,12 @@
 							</a>
 						</li>
 						<li>
+							<a href="/company/promociones">
+								<i class="fa fa-tags"></i>
+								Mis Promociones
+							</a>
+						</li>
+						<li>
 							<a href="/company/ajustes">
 								<i class="fa fa-cogs" aria-hidden="true"></i> Ajustes
 							</a>
@@ -300,7 +306,7 @@
     	
 
 		<script src="{{asset('plugins/fine-uploader/jquery.fine-uploader.js')}}"></script>
-
+		<script src="{{asset('plugins/jquery-ui/datepicker_es.js')}}"></script>
 		<script src="{{asset('js/app.js')}}"></script>
 
 

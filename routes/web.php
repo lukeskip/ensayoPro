@@ -75,6 +75,10 @@ Route::group(['middleware' => ['auth','company','active'],'prefix'=>'company'], 
 	
 	Route::get('/ajustes/', 'CompanyController@edit');
 	Route::get('/datalle/{id}', 'CompanyController@show');
+
+	Route::get('/promociones/', 'PromotionController@index_company');
+	Route::get('/promociones/registro', 'PromotionController@create');
+	Route::post('/promociones/registro', 'PromotionController@store');
 	
 	Route::get('/registro', 'CompanyController@register_company')->name('register_company');
 	Route::resource('companies', 'CompanyController');

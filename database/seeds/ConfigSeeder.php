@@ -93,5 +93,23 @@ class ConfigSeeder extends Seeder
 		$setting->slug = 'expiration_oxxo';
 		$setting->value = '12';
 		$setting->save();
+
+		// Creamos el setting max_log_hours
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Descuento máx. porcentaje';
+		$setting->description = 'Es el máximo de porcentaje de descuento que se permite en las promociones';
+		$setting->slug = 'max_prom_percentage';
+		$setting->value = '50';
+		$setting->save();
+
+		// Creamos el setting max_prom_percentage
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Descuento máx. directo';
+		$setting->description = 'Es el máximo de descuento directo que se permite en las promociones';
+		$setting->slug = 'max_prom_direct';
+		$setting->value = '100';
+		$setting->save();
     }
 }

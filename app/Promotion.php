@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Offer extends Model
+class Promotion extends Model
 {
     public function rooms(){
-    	return $this->belongsTo('App\Room','room_id');
+    	return $this->belongsToMany('App\Room','room_promotion');
     }
 
     public function companies(){
