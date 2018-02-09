@@ -30,5 +30,23 @@ class ConfigPromSeeder extends Seeder
 		$setting->slug = 'max_prom_direct';
 		$setting->value = '100';
 		$setting->save();
+
+		// Creamos el setting max_prom_percentage
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Precio mínimo promoción';
+		$setting->description = 'Es el precio mínimo que se permite en las promociones';
+		$setting->slug = 'min_hour_price';
+		$setting->value = '50';
+		$setting->save();
+
+		// Creamos el setting max_prom_percentage
+		$setting = new Setting;
+		$setting->type = 'number';
+		$setting->label = 'Descuento mínimo por hora';
+		$setting->description = 'Es el descuento mínimo que se permite en las promociones de precio por hora';
+		$setting->slug = 'min_hour_price_discount';
+		$setting->value = '10';
+		$setting->save();
     }
 }

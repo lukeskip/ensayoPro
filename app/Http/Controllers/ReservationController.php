@@ -64,7 +64,7 @@ class ReservationController extends Controller
         $daterange = new DatePeriod($begin, $interval ,$end);
 
         foreach($daterange as $date){
-            echo $request->room_id . "<br>";
+            
         }
     
         

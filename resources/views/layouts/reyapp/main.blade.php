@@ -306,7 +306,7 @@
     	
 
 		<script src="{{asset('plugins/fine-uploader/jquery.fine-uploader.js')}}"></script>
-		<script src="{{asset('plugins/jquery-ui/datepicker_es.js')}}"></script>
+		
 		<script src="{{asset('js/app.js')}}"></script>
 
 

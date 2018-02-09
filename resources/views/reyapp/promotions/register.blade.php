@@ -15,7 +15,7 @@
 					<label for="">Status</label>
 					<select name="status" id="status">
 						<option value="draft">Borrador</option>
-						<option value="active">Activa</option>
+						<option value="published">Pública</option>
 					</select>
 				</div>
 			</div>
@@ -26,6 +26,7 @@
 						<option value="">Selecciona...</option>
 						<option value="direct">Directo</option>
 						<option value="percentage">Porcentaje</option>
+						<option value="hour_price">Precio por hora</option>
 					</select>
 				</div>
 				<div class="large-4 columns">
@@ -42,7 +43,7 @@
 				</div>
 				
 				<div class="large-4 columns">
-					<label for="">Descuento <i class="fa fa-question-circle hastooltip" title="Es un número entero que dependiento el tipo de promoción significa dinero de descuento o un porcentaje del pago" aria-hidden="true"></i></label>
+					<label for="">Descuento <i class="fa fa-question-circle hastooltip" title="Es un número entero que dependiento el tipo de promoción significa dinero de descuento, un porcentaje del pago o el precio por hora" aria-hidden="true"></i></label>
 					<input type="number" id="discount" name="discount" class="required">
 				</div>
 			</div>
@@ -90,7 +91,7 @@
 						
 						<div class="large-6 columns">
 							<label for="">A partir de las... (hrs.)</label>
-							<select  id="schedule_starts" class="input-group-field required" name="schedule_start" id="">
+							<select  id="schedule_starts" class="input-group-field required" name="schedule_starts" id="">
 								<option value="">Selecciona...</option>
 								<option value="6">6:00</option>
 								<option value="7">7:00</option>
@@ -176,6 +177,7 @@
 @endsection
 
 @section('scripts')
+<script src="{{asset('plugins/jquery-ui/datepicker_es.js')}}"></script>
 <script src="{{asset('plugins/validation/messages.js')}}"></script>
 <script>
 	$(document).ready(function(){
@@ -195,16 +197,16 @@
         			greaterStart: "#valid_starts"
      			 },
      			 "discount": {
-        			percentage: "#type"
+        			percentage: "#type",
+        			direct: "#type",
+        			hour_price: "#type"
      			 },
-     			 "discount": {
-        			direct: "#type"
-     			 }
+     			
 
 
 			},
 			submitHandler: function(form) {
-				if($('#status').val()=='active'){
+				if($('#status').val()=='published'){
 					type 	= $('#type').val();
 					if(type == 'direct'){
 						type = 'Directo';
@@ -215,22 +217,32 @@
 					}
 					swal({
 					  title: 'Tu promoción se publicará',
-					  html: "No podrás modificarla. Este es el resumen de tu promoción <br><span class='tag blue'><i class='fa fa-tags'></i> "+value+"</span>",
+					  html: "No podrás modificarla desde el administrador, en caso de haber algún problema tendrás que contactar al webmaster de EnsayoPro",
 					  type: 'warning',
 					  showCancelButton: true,
-					  confirmButtonColor: '#3085d6',
+					  confirmButtonColor: '#36A939',
 					  cancelButtonColor: '#d33',
-					  confirmButtonText: 'Yes, delete it!'
+					  confirmButtonText: 'Entiendo, Publícala',
+					  cancelButtonText: 'Cancelar'
 					}).then((result) => {
 					  	data = $(form).serialize();
-			  			conection('POST', data, '/company/promociones/registro',true).then(function(data){
-			  					show_message('success','¡Listo!','Tu promoción fue gardada como borrador');
+			  			conection('POST', data, '/company/promociones/registro',true).then(function(answer){
+				  				if(answer.success == true){
+			  						show_message('success','¡Listo!','Tu promoción fue gardada como borrador');
+			  					}else{
+			  						show_message('error','Error!',answer.message);
+			  					}
 			  			});
 					});
 				}else if ($('#status').val()=='draft'){
 					data = $(form).serialize();
-		  			conection('POST', data, '/company/promociones/registro',true).then(function(data){
-		  					show_message('success','¡Listo!','Tu promoción fue gardada como borrador');
+		  			conection('POST', data, '/company/promociones/registro',true).then(function(answer){
+		  					if(answer.success == true){
+		  						show_message('success','¡Listo!','Tu promoción fue gardada como borrador');
+		  					}else{
+		  						show_message('error','Error!',answer.message);
+		  					}
+		  					
 		  			});
 				}
 				
@@ -266,6 +278,16 @@
 	          }
 	          
 	    },'No puedes hacer un descuento de más del ${{$max_prom_direct}} pesos');
+
+	    $.validator.addMethod("hour_price",function (value, element, param) {
+	          
+	          if($(param).val() == 'hour_price' && parseInt(value, 10) < {{$min_hour_price}}){
+	          	return false;
+	          }else{
+	          	return true;
+	          }
+	          
+	    },'No puedes bajar el precio a más allá de ${{$min_hour_price}} pesos');
 
 
 

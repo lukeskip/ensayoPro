@@ -3,7 +3,10 @@
 @section('content')
 	<h1>Promociones</h1>
 	<div class="row">
-		<div class="medium-9 columns">
+		<div class="medium-12 columns">
+			<a href="/company/promociones/registro" class="button green">Registrar Promoción</a>
+		</div>
+		<div class="medium-12 columns">
 				<div class="row list-header show-for-medium">
 					<div class="medium-3 columns">
 						Descripción:
@@ -11,10 +14,13 @@
 					<div class="medium-3 columns">
 						Validez:
 					</div>
-					<div class="medium-3 columns">
+					<div class="medium-2 columns">
+						Sala:
+					</div>
+					<div class="medium-2 columns">
 						Descuento:
 					</div>
-					<div class="medium-3 columns">
+					<div class="medium-2 columns">
 						Estatus:
 					</div>
 				</div>
@@ -24,7 +30,7 @@
 							<div class="medium-3 columns">
 
 								
-								{{$promotion->name}} 
+								<span class="hastooltip" title="{{$promotion->description}}">{{$promotion->name}}</span>
 								
 					
 								
@@ -32,16 +38,24 @@
 							<div class="medium-3 columns text-center">
 								{{$promotion->finishs}}
 							</div>
-							<div class="medium-3 columns text-center">
+							<div class="medium-2 columns text-center">
+								@foreach($promotion->rooms as $room)
+									<span class="tag black">{{$room->name}}</span>
+								@endforeach
+								
+							</div>
+							<div class="medium-2 columns text-center">
 								@if($promotion->type == 'direct')
 									${{$promotion->value}}
 								@elseif ($promotion->type == 'percentage')
 									{{$promotion->value}}%
+								@elseif ($promotion->type == 'hour_price')
+									${{$promotion->value}} p/hora
 								@endif
 							</div>
-							<div class="medium-3 columns status">
-								@if($promotion->status == 'active')
-									<i class="fa fa-check-circle-o confirmed hastooltip" title="Activa" aria-hidden="true"></i>
+							<div class="medium-2 columns status">
+								@if($promotion->status == 'published')
+									<i class="fa fa-check-circle-o confirmed hastooltip" title="Pública" aria-hidden="true"></i>
 								@elseif($promotion->status == 'draft')
 									<i class="fa fa-pencil-square-o hastooltip pending" aria-hidden="true" title="Borrador"></i>
 								@endif
@@ -57,9 +71,7 @@
 					</div>
 				@endif
 		</div>
-		<div class="medium-3 columns">
-			<a href="/company/promociones/registro" class="button expanded green">Registrar Promoción</a>
-		</div>
+		
 	</div>
 	<div class="row">
 		<div class="large-12 columns">

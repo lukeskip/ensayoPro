@@ -38,6 +38,6 @@ class Room extends Model
 
     public function promotions()
     {
-        return $this->belongsToMany('App\User','band_user');
+        return $this->belongsToMany('App\Promotion','room_promotion');
     }
 }
