@@ -99,6 +99,7 @@ class RegisterController extends Controller
             'merge_fields'  => array(
                 'FNAME' => $fname,
                 'LNAME' => $lname,
+                'TYPE' => $user->roles->first(),
                 )
         );
         $json_data = json_encode($data);
