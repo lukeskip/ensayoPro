@@ -6,6 +6,27 @@
 
 @endsection
 
+@section('metatags')
+
+<meta name="description" content="Inscríbe a tu sala de ensayo en nuestro ranking y genera más reservaciones gratis"/>
+<link rel="canonical" href="https://ensayopro.com.mx/unete" />
+<meta property="og:locale" content="es_ES" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Incribe a tu sala de ensayo en EnsayoPro" />
+<meta property="og:description" content="Inscríbe a tu sala de ensayo en nuestro ranking y genera más reservaciones gratis" />
+<meta property="og:url" content="https://ensayopro.com.mx/unete" />
+<meta property="og:site_name" content="EnsayoPro" />
+<meta property="article:section" content="Incríbe a tus sala de ensayo" />
+<meta property="article:published_time" content="2017-02-01T23:01:04-06:00" />
+<meta property="article:modified_time" content="2018-02-01T11:48:36-06:00" />
+<meta property="og:updated_time" content="2018-02-01T11:48:36-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Si tienes una sala de ensayo inscríbela en nuestro ranking y genera más reservaciones, es gratis" />
+<meta name="twitter:title" content="Obtén más reservaciones para tu Sala de Ensayo" />
+
+
+@endsection
+
 @section('content')
 <div class="hero-full-screen">
   <div class="middle-content-section">
