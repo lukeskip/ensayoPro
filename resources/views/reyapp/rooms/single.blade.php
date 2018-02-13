@@ -20,11 +20,34 @@
 					${{$room->price}}/hora
 				</span>
 			</h2>
+			
 
+			
 			<div class="tags">
 				<a href="/salas/?colonia={{$room->colony}}" class="colony">{{$room->colony}}</a>
 				<a href="/salas/?deleg={{$room->deputation}}" class="deputation">{{$room->deputation}}</a>
 			</div>
+			<br>
+			@if($room->promotions)
+				<h3 class="list-header green">
+					<i class="fa fa-tags"></i>
+					PROMOCIONES VIGENTES (*)
+				</h3>
+				<div class="promotions">
+					
+					@foreach($room->promotions as $promotion)
+						<div class="promotion">
+						<i class="fa fa-tags"></i>
+							{{$promotion->description}}
+
+						</div>
+					@endforeach
+					<div class="disclaimer">
+						* Sólo una promoción por transacción, se eligirá automáticamente según convenga al cliente
+					</div>
+				</div>
+			@endif
+			
 			<div class="hide-for-large">
 				<br><br>
 				<div class="text-center">

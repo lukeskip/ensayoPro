@@ -82,7 +82,7 @@ class PromotionController extends Controller
 								}
 							}
 
-							$rules = ' en la reserva de tu ensayo entre las '.$promotion->schedule_starts.':00 y las '.$promotion->schedule_ends.':00 los días '.$days_valid;
+							$rules = ' en la reserva de tu ensayo entre las '.$promotion->schedule_starts.':00hrs. y las '.$promotion->schedule_ends.':00hrs. los días '.$days_valid;
 						}
 
 						if($promotion->type == 'direct'){

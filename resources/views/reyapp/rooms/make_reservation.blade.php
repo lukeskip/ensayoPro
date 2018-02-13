@@ -61,8 +61,22 @@
 					</select> --}}
 
 					{{-- STARTS: Oxxo form --}}
+					<div class="promotions">
+					@if($room->promotions)
+						<h2>Promociones disponibles</h2>
+						@foreach($room->promotions as $promotion)
+							<div class="promotion promotion_{{$promotion->id}}">
+
+								<i class="fa fa-tags"></i>
+								<span class="title">{{$promotion->name}}:</span>
+								{{$promotion->description}}
+							</div>
+						@endforeach
+					@endif
+					</div>
 					<h2>Pago vía Oxxo</h2>
 					<p>Tendrás {{$expiration_oxxo}} horas para liquidar el pago</p>
+
 					<div class="oxxo method">
 						<form id="oxxo-form" action="/oxxo" method="POST">
 							{{ csrf_field() }}

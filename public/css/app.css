@@ -76,6 +76,10 @@ textarea{
 	
 }
 
+.green{
+	background: #36A939!important;
+}
+
 .tag.green{
 	background: #2FAB31;
 }
@@ -286,6 +290,48 @@ textarea{
 	margin-bottom: 10px;
 }
 /*ENDS: Dashboard****************************************/
+
+/*STARTS:Promotions***************************************/
+.promotions{
+	margin-bottom: 20px;
+	background: #eee;
+	padding: 20px;
+}
+
+.promotions .disclaimer{
+	font-size: .8em;
+	font-style: italic;
+}
+.promotion{
+	text-align: left;
+	margin-bottom: 10px;
+	font-size: 1.2em;
+}
+
+.promotion .title{
+	color:black;
+	font-weight: 700;
+}
+
+.room-single .promotions{
+	margin-bottom: 20px;
+	background: rgba(0,0,0,.5);
+	padding: 20px;
+}
+.room-single .promotion{
+	text-align: left;
+	margin-bottom: 10px;
+	font-size: 1em;
+}
+
+.room-single .promotion .title{
+	color:black;
+	font-weight: 700;
+}
+
+
+
+/*Ends: Promotions***************************************/
 
 /*STARTS: Edition calendar*/
 

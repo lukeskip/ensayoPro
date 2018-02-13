@@ -403,6 +403,46 @@ class RoomController extends Controller
 			$user = false;
 		}
 
+		$now                = Date::now();
+        $room->promotions = $room->promotions->where('valid_ends', '>=',  $now);
+        foreach ($room->promotions as $promotion) {
+                
+                $finishs = new Date($promotion->valid_ends);
+
+                $finishs =  $finishs->format('l j F Y');
+                
+
+
+                if($promotion->rule == 'hours'){
+                    $rule = " de descuento en la reserva de al menos ".$promotion->hours.' horas';
+                }elseif ($promotion->rule == 'schedule') {
+                    $days_array = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+                    $days_valid = '';
+                    $days = explode(',',$promotion->days);
+                    foreach ($days as $key => $value) {
+
+                        
+                        if ($key === end($days)){
+                            $days_valid .= $days_array[$value];
+                        }else{
+                            $days_valid .= $days_array[$value].', ';
+                        }
+                    }
+
+                    $rules = ' en la reserva de tu ensayo entre las '.$promotion->schedule_starts.':00hrs. y las '.$promotion->schedule_ends.':00hrs. los días '.$days_valid;
+                }
+
+                if($promotion->type == 'direct'){
+                    $description = '$'.$promotion->value.' de descuento '.$rules;
+                }elseif ($promotion->type == 'percentage'){
+                    $description = $promotion->value.'% de descuento'.$rules;
+                }elseif ($promotion->type == 'hour_price'){
+                    $description = '$'.$promotion->value.' precio por hora '.$rules;
+                }
+                $description = $description." válida hasta el ".$finishs;
+                $promotion->description = $description;
+        }
+
 		return view('reyapp.rooms.single')->with('room',$room)->with('user',$user);
 	}
 
