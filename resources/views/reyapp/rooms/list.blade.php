@@ -2,6 +2,20 @@
 @section('styles')
 <link rel="stylesheet" href="{{asset('plugins/bar-rating/themes/fontawesome-stars.css')}}">
 @endsection
+@section('metatags')
+<meta property="og:url"                content="http://setlist.reydecibel.com.mx" />
+		<meta property="og:title"              content="EnsayoPro" />
+		<meta property="og:description"        content="Renta la sala de ensayo que más te convenga, muchas opciones" />
+		<meta property="og:image"              content="{{asset('img/facebook_share.png')}}" />
+
+		<meta name="csrf-token" content="{{ csrf_token() }}">
+
+		<meta name="description" content="Renta la sala de ensayo que más te convenga en la Ciudad de México, muchas opciones" />
+		<meta name="keywords" content="Salas de Ensayo DF, cuartos de ensayo, las mejores salas de ensayo" />
+		<meta name="author" content="Rey Decibel">
+		<meta name="robots" content="index, follow">
+		<meta name="revisit-after" content="1 month">
+@endsection
 @section('content')
 	<form id="order_form" class="search" method="get" action="/salas">
 		@if ($role == 'admin')

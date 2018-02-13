@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Ensaya Pro</title>
+		<title>EnsayoPro</title>
 		<link rel="stylesheet" href="{{asset('js/vendor/selectize/css/selectize.default.css')}}">
 		<link rel="stylesheet" href="{{asset('css/foundation.css')}}">
 
@@ -22,21 +22,20 @@
 		<link rel="stylesheet" href="{{asset('css/app.css')}}">
 
 		<meta property="og:url"                content="http://setlist.reydecibel.com.mx" />
-		<meta property="og:title"              content="Generador de Setlist" />
-		<meta property="og:description"        content="Esta es una gran herramienta, indispensable para bandas independientes" />
+		<meta property="og:title"              content="EnsayoPro" />
+		<meta property="og:description"        content="Renta la sala de ensayo que más te convenga, muchas opciones" />
 		<meta property="og:image"              content="{{asset('img/facebook_share.png')}}" />
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 
+		<meta name="description" content="Renta la sala de ensayo que más te convenga, muchas opciones" />
+		<meta name="keywords" content="setlist, bandas, show, tocada, bandas independientes" />
+		<meta name="author" content="Rey Decibel">
+		<meta name="robots" content="index, follow">
+		<meta name="revisit-after" content="3 month">
+		
 		<script type="text/javascript">
 			var APP_URL = {!! json_encode(url('/')) !!}
 		</script>
-		<meta name="csrf-token" content="{{ csrf_token() }}">
-
-		<meta name="description" content="Esta es una plataforma que te ayudará a generar los setlists para tu show o tocadas" />
-		<meta name="keywords" content="setlist, bandas, show, tocada, bandas independientes" />
-		<meta name="author" content="metatags generator">
-		<meta name="robots" content="index, follow">
-		<meta name="revisit-after" content="3 month">
-
 		@yield('header')
 
 		<title>Ensaya Pro</title>

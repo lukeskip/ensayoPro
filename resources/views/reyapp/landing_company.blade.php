@@ -14,6 +14,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Incribe a tu sala de ensayo en EnsayoPro" />
 <meta property="og:description" content="Inscribe a tu sala de ensayo en nuestro ranking y genera más reservaciones gratis" />
+<meta property="og:image"              content="{{asset('img/facebook_share.png')}}" />
 <meta property="og:url" content="https://ensayopro.com.mx/unete" />
 <meta property="og:site_name" content="EnsayoPro" />
 <meta property="article:section" content="Incríbe a tus sala de ensayo" />

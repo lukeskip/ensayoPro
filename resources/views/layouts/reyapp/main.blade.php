@@ -24,21 +24,9 @@
 
 		<link rel="stylesheet" href="{{asset('css/app.css')}}">
 		
-		<meta property="og:url"                content="https://ensayopro.com.mx" />
-		<meta property="og:title"              content="EnsayoPro" />
-		<meta property="og:description"        content="Es una plataforma en la que podrás encontrar todas las opciones de sala de ensayo y podrás reservarlas aquí mismo" />
-		<meta property="og:image"              content="{{asset('img/facebook_share.png')}}" />
-
 		<script type="text/javascript">
 			var APP_URL = {!! json_encode(url('/')) !!}
 		</script>
-		<meta name="csrf-token" content="{{ csrf_token() }}">
-
-		<meta name="description" content="Esta es una plataforma que te ayudará a generar los setlists para tu show o tocadas" />
-		<meta name="keywords" content="setlist, bandas, show, tocada, bandas independientes" />
-		<meta name="author" content="metatags generator">
-		<meta name="robots" content="index, follow">
-		<meta name="revisit-after" content="3 month">
 		
 		@yield('header')
 
