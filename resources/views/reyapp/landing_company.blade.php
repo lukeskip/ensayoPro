@@ -13,7 +13,7 @@
 <meta property="og:locale" content="es_ES" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Incribe a tu sala de ensayo en EnsayoPro" />
-<meta property="og:description" content="Inscríbe a tu sala de ensayo en nuestro ranking y genera más reservaciones gratis" />
+<meta property="og:description" content="Inscribe a tu sala de ensayo en nuestro ranking y genera más reservaciones gratis" />
 <meta property="og:url" content="https://ensayopro.com.mx/unete" />
 <meta property="og:site_name" content="EnsayoPro" />
 <meta property="article:section" content="Incríbe a tus sala de ensayo" />
@@ -23,7 +23,6 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:description" content="Si tienes una sala de ensayo inscríbela en nuestro ranking y genera más reservaciones, es gratis" />
 <meta name="twitter:title" content="Obtén más reservaciones para tu Sala de Ensayo" />
-
 
 @endsection
 
