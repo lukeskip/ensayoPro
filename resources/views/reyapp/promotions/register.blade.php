@@ -24,7 +24,6 @@
 					<label for="">Tipo de promoción</label>
 					<select name="type" id="type" class="required">
 						<option value="">Selecciona...</option>
-						<option value="direct">Directo</option>
 						<option value="percentage">Porcentaje</option>
 						<option value="hour_price">Precio por hora</option>
 					</select>

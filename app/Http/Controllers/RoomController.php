@@ -182,10 +182,7 @@ class RoomController extends Controller
 						$rules = ' en la reserva de tu ensayo entre las '.$promotion->schedule_starts.':00 y las '.$promotion->schedule_ends.':00 los días '.$days_valid;
 					}
 
-					if($promotion->type == 'direct'){
-						$description = '$'.$promotion->value.' de descuento '.$rules;
-						$tag = '$'.$promotion->value;
-					}elseif ($promotion->type == 'percentage'){
+					if ($promotion->type == 'percentage'){
 
 						$description = $promotion->value.'% de descuento '.$rules;
 						$tag = $promotion->value.'% ';

@@ -22,7 +22,7 @@ class CreatePromotionsTable extends Migration
             $table->integer('hours')->nullable();
             $table->integer('schedule_starts')->nullable();
             $table->integer('schedule_ends')->nullable();
-            $table->enum('type', ['direct', 'percentage','hour_price']);
+            $table->enum('type', ['percentage','hour_price']);
             $table->enum('status', ['draft', 'published']);
             $table->integer('value');
             $table->enum('rule', ['hours', 'schedule']);

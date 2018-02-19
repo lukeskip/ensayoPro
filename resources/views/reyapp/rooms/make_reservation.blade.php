@@ -62,10 +62,10 @@
 
 					{{-- STARTS: Oxxo form --}}
 					<div class="promotions">
-					@if($room->promotions)
+					@if($room->promotions->count())
 						<h2>Promociones disponibles</h2>
 						@foreach($room->promotions as $promotion)
-							<div class="promotion promotion_{{$promotion->id}}">
+							<div class="promotion" data-id="{{$promotion->id}}">
 
 								<i class="fa fa-tags"></i>
 								<span class="title">{{$promotion->name}}:</span>
@@ -238,6 +238,7 @@
 		var max_card = {{$max_card}};
 		var min_available_oxxo = {{$min_available_oxxo}};
 		var user_comission = {{$user_comission}};
+		var promotion_id_active = 0;
 
 		@if($user->bands->count() < 1)
 			title = '{{$user->name}} {{$user->lastname}}';
@@ -362,7 +363,7 @@
 				}).then(function() {
 					$('.loader-wrapper').css('display','block');
 					checkout();
-    				data = $(form).serialize();
+    				data = $(form).serialize()+'&promotion_id='+promotion_id_active;
 					conection('POST',data,'/oxxo',true).then(function(answer){
 						if(answer.success == true){
 							window.location.replace("/confirmacion/"+answer.code);

@@ -28,25 +28,7 @@
 				<a href="/salas/?deleg={{$room->deputation}}" class="deputation">{{$room->deputation}}</a>
 			</div>
 			<br>
-			@if($room->promotions)
-				<h3 class="list-header green">
-					<i class="fa fa-tags"></i>
-					PROMOCIONES VIGENTES (*)
-				</h3>
-				<div class="promotions">
-					
-					@foreach($room->promotions as $promotion)
-						<div class="promotion">
-						<i class="fa fa-tags"></i>
-							{{$promotion->description}}
-
-						</div>
-					@endforeach
-					<div class="disclaimer">
-						* Sólo una promoción por transacción, se eligirá automáticamente según convenga al cliente
-					</div>
-				</div>
-			@endif
+			
 			
 			<div class="hide-for-large">
 				<br><br>
@@ -61,6 +43,26 @@
 					</select>
 				</div>
 				<a href="reservando/{{$room->id}}" class="button expanded green">Reservar esta sala</a>
+
+				@if($room->promotions)
+					<h3 class="list-header green">
+						<i class="fa fa-tags"></i>
+						PROMOCIONES VIGENTES (*)
+					</h3>
+					<div class="promotions">
+						
+						@foreach($room->promotions as $promotion)
+							<div class="promotion">
+							<i class="fa fa-tags"></i>
+								{{$promotion->description}}
+
+							</div>
+						@endforeach
+						<div class="disclaimer">
+							* Sólo una promoción por transacción, se eligirá automáticamente según convenga al cliente
+						</div>
+					</div>
+				@endif
 			</div>
 			
 			
@@ -83,6 +85,19 @@
 						<li class="list-item">{{$equipment}}</li>
 					@endforeach
 				</ul>
+				@if($room->media_items->count())
+				<h3 class="list-header">Imágenes</h3>
+				
+					<div class="images">
+						@foreach($room->media_items as $image)
+
+							<a class="image" href="{{url('imagenes/'.$image->name)}}" data-lightbox="{{$room->name}}">
+								<img src="{{url('imagenes/'.$image->name)}}" />
+							</a>
+				
+						@endforeach
+					</div>
+				@endif
 			</div>
 			
 
@@ -101,19 +116,31 @@
 					</select>
 				</div>
 				<a href="reservando/{{$room->id}}" class="button expanded green">Reservar esta sala</a>
+
+				@if($room->promotions->count())
+					<h3 class="list-header green">
+						<i class="fa fa-tags"></i>
+						PROMOCIONES VIGENTES (*)
+					</h3>
+					<div class="promotions">
+						
+						@foreach($room->promotions as $promotion)
+							<div class="promotion">
+							<i class="fa fa-tags"></i>
+								<span class="title">{{$promotion->name}}</span>
+								{{$promotion->description}}
+
+							</div>
+						@endforeach
+						<div class="disclaimer">
+							* Sólo una promoción por transacción, se eligirá automáticamente según convenga al cliente
+						</div>
+					</div>
+				@endif
 			</div>
 			<h3 class="list-header">Ubicación</h3>
 			<div id="map"></div>
-			<h3 class="list-header">Imágenes</h3>
-			<div class="images">
-				@foreach($room->media_items as $image)
-
-					<a class="image" href="{{url('imagenes/'.$image->name)}}" data-lightbox="{{$room->name}}">
-						<img src="{{url('imagenes/'.$image->name)}}" />
-					</a>
-		
-				@endforeach
-			</div>
+			
 			
 		</div>
 

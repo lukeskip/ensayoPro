@@ -295,8 +295,11 @@ textarea{
 .promotions{
 	margin-bottom: 20px;
 	background: #eee;
-	padding: 20px;
+	padding-top: 20px;
+	
 }
+
+
 
 .promotions .disclaimer{
 	font-size: .8em;
@@ -306,6 +309,11 @@ textarea{
 	text-align: left;
 	margin-bottom: 10px;
 	font-size: 1.2em;
+	padding: 10px 20px;
+}
+
+.promotion.active{
+	background: #C3E5C4;
 }
 
 .promotion .title{
@@ -325,7 +333,7 @@ textarea{
 }
 
 .room-single .promotion .title{
-	color:black;
+	color:white;
 	font-weight: 700;
 }
 
@@ -1756,7 +1764,7 @@ h1 .duration{
 
 .room-item .images{
 	text-align: center;
-	background: rgba(0,0,0,.5);
+	background: rgba(0,0,0,.1);
 	padding: 40px 0;
 }
 
