@@ -57,7 +57,7 @@ class Kernel extends ConsoleKernel
         })->daily();
 
         $schedule->call(function () {
-            $reservations = Reservation::where('starts', '>=', Date::today())->whereHas('payments', function ($query) {
+            $reservations = Reservation::where('status','pending')->where('starts', '>=', Date::today())->whereHas('payments', function ($query) {
                 $query->where('status','pending_payment')->where('expires_at', '>', strtotime(Date::today()));
             })->get();
 
