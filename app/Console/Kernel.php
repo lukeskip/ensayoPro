@@ -65,7 +65,7 @@ class Kernel extends ConsoleKernel
                 $reservation->status = "cancelled";
                 $reservation->save();     
             }
-        })->everyThirtyMinutes();
+        })->everyMinute();
     }
 
     /**
