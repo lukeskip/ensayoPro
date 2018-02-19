@@ -258,7 +258,7 @@ class PaymentController extends Controller
 
 		}
 
-		//Creando un pago mediante Oxxo.
+		//Creando un pago mediante https://www.facebook.com/NocheDeQuiz/videos/2162282630666059/?hc_ref=ARTCMGNwRCoNUmrswQn7U-yXD_ZfycEjUix3EzQQEmZle7ddc4ynWqQDmkcokscoZgcxo.
 		public function CreatePayOxxo(Request $request)
 		{
 
@@ -454,6 +454,22 @@ class PaymentController extends Controller
 			$payment->save();
 
 			Reservation::whereIn('id', $ids)->update(['payment_id'=>$payment->id]);
+
+			// Seteamos las variables para el envio de correo con la referencia
+			$reference 	  = $payment->reference;
+			$room_name    = $room->name;
+			$company_name =	$room->companies()->first()->name;
+			$user_mail 	  = $user->email;
+			$amount 	  = $payment->amount + $payment->comission;
+
+
+			// Enviamos un correo a la compañía con la información de todas las reservaciones
+			Mail::send('reyapp.mails.payment_order', ['reference'=>$reference,'company_name'=>$company_name,'room_name'=>$room_name,'amount'=>$amount], function ($message)use($user_mail,$company_name){
+
+            $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Order de pago pendiente para '.$company_name);
+            $message->to($user_mail);
+
+            });
 			
 			return response()->json(['success' => true,'message'=>$pS,'code'=>$payment->order_id]);
 
