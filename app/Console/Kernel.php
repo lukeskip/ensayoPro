@@ -61,12 +61,14 @@ class Kernel extends ConsoleKernel
                 $query->where('status','pending_payment')->where('expires_at', '>', strtotime(Date::today()));
             })->get();
 
-            Mail::send('reyapp.mails.test_kernel', ['reservations'=>$reservations], function ($message){
 
-                $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en ');
-                $message->to('contacto@chekogarcia.com.mx');
+            //Mail para envio de pruebas,  
+            // Mail::send('reyapp.mails.test_kernel', ['reservations'=>$reservations], function ($message){
 
-            });
+            //     $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes una reservación en ');
+            //     $message->to('contacto@chekogarcia.com.mx');
+
+            // });
 
             foreach ($reservations as $reservation) {   
                 $reservation->status = "cancelled";
@@ -76,7 +78,7 @@ class Kernel extends ConsoleKernel
             }
 
             
-        })->everyMinute();
+        })->everyThirtyMinutes();
 
 
     }
