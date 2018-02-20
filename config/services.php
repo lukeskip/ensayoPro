@@ -45,4 +45,5 @@ return [
         'secret' => env('MANDRILL_KEY'),
     ],
 
+
 ];

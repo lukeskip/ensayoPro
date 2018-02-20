@@ -36,7 +36,9 @@ Route::get('/phpinfo', function () {
     return phpinfo();
 });
 
-Route::get('/prueba', 'ReservationController@prueba');
+Route::get('/prueba', function(){
+	return $result = LaravelMsg91::message(5525555637, 'This is a test message');
+});
 
 Route::get('/terminos_y_condiciones', function(){
 	return view('reyapp.mandatories.terms');
