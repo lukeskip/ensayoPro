@@ -46,7 +46,7 @@ class PaymentController extends Controller
 				$ids         = array();
 				$band_id	 = 0;
 				$max_card 	 = Setting::where('slug','max_card')->first()->value;
-				$user_comission 	 	= Setting::where('slug','user_comission')->first()->value;
+				$user_comission = Setting::where('slug','user_comission')->first()->value;
 
 				if(count($events) < 1){
 					return response()->json(['success' => false,'message'=> 'Tienes que seleccionar un horario']);
@@ -284,9 +284,6 @@ class PaymentController extends Controller
 			$expire 	 = strtotime($now->add($expiration_oxxo.' hours'));
 
 			
-
-
-
 			if(count($events) < 1){
 				return response()->json(['success' => false,'message'=> 'Tienes que seleccionar un horario']);
 			}
@@ -376,7 +373,7 @@ class PaymentController extends Controller
 
 					$reservation->code = $code;
 
-					$room->reservations()->save($reservation);
+					// $room->reservations()->save($reservation);
 				 
 					$total_h += $start->diffInHours($end);     
 					$ids []   =  $reservation->id;
@@ -399,14 +396,16 @@ class PaymentController extends Controller
 
 			$valid_order =
 				array(
-						'line_items'=> array(
-							array(
-								'name'        => "Cargo por servicio",
-								'description' => 'Cargo por servicio',
-								'unit_price'  => $user_comission * 100,//El costo se pasa en centavos
-								'quantity'    => 1
-							),
-						
+					'line_items'=> array(
+						array(
+							'name'        => "Cargo por servicio",
+							'description' => 'Cargo por servicio',
+							'unit_price'  => $user_comission * 100,//El costo se pasa en centavos
+							'quantity'    => 1,
+							'metadata' => array(
+								'type' => 'comission'
+						)
+					),	
 				),
 
 				'currency'      => 'MXN',
@@ -510,7 +509,7 @@ class PaymentController extends Controller
 				}//ENDS: loop por hora
 
 				// agregamos el cargo por las horas de promocion
-				array_push($charges,array('title'=>'Hoaaaaras reservadas con promoción','total'=> $total_promotions,'total_hours'=>$total_hours_promotions));
+				array_push($charges,array('title'=>'Horas reservadas con promoción','total'=> $total_promotions,'total_hours'=>$total_hours_promotions,'type'=>'promotion'));
 				
 
 			}else{
@@ -521,7 +520,7 @@ class PaymentController extends Controller
 			// agregamos el cargo por las horas naturales si es que hay alguna
 			if($total_natural > 0 AND $total_hours_natural > 0){
 				
-				array_push($charges,array('title'=> 'Horas reservadas sin promoción','total' => $total_natural,'total_hours' => $total_hours_natural));	
+				array_push($charges,array('title'=> 'Horas reservadas sin promoción','total' => $total_natural,'total_hours' => $total_hours_natural,'type'=>'natural'));	
 			}
 			
 
@@ -531,7 +530,11 @@ class PaymentController extends Controller
 					'name'        => $charge['title'],
 					'description' => 'Renta de instalaciones',
 					'unit_price'  => $charge['total'] * 100,//El costo se pasa en centavos
-					'quantity'    => $charge['total_hours']
+					'quantity'    => $charge['total_hours'],
+					'metadata' => array(
+						'type' => $charge['type']
+					)
+
 				)); 
 
 			}
@@ -552,24 +555,58 @@ class PaymentController extends Controller
 				$pM = $order->charges[0]->payment_method->type;
 				$pS = $order['payment_status'];
 				$pT = $order->amount /100; //Total de la transacción
-				$pQ = $order->line_items[1]->quantity;
-				$pC = $order->line_items[0]->unit_price / 100;
-				$pA = ($order->line_items[1]->unit_price * $order->line_items[1]->quantity) / 100;//cargo sin contar la comision
+
+				// Declaramos las variables que serán ocupadas en los costos
+				$pQ    = 0;
+				$pUP   = 0;
+				$pC    = 0;
+				$pQP   = 0;
+				$pUPP  = 0;
+				
+				// asignamos la cantidad de horas y comision
+				foreach ($order->line_items as $line) {
+					
+					$line_type = $line['metadata']['type'];
+					
+					if($line_type == 'comission' ){
+						
+						$pC = $line->unit_price / 100;
+
+					}elseif ($line_type == 'natural') {
+						
+						$pQ  = $line->quantity;
+						$pUP = $line->unit_price / 100;
+
+					}elseif ($line_type == 'promotion') {
+						
+						$pQP  = $line->quantity;
+						$pUPP = $line->unit_price / 100;
+
+					}
+					
+				}
+
+				$order->line_items[2];
+				$pA = (($pUP * $pQ)+($pUPP * $pQP)) / 100;//cargo sin contar la comision
+				
 				$pE = $order->charges[0]->payment_method->expires_at;
 				// $rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS,'price'=>$price);
 
-				$payment         		= new Payment;
-				$payment->order_id   	= $pI;
-				$payment->amount 		= $pA;
-				$payment->total 		= $pT;
-				$payment->method 		= $pM;
-				$payment->company_id 	= $room->companies->id;
-				$payment->room_id 		= $room->id;
-				$payment->quantity		= $pQ;
-				$payment->comission		= $pC;
-				$payment->status		= $pS;
-				$payment->reference  	= $pR;
-				$payment->expires_at 	= $pE;
+				$payment         			= new Payment;
+				$payment->order_id   		= $pI;
+				$payment->amount 			= $pA;
+				$payment->total 			= $pT;
+				$payment->method 			= $pM;
+				$payment->company_id 		= $room->companies->id;
+				$payment->room_id 			= $room->id;
+				$payment->quantity			= $pQ;
+				$payment->unit_price		= $pUP;
+				$payment->unit_price_prom	= $pUPP;
+				$payment->quantity_prom		= $pQP;
+				$payment->comission			= $pC;
+				$payment->status			= $pS;
+				$payment->reference  		= $pR;
+				$payment->expires_at 		= $pE;
 				$payment->save();
 
 				Reservation::whereIn('id', $ids)->update(['payment_id'=>$payment->id]);

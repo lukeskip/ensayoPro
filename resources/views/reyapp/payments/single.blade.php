@@ -63,8 +63,10 @@
 				<div class="price-info">
 					<br>
 					<h3>Desglose</h3>
-					<div><label>Horas totales:</label>{{$payment->quantity}}</div>
+					<div><label>Horas sin promoción:</label>{{$payment->quantity}}</div>
+					<div><label>Horas con promoción:</label>{{$payment->quantity_prom}}</div>
 					<div><label>Precio Unitario:</label>${{$payment->rooms->price}}</div>
+					<div><label>Precio Unitario con promoción:</label>${{$payment->unit_price_prom}}</div>
 					<div><label>Comisión Ensayo Pro:</label>${{$payment->comission}}</div>
 					<hr>
 					<div><label>Importe pagado:</label> ${{$payment->total}}</div>
