@@ -96,7 +96,7 @@ $(document).ready(function() {
 			},
 			validRange: function(nowDate) {
 				return {
-					start: nowDate,
+					start: nowDate.subtract(1, 'days'),
 					end: nowDate.clone().add(2, 'months')
 				};
 			},
