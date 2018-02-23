@@ -63,7 +63,9 @@ class AdminMusicianController extends Controller
 			$company = $reservation->rooms->companies;
 
 			if($reservation->rooms->company_address){
-				$reservation->description = $company->name." ".$company->address.", ".$company->colony.", ".$company->deputation;
+				
+				$description = $company->name." ".$company->address.", ".$company->colony.", ".$company->deputation;
+				$reservation->description = preg_replace( "/\r|\n/", "", $description );
 			}
 			
 		}

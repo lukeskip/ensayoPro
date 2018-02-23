@@ -28,17 +28,11 @@
 
 		// Construimos un objeto con las reservaciones de otros usuarios y que se hicieron por la base de datos
 		@foreach($reservations as $reservation)
-			@if($reservation->bands)
-				var title = "{{$reservation->bands->name}}";
-			@elseif($reservation->description!='')
-				var title = '{{$reservation->description}}';
-			@else
-				var title = "{{$reservation->users->name}} {{$reservation->users->lastname}}";
-			@endif
+			
 			 
 			reservations.push({
 					'id' 		: '{{$reservation->code}}',
-					'title' 	: '{{$reservation->description}}',
+					'title' 	: '{!! nl2br(htmlspecialchars($reservation->description)) !!}',
 					'start' 	: '{{$reservation->starts}}',
 					'end'   	: '{{$reservation->ends}}',
 					'className' : 'reservation {{$reservation->class}}', 
