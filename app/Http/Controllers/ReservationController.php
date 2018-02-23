@@ -41,7 +41,7 @@ class ReservationController extends Controller
 
 			if($room->status == 'active' and $room->companies->status=='active'){
 				$now                = Date::now();
-				$room->promotions = $room->promotions->where('valid_ends', '>=',  $now);
+				$room->promotions = $room->promotions->where('valid_ends', '>=',  $now)->where('status','published');
 				foreach ($room->promotions as $promotion) {
 						
 						$finishs = new Date($promotion->valid_ends);
@@ -226,6 +226,7 @@ class ReservationController extends Controller
 		// if(request()->has('buscar')){
 		//    $users->where('name', 'LIKE', '%' . request()->buscar . '%')->orWhere('email', 'LIKE', '%' . request()->buscar . '%');
 		// }
+
 
 		$reservations = $reservations->paginate(15);
 

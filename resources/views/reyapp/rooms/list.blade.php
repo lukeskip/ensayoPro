@@ -109,8 +109,9 @@
 									Ver
 								</a href="#">
 							@endif
-							@if($room->promotions)
-								@foreach($room->promotions as $promotion)
+							@if($room->promotions->where('valid_ends','>=',$now))
+								@foreach($room->promotions->where('valid_ends','>=',$now) as $promotion)
+								
 									<a href="/salas/?ciudad={{$room->city}}" class="tag green hastooltip" title="{{$promotion->description}}">
 									 	<i class="fa fa-tags"></i> 
 									 	{{$promotion->tag}}

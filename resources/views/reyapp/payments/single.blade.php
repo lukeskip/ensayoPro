@@ -11,9 +11,9 @@
 			<h2>{{$payment->rooms->name}}</h2>
 		</div>
 		<div class="content row no-margin">
-			<div class="large-8 columns no-padding">
-				<br>
-				<h2>Resumen de reservaciones</h2>
+			<br>
+			<h2>Resumen de reservaciones</h2>
+			<div class="large-12 columns">
 				<ul>	
 					@foreach($payment->reservations as $reservations)
 
@@ -35,6 +35,80 @@
 						</li>
 					@endforeach
 				</ul>
+			</div>
+			
+			<div class="large-5 columns">
+				<div class="price-info">
+					<h3>Desglose</h3>
+					<div class="row">
+						<div class="small-8 columns">
+							<label class="description">
+							Horas
+							@if($payment->quantity_prom) 
+								sin promoción:
+							@endif
+							</label>
+						</div>
+						<div class="small-4 columns">
+							{{$payment->quantity}}
+						</div>
+					</div>
+
+					@if($payment->quantity_prom)
+						<div class="row">
+							<div class="small-8 columns">
+								<label class="description">Horas con promoción:</label>
+							</div>
+							<div class="small-4 columns">
+								{{$payment->quantity_prom}}
+							</div>
+						</div>
+					@endif
+					
+					<div class="row">
+						<div class="small-8 columns">
+							<label class="description">Precio Unitario:</label>
+						</div>
+						<div class="small-4 columns">
+							${{$payment->unit_price}}
+						</div>
+					</div>
+					
+					@if($payment->unit_price_prom)
+						<div class="row">
+							<div class="small-8 columns">
+								<label class="description">Precio Unitario con promoción:</label>
+							</div>
+							<div class="small-4 columns">
+								${{$payment->unit_price_prom}}
+							</div>
+						</div>
+					@endif
+					
+					<div class="row">
+						<div class="small-8 columns">
+							<label class="description">Comisión EnsayoPro</label>
+						</div>
+						<div class="small-4 columns">
+							${{$payment->comission}}
+						</div>
+					</div>
+					
+					<hr>
+					<div class="row">
+						<div class="small-8 columns">
+							<label>Importe pagado:</label>
+						</div>
+						<div class="small-4 columns">
+							${{$payment->total}}
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="large-7 columns no-padding">
+				
+				
 				<div class="instructions">
 					
 					@if($payment->method == 'oxxo' and $payment->status == 'pending_payment')
@@ -59,20 +133,7 @@
 
 				</div>
 			</div>
-			<div class="large-4 columns">
-				<div class="price-info">
-					<br>
-					<h3>Desglose</h3>
-					<div><label>Horas sin promoción:</label>{{$payment->quantity}}</div>
-					<div><label>Horas con promoción:</label>{{$payment->quantity_prom}}</div>
-					<div><label>Precio Unitario:</label>${{$payment->rooms->price}}</div>
-					<div><label>Precio Unitario con promoción:</label>${{$payment->unit_price_prom}}</div>
-					<div><label>Comisión Ensayo Pro:</label>${{$payment->comission}}</div>
-					<hr>
-					<div><label>Importe pagado:</label> ${{$payment->total}}</div>
-					
-				</div>
-			</div>
+			
 			
 		</div>
 	

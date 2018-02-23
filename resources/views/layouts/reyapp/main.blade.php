@@ -115,8 +115,9 @@
 								<i class="fa fa-calendar-o" aria-hidden="true"></i> Salas
 							</a>
 						</li>
+						
 						<li>
-							<a href="/admin/salas">
+							<a href="/admin/reportes">
 								<i class="fa fa-calendar-o" aria-hidden="true"></i> Reservaciones
 							</a>
 						</li>
@@ -124,6 +125,12 @@
 						<li>
 							<a href="/admin/pagos">
 								<i class="fa fa-credit-card-alt" aria-hidden="true"></i> Pagos
+							</a>
+						</li>
+
+						<li>
+							<a href="/admin/reportes">
+								<i class="fa fa-bar-chart" aria-hidden="true"></i> Reportes
 							</a>
 						</li>
 
@@ -164,6 +171,14 @@
 								Mis Promociones
 							</a>
 						</li>
+
+						<li>
+							<a href="/company/reportes">
+								<i class="fa fa-bar-chart" aria-hidden="true"></i> Reportes
+							</a>
+						</li>
+						
+
 						<li>
 							<a href="/company/ajustes">
 								<i class="fa fa-cogs" aria-hidden="true"></i> Ajustes

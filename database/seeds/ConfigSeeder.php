@@ -111,5 +111,18 @@ class ConfigSeeder extends Seeder
 		$setting->slug = 'max_prom_direct';
 		$setting->value = '100';
 		$setting->save();
+
+		// Creamos el setting statement_date
+		$setting = new Setting;
+		$setting->type = 'select';
+		$setting->label = 'Día de Corte';
+		$setting->labels = 'Domingo,Lunes,Martes,Miércoles,Jueves,Viernes,Sábado';
+		$setting->options = 'sunday,monday,tuesday,wednesday,thursday,friday,saturday';
+		$setting->description = 'Es el día de la semana en el que se hace el corte de pagos';
+		$setting->slug = 'statement_date';
+		$setting->value = 'tuesday';
+		$setting->save();
+
+
     }
 }

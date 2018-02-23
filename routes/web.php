@@ -36,9 +36,7 @@ Route::get('/phpinfo', function () {
     return phpinfo();
 });
 
-Route::get('/prueba', function(){
-	return $result = LaravelMsg91::message(5525555637, 'This is a test message');
-});
+Route::get('/prueba_reporte', 'ReportController@store');
 
 Route::get('/terminos_y_condiciones', function(){
 	return view('reyapp.mandatories.terms');
@@ -92,6 +90,8 @@ Route::group(['middleware' => ['auth','company','active'],'prefix'=>'company'], 
 	Route::post('/salas','RoomController@store');
 	Route::get('/salas','RoomController@index_company');
 	Route::put('/salas/{id}','RoomController@update');
+	Route::get('/reportes','ReportController@index_company');
+	Route::get('/reportes/{id}','ReportController@show');
 	
 });
 
@@ -110,7 +110,9 @@ Route::group(['middleware' => ['auth','admin','active'],'prefix'=>'admin'], func
 	Route::get('/company/ajustes/{id}', 'CompanyController@edit_admin');
 
 	Route::get('/users/', 'AdminController@users');
+	Route::get('/reportes/', 'ReportController@index');
 	Route::get('/reservaciones/', 'ReservationController@index');
+	Route::get('/reportes/{id}','ReportController@show');
 });
 
 

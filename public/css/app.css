@@ -291,6 +291,8 @@ textarea{
 }
 /*ENDS: Dashboard****************************************/
 
+
+
 /*STARTS:Promotions***************************************/
 .promotions{
 	margin-bottom: 20px;
@@ -1419,6 +1421,8 @@ h1 .duration{
 	text-align: right;
 	margin-bottom: 20px;
 	font-size: 2em;
+	/*background: #eee;*/
+	padding: 20px;
 }
 
 .checkout .price-info p{
@@ -1429,10 +1433,7 @@ h1 .duration{
 	font-size: .7em;
 }
 
-.checkout .price-info label{
-	background: white;
-	font-size: .6em;
-}
+
 
 .checkout .price-info hr{
 	border-bottom: 2px solid #333;
@@ -1444,6 +1445,11 @@ h1 .duration{
 	color: #666;
 	margin-right: 10px;
 	line-height: 1.9em;
+	background: none;
+}
+
+.checkout .price-info label.description{
+	font-size: .5em;
 }
 
 .checkout .header{
@@ -2930,3 +2936,29 @@ footer{
 
 
 /*ENDS: BAND EDIT********************************/
+
+/*STARTS: REPORTS*********************************/
+.report .hours{
+	font-size: 5em;
+	text-align: center;
+}
+
+.report .description{
+	font-size: .8em;
+	text-align: center;
+}
+
+.report .incomings_wrapper{
+	padding: 50px;
+	background: #36A939;
+	margin-top: 50px;
+
+}
+
+.report .incomings{
+	font-size: 5em;
+	text-align: center;
+
+
+}
+/*ENDS: REPORTS***********************************/

@@ -30,4 +30,10 @@ class Company extends Model
     {
         return $this->hasMany('App\Promotion');
     }
+
+    public function reports(){
+        return $this->hasMany('App\Report');
+    }
+
+
 }

@@ -152,7 +152,11 @@ class RoomController extends Controller
 			
 			$room['ratings'] = $sumRatings;
 
+			$now = Date::now();
+			$room->promotions = $room->promotions->where('valid_ends', '>=', $now)->where('status','published');
+
 			if ($room->promotions){
+				
 				foreach ($room->promotions as $promotion) {
 					$now                = Date::now();
 					$finishs            = new Date($promotion->valid_ends);
@@ -201,7 +205,7 @@ class RoomController extends Controller
 		$order = request()->order;
 		$deputations = $rooms->unique('deputation')->values()->all();
 		$cities = $rooms->unique('city')->values()->all();
-		return view('reyapp.rooms.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order)->with('role',$role)->with('deputations',$deputations)->with('cities',$cities);
+		return view('reyapp.rooms.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order)->with('role',$role)->with('deputations',$deputations)->with('cities',$cities)->with('now',$now);
 	}
 
 
@@ -401,7 +405,7 @@ class RoomController extends Controller
 		}
 
 		$now                = Date::now();
-        $room->promotions = $room->promotions->where('valid_ends', '>=',  $now);
+        $room->promotions = $room->promotions->where('valid_ends', '>=',  $now)->where('status','published');;
         foreach ($room->promotions as $promotion) {
                 
                 $finishs = new Date($promotion->valid_ends);

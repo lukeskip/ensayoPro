@@ -373,7 +373,7 @@ class PaymentController extends Controller
 
 					$reservation->code = $code;
 
-					// $room->reservations()->save($reservation);
+					$room->reservations()->save($reservation);
 				 
 					$total_h += $start->diffInHours($end);     
 					$ids []   =  $reservation->id;
@@ -586,8 +586,7 @@ class PaymentController extends Controller
 					
 				}
 
-				$order->line_items[2];
-				$pA = (($pUP * $pQ)+($pUPP * $pQP)) / 100;//cargo sin contar la comision
+				$pA = (($pUP * $pQ)+($pUPP * $pQP));//cargo sin contar la comision
 				
 				$pE = $order->charges[0]->payment_method->expires_at;
 				// $rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS,'price'=>$price);

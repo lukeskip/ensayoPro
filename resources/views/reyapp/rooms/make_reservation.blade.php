@@ -61,8 +61,9 @@
 					</select> --}}
 
 					{{-- STARTS: Oxxo form --}}
-					<div class="promotions">
+					
 					@if($room->promotions->count())
+					<div class="promotions">
 						<h2>Promociones disponibles</h2>
 						@foreach($room->promotions as $promotion)
 							<div class="promotion" data-id="{{$promotion->id}}">
@@ -72,8 +73,9 @@
 								{{$promotion->description}}
 							</div>
 						@endforeach
-					@endif
 					</div>
+					@endif
+					
 					<h2>Pago vía Oxxo</h2>
 					<p>Tendrás {{$expiration_oxxo}} horas para liquidar el pago</p>
 

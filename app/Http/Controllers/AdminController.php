@@ -24,8 +24,9 @@ class AdminController extends Controller
      */
     public function index()
     {   
-        $day1 = Date::parse('last tuesday')->startOfDay();
-        $day2 = Date::parse('next monday')->endOfDay();
+        $statement_date     = Setting::where('slug','statement_date')->first()->value;
+        $day1               = Date::parse('last '.$statement_date)->startOfDay();
+        $day2               = Date::parse('last '.$statement_date)->addWeeks(1)->endOfDay();
         $reservations   = Reservation::where('is_admin',0)->limit(5)->get();
         $comments       = Comment::where('status','pending')->limit(5)->get();
         $payments = Payment::whereBetween('created_at',[$day1,$day2])->where('status','paid')->get();
@@ -40,6 +41,8 @@ class AdminController extends Controller
             $incomings += $company_comission + $payment->comission;
         }
 
+        
+
         //Sumamos las horas reservadas
         foreach ($reservations as $reservation) {
             $date_starts = new Date($reservation['starts']);
@@ -48,6 +51,7 @@ class AdminController extends Controller
                 $reservation['hours'] = $date_starts->diffInHours($date_ends);
                 $hours += $reservation->hours;
             }
+
         }
 
         
@@ -85,6 +89,11 @@ class AdminController extends Controller
     public function settings()
     {
         $settings = Setting::all();
+        foreach ($settings as $setting) {
+            $setting['labels'] = explode(',',$setting->labels);
+            $setting['options'] = explode(',',$setting->options);
+
+        }
         return view('reyapp.admin.settings')->with('settings',$settings);
     }
 

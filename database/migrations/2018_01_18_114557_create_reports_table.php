@@ -15,6 +15,15 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('company_id');
+            $table->string('user_comissions');
+            $table->string('company_comissions');
+            $table->string('company_incomings');
+            $table->string('admin_incomings');
+            $table->string('hours');
+            $table->string('hours_prom');
+            $table->dateTime('period_starts');
+            $table->dateTime('period_ends');
             $table->timestamps();
         });
     }
