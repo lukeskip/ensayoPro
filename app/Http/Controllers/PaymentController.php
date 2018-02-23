@@ -464,12 +464,12 @@ class PaymentController extends Controller
 
 
 			// Enviamos un correo a la compañía con la información de todas las reservaciones
-			Mail::send('reyapp.mails.payment_order', ['reference'=>$reference,'company_name'=>$company_name,'room_name'=>$room_name,'amount'=>$amount], function ($message)use($user_mail,$company_name){
+			// Mail::send('reyapp.mails.payment_order', ['reference'=>$reference,'company_name'=>$company_name,'room_name'=>$room_name,'amount'=>$amount], function ($message)use($user_mail,$company_name){
 
-            $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Order de pago pendiente para '.$company_name);
-            $message->to($user_mail);
+   //          $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Orden de pago pendiente para '.$company_name);
+   //          $message->to($user_mail);
 
-            });
+   //          });
 			
 			return response()->json(['success' => true,'message'=>$pS,'code'=>$payment->order_id]);
 
