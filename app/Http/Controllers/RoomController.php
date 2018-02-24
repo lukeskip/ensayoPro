@@ -106,7 +106,9 @@ class RoomController extends Controller
 		}
 
 		if(request()->has('buscar')){	
-			$rooms = $rooms->where('name', 'LIKE', '%' . request()->buscar . '%');
+			$rooms = $rooms->where('name', 'LIKE', '%' . request()->buscar . '%')->orWhere('equipment', 'LIKE', '%' . request()->buscar . '%')->orWhereHas('companies', function($query){
+				$query->where('name', 'LIKE', '%' . request()->buscar . '%');
+			});
 		
 		}
 

@@ -211,7 +211,7 @@
 			</div>
 
 			<div class="large-4 columns">		
-				<label>Instrcciones <i class="fa fa-question-circle hastooltip" title="Escribe las indicaciones para quienes renten tu sala" aria-hidden="true"></i></label>
+				<label>Instrucciones <i class="fa fa-question-circle hastooltip" title="Escribe las indicaciones para quienes renten tu sala" aria-hidden="true"></i></label>
 				<textarea class="input-group-field required" type="text" name="instructions" placeholder="Ej. El baterista deberá de llevar sus platos y pedal de bombo..." data-rule-maxlength="255">{{$room->instructions}}</textarea>
 			</div>
 

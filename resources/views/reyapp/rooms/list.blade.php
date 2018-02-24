@@ -11,25 +11,35 @@
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
 		<meta name="description" content="Renta la sala de ensayo que más te convenga en la Ciudad de México, muchas opciones" />
-		<meta name="keywords" content="Salas de Ensayo DF, cuartos de ensayo, las mejores salas de ensayo" />
+		<meta name="keywords" content="Salas de Ensayo DF, cuartos de ensayo, las mejores salas de ensayo, disqueras independientes" />
 		<meta name="author" content="Rey Decibel">
 		<meta name="robots" content="index, follow">
 		<meta name="revisit-after" content="1 month">
 @endsection
 @section('content')
+	<div class="row">
+		<div class="large-10 columns text-center large-centered">
+			<img src="{{asset('img/logo_cabeza_ensayo.png')}}" width="500px" alt="">
+			<h1 style="font-size:1.5em;">ENCUENTRA LA MEJOR SALA DE ENSAYO PARA TU BANDA INDEPENDIENTE</h1>
+			Las disqueras independientes buscan seriedad, profesionaliza tu proyecto con una sala de ensayo, busca tu favorita, por ubicación, equipamiento, calificación o precio, tu banda te lo agradecerá. Regístrate y obtén beneficios exclusivos para tu banda independiente. Si tienes una sala de ensayos y quieres integrarte a esta lista <a href="/unete">da click aquí</a>
+			<br><br>
+			
+		</div>
+	</div>
 	<form id="order_form" class="search" method="get" action="/salas">
-		@if ($role == 'admin')
-			<div class="row">
-				<div class="medium-4 columns no-padding padding-right end">
-					<div class="input-group">
-					  <input class="input-group-field" type="text" name='buscar' value="{{request('buscar')}}">
-					  <div class="input-group-button">
-					    <input type="submit" class="button green" value="Buscar">
-					  </div>
-					</div>
+		{{-- <img src="{{asset('img/salas-de-ensayo.png')}}" width="100%" alt=""> --}}
+		<div class="row">
+			<div class="medium-12 columns no-padding padding-right end">
+				<div class="input-group">
+				  <input class="input-group-field" type="text" name='buscar' value="{{request('buscar')}}" placeholder="Por equipamiento o nombre">
+				  <div class="input-group-button">
+				    <input type="submit" class="button green" value="Buscar">
+				  </div>
 				</div>
 			</div>
-		@endif
+		</div>
+	
+		
 		<div class="row">
 			{{-- STARTS:Hidden fields --}}
 
@@ -163,6 +173,8 @@
 			{!! $rooms->appends(Request::capture()->except('page'))->render() !!}
 		</div>
 	</div>
+
+
 @endsection
 
 @section('scripts')
