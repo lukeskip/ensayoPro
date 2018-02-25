@@ -1,5 +1,6 @@
 @extends('layouts.reyapp.main')
 @section('content')
+@if($company)
 <div class="form_wrapper">
 	<form id="form_comp">
 		{{ csrf_field() }}
@@ -18,13 +19,25 @@
 			<div class="large-12 columns">
 				<h3>Información general</h3>
 			</div>
-			<div class="@if($role == 'admin'){{'large-6'}}@else{{'large-12'}}@endif columns">
+			<div class="@if($role == 'admin'){{'large-4'}}@else{{'large-6'}}@endif columns">
 				<label>Nombre Comercial (*)</label>
 				<input class="input-group-field required" type="text" name="name" value="{{$company->name}}">
 			</div>
+
+			<div class="@if($role == 'admin'){{'large-4'}}@else{{'large-6'}}@endif columns">
+				<div class="reservation_opt">
+					<div class="label_opt">
+						Aceptar reservaciones
+						<i class="fa fa-question-circle hastooltip" title="Tendrás que ser habilitado por un administrador de EnsayoPRO" aria-hidden="true"></i>
+					</div>
+					<div class="switch @if($company->reservation_opt == true) on @endif"></div>
+					
+				</div>
+				<input class="input-group-field required reservation_opt" type="hidden" name="reservation_opt" value="{{$company->reservation_opt}}">
+			</div>
 			
 			@if($role == 'admin')
-			<div class="large-6 columns">
+			<div class="large-4 columns">
 				<label for="">Estatus</label>
 				<select name="status" id="">
 					<option @if($company->status == 'active') {{'selected'}} @endif value="active">
@@ -172,14 +185,26 @@
 
 	</form>
 </div>
+@else
+<div class="row">
+	<div class="large-12 columns text-center">
+		<h1>Primero registra tu compañía</h1>
+		<a class="button green" href="/company/registro">Registrar Compañía</a>
+	</div>
+</div>
+@endif
+
 @endsection
 @section('scripts')
 	<script src="{{asset('plugins/validation/jquery.validate.min.js')}}"></script>
 	<script src="{{asset('plugins/validation/messages.js')}}"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMMiHmdWoL0K5FQPWL_cXBbK0IV-t7l3w"></script>
+@if($company)
 	<script>
+
 		var initMarker = {lat: {{$company->latitude}}, lng: {{$company->longitude}}};
 		var editmode 	= true;	
+
 	</script>
 	<script src="{{asset('js/get_loc.js')}}"></script>
 	<script>
@@ -215,4 +240,5 @@
 			show_message('warning','Atención','Los datos de tu compañía están siendo validados, por lo que aún no está activa');
 		}
 	</script>
+@endif
 @endsection

@@ -38,6 +38,9 @@ class ReservationController extends Controller
 			$room               = Room::find($room_id);
 			$reservations       = Reservation::where('room_id',$room_id)->where('status','!=','cancelled')->get();
 
+			if(!$room->companies->reservation_opt or !$room->companies->status == 'active'){
+				return redirect('/salas');
+			}
 
 			if($room->status == 'active' and $room->companies->status=='active'){
 				$now                = Date::now();

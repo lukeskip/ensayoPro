@@ -102,6 +102,7 @@ class CompanyController extends Controller
 			'postal_code'       => 'required|max:20',
 			'city'              => 'required|max:100',
 			'phone'             => 'required|max:30',
+			'reservation_opt'   => 'required|boolean',
 			// 'rfc'            => 'required|max:30',
 			// 'legalname'      => 'required|max:255',
 			'latitude'          => 'required|max:20',
@@ -133,6 +134,7 @@ class CompanyController extends Controller
 		$company->longitude      = $request->longitude;
 		$company->bank           = $request->bank;
 		$company->account_holder = $request->account_holder;
+		$company->reservation_opt = $request->reservation_opt;
 		$company->status         = 'inactive';
 		$emails 				 = [];	
 		
@@ -208,9 +210,12 @@ class CompanyController extends Controller
 	public function edit()
 	{
 		$user_id = Auth::user()->id;
-		$company = User::find($user_id);
-		$company = $company->companies->first();
+		$user = User::find($user_id);
+		$company = $user->companies()->first();
 		$role = User::find($user_id)->roles->first()->name;
+		
+	
+		
 
 		
 		// if($company->status == 'inactive'){
@@ -272,6 +277,7 @@ class CompanyController extends Controller
 			'postal_code'       => 'required|max:20',
 			'city'              => 'required|max:100',
 			'phone'             => 'required|max:30',
+			'reservation_opt'   => 'required|boolean',
 			'rfc'               => 'max:30',
 			'latitude'          => 'max:20',
 			'longitude'         => 'max:20',       
@@ -295,6 +301,7 @@ class CompanyController extends Controller
 		$company->postal_code    = $request->postal_code;
 		$company->city           = $request->city;
 		$company->phone          = $request->phone;
+		$company->reservation_opt = $request->reservation_opt;
 		$company->rfc            = $request->rfc;
 		
 		

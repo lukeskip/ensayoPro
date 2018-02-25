@@ -646,6 +646,35 @@ body.company_calendar{
 /*ENDS: PAGINATION*/
 
 /*FORM*/
+.form_wrapper .reservation_opt{
+	padding-top: 20px;
+	cursor: pointer;
+}
+.form_wrapper .reservation_opt .switch{
+	height: 50px;
+	width:85px;
+	overflow: hidden;
+	background: url('../img/switch.png') bottom left;
+	float: left;
+}
+
+.form_wrapper .reservation_opt .switch.on{
+	background-position:top left;
+}
+
+.form_wrapper .reservation_opt .label_opt{
+	padding-left: 10px;
+	padding-top: 15px;
+	float: left;
+	margin-right: 10px;
+}
+
+
+
+.form_wrapper .reservation_opt .label_opt{
+	
+}
+
 .form_wrapper select{
 	margin-bottom: 0px;
 }

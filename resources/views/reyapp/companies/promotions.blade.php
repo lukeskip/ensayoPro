@@ -1,6 +1,7 @@
 @extends('layouts.reyapp.main')
 
 @section('content')
+@if($company)
 	<h1>Promociones</h1>
 	<div class="row">
 		<div class="medium-12 columns">
@@ -77,7 +78,15 @@
 		<div class="large-12 columns">
 			{!! $promotions->appends(Request::capture()->except('page'))->render() !!}
 		</div>
-	</div>		
+	</div>
+@else
+<div class="row">
+	<div class="large-12 columns text-center">
+		<h1>Primero registra tu compañía</h1>
+		<a class="button green" href="/company/registro">Registrar Compañía</a>
+	</div>
+</div>
+@endif		
 	
 @endsection
 

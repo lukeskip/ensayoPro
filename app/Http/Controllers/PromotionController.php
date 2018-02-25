@@ -50,10 +50,21 @@ class PromotionController extends Controller
 				if(!Auth::guest()){
 						$user_id = $user->id;
 						$role = $user->roles->first()->name;
-						$company = $user->companies->first()->id;  
+						$company = $user->companies->first();
+
 				}
+
+
+
+				if($company){
+					$company_id = $company->id;
+				}else{
+					return redirect('/company');
+				}
+
+				
 	 
-				$promotions = Promotion::where('company_id',$company)->orderby('valid_ends','DESC')->paginate();
+				$promotions = Promotion::where('company_id',$company_id)->orderby('valid_ends','DESC')->paginate();
 
 				foreach ($promotions as $promotion) {
 						$now                = Date::now();
@@ -96,7 +107,7 @@ class PromotionController extends Controller
 						$promotion->description = $description;
 				}
 				
-				return view('reyapp.companies.promotions')->with('promotions',$promotions);
+				return view('reyapp.companies.promotions')->with('promotions',$promotions)->with('company',$company);
 		}
 
 		/**

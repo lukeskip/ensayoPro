@@ -370,7 +370,9 @@ class RoomController extends Controller
 	 */
 	public function show($id)
 	{
+		// Declaramos las primeras variables
 		$room = Room::find($id);
+		$reservation_opt = false;
 		if(!$room){
 			return "Esta sala ha sido eliminada o está temporalmente suspendida";
 		}
@@ -446,7 +448,12 @@ class RoomController extends Controller
                 $promotion->description = $description;
         }
 
-		return view('reyapp.rooms.single')->with('room',$room)->with('user',$user);
+        if($room->companies->status == 'active' and $room->companies->reservation_opt){
+        	$reservation_opt = true;
+        }
+        
+
+		return view('reyapp.rooms.single')->with('room',$room)->with('user',$user)->with('reservation_opt',$reservation_opt);
 	}
 
 	/**

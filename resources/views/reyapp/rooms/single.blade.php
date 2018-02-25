@@ -42,7 +42,9 @@
 						<option value="5">5</option>
 					</select>
 				</div>
-				<a href="reservando/{{$room->id}}" class="button expanded green">Reservar esta sala</a>
+				@if($reservation_opt)
+					<a href="reservando/{{$room->id}}" class="button expanded green">Reservar esta sala</a>
+				@endif
 
 				@if($room->promotions)
 					<h3 class="list-header green">
@@ -115,7 +117,9 @@
 						<option value="5">5</option>
 					</select>
 				</div>
-				<a href="reservando/{{$room->id}}" class="button expanded green">Reservar esta sala</a>
+				@if($reservation_opt)
+					<a href="reservando/{{$room->id}}" class="button expanded green">Reservar esta sala</a>
+				@endif
 
 				@if($room->promotions->count())
 					<h3 class="list-header green">

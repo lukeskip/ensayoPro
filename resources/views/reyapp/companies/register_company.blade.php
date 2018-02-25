@@ -30,9 +30,20 @@
 			<div class="large-12 columns">
 				<h3>Información general</h3>
 			</div>
-			<div class="large-12 columns">
+			<div class="large-6 columns">
 				<label>Nombre Comercial (*)</label>
 				<input class="input-group-field required" type="text" name="name">
+			</div>
+			<div class="large-6 columns">
+				<div class="reservation_opt">
+					<div class="label_opt">
+						Aceptar reservaciones
+						<i class="fa fa-question-circle hastooltip" title="Tendrás que ser habilitado por un administrador de EnsayoPRO" aria-hidden="true"></i>
+					</div>
+					<div class="switch"></div>
+					
+				</div>
+				<input class="input-group-field required reservation_opt" type="hidden" name="reservation_opt" value="">
 			</div>
 
 			

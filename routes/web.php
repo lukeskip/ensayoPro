@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth','company','active'],'prefix'=>'company'], 
 
 	Route::get('/agenda/', 'AdminCompanyController@company_calendar');
 
-	Route::get('/', 'AdminCompanyController@company');
+	Route::get('/', 'AdminCompanyController@company')->name('dashboard_company');
 	Route::get('/salas', 'AdminCompanyController@company_rooms');
 	Route::get('/codigos', 'AdminCompanyController@company_rooms');
 	

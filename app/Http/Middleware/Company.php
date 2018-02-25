@@ -16,11 +16,15 @@ class Company
      */
     public function handle($request, Closure $next)
     {   
-        $user = Auth::user();
-        $role = $user->roles->first()->name;
-        
+
+        $user    = Auth::user();
+        $role    = $user->roles->first()->name;
+        $company = $user->companies->first();
         if($role == 'company' or $role == 'admin'){
+          
+
             return $next($request);
+            
         }else if($role == 'musician'){
            return redirect('/musico/bienvenido'); 
         }

@@ -8,6 +8,17 @@ $(document).foundation();
 $(document).ready(function(){
 	
 	$('.loader-wrapper').fadeOut();
+
+	
+	$('.reservation_opt .switch').click(function(){
+		$(this).toggleClass('on');
+		if($(this).hasClass('on')){
+			$('.reservation_opt').val(1);
+		}else{
+			$('.reservation_opt').val(0);
+		}
+		console.log($('.reservation_opt').val());
+	});
 	
 
 	// Configure/customize these variables.

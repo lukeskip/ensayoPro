@@ -94,34 +94,8 @@ class ConfigSeeder extends Seeder
 		$setting->value = '12';
 		$setting->save();
 
-		// Creamos el setting max_log_hours
-		$setting = new Setting;
-		$setting->type = 'number';
-		$setting->label = 'Descuento máx. porcentaje';
-		$setting->description = 'Es el máximo de porcentaje de descuento que se permite en las promociones';
-		$setting->slug = 'max_prom_percentage';
-		$setting->value = '50';
-		$setting->save();
 
-		// Creamos el setting max_prom_percentage
-		$setting = new Setting;
-		$setting->type = 'number';
-		$setting->label = 'Descuento máx. directo';
-		$setting->description = 'Es el máximo de descuento directo que se permite en las promociones';
-		$setting->slug = 'max_prom_direct';
-		$setting->value = '100';
-		$setting->save();
-
-		// Creamos el setting statement_date
-		$setting = new Setting;
-		$setting->type = 'select';
-		$setting->label = 'Día de Corte';
-		$setting->labels = 'Domingo,Lunes,Martes,Miércoles,Jueves,Viernes,Sábado';
-		$setting->options = 'sunday,monday,tuesday,wednesday,thursday,friday,saturday';
-		$setting->description = 'Es el día de la semana en el que se hace el corte de pagos';
-		$setting->slug = 'statement_date';
-		$setting->value = 'tuesday';
-		$setting->save();
+		
 
 
     }

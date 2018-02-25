@@ -85,6 +85,10 @@ class AdminCompanyController extends Controller
 		$user_id = Auth::user()->id;
 		$user = User::find($user_id);
 		$company = $user->companies()->first();
+		// si aun no cuenta con una compañía lo redirigimos
+		if(!$company){
+			return redirect('/company');
+		}
 		$rooms = $company->rooms()->with('reservations')->where('status','active')->get();
 		$room_ids  = [];
 		foreach ($company->rooms as $room) {
