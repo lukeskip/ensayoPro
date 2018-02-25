@@ -61,8 +61,24 @@
 					</select> --}}
 
 					{{-- STARTS: Oxxo form --}}
+					
+					@if($room->promotions->count())
+					<div class="promotions">
+						<h2>Promociones disponibles</h2>
+						@foreach($room->promotions as $promotion)
+							<div class="promotion" data-id="{{$promotion->id}}">
+
+								<i class="fa fa-tags"></i>
+								<span class="title">{{$promotion->name}}:</span>
+								{{$promotion->description}}
+							</div>
+						@endforeach
+					</div>
+					@endif
+					
 					<h2>Pago vía Oxxo</h2>
 					<p>Tendrás {{$expiration_oxxo}} horas para liquidar el pago</p>
+
 					<div class="oxxo method">
 						<form id="oxxo-form" action="/oxxo" method="POST">
 							{{ csrf_field() }}
@@ -224,6 +240,7 @@
 		var max_card = {{$max_card}};
 		var min_available_oxxo = {{$min_available_oxxo}};
 		var user_comission = {{$user_comission}};
+		var promotion_id_active = 0;
 
 		@if($user->bands->count() < 1)
 			title = '{{$user->name}} {{$user->lastname}}';
@@ -348,7 +365,7 @@
 				}).then(function() {
 					$('.loader-wrapper').css('display','block');
 					checkout();
-    				data = $(form).serialize();
+    				data = $(form).serialize()+'&promotion_id='+promotion_id_active;
 					conection('POST',data,'/oxxo',true).then(function(answer){
 						if(answer.success == true){
 							window.location.replace("/confirmacion/"+answer.code);

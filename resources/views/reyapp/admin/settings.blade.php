@@ -14,10 +14,24 @@
 	<div class="row">
 		<form action="">
 			@foreach($settings as $setting)
+				@if($setting->type == 'text' or $setting->type== 'number')
+					<div class="medium-6 columns">
+						<label>{{$setting->label}} <i class="fa fa-question-circle hastooltip" title="{{$setting->description}}" aria-hidden="true"></i></label>
+						<input class="input-group-field" name="{{$setting->slug}}" type="{{$setting->type}}" value="{{$setting->value}}">
+					</div>
+				@elseif ($setting->type == 'select')
 				<div class="medium-6 columns">
 					<label>{{$setting->label}} <i class="fa fa-question-circle hastooltip" title="{{$setting->description}}" aria-hidden="true"></i></label>
-					<input class="input-group-field" name="{{$setting->slug}}" type="{{$setting->type}}" value="{{$setting->value}}">
+					<select name="{{$setting->slug}}" id="">
+
+						@for ($i = 0; $i < count($setting->labels); $i++)
+							<option @if($setting->value == $setting->options[$i]) selected @endif value="{{$setting->options[$i]}}">
+								{{$setting->labels[$i]}}
+							</option>
+						@endfor
+					</select>
 				</div>
+				@endif
 			@endforeach
 		</form>
 		

@@ -11,6 +11,8 @@ use App\MediaItem as MediaItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Jenssegers\Date\Date;
+use DateTime;
 
 class RoomController extends Controller
 {
@@ -39,8 +41,10 @@ class RoomController extends Controller
 		}
 		
 		
-		$rooms = Room::with('companies')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id'); 
+		$rooms = Room::with('companies','promotions')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->groupBy('rooms.id')->leftJoin('room_promotion', 'room_promotion.room_id', '=', 'rooms.id')->select('rooms.*','room_promotion.room_id as promotion',DB::raw('AVG(score) as average' ));
+
 		
+
 
 		// Actuamos dependiento los filtros que tengamos diponibles
 		if(request()->has('order')){
@@ -63,7 +67,8 @@ class RoomController extends Controller
 			}
 
 		}else{
-			$rooms = $rooms->orderBy('average','DESC');
+
+			$rooms = $rooms->orderBy('promotion','DESC')->orderBy('average','DESC');
 		}
 
 		if(request()->has('colonia')){	
@@ -148,12 +153,61 @@ class RoomController extends Controller
 			}
 			
 			$room['ratings'] = $sumRatings;
+
+			$now = Date::now();
+			$room->promotions = $room->promotions->where('valid_ends', '>=', $now)->where('status','published');
+
+			if ($room->promotions){
+				
+				foreach ($room->promotions as $promotion) {
+					$now                = Date::now();
+					$finishs            = new Date($promotion->valid_ends);
+					if($now <= $finishs){
+						$finishs            = $finishs->diffInDays($now);
+						$promotion['finishs']  = 'Le quedan '.$finishs.' día(s)';  
+					}else{
+						$promotion['finishs']  = 'Esta promoción caducó';   
+					}
+
+
+					if($promotion->rule == 'hours'){
+						$rule = " en la reserva de al menos ".$promotion->hours.' horas';
+					}elseif ($promotion->rule == 'schedule') {
+						$days_array = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+						$days_valid = '';
+						$days = explode(',',$promotion->days);
+						foreach ($days as $key => $value) {
+
+							if ($key === end($days)){
+								$days_valid .= $days_array[$value];
+							}else{
+								$days_valid .= $days_array[$value].', ';
+							}
+						}
+
+						$rules = ' en la reserva de tu ensayo entre las '.$promotion->schedule_starts.':00 y las '.$promotion->schedule_ends.':00 los días '.$days_valid;
+					}
+
+					if ($promotion->type == 'percentage'){
+
+						$description = $promotion->value.'% de descuento '.$rules;
+						$tag = $promotion->value.'% ';
+					}elseif ($promotion->type == 'hour_price'){
+						$description = '$'.$promotion->value.' precio por hora '.$rules;
+						$tag = '$'.$promotion->value.'p/hora ';
+					}
+					
+					$promotion->description = $description;
+					$promotion->tag 		= $tag;
+				}
+			}
 		}
+
 		$companies = Company::orderBy('name', 'desc')->get();
 		$order = request()->order;
 		$deputations = $rooms->unique('deputation')->values()->all();
 		$cities = $rooms->unique('city')->values()->all();
-		return view('reyapp.rooms.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order)->with('role',$role)->with('deputations',$deputations)->with('cities',$cities);
+		return view('reyapp.rooms.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order)->with('role',$role)->with('deputations',$deputations)->with('cities',$cities)->with('now',$now);
 	}
 
 
@@ -352,6 +406,46 @@ class RoomController extends Controller
 			$user = false;
 		}
 
+		$now                = Date::now();
+        $room->promotions = $room->promotions->where('valid_ends', '>=',  $now)->where('status','published');;
+        foreach ($room->promotions as $promotion) {
+                
+                $finishs = new Date($promotion->valid_ends);
+
+                $finishs =  $finishs->format('l j F Y');
+                
+
+
+                if($promotion->rule == 'hours'){
+                    $rule = " de descuento en la reserva de al menos ".$promotion->hours.' horas';
+                }elseif ($promotion->rule == 'schedule') {
+                    $days_array = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+                    $days_valid = '';
+                    $days = explode(',',$promotion->days);
+                    foreach ($days as $key => $value) {
+
+                        
+                        if ($key === end($days)){
+                            $days_valid .= $days_array[$value];
+                        }else{
+                            $days_valid .= $days_array[$value].', ';
+                        }
+                    }
+
+                    $rules = ' en la reserva de tu ensayo entre las '.$promotion->schedule_starts.':00hrs. y las '.$promotion->schedule_ends.':00hrs. los días '.$days_valid;
+                }
+
+                if($promotion->type == 'direct'){
+                    $description = '$'.$promotion->value.' de descuento '.$rules;
+                }elseif ($promotion->type == 'percentage'){
+                    $description = $promotion->value.'% de descuento'.$rules;
+                }elseif ($promotion->type == 'hour_price'){
+                    $description = '$'.$promotion->value.' precio por hora '.$rules;
+                }
+                $description = $description." válida hasta el ".$finishs;
+                $promotion->description = $description;
+        }
+
 		return view('reyapp.rooms.single')->with('room',$room)->with('user',$user);
 	}
 
@@ -476,4 +570,7 @@ class RoomController extends Controller
 	{
 		//
 	}
+
+
+	
 }

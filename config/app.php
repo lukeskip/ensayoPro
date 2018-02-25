@@ -187,6 +187,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        RobinCSamuel\LaravelMsg91\LaravelMsg91ServiceProvider::class
 
     ],
 
@@ -246,6 +247,7 @@ return [
         'Captcha' => '\Buzz\LaravelGoogleCaptcha\CaptchaFacade',
         'Carbon' => 'Carbon\Carbon',
         'Date' => Jenssegers\Date\Date::class,
+        'LaravelMsg91' => RobinCSamuel\LaravelMsg91\Facades\LaravelMsg91::class,
 
     ],
 

@@ -36,8 +36,8 @@ class Room extends Model
         return $this->hasMany('App\Payment');
     }
 
-    public function offers()
+    public function promotions()
     {
-        return $this->hasMany('App\Offer');
+        return $this->belongsToMany('App\Promotion','room_promotion');
     }
 }

@@ -71,11 +71,11 @@
 					Ingresos 
 					<span><i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Este mes vía la plataforma"></i></span>
 				</div>
-				<div class="number">20,000</div>
+				<div class="number"></div>
 			</div>
 
 			<div class="hours">
-				<div class="number">156</div>
+				<div class="number"></div>
 				<div class="text">
 					Horas Reservadas 
 					<span><i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Este mes vía la plataforma"></i></span>

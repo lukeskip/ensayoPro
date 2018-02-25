@@ -15,6 +15,7 @@ $(document).ready(function() {
 		});
 
 		function addEvent( start, end) {
+			
 			create = true;
 			
 			// Contruimos el objeto del nuevo evento
@@ -40,8 +41,6 @@ $(document).ready(function() {
 			diff_hours = Math.floor(diffSeconds/3600);
 
 			
-
-
 			// Buscamos eventos contiguos, si existen los pegamos
 			events = $('#calendar').fullCalendar( 'clientEvents' );
 			$.each(events, function( index, event ) {
@@ -64,13 +63,17 @@ $(document).ready(function() {
 			});
 
 			if(create == true && diff_hours >= 2){
-				$('#calendar').fullCalendar('renderEvent', new_event, true);
+				event = {'starts':start_time,'ends':end_time,'room_id':room_id};
+				$('#calendar').fullCalendar('renderEvent', new_event, true);	 
+				
+				checkprice();
 
 			}else if (create == true && diff_hours < 2){
 				show_message('error','¡Error!','Tienes que reservar al menos 2 horas, puedes hacerlo arrastrando el cursor lentamente');	
 			}
 
-			counting_hours();
+
+			// checkprice();
 			
 		}
 
@@ -140,7 +143,7 @@ $(document).ready(function() {
 				
 				}
 
-				counting_hours();
+				checkprice();
 			},
 			select: function(start, end, allDay,view) {
 
@@ -156,7 +159,8 @@ $(document).ready(function() {
 				// Eliminamos la reservación del calendario delete
 				element.find(".closeon").on('click', function() {
 					$('#calendar').fullCalendar('removeEvents',event.id);
-					counting_hours();	
+					checkprice();
+						
 				});
 			},	
 			dayClick: function(date, jsEvent, view) {
@@ -189,63 +193,83 @@ $(document).ready(function() {
 
 
 
-function counting_hours(){
-	total_hours = 0;
-	too_soon	= false;
+
+
+function checkprice(){
+	events_array = [];
 	events = $('#calendar').fullCalendar( 'clientEvents' );
 	$.each(events, function( index, event ) {
-		if(event.className == 'new-reservation'){
-			start_actual_time  =  event.start;
-			end_actual_time    =  event.end;
-			now 			   = new Date();
-			start_payment 	   = new Date(event.start.format("MMM DD, YYYY HH:MM"));
+		if (event.className != 'occupied' && event.className != 'cancelled'){
+			events_array.push({
+				'band'  : event.band,
+				'title' : event.title,
+				'start' : event.start,
+				'end' 	: event.end
+			});	
+		}
+		
+	});
+	events_array = JSON.stringify(events_array);
+	conection('POST','room_id='+room_id+'&events='+events_array,'/musico/checkprice',true).then(function(data){	
+		
+		if(data.success == true){
+			
+			total_hours 	= data.total_hours;
 
-			start_time 	= new Date(start_actual_time);
-			end_time 	= new Date(end_actual_time);
+			if(data.promotion_totals.length != 0){
+				total 			= _.first(_.sortBy(data.promotion_totals, 'total'));
+				price 			= total.total;
+				promotion_id 	= total.promotion_id;
+				active			= total.active;
 
-			diff = end_actual_time - start_actual_time;
-			diffSeconds = diff/1000;
-			hours = Math.floor(diffSeconds/3600);
-			total_hours = total_hours + hours;
+				$( ".promotion" ).each(function( index ) {
+  					promotion = $(this).data('id');
 
-			diff_payment = start_payment - now;
-			diff_payment_seconds = diff_payment/1000;
-			diff_payment_hours = Math.floor(diff_payment_seconds/3600);
+  					if(promotion == promotion_id && active){
+  						$(this).addClass('active');
+  						promotion_id_active = promotion_id;
+  					}else{
+  						$(this).removeClass('active')
+  					}
 
-			if(diff_payment_hours < min_available_oxxo){
-				too_soon = true;
+				});
+			}else{
+
+				price = data.total;
+
+			}			
+
+			if(price != 0){
+				price = price + user_comission;
+			}
+			
+
+			$('.total-hours .number').html(total_hours);
+			$('.total-price .number').html(price);
+			$('.amount').val(total_hours);
+
+			if($(".payment_method option:selected").val() == 'oxxo' && total_hours > max_oxxo){
+				$('#oxxo-form').find("button").prop("disabled", true);
+				show_message('error','¡Error!','No puedes reservar más de '+max_oxxo+' horas con este método de pago');
+			}else if($(".payment_method option:selected").val() == 'oxxo' && too_soon){
+				show_message('error','¡Error!','No puedes utilizar este método de pago con menos de  '+min_available_oxxo+' horas antes de tu ensayo');
+				$('#oxxo-form').find("button").prop("disabled", true);
+			}else{
+				$('#oxxo-form').find("button").prop("disabled", false);
 			}
 
+			if($(".payment_method option:selected").val() == 'credit_card' && total_hours > max_card){
+				$('#credit-form').find("button").prop("disabled", true);
+				show_message('error','¡Error!','No puedes reservar más de '+max_card+' horas con este método de pago');
+			}else{
+				$('#credit-form').find("button").prop("disabled", true);
+			}
+
+
+		}else{
+			show_message('warning','Atención',data.message);
 		}
 	});
-	
-	if(total_hours < 1){
-		var price = 0;
-	}else{
-		var price = (total_hours * room_price) + user_comission;
-	}
-	
-
-	$('.total-hours .number').html(total_hours);
-	$('.total-price .number').html(price);
-	$('.amount').val(total_hours);
-
-	if($(".payment_method option:selected").val() == 'oxxo' && total_hours > max_oxxo){
-		$('#oxxo-form').find("button").prop("disabled", true);
-		show_message('error','¡Error!','No puedes reservar más de '+max_oxxo+' horas con este método de pago');
-	}else if($(".payment_method option:selected").val() == 'oxxo' && too_soon){
-		show_message('error','¡Error!','No puedes utilizar este método de pago con menos de  '+min_available_oxxo+' horas antes de tu ensayo');
-		$('#oxxo-form').find("button").prop("disabled", true);
-	}else{
-		$('#oxxo-form').find("button").prop("disabled", false);
-	}
-
-	if($(".payment_method option:selected").val() == 'credit_card' && total_hours > max_card){
-		$('#credit-form').find("button").prop("disabled", true);
-		show_message('error','¡Error!','No puedes reservar más de '+max_card+' horas con este método de pago');
-	}else{
-		$('#credit-form').find("button").prop("disabled", true);
-	}
 	
 }
 

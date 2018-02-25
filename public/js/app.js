@@ -97,7 +97,15 @@ $(document).ready(function(){
 	// STARTS: Forms
 	if($('.chosen-select').length > 0){
 		$('.chosen-select').chosen();
-	}	
+	}
+
+	if($('.datepicker').length > 0){
+		$( ".datepicker" ).datepicker({
+			dateFormat: 'yy-mm-dd',
+		});
+	}
+
+		
 	
 
 	$(".colorpicker").on("change.color", function(event, color){

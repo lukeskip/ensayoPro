@@ -76,11 +76,15 @@ class Kernel extends ConsoleKernel
 
 
             }
+<<<<<<< HEAD
 
             
         })->everyThirtyMinutes();
 
 
+=======
+        })->everyThirtyMinutes();
+>>>>>>> promotions
     }
 
     /**

@@ -22,8 +22,9 @@ class AdminCompanyController extends Controller
 		$company 	= $user->companies()->first();
 		$hours  	= 0;
 		$room_ids  	= [];
-		$day1 = Date::parse('last tuesday')->startOfDay();
-	    $day2 = Date::parse('next monday')->endOfDay();
+		$statement_date 	= Setting::where('slug','statement_date')->first()->value;
+		$day1     			= Date::parse('last '.$statement_date)->startOfDay();
+		$day2     			= Date::parse('last '.$statement_date)->addWeeks(1)->endOfDay();
 	    $incomings = 0;
 		
 		if ($company !== null) {
@@ -37,15 +38,16 @@ class AdminCompanyController extends Controller
 
 			$payments = Payment::where('company_id',$company->id)->whereBetween('created_at',[$day1,$day2])->where('status','paid')->get();
 
-			$incomings = 0;
+			$incomings 		 = 0;
 
-			//Sumamos los paymentes de la semana para obtener lo ingresos
+			//Sumamos los payments de la semana para obtener lo ingresos
 			foreach ($payments as $payment) {
 				$incomings += $payment->amount;
+				
 			}
 		}
-		$comission = Setting::where('slug','comission')->first()->value;
-		$comission = $incomings * $comission;
+		$comission_setting = Setting::where('slug','comission')->first()->value;
+		$comission = $incomings * $comission_setting;
 
 		$incomings = number_format($incomings - $comission,2);
 
@@ -55,6 +57,7 @@ class AdminCompanyController extends Controller
 			$date_starts = new Date($reservation['starts']);
 			$date_ends = new Date($reservation['ends']);
 			if($reservation->status == 'confirmed'){
+
 				$reservation['hours'] = $date_starts->diffInHours($date_ends);
 				$hours += $reservation->hours;
 			}
@@ -62,7 +65,12 @@ class AdminCompanyController extends Controller
 			$reservation['date'] = $date_starts->format('d F h:i').' a '.$date_ends->format('h:i');
 			
 			if(count($reservation->payments) > 0){
-				$reservation['total'] = $reservation->payments->amount;
+				
+				$reservation_comission = $reservation->payments->amount * $comission_setting;
+				
+				$reservation_incoming = number_format($reservation->payments->amount - $reservation_comission,2);
+
+				$reservation['total'] = $reservation_incoming;
 			}
 			
 		}

@@ -129,11 +129,21 @@
 						
 						<div class="info">
 							@if($role == 'admin')
-								<a href="/salas/{{$room->id}}" class="green tag">
+								<a href="/salas/{{$room->id}}" class="green tag blue">
 									Ver
 								</a href="#">
 							@endif
-							<a href="/salas/?ciudad={{$room->city}}" class="city tag green">{{$room->city}}</a href="#">
+							@if($room->promotions->where('valid_ends','>=',$now))
+								@foreach($room->promotions->where('valid_ends','>=',$now) as $promotion)
+								
+									<a href="/salas/?ciudad={{$room->city}}" class="tag green hastooltip" title="{{$promotion->description}}">
+									 	<i class="fa fa-tags"></i> 
+									 	{{$promotion->tag}}
+									</a href="#">
+								@endforeach
+								
+							@endif
+							<a href="/salas/?ciudad={{$room->city}}" class="city tag blue">{{$room->city}}</a href="#">
 							<a href="/salas/?colonia={{$room->colony}}" class="colony tag">{{$room->colony}}</a href="#">
 							<a href="/salas/?deleg={{$room->deputation}}" class="deputation tag">{{$room->deputation}}</a href="#">
 							

@@ -34,6 +34,13 @@ a{
 textarea{
 	white-space: pre-line;
 }
+[type='text'], [type='password'], [type='date'], [type='datetime'], [type='datetime-local'], [type='month'], [type='week'], [type='email'], [type='number'], [type='search'], [type='tel'], [type='time'], [type='url'], [type='color'], textarea,select{
+	border-radius: 0;
+}
+.icon{
+	font-size: 2em;
+	font-weight: 700;
+}
 
 .padding{
 	padding: 10px;
@@ -64,7 +71,13 @@ textarea{
 	display: inline-block;
 	margin-top: 10px;
 	cursor: default;
+	font-weight: 700;
+	text-transform: capitalize;
 	
+}
+
+.green{
+	background: #36A939!important;
 }
 
 .tag.green{
@@ -75,6 +88,9 @@ textarea{
 	background: black;
 }
 
+.tag.blue{
+	background: #277BB5;
+}
 .tag.small{
 	font-size: .8em;
 }
@@ -274,6 +290,58 @@ textarea{
 	margin-bottom: 10px;
 }
 /*ENDS: Dashboard****************************************/
+
+
+
+/*STARTS:Promotions***************************************/
+.promotions{
+	margin-bottom: 20px;
+	background: #eee;
+	padding-top: 20px;
+	
+}
+
+
+
+.promotions .disclaimer{
+	font-size: .8em;
+	font-style: italic;
+}
+.promotion{
+	text-align: left;
+	margin-bottom: 10px;
+	font-size: 1.2em;
+	padding: 10px 20px;
+}
+
+.promotion.active{
+	background: #C3E5C4;
+}
+
+.promotion .title{
+	color:black;
+	font-weight: 700;
+}
+
+.room-single .promotions{
+	margin-bottom: 20px;
+	background: rgba(0,0,0,.5);
+	padding: 20px;
+}
+.room-single .promotion{
+	text-align: left;
+	margin-bottom: 10px;
+	font-size: 1em;
+}
+
+.room-single .promotion .title{
+	color:white;
+	font-weight: 700;
+}
+
+
+
+/*Ends: Promotions***************************************/
 
 /*STARTS: Edition calendar*/
 
@@ -578,6 +646,17 @@ body.company_calendar{
 /*ENDS: PAGINATION*/
 
 /*FORM*/
+.form_wrapper select{
+	margin-bottom: 0px;
+}
+.form_wrapper label.option_label{
+	padding:10px 20px;
+	display: inline-block;
+}
+
+.form_wrapper label.option_label.blue{
+	background: #207AB7;
+}
 
 textarea.input-group-field{
 	white-space: normal;
@@ -1342,6 +1421,8 @@ h1 .duration{
 	text-align: right;
 	margin-bottom: 20px;
 	font-size: 2em;
+	/*background: #eee;*/
+	padding: 20px;
 }
 
 .checkout .price-info p{
@@ -1352,10 +1433,7 @@ h1 .duration{
 	font-size: .7em;
 }
 
-.checkout .price-info label{
-	background: white;
-	font-size: .6em;
-}
+
 
 .checkout .price-info hr{
 	border-bottom: 2px solid #333;
@@ -1367,6 +1445,11 @@ h1 .duration{
 	color: #666;
 	margin-right: 10px;
 	line-height: 1.9em;
+	background: none;
+}
+
+.checkout .price-info label.description{
+	font-size: .5em;
 }
 
 .checkout .header{
@@ -1687,7 +1770,7 @@ h1 .duration{
 
 .room-item .images{
 	text-align: center;
-	background: rgba(0,0,0,.5);
+	background: rgba(0,0,0,.1);
 	padding: 40px 0;
 }
 
@@ -2853,3 +2936,29 @@ footer{
 
 
 /*ENDS: BAND EDIT********************************/
+
+/*STARTS: REPORTS*********************************/
+.report .hours{
+	font-size: 5em;
+	text-align: center;
+}
+
+.report .description{
+	font-size: .8em;
+	text-align: center;
+}
+
+.report .incomings_wrapper{
+	padding: 50px;
+	background: #36A939;
+	margin-top: 50px;
+
+}
+
+.report .incomings{
+	font-size: 5em;
+	text-align: center;
+
+
+}
+/*ENDS: REPORTS***********************************/

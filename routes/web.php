@@ -36,7 +36,7 @@ Route::get('/phpinfo', function () {
     return phpinfo();
 });
 
-Route::get('/prueba', 'ReservationController@prueba');
+Route::get('/prueba_reporte', 'ReportController@store');
 
 Route::get('/terminos_y_condiciones', function(){
 	return view('reyapp.mandatories.terms');
@@ -49,7 +49,6 @@ Route::get('/aviso-de-privacidad', function(){
 // Landing Company
 Route::get('/unete', function () {
     return view('reyapp.landing_company');
-    
 });
 
 Route::get('/registro', function () {
@@ -76,6 +75,10 @@ Route::group(['middleware' => ['auth','company','active'],'prefix'=>'company'], 
 	
 	Route::get('/ajustes/', 'CompanyController@edit');
 	Route::get('/datalle/{id}', 'CompanyController@show');
+
+	Route::get('/promociones/', 'PromotionController@index_company');
+	Route::get('/promociones/registro', 'PromotionController@create');
+	Route::post('/promociones/registro', 'PromotionController@store');
 	
 	Route::get('/registro', 'CompanyController@register_company')->name('register_company');
 	Route::resource('companies', 'CompanyController');
@@ -87,6 +90,8 @@ Route::group(['middleware' => ['auth','company','active'],'prefix'=>'company'], 
 	Route::post('/salas','RoomController@store');
 	Route::get('/salas','RoomController@index_company');
 	Route::put('/salas/{id}','RoomController@update');
+	Route::get('/reportes','ReportController@index_company');
+	Route::get('/reportes/{id}','ReportController@show');
 	
 });
 
@@ -105,7 +110,9 @@ Route::group(['middleware' => ['auth','admin','active'],'prefix'=>'admin'], func
 	Route::get('/company/ajustes/{id}', 'CompanyController@edit_admin');
 
 	Route::get('/users/', 'AdminController@users');
+	Route::get('/reportes/', 'ReportController@index');
 	Route::get('/reservaciones/', 'ReservationController@index');
+	Route::get('/reportes/{id}','ReportController@show');
 });
 
 
@@ -122,6 +129,7 @@ Route::group(['middleware' => ['auth','musician','active'],'prefix'=>'musico'], 
 
 	Route::put('/reservaciones/{id}', 'ReservationController@cancel');
 	
+	Route::post('/checkprice', 'ReservationController@checkprice');
 });
 
 Route::group(['middleware' => ['auth']], function () {
