@@ -264,7 +264,7 @@ class PaymentController extends Controller
 
 		}
 
-		//Creando un pago mediante https://www.facebook.com/NocheDeQuiz/videos/2162282630666059/?hc_ref=ARTCMGNwRCoNUmrswQn7U-yXD_ZfycEjUix3EzQQEmZle7ddc4ynWqQDmkcokscoZgcxo.
+		//Creando un pago mediante Oxxo.
 		public function CreatePayOxxo(Request $request)
 		{	
 			$max_oxxo 	 = Setting::where('slug','max_oxxo')->first()->value;
@@ -512,42 +512,6 @@ class PaymentController extends Controller
 				array_push($charges,array('title'=>'Horas reservadas con promoción','total'=> $total_promotions,'total_hours'=>$total_hours_promotions,'type'=>'promotion'));
 				
 
-
-			$pI = $order['id'];
-			$pM = $order->charges[0]->payment_method->type;
-			$pS = $order['payment_status'];
-			$pT = $order->amount /100; //Total de la transacción
-			$pQ = $order->line_items[1]->quantity;
-			$pC = $order->line_items[0]->unit_price / 100;
-			$pA = ($order->line_items[1]->unit_price * $order->line_items[1]->quantity) / 100;//cargo sin contar la comision
-			$pE = $order->charges[0]->payment_method->expires_at;
-			// $rsp = array("id"=>$pI,"method"=>$pM,"reference"=>$pR,"status"=>$pS,'price'=>$price);
-
-			$payment         		= new Payment;
-			$payment->order_id   	= $pI;
-			$payment->amount 		= $pA;
-			$payment->total 		= $pT;
-			$payment->method 		= $pM;
-			$payment->company_id 	= $room->companies->id;
-			$payment->room_id 		= $room->id;
-			$payment->quantity		= $pQ;
-			$payment->comission		= $pC;
-			$payment->status		= $pS;
-			$payment->reference  	= $pR;
-			$payment->expires_at 	= $pE;
-			$payment->save();
-
-			Reservation::whereIn('id', $ids)->update(['payment_id'=>$payment->id]);
-
-			// Seteamos las variables para el envio de correo con la referencia
-			$reference 	  = $payment->reference;
-			$room_name    = $room->name;
-			$company_name =	$room->companies()->first()->name;
-			$user_mail 	  = $user->email;
-			$amount 	  = $payment->amount + $payment->comission;
-
-
-
 			}else{
 				$total_natural = $price;
 				$total_hours_natural = $total_hours;
@@ -558,7 +522,6 @@ class PaymentController extends Controller
 				
 				array_push($charges,array('title'=> 'Horas reservadas sin promoción','total' => $total_natural,'total_hours' => $total_hours_natural,'type'=>'natural'));	
 			}
-
 			
 
 			// Hacemos push al arrey de Items de conekta

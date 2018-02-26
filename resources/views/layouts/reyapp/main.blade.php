@@ -153,18 +153,21 @@
 								<i class="fa fa-music" aria-hidden="true"></i> Mis Salas
 							</a>
 						</li>
-						<li>
-							<a href="/company/promociones">
-								<i class="fa fa-tags"></i>
-								Mis Promociones
-							</a>
-						</li>
+						@if(Auth::user()->companies->first() and Auth::user()->companies->first()->reservation_opt)
+							<li>
+								<a href="/company/promociones">
+									<i class="fa fa-tags"></i>
+									Mis Promociones
+								</a>
+							</li>
+							<li>
+								<a href="/company/reportes">
+									<i class="fa fa-bar-chart" aria-hidden="true"></i> Reportes
+								</a>
+							</li>
+						@endif
 
-						<li>
-							<a href="/company/reportes">
-								<i class="fa fa-bar-chart" aria-hidden="true"></i> Reportes
-							</a>
-						</li>
+						
 						
 
 						<li>

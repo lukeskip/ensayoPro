@@ -61,7 +61,12 @@ class ReportController extends Controller
 		$user = Auth::user();
 		$user_id = Auth::user()->id;
 		$role = User::find($user_id)->roles->first()->name;
-		$company_id = $user->companies->first()->id;  
+		$company = $user->companies->first(); 
+		$company_id = $company->id;
+
+		if(!$company->reservation_opt){
+			return redirect('/company');
+		}  
 
 		$reports = Report::where('company_id',$company_id)->paginate();
 

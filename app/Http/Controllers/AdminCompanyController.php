@@ -17,6 +17,8 @@ class AdminCompanyController extends Controller
 { 
 	// Dashboard
 	public function company(){
+
+
 		$user_id 	= Auth::user()->id;
 		$user 		= User::find($user_id);
 		$company 	= $user->companies()->first();
@@ -27,8 +29,14 @@ class AdminCompanyController extends Controller
 		$day2     			= Date::parse('last '.$statement_date)->addWeeks(1)->endOfDay();
 	    $incomings = 0;
 		
+
+
 		if ($company !== null) {
 			
+			if(!$company->reservtion_opt){
+				return redirect('/company/salas');
+			}
+
 			foreach ($company->rooms as $room) {
 				$room_ids[] = $room->id;
 			}
@@ -89,6 +97,11 @@ class AdminCompanyController extends Controller
 		if(!$company){
 			return redirect('/company');
 		}
+
+		if(!$company->rooms->first()){
+			return redirect('/company/salas');
+		}
+
 		$rooms = $company->rooms()->with('reservations')->where('status','active')->get();
 		$room_ids  = [];
 		foreach ($company->rooms as $room) {

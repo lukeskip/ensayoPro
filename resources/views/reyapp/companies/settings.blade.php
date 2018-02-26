@@ -106,7 +106,7 @@
 				
 			</div>
 
-			<div class="row">
+			<div class="row @if($company->reservation_opt != true) tax_info @endif">
 				<div class="large-12 columns">
 					<h3>Información Fiscal</h3>
 					<p>Estos campos son opcionales solo temporalmente, pronto tendrás que llenar esta información</p>

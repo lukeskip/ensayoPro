@@ -37,13 +37,13 @@
 			<div class="large-6 columns">
 				<div class="reservation_opt">
 					<div class="label_opt">
-						Aceptar reservaciones
+						Aceptar reservaciones en línea
 						<i class="fa fa-question-circle hastooltip" title="Tendrás que ser habilitado por un administrador de EnsayoPRO" aria-hidden="true"></i>
 					</div>
 					<div class="switch"></div>
 					
 				</div>
-				<input class="input-group-field required reservation_opt" type="hidden" name="reservation_opt" value="">
+				<input class="input-group-field required reservation_opt" type="hidden" name="reservation_opt" value="0">
 			</div>
 
 			
@@ -101,7 +101,7 @@
 				
 			</div>
 
-			<div class="row">
+			<div class="row tax_info hidden">
 				<div class="large-12 columns">
 					<h3>Información Fiscal</h3>
 					<p>Estos campos son opcionales solo temporalmente, pronto tendrás que llenar esta información</p>
@@ -121,7 +121,7 @@
 		</div>
 		{{-- ENDS: ADDRESS ZONE --}}
 		
-		<div class="row">
+		<div class="row tax_info hidden">
 			<div class="large-12 columns">
 				<h3>Información bancaria</h3>
 			</div>

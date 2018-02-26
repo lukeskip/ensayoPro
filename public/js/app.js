@@ -12,8 +12,10 @@ $(document).ready(function(){
 	
 	$('.reservation_opt .switch').click(function(){
 		$(this).toggleClass('on');
+		$('.tax_info').toggleClass('hidden');
 		if($(this).hasClass('on')){
 			$('.reservation_opt').val(1);
+
 		}else{
 			$('.reservation_opt').val(0);
 		}
