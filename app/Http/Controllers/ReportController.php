@@ -100,7 +100,16 @@ class ReportController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$statement_date 	= Setting::where('slug','statement_date')->first()->value;
+		$user 	= Auth::user();
+		$role 	= $user->roles->first()->name;
+		
+		if($role != 'admin'){
+			return redirect('/');
+		}
+
+		$statement_date     = Setting::where('slug','statement_date')->first()->value;
+		
+
 		$day1     			= Date::parse('last '.$statement_date)->startOfDay();
 		$day2     			= Date::parse('last '.$statement_date)->addWeeks(1)->endOfDay();
 		$companies  		= Company::all();
@@ -132,6 +141,7 @@ class ReportController extends Controller
 
 			$admin_incomings  = $user_comissions + $company_comissions;
 
+
 			$report 					= new Report;
 			$report->company_id 		= $company->id;
 			$report->user_comissions 	= $user_comissions;
@@ -145,6 +155,8 @@ class ReportController extends Controller
 			$report->save();
 
 		}
+
+		return redirect('/admin/reportes');
 		
 	}
 

@@ -24,7 +24,13 @@ class ReservationController extends Controller
 	// Pantalla de calendario para usuario 'musician'
 	public function make_reservation($room_id)
 	{
+		$user 			= Auth::user();
+		$role			= $user->roles->first()->name;
 		
+		if($role == 'company'){
+			return redirect('/company');
+		}
+
 		if($room_id != ''){
 			$user               = Auth::user();
 			$user_id            = $user->id;
@@ -54,7 +60,7 @@ class ReservationController extends Controller
 
 
 						if($promotion->rule == 'hours'){
-							$rule = " de descuento en la reserva de al menos ".$promotion->hours.' horas';
+							$rules = " de descuento en la reserva de al menos ".$promotion->hours.' horas';
 						}elseif ($promotion->rule == 'schedule') {
 							$days_array = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 							$days_valid = '';
@@ -95,6 +101,8 @@ class ReservationController extends Controller
 	// AQUÍ REVISAMOS PRECIO EN PRIMERA INSTANCIA
 	public function checkprice(Request $request)
 	{
+
+
 		$events     	= json_decode($request->events,true);
 		$now        	= Date::now();
 		$total      	= 0;
@@ -118,6 +126,7 @@ class ReservationController extends Controller
 				$type       	= $promotion->type;
 				$discount   	= $promotion->value;
 				$rule			= $promotion->rule;
+				$min_hours		= $promotion->min_hours;
 
 
 

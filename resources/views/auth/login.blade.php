@@ -53,6 +53,7 @@
                                 <button type="submit" class="button green expanded">
                                     Entrar
                                 </button>
+                                  <a href="{{url('/redirect')}}" class="btn btn-primary">Login with Facebook</a>
 
                             </div>
                         </div>

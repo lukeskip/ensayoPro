@@ -25,7 +25,9 @@ Route::get('logout', function (){
 	return redirect('/login');
 });
 
-
+// rutas para loggeo con facebook
+Route::get('/redirect', 'SocialAuthFacebookController@redirect');
+Route::get('/callback', 'SocialAuthFacebookController@callback');
 
 // Landing Músicos
 Route::get('/', function () {
@@ -36,7 +38,7 @@ Route::get('/phpinfo', function () {
     return phpinfo();
 });
 
-Route::get('/prueba_reporte', 'ReportController@store');
+Route::get('/generar_reporte', 'ReportController@store');
 
 Route::get('/terminos_y_condiciones', function(){
 	return view('reyapp.mandatories.terms');
@@ -156,7 +158,7 @@ Route::group(['middleware' => ['auth','active']], function () {
 	
 	
 	// Redirigimos según role después de registro
-	Route::get('registro/redirect', function (){
+	Route::get('/registro/redirect', function (){
 
 		$user_id = Auth::user()->id;
 		$user = App\User::where('id', $user_id)->with('roles')->first();

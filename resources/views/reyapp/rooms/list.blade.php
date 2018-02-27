@@ -119,12 +119,12 @@
 					<div class="medium-6 columns">
 						@if(!Auth::guest())
 							@if ($role == 'admin')
-								<a href="/admin/salas/ajustes/{{$room->id}}">{{$room->companies->name}} ({{$room->name}})</a>
+								<a href="/admin/salas/ajustes/{{$room->id}}"> {{$room->name}} ({{$room->companies->name}})</a>
 							@else
-								<a href="/salas/{{$room->id}}">{{$room->companies->name}} ({{$room->name}})</a>
+								<a href="/salas/{{$room->id}}">{{$room->name}} ({{$room->companies->name}})</a>
 							@endif
 						@else
-							<a href="/salas/{{$room->id}}">{{$room->companies->name}} ({{$room->name}})</a>
+							<a href="/salas/{{$room->id}}">{{$room->name}} ({{$room->companies->name}})</a>
 						@endif
 						
 						<div class="info">
@@ -133,16 +133,15 @@
 									Ver
 								</a href="#">
 							@endif
-							@if($room->promotions->where('valid_ends','>=',$now))
-								@foreach($room->promotions->where('valid_ends','>=',$now) as $promotion)
+							
+							@foreach($room->promotions as $promotion)
+								<a href="/salas/?ciudad={{$room->city}}" class="tag green hastooltip" title="{{$promotion->description}}">
+								 	<i class="fa fa-tags"></i> 
+								 	{{$promotion->tag}}
+								</a href="#">
+							@endforeach
 								
-									<a href="/salas/?ciudad={{$room->city}}" class="tag green hastooltip" title="{{$promotion->description}}">
-									 	<i class="fa fa-tags"></i> 
-									 	{{$promotion->tag}}
-									</a href="#">
-								@endforeach
-								
-							@endif
+						
 							<a href="/salas/?ciudad={{$room->city}}" class="city tag blue">{{$room->city}}</a href="#">
 							<a href="/salas/?colonia={{$room->colony}}" class="colony tag">{{$room->colony}}</a href="#">
 							<a href="/salas/?deleg={{$room->deputation}}" class="deputation tag">{{$room->deputation}}</a href="#">

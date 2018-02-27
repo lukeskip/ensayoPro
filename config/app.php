@@ -178,6 +178,7 @@ return [
         Trexology\Promocodes\PromocodesServiceProvider::class,
         'Buzz\LaravelGoogleCaptcha\CaptchaServiceProvider',
         'Jenssegers\Date\DateServiceProvider',
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -248,6 +249,7 @@ return [
         'Carbon' => 'Carbon\Carbon',
         'Date' => Jenssegers\Date\Date::class,
         'LaravelMsg91' => RobinCSamuel\LaravelMsg91\Facades\LaravelMsg91::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 

@@ -34,6 +34,7 @@ class RoomController extends Controller
 		$items_per_page = 10;
 		$order = 'quality_up';
 		$role  = '';
+		$now = Date::now();
 
 		if(!Auth::guest()){
 			$user_id = Auth::user()->id;
@@ -41,10 +42,13 @@ class RoomController extends Controller
 		}
 		
 		
-		$rooms = Room::with('companies','promotions')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->groupBy('rooms.id')->leftJoin('room_promotion', 'room_promotion.room_id', '=', 'rooms.id')->select('rooms.*','room_promotion.room_id as promotion',DB::raw('AVG(score) as average' ));
+		// $rooms = Room::with(array('promotions' => function($query) use($now) {
+		// 		$query->where('valid_ends','>=',$now)->orderBy('valid_ends', 'DESC')->where('status','published');
+  //   		}))->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->groupBy('rooms.id')->select('rooms.*',DB::raw('AVG(score) as average' ));
 
-		
-
+		$rooms = Room::with(array('promotions' => function($query) use($now) {
+				$query->where('valid_ends','>=',$now)->orderBy('valid_ends', 'DESC')->where('status','published');
+    		}))->leftJoin('room_promotion','room_promotion.room_id','=','rooms.id')->groupBy('rooms.id')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->groupBy('rooms.id')->select('rooms.*',DB::raw('(CASE WHEN  room_promotion.room_id != "NULL" THEN 1 ELSE 0 END) AS promotion' ), DB::raw('AVG(score) as average' ));
 
 		// Actuamos dependiento los filtros que tengamos diponibles
 		if(request()->has('order')){
@@ -69,6 +73,8 @@ class RoomController extends Controller
 		}else{
 
 			$rooms = $rooms->orderBy('promotion','DESC')->orderBy('average','DESC');
+
+
 		}
 
 		if(request()->has('colonia')){	
@@ -126,6 +132,8 @@ class RoomController extends Controller
 		$rooms = $rooms->paginate($items_per_page);
 
 		
+
+		
 		// Si tienen la misma dirección de la compañía la asignamos y la mandamos dentro del mismo objeto
 		foreach ($rooms as $room) {
 
@@ -154,8 +162,8 @@ class RoomController extends Controller
 			
 			$room['ratings'] = $sumRatings;
 
-			$now = Date::now();
-			$room->promotions = $room->promotions->where('valid_ends', '>=', $now)->where('status','published');
+			
+			// $room->promotions = $room->promotions->where('valid_ends', '>=', $now)->where('status','published');
 
 			if ($room->promotions){
 				
@@ -171,7 +179,7 @@ class RoomController extends Controller
 
 
 					if($promotion->rule == 'hours'){
-						$rule = " en la reserva de al menos ".$promotion->hours.' horas';
+						$rules = " en la reserva de al menos ".$promotion->min_hours.' horas';
 					}elseif ($promotion->rule == 'schedule') {
 						$days_array = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 						$days_valid = '';
@@ -419,7 +427,7 @@ class RoomController extends Controller
 
 
                 if($promotion->rule == 'hours'){
-                    $rule = " de descuento en la reserva de al menos ".$promotion->hours.' horas';
+                    $rules = " de descuento en la reserva de al menos ".$promotion->min_hours.' horas';
                 }elseif ($promotion->rule == 'schedule') {
                     $days_array = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
                     $days_valid = '';

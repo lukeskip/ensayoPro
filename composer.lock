@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f3058d45709442a480c785aed7be4ec",
+    "content-hash": "69e88bfec8b1e72cb5cd6dc56c755104",
     "packages": [
         {
             "name": "barryvdh/laravel-cors",
@@ -6770,9 +6770,9 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "conekta/conekta-php": 20,
-        "robincsamuel/laravel-msg91": 20,
+        "doctrine/doctrine-migrations-bundle": 20,
         "doctrine/migrations": 20,
-        "doctrine/doctrine-migrations-bundle": 20
+        "robincsamuel/laravel-msg91": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

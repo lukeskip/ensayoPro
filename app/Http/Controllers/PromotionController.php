@@ -182,6 +182,7 @@ class PromotionController extends Controller
 				$promotion->valid_ends      = $request->valid_ends;
 				$promotion->value           = $value;
 				$promotion->rule            = $request->rule;
+				$promotion->min_hours       = $request->min_hours;
 
 
 
@@ -230,7 +231,7 @@ class PromotionController extends Controller
 				$promotion->save();
 
 				foreach ($rooms as $room) {
-						$promotion->rooms()->attach($room->id);
+						$promotion->rooms()->attach($room->id,['pivot_valid_ends' => $promotion->valid_ends,'pivot_status'=>$promotion->status]);
 				}
 
 				

@@ -449,6 +449,7 @@ class PaymentController extends Controller
 				$type       			= $promotions->type;
 				$discount   			= $promotions->value;
 				$rule					= $promotions->rule;
+				$min_hours				= $promotions->min_hours;
 
 
 				// STARTS:loop por hora

@@ -36,14 +36,16 @@ return [
     ],
 
     'facebook' => [
-        'client_id'     => '851875531619550',
-        'client_secret' => '3a3669327c47b754bcf9ef82eb257e3e',
+        'client_id'     => '158440878209310',
+        'client_secret' => 'de6007ee47b8a3be39fdf8f70b1acea6',
         'redirect'      => env('FACEBOOK_URL'),
     ],
 
     'mandrill' => [
         'secret' => env('MANDRILL_KEY'),
     ],
+
+    
 
 
 ];
