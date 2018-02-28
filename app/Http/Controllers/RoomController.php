@@ -41,10 +41,6 @@ class RoomController extends Controller
 			$role = User::find($user_id)->roles->first()->name;  
 		}
 		
-		
-		// $rooms = Room::with(array('promotions' => function($query) use($now) {
-		// 		$query->where('valid_ends','>=',$now)->orderBy('valid_ends', 'DESC')->where('status','published');
-  //   		}))->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->groupBy('rooms.id')->select('rooms.*',DB::raw('AVG(score) as average' ));
 
 		$rooms = Room::with(array('promotions' => function($query) use($now) {
 				$query->where('valid_ends','>=',$now)->orderBy('valid_ends', 'DESC')->where('status','published');
@@ -124,9 +120,7 @@ class RoomController extends Controller
 		}
 
 		if($role != 'admin'){ 
-			$rooms = $rooms->where('status','active')->whereHas('companies', function ($query) {
-    			$query->where('status', 'active');
-			}); 
+			$rooms = $rooms->where('status','active'); 
 		}
 		
 		$rooms = $rooms->paginate($items_per_page);
