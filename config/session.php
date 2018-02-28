@@ -148,7 +148,7 @@ return [
     |
     */
 
-    'domain' => 'ensayopro.com.mx',
+    'domain' => env('SESSION_DOMAIN', null),
 
     /*
     |--------------------------------------------------------------------------
