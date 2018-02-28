@@ -120,8 +120,9 @@ class RoomController extends Controller
 		}
 
 		if($role != 'admin'){ 
-			$rooms = $rooms->where('status','active');
-			 // 
+			$rooms = $rooms->where('status','active')->whereHas('companies', function ($query) {
+    			$query->where('status', '!=', 'deleted');
+			}); 
 		}
 		
 		$rooms = $rooms->paginate($items_per_page);
