@@ -29,9 +29,17 @@
 					@foreach ($promotions as $promotion)
 						<div class="row list-item room-item">
 							<div class="medium-3 columns">
-
+									<span class="hastooltip" title="{{$promotion->description}}">{{$promotion->name}}</span>
 								
-								<span class="hastooltip" title="{{$promotion->description}}">{{$promotion->name}}</span>
+								@if($promotion->edit)
+								<div>
+									<a href="/company/promociones/{{$promotion->id}}" class="tag blue">
+										Editar
+									</a>
+								</div>
+									
+								@endif
+								
 								
 					
 								

@@ -205,15 +205,9 @@
 
 			},
 			submitHandler: function(form) {
+				// En caso de ser "published avisamos que no podrán editarla"
 				if($('#status').val()=='published'){
-					type 	= $('#type').val();
-					if(type == 'direct'){
-						type = 'Directo';
-						value = '$'+$('#discount').val();
-					}else if(type == 'percentage'){
-						type = 'porcentaje';
-						value = $('#discount').val()+'%';
-					}
+					
 					swal({
 					  title: 'Tu promoción se publicará',
 					  html: "No podrás modificarla desde el administrador, en caso de haber algún problema tendrás que contactar al webmaster de EnsayoPro",
@@ -227,7 +221,7 @@
 					  	data = $(form).serialize();
 			  			conection('POST', data, '/company/promociones/registro',true).then(function(answer){
 				  				if(answer.success == true){
-			  						show_message('success','¡Listo!','Tu promoción fue gardada como borrador');
+			  						window.location.replace('/company/promociones');
 			  					}else{
 			  						show_message('error','Error!',answer.message);
 			  					}
@@ -237,7 +231,7 @@
 					data = $(form).serialize();
 		  			conection('POST', data, '/company/promociones/registro',true).then(function(answer){
 		  					if(answer.success == true){
-		  						show_message('success','¡Listo!','Tu promoción fue gardada como borrador');
+		  						window.location.replace('/company/promociones');
 		  					}else{
 		  						show_message('error','Error!',answer.message);
 		  					}
