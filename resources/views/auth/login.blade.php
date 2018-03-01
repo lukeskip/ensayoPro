@@ -53,17 +53,14 @@
                                 <button type="submit" class="button green expanded">
                                     Entrar
                                 </button>
-                                {{-- <a href="{{url('/redirect')}}" class="button facebook expanded">
+                                <a href="{{url('/redirect')}}" class="button facebook expanded">
                                     <i class="fa fa-facebook"></i>
                                     Login con Facebook
-                                </a> --}}
+                                </a>
 
                             </div>
                         </div>
                         <div class="alternatives">
-                            <a href="{{url('/redirect')}}" class=""> 
-                                    F
-                                </a>
                             <a class="" href="{{ route('password.request') }}">
                                     ¿Olvidaste tu contraseña?
                                 </a>

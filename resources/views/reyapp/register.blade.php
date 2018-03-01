@@ -126,10 +126,10 @@
 				
 			</div>
 			<div class="large-6 columns">
-				{{-- <a href="{{url('/redirect')}}" class="button facebook expanded">
+				<a href="{{url('/redirect')}}" class="button facebook expanded">
                     <i class="fa fa-facebook"></i>
                     Registro con Facebook
-                </a> --}}
+                </a>
 
 			</div>
 		</div>
