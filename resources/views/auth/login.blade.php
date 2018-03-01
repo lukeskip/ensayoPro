@@ -61,10 +61,9 @@
                             </div>
                         </div>
                         <div class="alternatives">
-                            <a href="{{url('/redirect')}}" class="">
-                                    <i class="fa fa-facebook"></i>
+                            <a href="{{url('/redirect')}}" class=""> 
                                     F
-                                </a> --}}
+                                </a>
                             <a class="" href="{{ route('password.request') }}">
                                     ¿Olvidaste tu contraseña?
                                 </a>
