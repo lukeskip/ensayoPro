@@ -54,7 +54,12 @@ Route::get('/unete', function () {
 });
 
 Route::get('/registro', function () {
-    return view('reyapp.register');
+	if(Auth::guest()){
+		return view('reyapp.register');	
+	}else{
+		return redirect('login/redirect');
+	}
+    
 });
 
 Route::post('/confirmed_oxxo','PaymentController@confirmation');
