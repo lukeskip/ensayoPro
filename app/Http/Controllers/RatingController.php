@@ -78,7 +78,7 @@ class RatingController extends Controller
                 return response()->json(['success' => true,'message'=>'Gracias por calificar esta sala']);
             }
         }else{
-           return response()->json(['success' => false,'message'=>'logéate para poder calificar esta sala']); 
+           return response()->json(['success' => false,'login'=>false,'message'=>'logéate para poder calificar esta sala']); 
         }
         
     }

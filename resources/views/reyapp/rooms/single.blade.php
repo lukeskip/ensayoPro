@@ -226,6 +226,10 @@
 		
 
 		@if(Auth::guest())
+			login();
+		@endif
+
+		function login (){
 			swal({
 			  title: 'Logéate',
 			  imageUrl: '{{asset('img/logo_ensayo.png')}}',
@@ -234,9 +238,7 @@
 			  showConfirmButton: false,
 			  focusConfirm: false,
 			});
-
-
-		@endif
+		}
 
 		map = new GMaps({
 	        div: '#map',
@@ -259,7 +261,16 @@
 			initialRating:@if($room->score){{$room->score}} @else 0 @endif,
 			onSelect:function(value, text, event){
 				data = {'score':value,'room_id':{{$room->id}},'description':text };
-				conection('POST',data,'/ratings');
+				conection('POST',data,'/ratings',true).then(function(data){
+					if(data.login == true){
+						login();	
+					}else if(data.success == true){
+						show_message('success','¡Listo!',data.message);
+					}else if(data.success == false){
+						show_message('error','¡Error!',data.message);
+					}
+					
+				});
 			}
 		});
 
