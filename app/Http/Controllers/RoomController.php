@@ -407,7 +407,7 @@ class RoomController extends Controller
 		$room['ratings'] = $sumRatings;
 
 		if(!Auth::guest()){
-			$user = User::find(Auth::user()->id)->id;
+			$user 	 = Auth::user()->id;
 		}else{
 			$user = false;
 		}
@@ -417,10 +417,7 @@ class RoomController extends Controller
         foreach ($room->promotions as $promotion) {
                 
                 $finishs = new Date($promotion->valid_ends);
-
                 $finishs =  $finishs->format('l j F Y');
-                
-
 
                 if($promotion->rule == 'hours'){
                     $rules = " de descuento en la reserva de al menos ".$promotion->min_hours.' horas';
@@ -456,6 +453,21 @@ class RoomController extends Controller
         	$reservation_opt = true;
         }
         
+        $comments = $room->comments;
+        
+
+        foreach ($comments as $comment) {
+        	$role  	 =  $comment->users->roles->first()->name;
+
+        	if($role == 'company' and $comment->users->companies->count() > 0){
+        		$company = $comment->users->companies->first()->name;
+        		$comment['author'] = $company;
+        	}else{
+        		$comment['author'] = $comment->users->name . ' '. $comment->users->lastname;
+        	}
+
+        }
+
 
 		return view('reyapp.rooms.single')->with('room',$room)->with('user',$user)->with('reservation_opt',$reservation_opt);
 	}

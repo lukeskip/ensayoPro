@@ -178,7 +178,8 @@
 									{{$comment->description}}
 								</div>
 								<div class="sign">
-									{{$comment->users->name}} 
+
+									{{$comment->author}} 
 									<span class="date">{{$comment->created_at->format('d/m/Y')}}</span>
 									@if(!Auth::guest())
 									@if(Auth::user()->id == $comment->user_id)

@@ -67,7 +67,15 @@ class CommentController extends Controller
         $comment->status        = $status;
 
         $comment->save();
-        $author = $comment->users->name;
+
+        $role    =  $comment->users->roles->first()->name;
+        if($role == 'company' and $comment->users->companies->count() > 0){
+            $company = $comment->users->companies->first()->name;
+            $author = $company;
+        }else{
+            $author = $comment->users->name . ' '. $comment->users->lastname;
+        }
+
         $date = $comment->created_at->format('d/m/Y');
         return response()->json(['success' => true,'message'=>'Tu comentario ha sido guardado','title' => $request->title,'description' => $request->description ,'author' => $author,'class' => $status,'date'=>$date]);
     }
