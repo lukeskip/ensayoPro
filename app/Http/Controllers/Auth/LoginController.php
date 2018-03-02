@@ -25,10 +25,14 @@ class LoginController extends Controller
      *
      * @var string
      */
-    if(!session('goto')){
-        protected $redirectTo = 'login/redirect';
-    }else{
-        protected $redirectTo = session('goto');
+   
+    protected function redirectTo(){
+        if(!session('goto')){
+            return '/login/redirect';  
+        }else{
+            return session('goto');
+        }
+        
     }
     
 
