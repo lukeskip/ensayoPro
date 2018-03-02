@@ -57,10 +57,8 @@ class RatingController extends Controller
             }
 
             $user_id = Auth::user()->id;
-            $rating_check = Rating::where(
-                function ($query) use ($room_id,$user_id) {
-                    $query->where('room_id', $room_id)->where('user_id', $user_id);
-                })->first();
+
+            $rating_check = Rating::where('room_id',$room_id)->where('user_id',$user_id)->first();
 
             // Revisamos si el usuario ya había calificato esta sala 
             if(!$rating_check){

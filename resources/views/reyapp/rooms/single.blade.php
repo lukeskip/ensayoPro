@@ -223,6 +223,21 @@
 		// creamos el mapa con las coordenadas guardadas
 		// $('#map').height($('.info').height());
 
+		
+
+		@if(Auth::guest())
+			swal({
+			  title: 'Logéate',
+			  imageUrl: '{{asset('img/logo_ensayo.png')}}',
+			  html: 'Para comentar y califcar esta sala <br><a href="{{url('/redirect')}}" target="_black" style="margin-top:20px;" class="button facebook expanded"><i class="fa fa-facebook"></i>      Login con Facebook</a>',
+			  showCloseButton: true,
+			  showConfirmButton: false,
+			  focusConfirm: false,
+			});
+
+
+		@endif
+
 		map = new GMaps({
 	        div: '#map',
 	        lat: {{$room->latitude}},
