@@ -4,10 +4,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Socialite;
 use App\Services\SocialFacebookAccountService;
 use Session;
+use Request;
 
 class SocialAuthFacebookController extends Controller
 {
