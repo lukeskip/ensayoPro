@@ -38,7 +38,7 @@ Route::get('/phpinfo', function () {
     return phpinfo();
 });
 
-Route::get('/eliminar_calificaciones', 'RatingController@eliminar_calificaciones');
+// Route::get('/eliminar_calificaciones', 'RatingController@eliminar_calificaciones');
 
 Route::get('/generar_reporte', 'ReportController@store');
 
