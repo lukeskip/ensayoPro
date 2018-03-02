@@ -8,6 +8,7 @@ use Socialite;
 use App\Services\SocialFacebookAccountService;
 use Session;
 use Request;
+use URL;
 
 class SocialAuthFacebookController extends Controller
 {
@@ -17,8 +18,8 @@ class SocialAuthFacebookController extends Controller
    * @return void
    */
     public function redirect()
-    {
-        Session::put('url.intended', Request::fullUrl());  
+    { 
+        Session::put('url.intended', URL::previous());  
         return Socialite::driver('facebook')->redirect();
     }
 
