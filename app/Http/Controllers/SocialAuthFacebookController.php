@@ -32,7 +32,12 @@ class SocialAuthFacebookController extends Controller
     {
         $user = $service->createOrGetUser(Socialite::driver('facebook')->stateless()->user());
         auth()->login($user);
-        return redirect()->to(session('goto'));
+        if(!session('goto')){
+            return redirect()->to('/login/redirect');
+        }else{
+            return redirect()->to(session('goto'));
+        }
+        
         
     }
 }
