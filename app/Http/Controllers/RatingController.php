@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use App\Rating as Rating;
+use App\User as User;
 use Illuminate\Support\Facades\Validator;
 
 class RatingController extends Controller
@@ -38,7 +39,13 @@ class RatingController extends Controller
     public function store(Request $request)
     {
         if(Auth::check()){
-        
+            
+            $role = Auth::user()->roles->first()->name;
+
+            if($role == 'company'){
+               return response()->json(['success' => false,'message'=>'No puedes calificar si eres una compañía']); 
+            }
+
             // Registramos las reglas de validación
             $rules = array(
                 'score'         => 'required|integer',
@@ -125,6 +132,15 @@ class RatingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+
+
+
+    }
+
+    public function eliminar_calificaciones(){
+        return $users = User::whereHas('roles',function($query){
+            $query->where('name','company');
+        })->get();
     }
 }
