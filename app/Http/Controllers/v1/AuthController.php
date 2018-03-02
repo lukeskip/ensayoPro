@@ -59,4 +59,10 @@ class AuthController extends Controller
 		
 		return response()->json(compact('token'));
 	}
+
+	public function logout(){
+        Session::flush();
+        Auth::guard($this->getGuard())->logout();
+        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/login');
+    }
 }
