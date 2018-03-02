@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Socialite;
 use App\Services\SocialFacebookAccountService;
 use Session;
+use App\Url;
 
 class SocialAuthFacebookController extends Controller
 {
