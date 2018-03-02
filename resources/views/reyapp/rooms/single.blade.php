@@ -262,7 +262,7 @@
 			onSelect:function(value, text, event){
 				data = {'score':value,'room_id':{{$room->id}},'description':text };
 				conection('POST',data,'/ratings',true).then(function(data){
-					if(data.login == true){
+					if(data.login == false){
 						login();	
 					}else if(data.success == true){
 						show_message('success','¡Listo!',data.message);
