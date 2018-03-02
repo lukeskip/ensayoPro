@@ -1895,6 +1895,8 @@ h1 .duration{
 	margin-bottom: 80px;
 }
 
+
+
 .comments-wrapper .comment-form{
 	background: white;
 	padding: 20px 50px;
@@ -1907,6 +1909,7 @@ h1 .duration{
 .comment{
 	padding: 20px 50px;
 }
+
 
 .comment label{
 	color: #333;
@@ -1953,6 +1956,10 @@ h1 .duration{
 
 .comment:nth-child(even) {color:#333;background: white;}
 .comment:nth-child(odd) {color:#333;background: #eee}
+
+.comment.active{
+	background: #85C985;
+}
 
 .comment-swal.sweet-alert h2{
 	font-size: 16px;

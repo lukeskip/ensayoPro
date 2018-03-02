@@ -171,7 +171,7 @@
 						@foreach($room->comments as $comment)
 							{{-- Si el comentarios está aprobado o pertenece al usuario que lo creo, estará visible --}}
 							@if($comment->status == 'approved' or $user == $comment->user_id)
-							<div class="comment {{$comment->status}}" data-id="{{$comment->id}}">
+							<div class="comment {{$comment->status}} @if(Request::get('comentario') == $comment->id){{'active'}} @endif  " data-id="{{$comment->id}}">
 
 								<div class="title">{{$comment->title}}</div>
 								<div class="description">

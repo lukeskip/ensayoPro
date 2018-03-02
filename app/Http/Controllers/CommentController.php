@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth as Auth;
 use App\Comment as Comment;
 use Illuminate\Support\Facades\Validator;
 use App\User as User;
+use Mail;
 
 class CommentController extends Controller
 {
@@ -68,15 +69,20 @@ class CommentController extends Controller
 
         $comment->save();
 
-        $role    =  $comment->users->roles->first()->name;
+        // Si quien hace el comentario es una compañía enviamos el nombre de la compañía al frente
+        $role           = $comment->users->roles->first()->name;
+        
         if($role == 'company' and $comment->users->companies->count() > 0){
-            $company = $comment->users->companies->first()->name;
-            $author = $company;
+            $own_company = $comment->users->companies->first()->name;
+            $author      = $own_company;
         }else{
             $author = $comment->users->name . ' '. $comment->users->lastname;
         }
 
         $date = $comment->created_at->format('d/m/Y');
+
+        
+
         return response()->json(['success' => true,'message'=>'Tu comentario ha sido guardado','title' => $request->title,'description' => $request->description ,'author' => $author,'class' => $status,'date'=>$date]);
     }
 
@@ -114,6 +120,27 @@ class CommentController extends Controller
         $comment = Comment::find($id);
         $comment->status = $request->status;
         $comment->save();
+
+        if($comment->status == 'approved'){
+
+            $room               = $comment->rooms;
+            $room_name          = $room->name;
+            $company_email      = $comment->rooms->companies->users->first()->email;
+
+            $comment['author']  = $comment->users->name . ' '.$comment->users->lastname;
+
+
+
+            // Enviamos un correo a la compañía dueña de esa sala de ensayos para que esté enterado cuando recibe un comentario
+            Mail::send('reyapp.mails.comment', ['comment' => $comment,'room' => $room], function ($message)use($company_email,$room_name){
+
+            $message->from('no_replay@ensayopro.com.mx', 'EnsayoPro')->subject('Tienes un comentario de la sala '.$room_name);
+            $message->to($company_email);
+
+            });
+        }
+
+        
 
         return response()->json(['success' => true,'message'=>'El comentario ha sido actualizado']);
     }
