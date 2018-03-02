@@ -139,8 +139,20 @@ class RatingController extends Controller
     }
 
     public function eliminar_calificaciones(){
-        return $users = User::whereHas('roles',function($query){
+        $users = User::with('ratings')->whereHas('roles',function($query){
             $query->where('name','company');
         })->get();
+
+        foreach ($users as $user ) {
+            foreach ($user->ratings as $rating) {
+                $rating->delete();
+                echo $rating->users->email.' Borrado <br>';
+            }
+        }
+
+        
+        
+
+
     }
 }
