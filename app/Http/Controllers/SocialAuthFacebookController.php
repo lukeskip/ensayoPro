@@ -19,7 +19,7 @@ class SocialAuthFacebookController extends Controller
    */
     public function redirect()
     { 
-        Session::put('url.intended', URL::previous());  
+        session(['goto' => URL::previous()]);  
         return Socialite::driver('facebook')->redirect();
     }
 
@@ -33,6 +33,6 @@ class SocialAuthFacebookController extends Controller
         
         $user = $service->createOrGetUser(Socialite::driver('facebook')->stateless()->user());
         auth()->login($user);
-        return redirect()->intended();
+        return redirect()->to(session('goto'););
     }
 }
