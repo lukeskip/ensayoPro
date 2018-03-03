@@ -3,9 +3,9 @@
 <link rel="stylesheet" href="{{asset('plugins/bar-rating/themes/fontawesome-stars.css')}}">
 @endsection
 @section('metatags')
-<meta property="og:url"                content="http://setlist.reydecibel.com.mx" />
+<meta property="og:url"                content="http://ensayopro.com.mx" />
 		<meta property="og:title"              content="EnsayoPro" />
-		<meta property="og:description"        content="Renta la sala de ensayo que más te convenga, muchas opciones" />
+		<meta property="og:description"        content="Renta la sala de ensayo que más te convenga, las mejores opciones en la ciudad de méxico, guadalajara, monterrey" />
 		<meta property="og:image"              content="{{asset('img/facebook_share.png')}}" />
 
 		<meta name="csrf-token" content="{{ csrf_token() }}">
