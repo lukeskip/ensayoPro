@@ -91,9 +91,22 @@
 			</div>
 
 			<div class="row">
-				<div class="large-6 columns">
-					<label>Ciudad (*)</label>	
-					<input class="input-group-field city get_loc required" type="text" name="city" value="{{$company->city}}">
+				<div class="large-6 columns">	
+					<label>Estado (*)</label>	
+					<select class="required" name="city" id="">
+						<option @if($company->city == 'Ciudad de México'){{'selected'}} value="Ciudad de México">
+							Ciudad de México (CDMX)
+						</option>
+						<option @if($company->city == 'Estado de México'){{'selected'}} value="Estado de México">
+							Estado de México
+						</option>
+						<option @if($company->city == 'Jalisco'){{'selected'}} value="Jalisco">
+							Jalisco
+						</option>
+						<option @if($company->city == 'Nuevo León'){{'selected'}} value="Nuevo León">
+							Nuevo León
+						</option>
+					</select>
 				</div>
 
 				<div class="large-6 columns">

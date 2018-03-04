@@ -87,8 +87,21 @@
 
 			<div class="row">
 				<div class="large-6 columns">
-					<label>Ciudad (*)</label>	
-					<input class="input-group-field city get_loc required" type="text" name="city">
+					<label>Estado (*)</label>	
+					<select class="required" name="city" id="">
+						<option value="Ciudad de México">
+							Ciudad de México (CDMX)
+						</option>
+						<option value="Estado de México">
+							Estado de México
+						</option>
+						<option value="Jalisco">
+							Jalisco
+						</option>
+						<option value="Nuevo León">
+							Nuevo León
+						</option>
+					</select>
 				</div>
 
 				<div class="large-6 columns">
