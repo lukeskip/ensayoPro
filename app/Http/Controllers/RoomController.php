@@ -44,7 +44,7 @@ class RoomController extends Controller
 
 		$rooms = Room::with(array('promotions' => function($query) use($now) {
 				$query->where('valid_ends','>=',$now)->orderBy('valid_ends', 'DESC')->where('status','published');
-    		}))->leftJoin('room_promotion','room_promotion.room_id','=','rooms.id')->groupBy('rooms.id')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->groupBy('rooms.id')->select('rooms.*',DB::raw('(CASE WHEN  room_promotion.room_id != "NULL" THEN 1 ELSE 0 END) AS promotion' ), DB::raw('AVG(score) as average' ));
+    		}))->leftJoin('room_promotion','room_promotion.room_id','=','rooms.id')->groupBy('rooms.id')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->groupBy('rooms.id')->select('rooms.*',DB::raw('(CASE WHEN  room_promotion.room_id != "NULL" THEN 1 ELSE 0 END) AS promotion' ), DB::raw('AVG(score) as average' ), DB::raw('COUNT(ratings.id) as total_ratings'));
 
 		// Actuamos dependiento los filtros que tengamos diponibles
 		if(request()->has('order')){
@@ -68,7 +68,7 @@ class RoomController extends Controller
 
 		}else{
 
-			$rooms = $rooms->orderBy('promotion','DESC')->orderBy('average','DESC');
+			$rooms = $rooms->orderBy('promotion','DESC')->orderBy('average','DESC')->orderBy('total_ratings','DESC');
 
 
 		}
