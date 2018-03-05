@@ -5,7 +5,7 @@
     <div class="row">
         <div class="large-6 medium-8 medium-centered columns login">
             <div class="panel panel-default">
-                <h2>Login</h2>
+                <div class="text-center"><img src="{{asset('img/logo_ensayo.png')}}" alt="" width="180px;"></div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
