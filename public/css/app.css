@@ -354,6 +354,27 @@ textarea{
 	font-weight: 700;
 }
 
+.room-single .contact{
+	padding: 20px;
+	margin-top: 20px;
+}
+
+.room-single .contact.gest{
+	background: rgba(0,0,0,.1);
+	padding: 20px;
+	margin-top: 20px;
+}
+
+.room-single .contact i{
+	font-size: 2em;
+	margin-right:20px;
+	margin-top: 20px;
+}
+
+.room-single .contact .phone{
+	font-size: 1.5em;
+}
+
 
 
 /*Ends: Promotions***************************************/

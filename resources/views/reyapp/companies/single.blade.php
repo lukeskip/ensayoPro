@@ -42,7 +42,6 @@
 						<div class="info">
 							<a href="/company/salas/ajustes/{{$room->id}}" class="tag blue">Editar</a href="#">
 							<a href="/salas/{{$room->id}}" class="tag blue">Ver</a href="#">
-							{{-- <a href="#" class="discount">Descuento -20%</a href="#"> --}}
 						</div>
 						
 					</div>

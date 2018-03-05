@@ -14,9 +14,8 @@ class AddContactFieldsToCompaniesTabla extends Migration
     public function up()
     {
         Schema::table('companies', function($table) {
-            $table->string('contact_phones')->nullable()->after("name");
-            $table->string('webpage')->nullable()->after("contact_phones");
-            $table->string('facebook')->nullable()->after("facebook");
+            $table->string('webpage')->nullable()->after("phone");
+            $table->string('facebook')->nullable()->after("webpage");
         });    
     }
 

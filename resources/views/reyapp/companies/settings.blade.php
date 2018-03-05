@@ -91,19 +91,32 @@
 			</div>
 
 			<div class="row">
+				
+				<div class="large-6 columns">
+					<label>Página web</label>	
+					<input class="input-group-field colony get_loc " type="text" name="webpage" value="{{$company->webpage}}">
+				</div>
+
+				<div class="large-6 columns">
+					<label>Facebook</label>
+					<input class="input-group-field" type="text" name="facebook" value="{{$company->facebook}}">
+				</div>
+			</div>
+
+			<div class="row">
 				<div class="large-6 columns">	
 					<label>Estado (*)</label>	
 					<select class="required" name="city" id="">
-						<option @if($company->city == 'Ciudad de México'){{'selected'}} value="Ciudad de México">
+						<option @if($company->city == 'Ciudad de México'){{'selected'}}@endif value="Ciudad de México">
 							Ciudad de México (CDMX)
 						</option>
-						<option @if($company->city == 'Estado de México'){{'selected'}} value="Estado de México">
+						<option @if($company->city == 'Estado de México'){{'selected'}}@endif value="Estado de México">
 							Estado de México
 						</option>
-						<option @if($company->city == 'Jalisco'){{'selected'}} value="Jalisco">
+						<option @if($company->city == 'Jalisco'){{'selected'}} @endif value="Jalisco">
 							Jalisco
 						</option>
-						<option @if($company->city == 'Nuevo León'){{'selected'}} value="Nuevo León">
+						<option @if($company->city == 'Nuevo León'){{'selected'}} @endif value="Nuevo León">
 							Nuevo León
 						</option>
 					</select>
@@ -119,7 +132,7 @@
 				
 			</div>
 
-			<div class="row @if($company->reservation_opt != true) tax_info @endif">
+			<div class="row tax_info @if($company->reservation_opt != true) {{'hidden'}} @endif">
 				<div class="large-12 columns">
 					<h3>Información Fiscal</h3>
 					<p>Estos campos son opcionales solo temporalmente, pronto tendrás que llenar esta información</p>
@@ -140,7 +153,7 @@
 		</div>
 		{{-- ENDS: ADDRESS ZONE --}}
 		
-		<div class="row">
+		<div class="row tax_info @if($company->reservation_opt != true) {{'hidden'}} @endif">
 			<div class="large-12 columns">
 				<h3>Información bancaria</h3>
 			</div>

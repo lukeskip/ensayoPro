@@ -9,7 +9,6 @@
 <div class="room-item room-single">
 
 	<div class="row">
-		
 	
 		<div class="large-8 columns info">
 			
@@ -20,6 +19,37 @@
 					${{$room->price}}/hora
 				</span>
 			</h2>
+			{{-- Solo mostramos la información si está logeado --}}
+			@if(!Auth::guest())
+				@if($room->companies->phone or $room->companies->webpage or $room->companies->facebook)
+				<div class="contact">
+
+					@if($room->companies->phone)
+						<div class="phone">
+							Tel: {{$room->companies->phone}}
+						</div>
+					@endif
+					@if($room->companies->webpage)
+						<a class="web" target="_black" href={{"http://".$room->companies->webpage}}>
+							<i class="fa fa-chrome"></i>
+						</a>
+					@endif
+					@if($room->companies->facebook)
+						<a class="facebook" target="_black" href="{{"http://".$room->companies->facebook}}">
+							<i class="fa fa-facebook-square"></i>
+						</a>
+					@endif
+				</div>
+				@endif
+			@else
+				<div class="contact guest">
+					Para ver los datos de contacto logéate<br><br>
+					<a href="{{url('/redirect')}}" class="button facebook">
+                    <i class="fa fa-facebook"></i>
+                    Registro con Facebook
+                </a>
+				</div>
+			@endif
 			
 
 			
@@ -222,11 +252,11 @@
 		
 		// creamos el mapa con las coordenadas guardadas
 		// $('#map').height($('.info').height());
-
-		
-
 		@if(Auth::guest())
-			login();
+			if (sessionStorage.getItem('loggin_invitation') !== 'true') {
+				login();
+				sessionStorage.setItem('loggin_invitation','true');
+			}
 		@endif
 
 		function login (){

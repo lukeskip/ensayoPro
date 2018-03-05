@@ -86,6 +86,22 @@
 			</div>
 
 			<div class="row">
+				
+				<div class="large-6 columns">
+					<label>Página web</label>	
+					<input class="input-group-field colony  " type="text" name="webpage">
+				</div>
+
+				<div class="large-6 columns">
+					<label>
+						Facebook 
+						<i class="fa fa-question-circle hastooltip" title="Escríbe la dirección completa 'facebook.com/misala'" aria-hidden="true"></i>
+					</label>
+					<input class="input-group-field" type="text" name="facebook">
+				</div>
+			</div>
+
+			<div class="row">
 				<div class="large-6 columns">
 					<label>Estado (*)</label>	
 					<select class="required" name="city" id="">

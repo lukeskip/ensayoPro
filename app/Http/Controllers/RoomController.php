@@ -324,7 +324,7 @@ class RoomController extends Controller
 		$room->schedule_end     = $request->schedule_end;
 		$room->color            = $request->color;
 		$room->instructions     = $request->instructions;
-		$room->status           = 'inactive';
+		$room->status           = 'active';
 		
 		// Si el valor es -1 agregamos todos los días al string
 		if(in_array('-1',$request->days)){

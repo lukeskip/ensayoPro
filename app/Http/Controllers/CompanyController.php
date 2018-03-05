@@ -42,12 +42,7 @@ class CompanyController extends Controller
 
 	public function index()
 	{
-		$companies = Company::paginate();
-
-		// $companies = Company::with('rooms')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id');
-
-		// $companies = Room::leftJoin('companies', 'companies.id', '=', 'rooms.company_id')->select('companies.*','rooms.*')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->select('rooms.*','companies.*', DB::raw('AVG(score) as average' ))->groupBy('rooms.id');
-		
+		$companies = Company::paginate();		
 		return view('reyapp.companies')->with('companies',$companies);
 	}
 
@@ -118,6 +113,11 @@ class CompanyController extends Controller
 			return response()->json($validator->messages(), 200);
 		}
 
+		$webpage	= str_replace("http://", "",  $request->webpage);
+		$webpage	= str_replace("https://", "",  $webpage);
+		$facebook  	= str_replace("http://", "",  $request->facebook);
+		$facebook  	= str_replace("https://", "",  $facebook);
+
 		$user_id = Auth::user()->id;
 		$company                 = new Company();
 		$company->legalname      = $request->legalname;
@@ -129,6 +129,8 @@ class CompanyController extends Controller
 		$company->postal_code    = $request->postal_code;
 		$company->city           = $request->city;
 		$company->phone          = $request->phone;
+		$company->webpage        = $webpage;
+		$company->facebook       = $facebook;
 		$company->rfc            = $request->rfc;
 		$company->latitude       = $request->latitude;
 		$company->longitude      = $request->longitude;
@@ -288,9 +290,13 @@ class CompanyController extends Controller
 
 		// Si la validación falla, nos detenemos y mandamos false
 		if ($validator->fails()) {
-			// return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
 			return response()->json(['success'=> false,$validator->messages()], 200);
 		}
+
+		$webpage	= str_replace("http://", "",  $request->webpage);
+		$webpage	= str_replace("https://", "",  $webpage);
+		$facebook  	= str_replace("http://", "",  $request->facebook);
+		$facebook  	= str_replace("https://", "",  $facebook);
 
 		$company->legalname      = $request->legalname;
 		$company->clabe          = $request->clabe;
@@ -301,6 +307,8 @@ class CompanyController extends Controller
 		$company->postal_code    = $request->postal_code;
 		$company->city           = $request->city;
 		$company->phone          = $request->phone;
+		$company->webpage        = $webpage;
+		$company->facebook       = $facebook;
 		$company->reservation_opt = $request->reservation_opt;
 		$company->rfc            = $request->rfc;
 		
