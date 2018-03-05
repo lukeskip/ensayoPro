@@ -167,6 +167,9 @@
 								<option value="4">4</option>
 								<option value="5">5</option>
 							</select>
+							<div class="clarification">
+								Basado en {{$room->total_ratings}} calificación(es)
+							</div>
 							
 						@else
 

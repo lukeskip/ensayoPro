@@ -1914,6 +1914,12 @@ h1 .duration{
 	padding-top: 20px;
 }
 
+
+.room-item .rating_wrapper .clarification{
+	font-size: .8em;
+	text-align: center;
+}
+
 .comments-wrapper{
 	color:white;
 	margin-top: 20px;
