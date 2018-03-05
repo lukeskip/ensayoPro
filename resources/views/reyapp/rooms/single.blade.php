@@ -157,7 +157,7 @@
 					<a href="reservando/{{$room->id}}" class="button expanded green">Reservar esta sala</a>
 				@endif
 
-				@if($room->promotions->count())
+				@if($room->promotions)
 					<h3 class="list-header green">
 						<i class="fa fa-tags"></i>
 						PROMOCIONES VIGENTES (*)
