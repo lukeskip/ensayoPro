@@ -205,7 +205,7 @@ Route::group(['middleware' => ['auth','active']], function () {
 		}
 
 		if($role == 'musician'){
-			return redirect('/musico/bienvenido');
+			return redirect('/salas');
 		}
 	});
 

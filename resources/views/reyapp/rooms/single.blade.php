@@ -30,12 +30,12 @@
 						</div>
 					@endif
 					@if($room->companies->webpage)
-						<a class="web" target="_black" href={{"http://".$room->companies->webpage}}>
+						<a class="web icon" target="_black" href={{"http://".$room->companies->webpage}}>
 							<i class="fa fa-chrome"></i>
 						</a>
 					@endif
 					@if($room->companies->facebook)
-						<a class="facebook" target="_black" href="{{"http://".$room->companies->facebook}}">
+						<a class="facebook icon" target="_black" href="{{"http://".$room->companies->facebook}}">
 							<i class="fa fa-facebook-square"></i>
 						</a>
 					@endif
@@ -46,7 +46,7 @@
 					Para ver los datos de contacto logéate<br><br>
 					<a href="{{url('/redirect')}}" class="button facebook">
                     <i class="fa fa-facebook"></i>
-                    Registro con Facebook
+                    Logéate con Facebook
                 </a>
 				</div>
 			@endif
@@ -71,6 +71,9 @@
 						<option value="4">4</option>
 						<option value="5">5</option>
 					</select>
+					<div class="clarification">
+						Basado en {{$room->ratings}} calificación(es)
+					</div>
 				</div>
 				@if($reservation_opt)
 					<a href="reservando/{{$room->id}}" class="button expanded green">Reservar esta sala</a>
@@ -138,7 +141,7 @@
 		<div class="large-4 columns location">
 			<div class="show-for-large">
 				<div class="text-center">
-					<label for="">Califica esta sala</label>
+					<label for="">@if($room->score) Califica esta sala @else Sé el primero en calificar esta sala @endif</label>
 					<select name="rating" class="hidden rating">
 						<option value="1">1</option>
 						<option value="2">2</option>
@@ -146,6 +149,9 @@
 						<option value="4">4</option>
 						<option value="5">5</option>
 					</select>
+					<div class="clarification">
+						Basado en {{$room->ratings}} calificación(es)
+					</div>
 				</div>
 				@if($reservation_opt)
 					<a href="reservando/{{$room->id}}" class="button expanded green">Reservar esta sala</a>
@@ -246,6 +252,9 @@
 	<script src="{{asset('plugins/lightbox/js/lightbox-plus-jquery.min.js')}}"></script>
 	<script src="{{asset('plugins/gmaps/gmaps.js')}}"></script>
 	<script src="{{asset('plugins/bar-rating/jquery.barrating.min.js')}}"></script>
+	<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=5a9cd9c60d592a0013178ca5&product=sticky-share-buttons"></script>
+
+
 	<script>
 
 	$(document).ready(function(){

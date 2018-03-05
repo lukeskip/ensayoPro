@@ -355,7 +355,6 @@ textarea{
 }
 
 .room-single .contact{
-	padding: 20px;
 	margin-top: 20px;
 }
 
@@ -365,7 +364,7 @@ textarea{
 	margin-top: 20px;
 }
 
-.room-single .contact i{
+.room-single .contact .icon{
 	font-size: 2em;
 	margin-right:20px;
 	margin-top: 20px;
@@ -373,6 +372,11 @@ textarea{
 
 .room-single .contact .phone{
 	font-size: 1.5em;
+}
+
+.room-single .clarification{
+	font-size: .8em;
+	margin-bottom: 10px;
 }
 
 
