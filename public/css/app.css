@@ -405,7 +405,13 @@ body.full{
 }*/
 
 /*ENDS: Edition Calendar*/
-
+/*STARTS: Company Single*/
+.company-single .clarification{
+	font-size: .8em;
+	margin-bottom: 10px;
+	text-align: center;
+}
+/*ENDS: Company Single*/
 
 /*STARTS: Company Calendar*******************************/
 

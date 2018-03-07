@@ -1,6 +1,7 @@
 @extends('layouts.reyapp.main')
 
 @section('content')
+<div class="company-single">
 	<div class="row">
 		<div class="large-12 columns">
 			<h1>Salas de {{$company->name}}</h1>	
@@ -57,6 +58,9 @@
 								<option value="4">4</option>
 								<option value="5">5</option>
 							</select>
+							<div class="clarification">
+								Basado en {{$room->ratings}} calificación(es)
+							</div>
 							
 						@else
 
@@ -76,7 +80,7 @@
 								<i class="fa fa-check-circle-o confirmed hastooltip" title="Activa" aria-hidden="true"></i>
 							@elseif($room->status == 'inactive')
 								<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Inactiva"></i>
-							@elseif($room->status == 'cancelled')
+							@elseif($room->status == 'deleted')
 								<i class="fa fa-times-circle-o hastooltip cancelled" title="Cancelada" aria-hidden="true"></i>
 							@endif
 						</div>
@@ -87,7 +91,7 @@
 		</div>
 		
 	</div>
-	
+</div>	
 @endsection
 
 @section('scripts')

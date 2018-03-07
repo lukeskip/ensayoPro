@@ -5,19 +5,22 @@
 	<div class="row">
 		<div class="large-12 columns">
 				<div class="row list-header show-for-medium">
-					<div class="medium-6 columns">
+					<div class="medium-4 columns">
 						Nombre/Marca:
 					</div>
-					<div class="medium-3 columns">
-						Califiación:
+					<div class="medium-2 columns">
+						Acepta Online:
 					</div>
-					<div class="medium-3 columns">
+					<div class="medium-4 columns">
+						Calificación:
+					</div>
+					<div class="medium-2 columns">
 						Estatus:
 					</div>
 				</div>
 				@foreach ($companies as $company)
 				<div class="row list-item room-item">
-					<div class="medium-6 columns text-center">
+					<div class="medium-4 columns text-center">
 
 						<a href="/company/datalle/{{$company->id}}">{{$company->name}}</a>
 						<div class="info">
@@ -29,7 +32,15 @@
 						</div>
 						
 					</div>
-					<div class="medium-3 columns rating_wrapper">
+					<div class="medium-2 columns status">
+						@if($company->reservation_opt)
+							<i class="fa fa-check-circle-o confirmed hastooltip" title="Acepta reservaciones" aria-hidden="true"></i>
+						@else
+							<i class="fa fa-times-circle-o hastooltip cancelled" title="No acepta reservaciones" aria-hidden="true"></i>
+						@endif
+
+					</div>
+					<div class="medium-4 columns rating_wrapper">
 								
 						@if($company->ratings > 0)
 							<select name="" data-score="{{$company->score}}" class="rating">
@@ -42,13 +53,13 @@
 							
 						@else
 
-							<div class="text-center">
+							<div class="text-center clarification">
 								 Esta compañía aún no tiene calificaciones
 							</div>
 						@endif
 						
 					</div>
-					<div class="medium-3 columns rating_wrapper status">
+					<div class="medium-2 columns status">
 								
 						@if($company->status == 'active')
 							<i class="fa fa-check-circle-o confirmed hastooltip" title="Activa" aria-hidden="true"></i>
