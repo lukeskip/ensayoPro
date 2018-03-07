@@ -42,7 +42,7 @@ class CompanyController extends Controller
 
 	public function index()
 	{
-		$companies = Company::paginate(2);		
+		$companies = Company::paginate();		
 		return view('reyapp.companies')->with('companies',$companies);
 	}
 
