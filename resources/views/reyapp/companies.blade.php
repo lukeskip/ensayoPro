@@ -53,7 +53,9 @@
 						@if($company->status == 'active')
 							<i class="fa fa-check-circle-o confirmed hastooltip" title="Activa" aria-hidden="true"></i>
 						@elseif($company->status == 'inactive')
-							<i class="fa fa-clock-o hastooltip pending" aria-hidden="true" title="Inactiva"></i>
+							<i class="fa fa-clock-o hastooltip" aria-hidden="true" title="Inactiva"></i>
+						@elseif($company->status == 'paused')
+							<i class="fa fa-pause hastooltip pending" aria-hidden="true" title="Pausada"></i>
 						@elseif($company->status == 'deleted')
 							<i class="fa fa-times-circle-o hastooltip cancelled" title="Cancelada" aria-hidden="true"></i>
 						@endif
@@ -64,7 +66,11 @@
 				@endforeach
 		</div>
 	</div>
-	
+	<div class="row">
+		<div class="large-12 columns">
+			{!! $companies->appends(Request::capture()->except('page'))->render() !!}
+		</div>
+	</div>
 @endsection
 
 @section('scripts')
