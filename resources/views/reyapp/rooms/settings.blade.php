@@ -112,13 +112,14 @@
 			<div class="large-4 columns">
 				<label for="company_address">
 					Estatus <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Desactiva esta sala temporalmente"></i>
+					{{$room->status}}
 				</label>
 				<select name="status" id="">
 					<option @if($room->status == 'active') {{'selected'}} @endif value="active">Activa</option>
 					<option @if($room->status == 'inactive') {{'selected'}} @endif value="inactive">Inactiva</option>
 
 					@if($role == 'admin')
-						<option @if($room->status == 'cancelled') {{'selected'}} @endif value="cancelled">Cancelada</option>
+						<option @if($room->status == 'deleted') {{'selected'}} @endif value="deleted">Cancelada</option>
 					@endif
 				</select>
 			</div>
