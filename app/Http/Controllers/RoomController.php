@@ -528,7 +528,7 @@ class RoomController extends Controller
 			'schedule_end'      => 'required|max:3',
 			'color'             => 'required|max:10',        
 			'price'             => 'required|integer',
-			'status'            => 'in:inactive,active'        
+			'status'            => 'in:inactive,active,cancelled'        
 		);
 
 		// Validamos todos los campos
