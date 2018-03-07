@@ -40,4 +40,8 @@ class Room extends Model
     {
         return $this->belongsToMany('App\Promotion','room_promotion');
     }
+
+    public function types(){
+        return $this->belongsTo('App\Type','type_id');;
+    }
 }

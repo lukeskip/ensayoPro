@@ -96,19 +96,32 @@
 		
 		<div class="row">
 			<div class="large-12 columns">
-				<h1>Edita los datos de tu sala de ensayo</h1>
+				<h1>Edita los datos de tu {{$room->types->label}}</h1>
 			</div>
 		</div>
 		
 		<div class="row">
 			<input type="hidden" name="company" value="{{$company->id}}">
 
-			<div class="large-8 columns">
+			<div class="large-4 columns">
 			
 				<label>Nombre</label>
 				<input class="input-group-field required"  type="text" name="name" placeholder="Ej. Sala grande" value="{{$room->name}}">
 				
 			</div>
+
+			<div class="large-4 columns">
+				
+					<label>Tipo</label>
+					<select class="required" name="type" id="">
+						<option value="">Elige...</option>
+						@foreach($types as $type)
+							<option @if($room->types->name == $type->name) {{'selected'}} @endif value="{{$type->name}}">{{$type->label}}</option>
+						@endforeach
+					</select>
+					
+				</div>
+
 			<div class="large-4 columns">
 				<label for="company_address">
 					Estatus <i class="fa fa-question-circle hastooltip" aria-hidden="true" title="Desactiva esta sala temporalmente"></i>

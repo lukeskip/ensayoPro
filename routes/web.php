@@ -14,6 +14,7 @@
 Auth::routes();
 
 Route::get('/confirmacion/{order_id}','PaymentController@show');
+Route::get('/aplicar_type','TypeController@change_rooms_type');
 // Route::get('/payments', 'PaymentController@index');
 // Route::post('/checkout', 'PaymentController@checkout');
 

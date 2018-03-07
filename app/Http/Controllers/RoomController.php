@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as Auth;
 use App\Room as Room;
 use App\User as User;
+use App\Type as Type;
 use App\Company as Company;
 use App\MediaItem as MediaItem;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,7 @@ class RoomController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
+	// DEL TYPE SALA DE ENSAYO
 	public function index()
 	{   
 		$items_per_page = 10;
@@ -281,7 +283,8 @@ class RoomController extends Controller
 		$user_id = Auth::user()->id;
 		$companies = User::where('id',$user_id)->with('companies')->first();
 		$company = $companies->companies->first();
-		return view('reyapp.rooms.register_room')->with('company',$company);
+		$types 	 = Type::all();
+		return view('reyapp.rooms.register_room')->with('company',$company)->with('types',$types);
 	}
 
 	/**
@@ -486,6 +489,8 @@ class RoomController extends Controller
 		$room_user = $room->companies->users->first()->id;
 		$role = User::find($user_id)->roles->first()->name;
 
+		$types = Type::all();
+
 		// verificamos que el usuario sea dueño de la información
 		if($user_id != $room_user and $role!='admin'){
 			return response()->json(['success' => false,'messages'=>'No tienes privilegios necesarios']); 
@@ -505,7 +510,7 @@ class RoomController extends Controller
 			$longitude = $room->longitude;
 		}
 		
-		return view('reyapp.rooms.settings')->with('room',$room)->with('company',$company)->with('latitude',$latitude)->with('longitude',$longitude)->with('role',$role);
+		return view('reyapp.rooms.settings')->with('room',$room)->with('company',$company)->with('latitude',$latitude)->with('longitude',$longitude)->with('role',$role)->with('types',$types);
 	}
 
 	/**
