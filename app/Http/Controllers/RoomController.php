@@ -44,7 +44,9 @@ class RoomController extends Controller
 		}
 		
 
-		$rooms = Room::with(array('promotions' => function($query) use($now) {
+		$rooms = Room::whereHas('types',function($query){
+				$query->where('name','room');
+			})->with(array('promotions' => function($query) use($now) {
 				$query->where('valid_ends','>=',$now)->orderBy('valid_ends', 'DESC')->where('status','published');
     		}))->leftJoin('room_promotion','room_promotion.room_id','=','rooms.id')->groupBy('rooms.id')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->groupBy('rooms.id')->select('rooms.*',DB::raw('(CASE WHEN  room_promotion.room_id != "NULL" THEN 1 ELSE 0 END) AS promotion' ), DB::raw('AVG(score) as average' ), DB::raw('COUNT(ratings.id) as total_ratings'));
 
@@ -217,6 +219,193 @@ class RoomController extends Controller
 	}
 
 
+	public function index_studios(){
+		$items_per_page = 10;
+		$order = 'quality_up';
+		$role  = '';
+		$now = Date::now();
+
+		if(!Auth::guest()){
+			$user_id = Auth::user()->id;
+			$role = User::find($user_id)->roles->first()->name;  
+		}
+		
+
+		$rooms = Room::whereHas('types',function($query){
+				$query->where('name','studio');
+			})->with(array('promotions' => function($query) use($now) {
+				$query->where('valid_ends','>=',$now)->orderBy('valid_ends', 'DESC')->where('status','published');
+    		}))->leftJoin('room_promotion','room_promotion.room_id','=','rooms.id')->groupBy('rooms.id')->leftJoin('ratings', 'ratings.room_id', '=', 'rooms.id')->groupBy('rooms.id')->select('rooms.*',DB::raw('(CASE WHEN  room_promotion.room_id != "NULL" THEN 1 ELSE 0 END) AS promotion' ), DB::raw('AVG(score) as average' ), DB::raw('COUNT(ratings.id) as total_ratings'));
+
+		// Actuamos dependiento los filtros que tengamos diponibles
+		if(request()->has('order')){
+			
+			if(request()->order == 'price_up'){
+			
+				$rooms = $rooms->orderBy('price','ASC');
+			
+			}else if(request()->order == 'price_down'){
+			
+				$rooms = $rooms->orderBy('price','DESC');
+			
+			}else if(request()->order == 'quality_up'){
+
+				$rooms = $rooms->orderBy('average','ASC');
+
+			}else if(request()->order == 'quality_down'){
+
+				$rooms = $rooms->orderBy('average','DESC');
+			}
+
+		}else{
+
+			$rooms = $rooms->orderBy('promotion','DESC')->orderBy('average','DESC')->orderBy('total_ratings','DESC');
+
+
+		}
+
+		if(request()->has('colonia')){	
+			if($role == 'admin'){ 
+				$rooms = $rooms->where('colony',request()->colonia)->orWhereHas('companies', function ($query) {
+	    			$query->where('colony', 'like',request()->deleg);
+				});
+			}else{
+				$rooms = $rooms->where('colony',request()->deleg )->orWhereHas('companies', function ($query) {
+    			$query->where('colony', 'like', request()->deleg );
+				})->where('status','active');
+			}
+			
+		}
+
+		if(request()->has('deleg')){
+			if($role == 'admin'){ 
+				$rooms = $rooms->where('deputation',request()->deleg )->orWhereHas('companies', function ($query) {
+    			$query->where('deputation', 'like', request()->deleg );
+			});
+			}else{
+				$rooms = $rooms->where('deputation', request()->deleg )->orWhereHas('companies', function ($query) {
+    			$query->where('deputation', 'like', request()->deleg );
+			})->where('status','active');
+			}
+			
+		}
+
+		if(request()->has('ciudad')){
+			if($role == 'admin'){ 
+				$rooms = $rooms->where('city',request()->ciudad )->orWhereHas('companies', function ($query) {
+    			$query->where('city', 'like', request()->ciudad );
+			});
+			}else{
+				$rooms = $rooms->where('city',request()->ciudad )->orWhereHas('companies', function ($query) {
+    			$query->where('city', 'like', request()->ciudad);
+			})->where('status','active');
+			}
+			
+		}
+
+		if(request()->has('buscar')){	
+			$rooms = $rooms->where('name', 'LIKE', '%' . request()->buscar . '%')->orWhere('equipment', 'LIKE', '%' . request()->buscar . '%')->orWhereHas('companies', function($query){
+				$query->where('name', 'LIKE', '%' . request()->buscar . '%');
+			});
+		
+		}
+
+		if($role != 'admin'){ 
+			$rooms = $rooms->where('status','active')->whereHas('companies', function ($query) {
+    			$query->where('status', '!=', 'deleted');
+			}); 
+		}
+		
+		$rooms = $rooms->paginate($items_per_page);
+
+		
+
+		
+		// Si tienen la misma dirección de la compañía la asignamos y la mandamos dentro del mismo objeto
+		foreach ($rooms as $room) {
+
+			if($room->company_address){
+				$room['address']        = $room->companies->address;
+				$room['colony']         = $room->companies->colony;
+				$room['deputation']     = $room->companies->deputation;
+				$room['postal_code']    = $room->companies->postal_code;
+				$room['latitude']       = $room->companies->latitude;
+				$room['longitude']      = $room->companies->longitude;
+				$room['city']      		= $room->companies->city;
+			}
+			
+			// Cuantificamos y promediamos las calificaiones
+			$quality = 0;
+			$sumRatings = count($room->ratings);
+
+			if($sumRatings > 0){
+				foreach ($room->ratings as $rating) {
+					$quality += $rating->score;
+				}
+
+				$quality = $quality / $sumRatings;
+				$room['score']    = $quality;
+			}
+			
+			$room['ratings'] = $sumRatings;
+
+			
+			// $room->promotions = $room->promotions->where('valid_ends', '>=', $now)->where('status','published');
+
+			if ($room->promotions){
+				
+				foreach ($room->promotions as $promotion) {
+					$now                = Date::now();
+					$finishs            = new Date($promotion->valid_ends);
+					if($now <= $finishs){
+						$finishs            = $finishs->diffInDays($now);
+						$promotion['finishs']  = 'Le quedan '.$finishs.' día(s)';  
+					}else{
+						$promotion['finishs']  = 'Esta promoción caducó';   
+					}
+
+
+					if($promotion->rule == 'hours'){
+						$rules = " en la reserva de al menos ".$promotion->min_hours.' horas';
+					}elseif ($promotion->rule == 'schedule') {
+						$days_array = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+						$days_valid = '';
+						$days = explode(',',$promotion->days);
+						foreach ($days as $key => $value) {
+
+							if ($key === end($days)){
+								$days_valid .= $days_array[$value];
+							}else{
+								$days_valid .= $days_array[$value].', ';
+							}
+						}
+
+						$rules = ' en la reserva de tu ensayo entre las '.$promotion->schedule_starts.':00 y las '.$promotion->schedule_ends.':00 los días '.$days_valid;
+					}
+
+					if ($promotion->type == 'percentage'){
+
+						$description = $promotion->value.'% de descuento '.$rules;
+						$tag = $promotion->value.'% ';
+					}elseif ($promotion->type == 'hour_price'){
+						$description = '$'.$promotion->value.' precio por hora '.$rules;
+						$tag = '$'.$promotion->value.'p/hora ';
+					}
+					
+					$promotion->description = $description;
+					$promotion->tag 		= $tag;
+				}
+			}
+		}
+
+		$companies = Company::orderBy('name', 'desc')->get();
+		$order = request()->order;
+		$deputations = $rooms->unique('deputation')->values()->all();
+		$cities = $rooms->unique('city')->values()->all();
+		return view('reyapp.studios.list')->with('rooms',$rooms)->with('companies',$companies)->with('order',$order)->with('role',$role)->with('deputations',$deputations)->with('cities',$cities)->with('now',$now);
+	}
+
+
 	public function index_company()
 	{
 		$items_per_page = 10;
@@ -383,6 +572,7 @@ class RoomController extends Controller
 		if(!$room){
 			return "Esta sala ha sido eliminada o está temporalmente suspendida";
 		}
+
 		if($room->company_address){
 			$room['address']        = $room->companies->address;
 			$room['colony']         = $room->companies->colony;
@@ -471,8 +661,11 @@ class RoomController extends Controller
 
         }
 
+        $days = explode(',',$room->days);
+        $days_array = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 
-		return view('reyapp.rooms.single')->with('room',$room)->with('user',$user)->with('reservation_opt',$reservation_opt);
+
+		return view('reyapp.rooms.single')->with('room',$room)->with('user',$user)->with('reservation_opt',$reservation_opt)->with('days',$days)->with('days_array',$days_array);
 	}
 
 	/**

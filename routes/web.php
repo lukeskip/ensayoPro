@@ -243,6 +243,7 @@ Route::resource('ratings', 'RatingController');
 // Rutas de salas sin necesidad de registro
 Route::get('/salas/{id}', 'RoomController@show');
 Route::get('/salas', 'RoomController@index');
+Route::get('/estudios-de-grabacion', 'RoomController@index_studios');
 
 // STARTS: Carga de imágenes fineuploader
 Route::get('imagenes/{image}', function($image){

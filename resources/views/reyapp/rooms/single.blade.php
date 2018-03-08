@@ -11,7 +11,9 @@
 	<div class="row">
 	
 		<div class="large-8 columns info">
-			
+			<div class="tag green">
+				{{$room->types->label}}
+			</div>
 			<h1 class="text-left">{{$room->companies->name}}</h1>
 			<h2 class="text-left">
 				{{$room->name}}
@@ -25,25 +27,46 @@
 				<div class="contact">
 
 					@if($room->companies->phone)
-						<div class="phone">
-							Tel: {{$room->companies->phone}}
+						<div class="phone title">
+							TEL: {{$room->companies->phone}}
 						</div>
 					@endif
 					@if($room->companies->webpage)
-						<a class="web icon" target="_black" href={{"http://".$room->companies->webpage}}>
+						<a class="web icon title" target="_black" href={{"http://".$room->companies->webpage}}>
 							<i class="fa fa-chrome"></i>
 						</a>
 					@endif
 					@if($room->companies->facebook)
-						<a class="facebook icon" target="_black" href="{{"http://".$room->companies->facebook}}">
+						<a class="facebook icon title" target="_black" href="{{"http://".$room->companies->facebook}}">
 							<i class="fa fa-facebook-square"></i>
 						</a>
 					@endif
 				</div>
 				@endif
+				<br>
+				<div class="row">
+					<div class="large-6 columns">
+						<h3 class="text-left">HORARIO:</h3>
+						<div class="timetable">
+							@foreach($days as $day)
+								<span class="tag black_op">{{$days_array[$day]}}</span>
+							@endforeach
+						</div>
+
+							
+					</div>
+					<div class="large-6 columns">
+						<div class="openhours">
+							<i class="fa fa-clock-o"></i> De {{$room->schedule_start}}hrs. a {{$room->schedule_end}}hrs. 
+						</div>
+					</div>
+					
+				</div>
+				
+
 			@else
 				<div class="contact guest">
-					Para ver los datos de contacto logéate<br><br>
+					Para ver los datos de contacto y horarios logéate<br><br>
 					<a href="{{url('/redirect')}}" class="button facebook">
                     <i class="fa fa-facebook"></i>
                     Logéate con Facebook
@@ -51,13 +74,6 @@
 				</div>
 			@endif
 			
-
-			
-			<div class="tags">
-				<a href="/salas/?colonia={{$room->colony}}" class="colony">{{$room->colony}}</a>
-				<a href="/salas/?deleg={{$room->deputation}}" class="deputation">{{$room->deputation}}</a>
-			</div>
-			<br>
 			
 			
 			<div class="hide-for-large">
@@ -108,6 +124,10 @@
 				{{$room->deputation}},
 				{{$room->postal_code}},
 				{{$room->companies->phone}}
+			</div>
+			<div class="tags">
+				<a href="/salas/?colonia={{$room->colony}}" class="colony">{{$room->colony}}</a>
+				<a href="/salas/?deleg={{$room->deputation}}" class="deputation">{{$room->deputation}}</a>
 			</div>
 			<div class="description">
 				<p>{{$room->description}}</p>
