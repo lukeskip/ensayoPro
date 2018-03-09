@@ -2950,15 +2950,34 @@ footer{
 	overflow: hidden;
 }
 
-.slider_wrapper .button{
-	width: 300px;
+.slider_wrapper .buttons{
+	max-width: 700px;
 	position: absolute;
 	top: 70%;
 	left: 50%;
-	margin-left: -150px;
+	margin-left: -350px;
 	z-index: 2;
+	width: 100%;
+	text-align: center;
 }
 
+
+
+.slider_wrapper .buttons .button{
+	width:49%;
+}
+
+@media only screen and (max-width: 600px) {
+	.slider_wrapper .buttons{
+		top: 70%;
+		left: 0;
+		margin-left: 0;
+	}	
+
+	.slider_wrapper .buttons .button{
+		width:90%;
+	}
+}
 
 .feature-item .feature-title{
 	padding: 0;
