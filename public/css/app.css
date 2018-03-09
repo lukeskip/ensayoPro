@@ -88,6 +88,10 @@ textarea{
 	background: black;
 }
 
+.tag.black_op{
+	background: rgba(0,0,0,.2);
+}
+
 .tag.blue{
 	background: #277BB5;
 }
@@ -336,6 +340,10 @@ textarea{
 .promotion .title{
 	color:black;
 	font-weight: 700;
+}
+
+.room-single .timetable{
+	max-width: 300px;
 }
 
 .room-single .promotions{
@@ -1837,6 +1845,12 @@ h1 .duration{
 	height: 200px;
 	border:5px solid black;
 }
+
+.room-item .title{
+	font-weight: 700;
+	color:white;
+}
+
 .room-item .image{
 	width: 25%;
 	margin-right: 2%;
@@ -1857,7 +1871,7 @@ h1 .duration{
 }
 
 .room-item .info .tags{
-	margin-top: 30px;
+	margin-bottom: 20px;
 }
 
 .equipment ul{
@@ -1881,9 +1895,21 @@ h1 .duration{
 }
 
 .room-item .full-address{
-	margin: 20px 0;
+	margin: 10px 0;
 	font-size: 1.3em;
 
+}
+
+.room-item .openhours{
+	font-size: 1.3em;
+	margin: 10px 0;
+	margin-top: 50px;
+}
+
+@media screen and (max-width: 1024px) {
+	.room-item .openhours{
+		margin-top: 10px;
+	}
 }
 
 .room-item .equipment{

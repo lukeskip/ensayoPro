@@ -113,10 +113,22 @@
 
 				<input type="hidden" name="company" value="{{$company->id}}">
 
-				<div class="large-12 columns">
+				<div class="large-8 columns">
 				
 					<label>Nombre</label>
 					<input class="input-group-field required"  type="text" name="name" placeholder="Ej. Sala grande">
+					
+				</div>
+
+				<div class="large-4 columns">
+				
+					<label>Tipo</label>
+					<select class="required" name="type" id="">
+						<option value="">Elige...</option>
+						@foreach($types as $type)
+							<option value="{{$type->name}}">{{$type->label}}</option>
+						@endforeach
+					</select>
 					
 				</div>
 

@@ -11,7 +11,7 @@
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
 		<meta name="description" content="Renta la sala de ensayo que más te convenga en la Ciudad de México, muchas opciones" />
-		<meta name="keywords" content="Salas de Ensayo DF, cuartos de ensayo, las mejores salas de ensayo, disqueras independientes" />
+		<meta name="keywords" content="Estudios de grabación DF, cuartos de ensayo,grabación de EP,Estudios baratos" />
 		<meta name="author" content="Rey Decibel">
 		<meta name="robots" content="index, follow">
 		<meta name="revisit-after" content="1 month">
@@ -20,8 +20,8 @@
 	<div class="row">
 		<div class="large-10 columns text-center large-centered">
 			<img src="{{asset('img/logo_cabeza_ensayo.png')}}" width="500px" alt="">
-			<h1 style="font-size:1.5em;">ENCUENTRA LA MEJOR SALA DE ENSAYO PARA TU BANDA INDEPENDIENTE</h1>
-			Las disqueras independientes buscan seriedad, profesionaliza tu proyecto con una sala de ensayo, busca tu favorita, por ubicación, equipamiento, calificación o precio, tu banda te lo agradecerá. Regístrate y obtén beneficios exclusivos para tu banda independiente. Si tienes una sala de ensayos y quieres integrarte a esta lista <a href="/unete">da click aquí</a>
+			<h1 style="font-size:1.5em;">ENCUENTRA EL MEJOR ESTUDIO DE GRABACIÓN</h1>
+			Las disqueras independientes buscan seriedad, profesionaliza tu sonido con un studio a la medida de tu banda, busca tu favorito, por ubicación, equipamiento, calificación o precio. Regístrate y obtén beneficios exclusivos para tu banda independiente. Si tienes un estudio de grabación y quieres integrarte a esta lista <a href="/unete">da click aquí</a>
 			<br><br>
 			
 		</div>
@@ -117,11 +117,6 @@
 				@foreach ($rooms as $room)
 				<div class="row list-item room-item">
 					<div class="medium-6 columns"> 
-						@if($room->companies->reservation_opt and $room->types->name == "room")
-							<span class="tag green">
-								<i class="fa fa-calendar hastooltip" title="Esta sala acepta reservaciones en línea"></i>
-							</span>
-						@endif
 						@if(!Auth::guest())
 							@if ($role == 'admin')
 								<a href="/admin/salas/ajustes/{{$room->id}}"> {{$room->name}} ({{$room->companies->name}})</a>
