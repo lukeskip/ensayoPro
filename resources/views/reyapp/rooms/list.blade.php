@@ -117,7 +117,7 @@
 				@foreach ($rooms as $room)
 				<div class="row list-item room-item">
 					<div class="medium-6 columns"> 
-						@if($room->companies->reservation_opt)
+						@if($room->companies->reservation_opt and $room->types->name == "room")
 							<span class="tag green">
 								<i class="fa fa-calendar hastooltip" title="Esta sala acepta reservaciones en línea"></i>
 							</span>

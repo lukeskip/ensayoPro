@@ -91,7 +91,7 @@
 						Basado en {{$room->ratings}} calificación(es)
 					</div>
 				</div>
-				@if($reservation_opt)
+				@if($reservation_opt and $room->types->name == 'room')
 					<a href="reservando/{{$room->id}}" class="button expanded green">Reservar esta sala</a>
 				@endif
 

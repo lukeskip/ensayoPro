@@ -242,6 +242,18 @@
 					</li>
 					<li>
 						
+						<a href="/salas">
+							<i class="fa fa-check-square-o" aria-hidden="true"></i> Salas de ensayo
+						</a>
+					</li>
+					<li>
+						
+						<a href="/estudios-de-grabacion">
+							<i class="fa fa-check-square-o" aria-hidden="true"></i> Estudios de grabación
+						</a>
+					</li>
+					<li>
+						
 						<a target="_blank" href="http://reydecibel.com.mx">
 						<i class="fa fa-newspaper-o" aria-hidden="true"></i> Blog
 						</a>
