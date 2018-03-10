@@ -116,7 +116,7 @@
 					<select class="required" name="type" id="">
 						<option value="">Elige...</option>
 						@foreach($types as $type)
-							<option @if($room->types->name == $type->name) {{'selected'}} @endif value="{{$type->name}}">{{$type->label}}</option>
+							<option @if($room->types->name == $type->name) {{'selected'}} @endif value="{{$type->id}}">{{$type->label}}</option>
 						@endforeach
 					</select>
 					
