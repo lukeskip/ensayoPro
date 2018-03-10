@@ -6,7 +6,7 @@
 	<h2>Tus salas de ensayo y estudios de grabación</h2>
 	<div class="row">
 		<div class="medium-3 columns">
-			<a href="/company/registro/salas" class="button expanded green">Registrar Sala</a>
+			<a href="/company/registro/salas" class="button expanded green">Registrar Sala o Estudio</a>
 		</div>
 	</div>
 	<div class="row">
