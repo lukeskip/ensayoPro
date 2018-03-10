@@ -104,7 +104,7 @@
 						</div>
 					@endif
 					
-					<h1>Registra tu sala de ensay< o estudio de grabación</h1>
+					<h1>Registra tu sala de ensayo estudio de grabación</h1>
 					<h2>Tendrás que registrar una a una las salas o estudios con las que cuenta tu marca, ponles nombre creativo adicional al nombre de tu marca</h2>
 				</div>
 			</div>
