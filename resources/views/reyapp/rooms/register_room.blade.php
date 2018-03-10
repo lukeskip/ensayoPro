@@ -126,7 +126,7 @@
 					<select class="required" name="type" id="">
 						<option value="">Elige...</option>
 						@foreach($types as $type)
-							<option value="{{$type->name}}">{{$type->label}}</option>
+							<option value="{{$type->id}}">{{$type->label}}</option>
 						@endforeach
 					</select>
 					
@@ -227,7 +227,7 @@
 			<div class="row">
 			   
 				<div class="large-6 columns">
-					<label>Precio <i class="fa fa-question-circle hastooltip" title="Escribe el precio de renta de esta sala por hora" aria-hidden="true"></i></label>
+					<label>Precio por hora <i class="fa fa-question-circle hastooltip" title="Escribe el precio de renta de esta sala o estudio por hora" aria-hidden="true"></i></label>
 					<input class="input-group-field required" type="text" name="price">
 				</div>
 

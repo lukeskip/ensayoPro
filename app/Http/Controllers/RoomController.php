@@ -517,6 +517,7 @@ class RoomController extends Controller
 		$room->color            = $request->color;
 		$room->instructions     = $request->instructions;
 		$room->status           = 'active';
+		$room->type_id          = $request->type;
 		
 		// Si el valor es -1 agregamos todos los días al string
 		if(in_array('-1',$request->days)){
@@ -749,6 +750,7 @@ class RoomController extends Controller
 		$days                   = implode(',', $request->days);
 		$room->days             = $days;
 		$room->status           = $request->status;
+		$room->type_id          = $request->type;
 		
 
 		if($request->company_address){

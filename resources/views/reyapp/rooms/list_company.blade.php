@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{asset('plugins/bar-rating/themes/fontawesome-stars.css')}}">
 @endsection
 @section('content')
-	<h2>Tus salas de ensayo</h2>
+	<h2>Tus salas de ensayo y estudios de grabación</h2>
 	<div class="row">
 		<div class="medium-3 columns">
 			<a href="/company/registro/salas" class="button expanded green">Registrar Sala</a>
