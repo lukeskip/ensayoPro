@@ -142,6 +142,7 @@
 							@endif
 							
 							@foreach($room->promotions as $promotion)
+								ss
 								<a href="/salas/?ciudad={{$room->city}}" class="tag green hastooltip" title="{{$promotion->description}}">
 								 	<i class="fa fa-tags"></i> 
 								 	{{$promotion->tag}}
