@@ -117,7 +117,7 @@
 				@foreach ($rooms as $room)
 				<div class="row list-item room-item">
 					<div class="medium-6 columns"> 
-						@if($room->companies->reservation_opt and $room->types->name == "room")
+						@if($room->companies->reservation_opt and $room->types->name == "room" and $room->companies->status == "active")
 							<span class="tag green">
 								<i class="fa fa-calendar hastooltip" title="Esta sala acepta reservaciones en línea"></i>
 							</span>
@@ -126,10 +126,10 @@
 							@if ($role == 'admin')
 								<a href="/admin/salas/ajustes/{{$room->id}}"> {{$room->name}} ({{$room->companies->name}})</a>
 							@else
-								<a href="/salas/{{$room->id}}">{{$room->name}} ({{$room->companies->name}})</a>
+								<a href="/salas/{{$room->id}}">{{ $room->companies->name }} ({{$room->name}})</a>
 							@endif
 						@else
-							<a href="/salas/{{$room->id}}">{{$room->name}} ({{$room->companies->name}})</a>
+							<a href="/salas/{{$room->id}}">{{ $room->companies->name }} ({{$room->name}})</a>
 						@endif
 
 						
@@ -142,8 +142,7 @@
 							@endif
 							
 							@foreach($room->promotions as $promotion)
-								ss
-								<a href="/salas/?ciudad={{$room->city}}" class="tag green hastooltip" title="{{$promotion->description}}">
+								<a href="#" class="tag green hastooltip" title="{{$promotion->description}}">
 								 	<i class="fa fa-tags"></i> 
 								 	{{$promotion->tag}}
 								</a href="#">
