@@ -43,6 +43,7 @@
 						<div class="info">
 							<a href="/company/salas/ajustes/{{$room->id}}" class="tag blue">Editar</a href="#">
 							<a href="/salas/{{$room->id}}" class="tag blue">Ver</a href="#">
+							<a href="/admin/salas/eliminar/{{$room->id}}" class="tag blue delete" data-id="{{$room->id}}">Eliminar</a href="#">
 						</div>
 						
 					</div>
@@ -108,6 +109,34 @@
 						console.log(value);
 					}
 				});
+		    });
+
+		    $('.room-item .delete').click(function(e){
+		    	e.preventDefault();
+		    	var id = $(this).data('id');
+		    	swal({
+					title: "¿Estas seguro?",
+					text: "Esta acción no se puede revertir.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: '#36A939',
+					confirmButtonText: 'Sí, elimínalo!',
+					cancelButtonText: "No, cancelar!",
+					cancelButtonColor: '#CD2B37'
+				}).then(function() {
+					// $('.loader-wrapper').css('display','block');
+					
+					conection('GET','','/admin/salas/eliminar/'+id,true).then(function(answer){
+						if(answer.success == true){
+							location.reload();
+						}else{
+							show_message('error','¡Error!',answer.message);
+						}
+	    			});
+				},function(dismiss) {
+					
+				});
+
 		    });
 		});
 	</script>

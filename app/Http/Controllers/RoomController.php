@@ -790,8 +790,11 @@ class RoomController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($id)
-	{
-		//
+	{	
+		$room = Room::find($id);
+		$room->delete();
+
+		return response()->json(['success' => true,'message'=>'EL item fue borrado con éxito']);
 	}
 
 

@@ -3,9 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Room extends Model
-{
+class Room extends Model{
+
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     public function companies()
     {
         return $this->belongsTo('App\Company','company_id');

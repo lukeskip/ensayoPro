@@ -113,6 +113,7 @@ Route::group(['middleware' => ['auth','admin','active'],'prefix'=>'admin'], func
 	Route::get('/comentarios/', 'CommentController@index')->name('admin');
 	Route::get('/salas/ajustes/{id}', 'RoomController@edit');
 	Route::get('/salas/', 'RoomController@index');
+	Route::get('/salas/eliminar/{id}', 'RoomController@destroy');
 	Route::get('/pagos/', 'PaymentController@index');
 	Route::get('/pagos/{order_id}/', 'PaymentController@show');
 	Route::get('/ajustes/', 'AdminController@settings');
