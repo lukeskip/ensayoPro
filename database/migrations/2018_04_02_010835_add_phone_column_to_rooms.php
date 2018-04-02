@@ -29,6 +29,9 @@ class AddPhoneColumnToRooms extends Migration
     {
         Schema::table('rooms', function($table) {
             $table->dropColumn('phone');
+            $table->dropColumn('webpage');
+            $table->dropColumn('facebook');
+
         });
     }
 }
