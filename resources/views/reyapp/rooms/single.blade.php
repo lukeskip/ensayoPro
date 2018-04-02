@@ -29,7 +29,7 @@
 			@if(!Auth::guest())
 					
 				<div class="contact">
-					@if($room->companies->phone)
+					@if($room->phone)
 						<div class="phone title">
 							TEL: {{$room->companies->phone}}
 						</div>
