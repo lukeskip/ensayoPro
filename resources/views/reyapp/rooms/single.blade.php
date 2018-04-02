@@ -31,16 +31,16 @@
 				<div class="contact">
 					@if($room->phone)
 						<div class="phone title">
-							TEL: {{$room->companies->phone}}
+							TEL: {{$room->phone}}
 						</div>
 					@endif
 					@if($room->webpage)
-						<a class="web icon title" target="_black" href={{"http://".$room->companies->webpage}}>
+						<a class="web icon title" target="_black" href={{"http://".$room->webpage}}>
 							<i class="fa fa-chrome"></i>
 						</a>
 					@endif
 					@if($room->facebook)
-						<a class="facebook icon title" target="_black" href="{{"http://".$room->companies->facebook}}">
+						<a class="facebook icon title" target="_black" href="{{"http://".$room->facebook}}">
 							<i class="fa fa-facebook-square"></i>
 						</a>
 					@endif
