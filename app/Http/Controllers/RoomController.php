@@ -520,6 +520,9 @@ class RoomController extends Controller
 		$room                   = new Room();
 		$room->name             = $request->name;
 		$room->company_name     = $request->company_name;
+		$room->phone     		= $request->phone;
+		$room->webpage     		= $request->webpage;
+		$room->facebook     	= $request->facebook;
 		$room->price            = $request->price;
 		$room->description      = $request->description;
 		$room->equipment        = $request->equipment;
@@ -593,13 +596,16 @@ class RoomController extends Controller
 			return "Esta sala ha sido eliminada o está temporalmente suspendida";
 		}
 
-		if($room->company_address){
+		if($room->company_address or !$room->is_admin){
 			$room['address']        = $room->companies->address;
 			$room['colony']         = $room->companies->colony;
 			$room['deputation']     = $room->companies->deputation;
 			$room['postal_code']    = $room->companies->postal_code;
 			$room['latitude']       = $room->companies->latitude;
 			$room['longitude']      = $room->companies->longitude;
+			$room['phone']      	= $room->companies->phone;
+			$room['webpage']      	= $room->companies->webpage;
+			$room['facebook']      	= $room->companies->facebook;
 		}
 
 		$room['equipment'] = explode(PHP_EOL, $room['equipment']);
@@ -703,15 +709,18 @@ class RoomController extends Controller
 		$user_id = Auth::user()->id;
 		$room = Room::with('companies')->findOrFail($id);
 		$companies = "";
+		$room_user = '';
 		
 		if(!$room->is_admin){
 			$room_user = $room->companies->users->first()->id;
 			$role = User::find($user_id)->roles->first()->name;
 		}else{
-			$role = 'admin';
-			$room_user = -1;
-			$companies = Company::all();
+			$role = $this->get_role();
 		}
+		
+
+		$companies = Company::all();
+		
 		
 
 		$types = Type::all();
@@ -761,7 +770,9 @@ class RoomController extends Controller
 			'schedule_end'      => 'required|max:3',
 			'color'             => 'required|max:10',        
 			'price'             => 'required|integer',
-			'status'            => 'in:inactive,active,deleted'        
+			'status'            => 'in:inactive,active,deleted',
+			'webpage'           => 'sometimes|url',
+			'facebook'          => 'sometimes|url',        
 		);
 
 		// Validamos todos los campos
@@ -772,8 +783,12 @@ class RoomController extends Controller
 			return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
 		}
 		 
+
 		$room                   = Room::find($id);
 		$room->name             = $request->name;
+		$room->phone     		= $request->phone;
+		$room->webpage     		= $request->webpage;
+		$room->facebook     	= $request->facebook;
 		$room->price            = $request->price;
 		$room->description      = $request->description;
 		$room->equipment        = $request->equipment;
@@ -781,10 +796,17 @@ class RoomController extends Controller
 		$room->schedule_start   = $request->schedule_start;
 		$room->schedule_end     = $request->schedule_end;
 		$room->color            = $request->color;
+		$room->company_id       = $request->company_id;
 		$days                   = implode(',', $request->days);
 		$room->days             = $days;
 		$room->status           = $request->status;
 		$room->type_id          = $request->type;
+
+		if($room->company_id != 0){
+			$room->is_admin = false;
+		}else{
+			$room->is_admin = true;
+		}
 		
 
 		if($request->company_address){

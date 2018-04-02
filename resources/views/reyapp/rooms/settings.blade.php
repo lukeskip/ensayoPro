@@ -100,7 +100,7 @@
 			</div>
 		</div>
 		
-		@if($room->is_admin)
+		@if($role == "admin")
 			<div class="row">
 				<div class="large-8 columns">
 					<label>Nombre de la compañía</label>
@@ -109,12 +109,27 @@
 
 				<div class="large-4 columns">
 					<label>Asignar a una compañía</label>
-					<select name="company" id="">
-						<option value="">Elige</option>
+					<select name="company_id" id="">
+						<option value="0">Elige</option>
 						@foreach($companies as $company)
-							<option value="{{$company->id}}">{{$company->name}}</option>
+							<option @if($room->company_id == $company->id)  {{"selected"}} @endif value="{{$company->id}}">{{$company->name}}</option>
 						@endforeach
 					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-6 columns">
+				
+					<label>Página web:</label>
+					<input class="input-group-field url"  type="text" name="webpage" value="{{$room->webpage}}">
+				
+					
+				</div>
+				<div class="large-6 columns">
+				
+					<label>Facebook:</label>
+					<input class="input-group-field url"  type="text" name="facebook" value="{{$room->facebook}}">
+					
 				</div>
 			</div>
 		@endif

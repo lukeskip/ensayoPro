@@ -140,6 +140,24 @@
 
 			<div class="row">
 				<div class="large-12 columns">
+				
+					<label>Página web:</label>
+					<input class="input-group-field"  type="text" name="website">
+					
+					{{-- Variable is admin TRUE --}}
+					<input   type="hidden" name="is_admin" value="1">
+					
+				</div>
+				<div class="large-8 columns">
+				
+					<label>Facebook:</label>
+					<input class="input-group-field"  type="text" name="name">
+					
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-12 columns">
 					<h3>Ubicación</h3>
 				</div>
 			</div>

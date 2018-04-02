@@ -2,7 +2,7 @@ $.extend(jQuery.validator.messages, {
   required: "Por favor, llena este campo.",
   remote: "Por favor, llena este campo.",
   email: "Por favor, escribe una dirección de correo válida",
-  url: "Por favor, escribe una URL válida.",
+  url: "Por favor, escribe una URL válida. Incluye 'http://'",
   date: "Por favor, escribe una fecha válida.",
   dateISO: "Por favor, escribe una fecha (ISO) válida.",
   number: "Por favor, escribe un número entero válido.",
