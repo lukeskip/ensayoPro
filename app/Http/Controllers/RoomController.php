@@ -211,6 +211,7 @@ class RoomController extends Controller
 			}
 		}
 
+
 		$companies = Company::orderBy('name', 'desc')->get();
 		$order = request()->order;
 		$deputations = $rooms->unique('deputation')->values()->all();
@@ -469,11 +470,19 @@ class RoomController extends Controller
 	 */
 	public function create()
 	{
+
 		$user_id = Auth::user()->id;
 		$companies = User::where('id',$user_id)->with('companies')->first();
 		$company = $companies->companies->first();
 		$types 	 = Type::all();
-		return view('reyapp.rooms.register_room')->with('company',$company)->with('types',$types);
+		return view('reyapp.rooms.register_room')->with('company',$company)->with('types',$types)->with('role',$this->get_role());
+	}
+
+	public function create_admin()
+	{
+		
+		$types 	 = Type::all();
+		return view('reyapp.rooms.register_room_admin')->with('types',$types)->with('role',$this->get_role());
 	}
 
 	/**
@@ -506,9 +515,11 @@ class RoomController extends Controller
 			return response()->json(['success' => false,'message'=>'Hay campos con información inválida, por favor revísalos']);
 		}
 		 
+		$is_admin             	= $request->is_admin;
 		$company_id             = $request->company;
 		$room                   = new Room();
 		$room->name             = $request->name;
+		$room->company_name     = $request->company_name;
 		$room->price            = $request->price;
 		$room->description      = $request->description;
 		$room->equipment        = $request->equipment;
@@ -518,6 +529,7 @@ class RoomController extends Controller
 		$room->instructions     = $request->instructions;
 		$room->status           = 'active';
 		$room->type_id          = $request->type;
+		$room->is_admin			=$is_admin;
 		
 		// Si el valor es -1 agregamos todos los días al string
 		if(in_array('-1',$request->days)){
@@ -539,9 +551,13 @@ class RoomController extends Controller
 			$room->postal_code      = $request->postal_code;
 			$room->city             = $request->city;
 		}
-
-		$company = Company::where('id',$company_id)->with('rooms')->first();      
-		$company->rooms()->save($room);
+		if($is_admin){
+			$room->save();
+		}else{
+			$company = Company::where('id',$company_id)->with('rooms')->first();      
+			$company->rooms()->save($room);
+		}
+		
 		
 		// Creamos los objetos de imagen y los relacionamos con el cuarto
 		$images = json_decode($request->input('images'),true);
@@ -556,7 +572,7 @@ class RoomController extends Controller
 		}
 
 		// respondemos la petición con un true
-		return response()->json(['success' => true]);
+		return response()->json(['success' => true,'is_admin',$is_admin]);
 	}
 
 	/**
@@ -795,6 +811,46 @@ class RoomController extends Controller
 		$room->delete();
 
 		return response()->json(['success' => true,'message'=>'EL item fue borrado con éxito']);
+	}
+
+	private function get_role(){
+		if(!Auth::guest()){
+			$user = Auth::user();
+			$role = $user->roles->first()->name;
+			return $role;  
+		}
+	}
+
+	public function rooms_admin()
+	{	
+
+		if($this->get_role() == 'admin'){
+			$rooms = Room::where('is_admin', 1)->get();
+
+			foreach ($rooms as $room) {
+				// Cuantificamos y promediamos las calificaiones
+				$quality = 0;
+				$sumRatings = count($room->ratings);
+
+				if($sumRatings > 0){
+					foreach ($room->ratings as $rating) {
+						$quality += $rating->score;
+					}
+
+					$quality = $quality / $sumRatings;
+					$room['score']    = $quality;
+				}
+				
+				$room['ratings'] = $sumRatings;
+			}
+
+
+
+			return view('reyapp.admin.rooms_admin')->with('rooms',$rooms)->with('role',$this->get_role());
+		}else{
+			return false;
+		}
+		
 	}
 
 

@@ -113,6 +113,7 @@ Route::group(['middleware' => ['auth','admin','active'],'prefix'=>'admin'], func
 	Route::get('/comentarios/', 'CommentController@index')->name('admin');
 	Route::get('/salas/ajustes/{id}', 'RoomController@edit');
 	Route::get('/salas/', 'RoomController@index');
+	Route::get('/salas-administrador', 'RoomController@rooms_admin');
 	Route::get('/salas/eliminar/{id}', 'RoomController@destroy');
 	Route::get('/pagos/', 'PaymentController@index');
 	Route::get('/pagos/{order_id}/', 'PaymentController@show');
@@ -126,6 +127,9 @@ Route::group(['middleware' => ['auth','admin','active'],'prefix'=>'admin'], func
 	Route::get('/reportes/', 'ReportController@index');
 	Route::get('/reservaciones/', 'ReservationController@index');
 	Route::get('/reportes/{id}','ReportController@show');
+	Route::get('/registro/salas', 'RoomController@create_admin')->name('register_room_admin');
+
+	
 });
 
 

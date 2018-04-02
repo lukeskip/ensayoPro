@@ -86,6 +86,10 @@ class AdminController extends Controller
         return view('reyapp.admin.rooms')->with('rooms',$rooms);
     }
 
+    public function register_room(){
+        
+    }
+
     public function settings()
     {
         $settings = Setting::all();

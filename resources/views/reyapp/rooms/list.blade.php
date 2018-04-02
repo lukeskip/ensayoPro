@@ -117,6 +117,7 @@
 				@foreach ($rooms as $room)
 				<div class="row list-item room-item">
 					<div class="medium-6 columns"> 
+					@if(!$room->is_admin)
 						@if($room->companies->reservation_opt and $room->types->name == "room" and $room->companies->status == "active")
 							<span class="tag green">
 								<i class="fa fa-calendar hastooltip" title="Esta sala acepta reservaciones en línea"></i>
@@ -124,13 +125,22 @@
 						@endif
 						@if(!Auth::guest())
 							@if ($role == 'admin')
-								<a href="/admin/salas/ajustes/{{$room->id}}"> {{$room->name}} ({{$room->companies->name}})</a>
+								<a href="/admin/salas/ajustes/{{$room->id}}"> {{$room->companies->name}} ({{$room->name}})</a>
 							@else
 								<a href="/salas/{{$room->id}}">{{ $room->companies->name }} ({{$room->name}})</a>
 							@endif
 						@else
 							<a href="/salas/{{$room->id}}">{{ $room->companies->name }} ({{$room->name}})</a>
 						@endif
+					@else
+
+						@if ($role == 'admin')
+							<a href="/admin/salas/ajustes/{{$room->id}}"> {{$room->company_name}} ({{$room->name}})</a>
+						@else
+							<a href="/salas/{{$room->id}}">{{ $room->company_name }} ({{$room->name}})</a>
+						@endif
+
+					@endif
 
 						
 						

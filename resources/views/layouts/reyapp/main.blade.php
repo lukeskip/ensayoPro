@@ -103,6 +103,12 @@
 								<i class="fa fa-calendar-o" aria-hidden="true"></i> Salas
 							</a>
 						</li>
+
+						<li>
+							<a href="/admin/salas-administrador">
+								<i class="fa fa-calendar-o" aria-hidden="true"></i> Salas de administrador
+							</a>
+						</li>
 						
 						<li>
 							<a href="/admin/reportes">
