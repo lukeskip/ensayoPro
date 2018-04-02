@@ -139,19 +139,19 @@
 			</div>
 
 			<div class="row">
-				<div class="large-12 columns">
+				<div class="large-6 columns">
 				
 					<label>Página web:</label>
-					<input class="input-group-field"  type="text" name="website">
+					<input class="input-group-field"  type="text" name="webpage">
 					
 					{{-- Variable is admin TRUE --}}
 					<input   type="hidden" name="is_admin" value="1">
 					
 				</div>
-				<div class="large-8 columns">
+				<div class="large-6 columns">
 				
 					<label>Facebook:</label>
-					<input class="input-group-field"  type="text" name="name">
+					<input class="input-group-field"  type="text" name="facebook">
 					
 				</div>
 			</div>
