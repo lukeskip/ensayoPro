@@ -100,8 +100,27 @@
 			</div>
 		</div>
 		
+		@if($room->is_admin)
+			<div class="row">
+				<div class="large-8 columns">
+					<label>Nombre de la compañía</label>
+					<input class="input-group-field required"  type="text" name="company_name" placeholder="Ej. Ruido Blanco" value="{{$room->company_name}}">
+				</div>
+
+				<div class="large-4 columns">
+					<label>Asignar a una compañía</label>
+					<select name="company" id="">
+						<option value="">Elige</option>
+						@foreach($companies as $company)
+							<option value="{{$company->id}}">{{$company->name}}</option>
+						@endforeach
+					</select>
+				</div>
+			</div>
+		@endif
+
+
 		<div class="row">
-			<input type="hidden" name="company" value="{{$company->id}}">
 
 			<div class="large-4 columns">
 			
@@ -142,15 +161,19 @@
 		<div class="row">
 			<div class="large-12 columns">
 				<h3>Ubicación</h3>
-				<label for="company_address" class="no-background">
-					<input id="company_address" name="company_address" @if($room->company_address) {{'checked'}} @endif type="checkbox">Misma dirección que marca
-				</label>
+				@if(!$room->is_admin)
+					<label for="company_address" class="no-background">
+						<input id="company_address" name="company_address" @if($room->company_address) {{'checked'}} @endif type="checkbox">Misma dirección que marca
+					</label>
+				@endif
 			</div>
 		</div>
 
 		{{-- STARTS: ADDRESS ZONE --}}
 		<div class="new_address">
 			<div class="row">
+				<input type="hidden" name="latitude" class="latitude" value="{{$latitude}}">
+				<input type="hidden" name="longitude" class="longitude" value="{{$longitude}}">
 				
 				<div class="large-8 columns">	
 					<label>Dirección</label>

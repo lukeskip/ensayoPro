@@ -119,7 +119,7 @@ class RoomController extends Controller
 		}
 
 		if(request()->has('buscar')){	
-			$rooms = $rooms->where('name', 'LIKE', '%' . request()->buscar . '%')->orWhere('equipment', 'LIKE', '%' . request()->buscar . '%')->orWhereHas('companies', function($query){
+			$rooms = $rooms->where('name', 'LIKE', '%' . request()->buscar . '%')->orWhere('equipment', 'LIKE', '%' . request()->buscar . '%')->orWhere('company_name', 'LIKE', '%' . request()->buscar . '%')->orWhereHas('companies', function($query){
 				$query->where('name', 'LIKE', '%' . request()->buscar . '%');
 			});
 		
@@ -550,6 +550,9 @@ class RoomController extends Controller
 			$room->deputation       = $request->deputation;
 			$room->postal_code      = $request->postal_code;
 			$room->city             = $request->city;
+			$room->latitude         = $request->latitude;
+			$room->longitude        = $request->longitude;
+			$room->phone       		= $request->phone;
 		}
 		if($is_admin){
 			$room->save();
@@ -659,9 +662,12 @@ class RoomController extends Controller
                 $promotion->description = $description;
         }
 
-        if($room->companies->status == 'active' and $room->companies->reservation_opt){
-        	$reservation_opt = true;
+        if(!$room->is_admin){
+        	if($room->companies->status == 'active' and $room->companies->reservation_opt){
+        		$reservation_opt = true;
+        	}
         }
+        
         
         $comments = $room->comments;
         
@@ -696,10 +702,22 @@ class RoomController extends Controller
 
 		$user_id = Auth::user()->id;
 		$room = Room::with('companies')->findOrFail($id);
-		$room_user = $room->companies->users->first()->id;
-		$role = User::find($user_id)->roles->first()->name;
+		$companies = "";
+		
+		if(!$room->is_admin){
+			$room_user = $room->companies->users->first()->id;
+			$role = User::find($user_id)->roles->first()->name;
+		}else{
+			$role = 'admin';
+			$room_user = -1;
+			$companies = Company::all();
+		}
+		
 
 		$types = Type::all();
+
+
+		
 
 		// verificamos que el usuario sea dueño de la información
 		if($user_id != $room_user and $role!='admin'){
@@ -720,7 +738,7 @@ class RoomController extends Controller
 			$longitude = $room->longitude;
 		}
 		
-		return view('reyapp.rooms.settings')->with('room',$room)->with('company',$company)->with('latitude',$latitude)->with('longitude',$longitude)->with('role',$role)->with('types',$types);
+		return view('reyapp.rooms.settings')->with('room',$room)->with('company',$company)->with('latitude',$latitude)->with('longitude',$longitude)->with('role',$role)->with('types',$types)->with('companies',$companies);
 	}
 
 	/**
@@ -778,6 +796,9 @@ class RoomController extends Controller
 			$room->deputation       = $request->deputation;
 			$room->postal_code      = $request->postal_code;
 			$room->city             = $request->city;
+			$room->latitude      	= $request->latitude;
+			$room->longitude        = $request->longitude;
+			$room->phone       		= $request->phone;
 		}
 
 			  

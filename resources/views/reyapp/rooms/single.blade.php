@@ -14,35 +14,64 @@
 			<div class="tag green">
 				{{$room->types->label}}
 			</div>
-			<h1 class="text-left">{{$room->companies->name}}</h1>
+			@if(!$room->is_admin)
+				<h1 class="text-left">{{$room->companies->name}}</h1>
+			@else
+				<h1 class="text-left">{{$room->company_name}}</h1>
+			@endif
 			<h2 class="text-left">
 				{{$room->name}}
 				<span class="price">
 					${{$room->price}}/hora
 				</span>
 			</h2>
-			{{-- Solo mostramos la información si está logeado --}}
+			{{-- Solo mostramos la información si está logeado haciendo la condicionante si la sala o estudio es del administrador o no--}}
 			@if(!Auth::guest())
-				@if($room->companies->phone or $room->companies->webpage or $room->companies->facebook)
-				<div class="contact">
-
-					@if($room->companies->phone)
-						<div class="phone title">
-							TEL: {{$room->companies->phone}}
+				
+					@if(!$room->is_admin)
+						<div class="contact">
+							@if($room->companies->phone and $room->company_address)
+								<div class="phone title">
+									TEL: {{$room->companies->phone}}
+								</div>
+							@elseif(!$room->company_address and $room->phone)
+								<div class="phone title">
+									TEL: {{$room->phone}}
+								</div>
+							@endif
+							@if($room->companies->webpage)
+								<a class="web icon title" target="_black" href={{"http://".$room->companies->webpage}}>
+									<i class="fa fa-chrome"></i>
+								</a>
+							@endif
+							@if($room->companies->facebook)
+								<a class="facebook icon title" target="_black" href="{{"http://".$room->companies->facebook}}">
+									<i class="fa fa-facebook-square"></i>
+								</a>
+							@endif
 						</div>
+					@else
+						<div class="contact">
+							@if($room->phone)
+								<div class="phone title">
+									TEL: {{$room->phone}}
+								</div>
+							@endif
+							@if($room->webpage)
+								<a class="web icon title" target="_black" href={{"http://".$room->webpage}}>
+									<i class="fa fa-chrome"></i>
+								</a>
+							@endif
+							@if($room->facebook)
+								<a class="facebook icon title" target="_black" href="{{"http://".$room->facebook}}">
+									<i class="fa fa-facebook-square"></i>
+								</a>
+							@endif
+						</div>
+
 					@endif
-					@if($room->companies->webpage)
-						<a class="web icon title" target="_black" href={{"http://".$room->companies->webpage}}>
-							<i class="fa fa-chrome"></i>
-						</a>
-					@endif
-					@if($room->companies->facebook)
-						<a class="facebook icon title" target="_black" href="{{"http://".$room->companies->facebook}}">
-							<i class="fa fa-facebook-square"></i>
-						</a>
-					@endif
-				</div>
-				@endif
+				
+				
 				<br>
 				<div class="row">
 					<div class="large-6 columns">
@@ -119,11 +148,19 @@
 			
 			<div class="full-address">
 				<i class="fa fa-map-marker" aria-hidden="true"></i>
-				{{$room->address}},
-				{{$room->colony}},
-				{{$room->deputation}},
-				{{$room->postal_code}},
-				{{$room->companies->phone}}
+				@if(!$room->is_admin and $room->company_address)
+					{{$room->companies->address}},
+					{{$room->companies->colony}},
+					{{$room->companies->deputation}},
+					{{$room->companies->postal_code}},
+					{{$room->companies->phone}}
+				@else
+					{{$room->address}},
+					{{$room->colony}},
+					{{$room->deputation}},
+					{{$room->postal_code}},
+					{{$room->phone}}
+				@endif
 			</div>
 			<div class="tags">
 				<a href="/salas/?colonia={{$room->colony}}" class="colony">{{$room->colony}}</a>

@@ -148,6 +148,9 @@
 			<div class="new_address">
 				<div class="row">
 					
+					<input type="hidden" name="latitude" class="latitude" >
+					<input type="hidden" name="longitude" class="longitude" >
+
 					<div class="large-8 columns">	
 						<label>Dirección</label>
 						<input class="input-group-field address get_loc required" type="text" name="address" placeholder="Calle y número" value="">
