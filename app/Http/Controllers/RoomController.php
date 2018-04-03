@@ -96,7 +96,7 @@ class RoomController extends Controller
 			if($role == 'admin'){ 
 				$rooms = $rooms->where('deputation',request()->deleg )->orWhereHas('companies', function ($query) {
     			$query->where('deputation', 'like', request()->deleg );
-			});
+				});
 			}else{
 				$rooms = $rooms->where('deputation', request()->deleg )->orWhereHas('companies', function ($query) {
     			$query->where('deputation', 'like', request()->deleg );
@@ -126,9 +126,7 @@ class RoomController extends Controller
 		}
 
 		if($role != 'admin'){ 
-			$rooms = $rooms->where('status','active')->whereHas('companies', function ($query) {
-    			$query->where('status', '!=', 'deleted');
-			}); 
+			$rooms = $rooms->where('status','active'); 
 		}
 		
 		$rooms = $rooms->paginate($items_per_page);
@@ -720,12 +718,7 @@ class RoomController extends Controller
 		
 
 		$companies = Company::all();
-		
-		
-
 		$types = Type::all();
-
-
 		
 
 		// verificamos que el usuario sea dueño de la información
