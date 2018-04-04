@@ -132,6 +132,8 @@
 					
 				</div>
 			</div>
+		@else
+			<input type="hidden" name="company_id" value="{{$room->company_id}}">
 		@endif
 
 
