@@ -225,6 +225,24 @@
 				}
 			});
 	    });
+
+	    @if(Auth::guest())
+			if (sessionStorage.getItem('loggin_invitation') !== 'true') {
+				login();
+				sessionStorage.setItem('loggin_invitation','true');
+			}
+		@endif
+
+		function login (){
+			swal({
+			  title: 'Logéate',
+			  imageUrl: '{{asset('img/logo_ensayo.png')}}',
+			  html: 'Para comentar y califcar esta sala <br><a href="{{url('/redirect')}}" style="margin-top:20px;" class="button facebook expanded"><i class="fa fa-facebook"></i>      Login con Facebook</a>',
+			  showCloseButton: true,
+			  showConfirmButton: false,
+			  focusConfirm: false,
+			});
+		}
 	});
 </script>
 	
