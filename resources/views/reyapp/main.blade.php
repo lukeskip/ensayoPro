@@ -1,4 +1,4 @@
-@extends('layouts.reyapp.main')
+@extends('layouts.reyapp.main_front')
 @section('body_class', 'landing')
 @section('header')
 

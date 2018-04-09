@@ -1,4 +1,4 @@
-@extends('layouts.reyapp.main')
+@extends('layouts.reyapp.main_front')
 
 @section('styles')
 	<link rel="stylesheet" href="{{asset('plugins/lightbox/css/lightbox.min.css')}}">
