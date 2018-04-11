@@ -5,6 +5,22 @@
 	<link rel="stylesheet" href="{{asset('plugins/bar-rating/themes/fontawesome-stars-o.css')}}">
 @endsection
 
+@section("metatags")
+<title>{{$room->company}} {{$room->name}}</title>
+
+<meta property="og:url" content="https://ensayopro.com.mx/salas/{{$room->id}}" />
+<meta property="og:title"              content="{{$room->company}} EnsayoPRO" />
+<meta property="og:description"        content="Renta la sala de ensayo que más te convenga, las mejores opciones en la ciudad de méxico, guadalajara, monterrey" />
+<meta property="og:image"              content="{{asset('img/facebook_share.png')}}" />
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<meta name="description" content="Conoce lo que músicos opinan de {{$room->company}} {{$room->types->label}}" />
+<meta name="keywords" content="{{$room->company}},Salas de Ensayo DF, cuartos de ensayo, las mejores salas de ensayo, disqueras independientes" />
+<meta name="author" content="Rey Decibel">
+<meta name="robots" content="index, follow">
+<meta name="revisit-after" content="1 week">
+@endsection
 @section('content')
 <div class="room-item room-single">
 
@@ -14,11 +30,7 @@
 			<div class="tag green">
 				{{$room->types->label}}
 			</div>
-			@if(!$room->is_admin)
-				<h1 class="text-left">{{$room->companies->name}}</h1>
-			@else
-				<h1 class="text-left">{{$room->company_name}}</h1>
-			@endif
+			<h1>{{$room->company}}</h1>
 			<h2 class="text-left">
 				{{$room->name}}
 				<span class="price">
@@ -118,6 +130,7 @@
 						</div>
 					</div>
 				@endif
+
 			</div>
 			
 			
@@ -144,19 +157,7 @@
 						<li class="list-item">{{$equipment}}</li>
 					@endforeach
 				</ul>
-				@if($room->media_items->count())
-				<h3 class="list-header">Imágenes</h3>
 				
-					<div class="images">
-						@foreach($room->media_items as $image)
-
-							<a class="image" href="{{url('imagenes/'.$image->name)}}" data-lightbox="{{$room->name}}">
-								<img src="{{url('imagenes/'.$image->name)}}" />
-							</a>
-				
-						@endforeach
-					</div>
-				@endif
 			</div>
 			
 
@@ -204,6 +205,19 @@
 			</div>
 			<h3 class="list-header">Ubicación</h3>
 			<div id="map"></div>
+			@if($room->media_items->count())
+				<h3 class="list-header">Imágenes</h3>
+				
+				<div class="images">
+					@foreach($room->media_items as $image)
+
+						<a class="image" href="{{url('imagenes/'.$image->name)}}" data-lightbox="{{$room->name}}">
+							<img src="{{url('imagenes/'.$image->name)}}" />
+						</a>
+			
+					@endforeach
+				</div>
+			@endif
 			
 			
 		</div>

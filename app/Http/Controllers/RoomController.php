@@ -135,7 +135,7 @@ class RoomController extends Controller
 		// Si tienen la misma dirección de la compañía la asignamos y la mandamos dentro del mismo objeto
 		foreach ($rooms as $room) {
 
-			if($room->company_address){
+			if($room->company_address AND !$room->is_admin ){
 				$room['address']        = $room->companies->address;
 				$room['colony']         = $room->companies->colony;
 				$room['deputation']     = $room->companies->deputation;
@@ -594,7 +594,7 @@ class RoomController extends Controller
 			return "Esta sala ha sido eliminada o está temporalmente suspendida";
 		}
 
-		if($room->company_address or !$room->is_admin){
+		if($room->company_address AND !$room->is_admin){
 			$room['address']        = $room->companies->address;
 			$room['colony']         = $room->companies->colony;
 			$room['deputation']     = $room->companies->deputation;
@@ -664,12 +664,23 @@ class RoomController extends Controller
                 }
                 $description = $description." válida hasta el ".$finishs;
                 $promotion->description = $description;
+
+            
+
+		        
+
         }
 
         if(!$room->is_admin){
+        	
         	if($room->companies->status == 'active' and $room->companies->reservation_opt){
         		$reservation_opt = true;
         	}
+
+        	$room['company'] = $room->companies->name;
+        	
+        }else{
+        	$room['company'] = $room->company_name;
         }
         
         
@@ -703,7 +714,6 @@ class RoomController extends Controller
 	 */
 	public function edit($id)
 	{
-
 		$user_id = Auth::user()->id;
 		$room = Room::with('companies')->findOrFail($id);
 		$companies = "";
@@ -764,8 +774,8 @@ class RoomController extends Controller
 			'color'             => 'required|max:10',        
 			'price'             => 'required|integer',
 			'status'            => 'in:inactive,active,deleted',
-			'webpage'           => 'sometimes|url',
-			'facebook'          => 'sometimes|url',        
+			'webpage'           => 'nullable|url',
+			'facebook'          => 'nullable|url',        
 		);
 
 		// Validamos todos los campos

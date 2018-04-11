@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>EnsayoPro</title>
+		
 		<link rel="stylesheet" href="{{asset('js/vendor/selectize/css/selectize.default.css')}}">
 		<link rel="stylesheet" href="{{asset('css/foundation.css')}}">
 
@@ -29,8 +29,6 @@
 		</script>
 		
 		@yield('header')
-
-		<title>Ensaya Pro</title>
 
 		<script type="text/javascript"> //<![CDATA[ 
 		var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");

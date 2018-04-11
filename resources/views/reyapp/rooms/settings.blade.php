@@ -104,7 +104,7 @@
 			<div class="row">
 				<div class="large-8 columns">
 					<label>Nombre de la compañía</label>
-					<input class="input-group-field required"  type="text" name="company_name" placeholder="Ej. Ruido Blanco" value="{{$room->company_name}}">
+					<input class="input-group-field"  type="text" name="company_name" placeholder="Ej. Ruido Blanco" value="{{$room->company_name}}">
 				</div>
 
 				<div class="large-4 columns">
