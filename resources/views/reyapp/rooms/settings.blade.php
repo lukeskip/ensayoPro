@@ -255,7 +255,7 @@
 			</div>
 			<div class="large-4 columns">
 				<label>Descripción <i class="fa fa-question-circle hastooltip" title="Escribe una descripción breve, ej: Sala amplia cómoda para bandas de hasta 6 miembros" aria-hidden="true"></i></label>
-				<textarea class="input-group-field required" type="text" name="description" data-rule-maxlength="255">{{$room->description}}</textarea>
+				<textarea class="input-group-field required" type="text" name="description">{{$room->description}}</textarea>
 
 			</div>
 

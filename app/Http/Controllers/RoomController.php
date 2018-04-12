@@ -495,7 +495,7 @@ class RoomController extends Controller
 		// Registramos las reglas de validación
 		$rules = array(
 			'name'              => 'required|max:255',
-			'description'       => 'required|max:255',
+			'description'       => 'required',
 			'equipment'         => 'required|max:1000',
 			'instructions'      => 'max:255',
 			'days'              => 'required|max:255',
@@ -765,7 +765,7 @@ class RoomController extends Controller
 		// Registramos las reglas de validación
 		$rules = array(
 			'name'              => 'required|max:255',
-			'description'       => 'required|max:255',
+			'description'       => 'required',
 			'equipment'         => 'required|max:1000',
 			'instructions'      => 'max:255',
 			'days'              => 'required|max:255',
