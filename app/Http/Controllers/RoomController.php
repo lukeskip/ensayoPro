@@ -74,7 +74,7 @@ class RoomController extends Controller
 
 		}else{
 
-			$rooms = $rooms->orderBy('promotion','DESC')->orderBy('average','DESC')->orderBy('total_ratings','DESC');
+			$rooms = $rooms->orderBy('promotion','DESC')->orderBy('total_ratings','DESC')->orderBy('average','DESC')->orderBy('total_ratings','DESC');
 
 
 		}
