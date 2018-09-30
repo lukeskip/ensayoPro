@@ -31,7 +31,7 @@ Route::get('/redirect', function (){
 });
 
 Route::get('/phpinfo', function (){
-	return phpinfo();
+	phpinfo();
 });
 
 // rutas para loggeo con facebook
