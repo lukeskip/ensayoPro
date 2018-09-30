@@ -397,7 +397,7 @@
 
 		function send_data(){
 			data = $("#form_rooms").serialize()+'&images='+JSON.stringify(room_images);
-			conection('POST',data,'/company/salas/',true).then(function(answer){
+			conection('POST',data,'/company/salas',true).then(function(answer){
 				if(answer.success == true){
 					swal({
 					  title: '¡Listo!',
