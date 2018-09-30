@@ -26,6 +26,14 @@ Route::get('logout', function (){
 	return redirect('/login');
 });
 
+Route::get('/redirect', function (){
+	
+});
+
+Route::get('/phpinfo', function (){
+	return phpinfo();
+});
+
 // rutas para loggeo con facebook
 Route::get('/redirect', 'SocialAuthFacebookController@redirect');
 Route::get('/callback', 'SocialAuthFacebookController@callback');
