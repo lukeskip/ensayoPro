@@ -30,9 +30,15 @@ Route::get('/redirect', function (){
 	
 });
 
-Route::get('/phpinfo', function (){
-	phpinfo();
+Route::group(['middleware' => ['auth']], function () {
+	Route::get('/playlist', function (){
+		return "hola";
+	});
+
 });
+
+
+
 
 // rutas para loggeo con facebook
 Route::get('/redirect', 'SocialAuthFacebookController@redirect');
@@ -43,9 +49,9 @@ Route::get('/', function () {
     return view('reyapp.main');
 });
 
-Route::get('/phpinfo', function () {
-    return phpinfo();
-});
+// Route::get('/phpinfo', function () {
+//     return phpinfo();
+// });
 
 // Route::get('/eliminar_calificaciones', 'RatingController@eliminar_calificaciones');
 

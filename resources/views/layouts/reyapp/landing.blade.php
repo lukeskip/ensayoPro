@@ -79,10 +79,6 @@
 
 	<div class="off-canvas-content" data-off-canvas-content>
 
-		{{-- <div class="beta">Alpha</div> --}}
-		<div class="loader_wrapper">
-			<div class="loader"></div>
-		</div>
 
 		<div class="container">
 
