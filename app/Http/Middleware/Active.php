@@ -16,12 +16,13 @@ class Active
      */
     public function handle($request, Closure $next)
     {
-        $active = Auth::user()->active;
-        if($active){
-            return $next($request);
-        }else{
-            return redirect('/activa_tu_cuenta');
-        }
+        return $next($request);
+        // $active = Auth::user()->active;
+        // if($active){
+        //     return $next($request);
+        // }else{
+        //     return redirect('/activa_tu_cuenta');
+        // }
         
        
     }

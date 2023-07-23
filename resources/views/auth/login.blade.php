@@ -53,10 +53,10 @@
                                 <button type="submit" class="button green expanded">
                                     Entrar
                                 </button>
-                                <a href="{{url('/redirect')}}" class="button facebook expanded">
+                                <!-- <a href="{{url('/redirect')}}" class="button facebook expanded">
                                     <i class="fa fa-facebook"></i>
                                     Login con Facebook
-                                </a>
+                                </a> -->
 
                             </div>
                         </div>

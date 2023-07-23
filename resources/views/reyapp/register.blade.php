@@ -103,14 +103,14 @@
 		</div>
 		<hr>
 		<div class="row">
-			<div class="medium-4 columns text-center">
+			<!-- <div class="medium-4 columns text-center">
 				{!! Captcha::display() !!}
 				@if ($errors->has('g-recaptcha-response'))
 					<label class="error">
 						<strong>{{ $errors->first('g-recaptcha-response') }}</strong>
 					</label>
 				@endif
-			</div>
+			</div> -->
 			<div class="medium-8 columns">
 				<div class="disclaimer">
 					Haciendo click en "Registrar" o "Registro con Facebook" aceptas los <strong><a href="/terminos_y_condiciones">Términos y Condiciones</a></strong> así como el <strong><a href="/aviso-de-privacidad">Aviso de Privacidad</a></strong> que puedes visitar en los enlaces antes mencionados, además aceptas que Rey Decibel a través de EnsayoPro te contacte a tu correo para temas propios de la plataforma.
@@ -126,10 +126,10 @@
 				
 			</div>
 			<div class="large-6 columns">
-				<a href="{{url('/redirect')}}" class="button facebook expanded">
+				<!-- <a href="{{url('/redirect')}}" class="button facebook expanded">
                     <i class="fa fa-facebook"></i>
                     Registro con Facebook
-                </a>
+                </a> -->
 
 			</div>
 		</div>

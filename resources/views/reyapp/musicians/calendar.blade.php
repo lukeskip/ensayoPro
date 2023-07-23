@@ -42,7 +42,7 @@
 		@endforeach
 
 		@foreach($events as $event)
-			@if($reservation->bands)
+			@if($reservations->has("bands"))
 				var title = '{{$event->bands->name}}';
 			@else
 				var title = '{{$event->description}}';
